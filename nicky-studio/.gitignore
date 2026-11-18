@@ -1,0 +1,9 @@
+__pycache__/
+out_*/fr_*/
+out_*/*.tmp.mp4
+out_*/q*.mp4
+out_*/hook.mp4
+out_*/cta.mp4
+out_*/outro.mp4
+out_*/list.txt
+out_*/sound.wav
