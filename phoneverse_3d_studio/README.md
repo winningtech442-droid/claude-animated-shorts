@@ -39,5 +39,10 @@ Render cost on this 4-core box: about 6 s a frame at 540x960 / 16 samples, so ab
 ## Status (19 Nov 2026)
 - Built and tested: world, packets, lid/cutaway, filter switch, camera moves, anchors, labels, HUD, hook, captions, face beats.
 - `docs/storyboard_3d.png`: one frame per beat of FIX #12 re-staged. `docs/proof_first_12s.mp4`: the first 12 s in motion.
-- Not done yet: full 70 s render of the test episode (about 3 h), sound design for packets (whoosh/ding per packet is the obvious next step),
+- Full showcase rendered: final/fix12_3d_test_mix_{voice_fx,with_pad}.mp4 (gitignored). QC: all PASS except "longest shot" 10.83 s
+  (46.8-57.6 s, checked by eye: something changes about every 1.5 s, OK under v8). A frozen laptop shot (26.6-29.5 s) was fixed with the `laptop_close` push-in.
+  Phone-size check: docs/phone_size_check_3d.png.
+- Fix next: desk grain reads as corduroy stripes in wide shots; no part labels during the lid cutaway; the packet trail clumps into a blob;
+  the call screen at 30.5 s is too small to read.
+- Not done yet: sound design for packets (whoosh/ding per packet is the obvious next step),
   a richer desk set (lamp, mug) and a stronger laptop look.
