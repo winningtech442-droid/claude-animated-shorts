@@ -43,7 +43,7 @@ def empty(name, loc, parent=None):
 # desk: procedural wood, warm
 bpy.ops.mesh.primitive_plane_add(size=4, location=(0, 0.4, 0)); desk = bpy.context.active_object; desk.name = "desk"
 dm = bpy.data.materials.new("wood"); dm.use_nodes = True; nt = dm.node_tree; bs = nt.nodes["Principled BSDF"]
-wv = nt.nodes.new("ShaderNodeTexWave"); wv.inputs["Scale"].default_value = 60; wv.inputs["Distortion"].default_value = 14; wv.inputs["Detail"].default_value = 8
+wv = nt.nodes.new("ShaderNodeTexWave"); wv.inputs["Scale"].default_value = 60; wv.inputs["Distortion"].default_value = 6; wv.inputs["Detail"].default_value = 8
 cr = nt.nodes.new("ShaderNodeValToRGB"); cr.color_ramp.elements[0].color = (0.10, 0.045, 0.018, 1); cr.color_ramp.elements[1].color = (0.17, 0.075, 0.03, 1)
 nt.links.new(wv.outputs["Fac"], cr.inputs[0]); nt.links.new(cr.outputs[0], bs.inputs["Base Color"]); bs.inputs["Roughness"].default_value = 0.35
 bp = nt.nodes.new("ShaderNodeBump"); bp.inputs["Strength"].default_value = 0.15; nt.links.new(wv.outputs["Fac"], bp.inputs["Height"]); nt.links.new(bp.outputs[0], bs.inputs["Normal"])
@@ -83,7 +83,19 @@ for k in range(3):
 bpy.ops.mesh.primitive_uv_sphere_add(radius=0.006, location=(-0.15, 0.33, 0.335)); blink = bpy.context.active_object; blink.data.materials.append(mat("blink", (1, 0.1, 0.1), emit=(1, 0.08, 0.05), strength=6))
 lap_base = box("laptop_base", (0.13, 0.09, 0.006), (0.16, 0.36, 0.003), mat("lapbody", (0.05, 0.05, 0.06), 0.4, 0.5), bevel=0.002)
 lid = box("laptop_lid", (0.13, 0.005, 0.088), (0.16, 0.407, 0.047), mat("lapbody2", (0.05, 0.05, 0.06), 0.4, 0.5), bevel=0.002); lid.rotation_euler.x = math.radians(-12)
-lapscr = box("laptop_screen", (0.118, 0.001, 0.076), (0.16, 0.4035, 0.047), mat("lapscr", (0.1, 0, 0), emit=(1.0, 0.12, 0.1), strength=3)); lapscr.rotation_euler.x = math.radians(-12)
+lapscr = box("laptop_screen", (0.118, 0.001, 0.076), (0.16, 0.4035, 0.047), mat("lapscr", (0.02, 0, 0), emit=(1.0, 0.12, 0.1), strength=1)); lapscr.rotation_euler.x = math.radians(-12)
+from PIL import Image as _I, ImageDraw as _D; import random as _r
+_im = _I.new("RGB", (472, 304), (8, 4, 6)); _d = _D.Draw(_im); _r.seed(4)
+for _y in range(18, 300, 22): _d.rectangle((16, _y, 16 + _r.randint(60, 420), _y + 9), fill=(255, 50, 40) if _r.random() < 0.3 else (120, 30, 30))
+_p = os.path.join(a.out, "laptop_screen.png"); os.makedirs(a.out, exist_ok=True); _im.save(_p)
+_nt = lapscr.active_material.node_tree; _tx = _nt.nodes.new("ShaderNodeTexImage"); _tx.image = bpy.data.images.load(os.path.abspath(_p))
+_nt.links.new(_tx.outputs[0], _nt.nodes["Principled BSDF"].inputs["Emission Color"])
+_tc = _nt.nodes.new("ShaderNodeTexCoord"); _sp = _nt.nodes.new("ShaderNodeSeparateXYZ"); _cb = _nt.nodes.new("ShaderNodeCombineXYZ")   # map the image onto the x/z face, not the cube cross
+_mx = _nt.nodes.new("ShaderNodeMath"); _mx.operation = "MULTIPLY_ADD"; _mx.inputs[1].default_value = 1 / 0.118; _mx.inputs[2].default_value = 0.5
+_mz = _nt.nodes.new("ShaderNodeMath"); _mz.operation = "MULTIPLY_ADD"; _mz.inputs[1].default_value = 1 / 0.076; _mz.inputs[2].default_value = 0.5
+_nt.links.new(_tc.outputs["Object"], _sp.inputs[0]); _nt.links.new(_sp.outputs[0], _mx.inputs[0]); _nt.links.new(_sp.outputs[2], _mz.inputs[0])
+_nt.links.new(_mx.outputs[0], _cb.inputs[0]); _nt.links.new(_mz.outputs[0], _cb.inputs[1]); _nt.links.new(_cb.outputs[0], _tx.inputs[0])
+box("keyboard", (0.11, 0.05, 0.0008), (0.16, 0.355, 0.0062), mat("keys", (0.015, 0.015, 0.02), 0.1, 0.7))
 lap_light = bpy.data.objects.new("lap_light", bpy.data.lights.new("lap_light", "POINT")); col.objects.link(lap_light); lap_light.location = (0.16, 0.32, 0.08); lap_light.data.color = (1, 0.15, 0.1); lap_light.data.energy = 3
 traym = mat("tray", (0.12, 0.2, 0.42), 0.3, 0.4)
 TR = Vector((0.13, -0.15, 0.0))
@@ -153,7 +165,7 @@ def apply(t):
     set_screen(b.get("screen"), p)
     lidv = track("lid", t); hinge.rotation_euler.x = math.radians(-75) * lidv; hinge.location.z = SZ + 0.012 * lidv
     fv = track("filter", t); knob.location.x = -0.022 + 0.012 * fv; knob.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 6 * fv
-    lv = track("laptop", t, 0.4); lapscr.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 0.5 + 2.5 * lv; lap_light.data.energy = 0.3 + 1.5 * lv
+    lv = track("laptop", t, 0.4); lapscr.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 1.0 + 2.0 * lv; lap_light.data.energy = 0.08 + 0.4 * lv
     blink.hide_render = int(t * 2) % 2 == 1
     active = [e for bb in BEATS for e in bb.get("events", []) if e["type"] == "packet" and e["t0"] <= t < e["t1"]]
     pk_pos = None
