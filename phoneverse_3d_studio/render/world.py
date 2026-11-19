@@ -131,7 +131,7 @@ w = bpy.data.worlds.new("w"); sc.world = w; w.use_nodes = True; w.node_tree.node
 CAM = {"hero": ((0.15, -0.28, 0.19), (0, 0.01, 0), 42), "screen": ((0.0, -0.045, 0.27), (0, 0.0, 0), 50), "screen_close": ((0.0, -0.03, 0.19), (0, 0.005, 0), 50),
        "screen_tilt": ((0.06, -0.19, 0.2), (0, 0.01, 0), 50), "macro": ((0.03, -0.055, 0.065), (-0.005, 0.02, 0.004), 35),
        "macro_filter": ((-0.005, -0.03, 0.045), (-0.016, 0.006, 0.004), 35), "mast": ((-0.05, 0.02, 0.16), (-0.15, 0.33, 0.25), 35),
-       "laptop": ((0.08, 0.14, 0.12), (0.16, 0.39, 0.06), 35), "wide": ((0.0, -0.52, 0.40), (0.0, 0.14, 0.08), 28), "tray": ((0.08, -0.34, 0.15), (0.12, -0.13, 0.01), 40),
+       "laptop": ((0.08, 0.14, 0.12), (0.16, 0.39, 0.06), 35), "laptop_close": ((0.11, 0.19, 0.105), (0.16, 0.395, 0.058), 36), "wide": ((0.0, -0.52, 0.40), (0.0, 0.14, 0.08), 28), "tray": ((0.08, -0.34, 0.15), (0.12, -0.13, 0.01), 40),
        "top": ((0.0, 0.06, 0.82), (0.0, 0.10, 0), 28)}
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
