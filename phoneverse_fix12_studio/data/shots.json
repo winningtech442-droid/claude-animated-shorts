@@ -1,0 +1,987 @@
+{
+ "take_length_s": 69.45,
+ "shots": [
+  {
+   "id": "1a",
+   "line": 1,
+   "start": 0.0,
+   "end": 1.6,
+   "dur": 1.6,
+   "set": "B/A",
+   "action": "Her hands grip the phone; the ParcelGo banner SLAMS in and fills the screen, a \u00a32 chip pulses (frame 1 is mid-slam)",
+   "face_clip": "-",
+   "camera": "Close-up, fast push-in",
+   "overlay": "Corner tag PHONEVERSE \u00b7 FIX #12",
+   "sfx": [
+    {
+     "t": 0.0,
+     "name": "buzz"
+    },
+    {
+     "t": 0.0,
+     "name": "bus_hum"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "1b",
+   "line": 1,
+   "start": 1.6,
+   "end": 3.323,
+   "dur": 1.723,
+   "set": "B",
+   "action": "Banner text 'Missed parcel. Pay \u00a32 to redeliver.' fills the frame; the \u00a32 chip swells and glows red",
+   "face_clip": "-",
+   "camera": "Slow push on the chip",
+   "overlay": "\u00a32 chip glow",
+   "sfx": [
+    {
+     "t": 1.7,
+     "name": "tick_rise"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "2a",
+   "line": 2,
+   "start": 3.323,
+   "end": 4.523,
+   "dur": 1.2,
+   "set": "A",
+   "action": "Whip pan from the phone to her face as the buzz hits; amber lights streak behind the wet window",
+   "face_clip": "bus_hope",
+   "camera": "Whip pan, then hold under 1 s",
+   "overlay": "Starred caption 'buzzes'",
+   "sfx": [
+    {
+     "t": 3.423,
+     "name": "buzz"
+    },
+    {
+     "t": 3.423,
+     "name": "whoosh"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "2b",
+   "line": 2,
+   "start": 4.523,
+   "end": 5.807,
+   "dur": 1.284,
+   "set": "A",
+   "action": "Over-the-shoulder: her thumb lifts the phone; the bus rocks, rain runs down the glass",
+   "face_clip": "-",
+   "camera": "Over-the-shoulder drift",
+   "overlay": "-",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "3a",
+   "line": 3,
+   "start": 5.807,
+   "end": 7.607,
+   "dur": 1.8,
+   "set": "D",
+   "action": "A UK map fills the frame; red dots spread over it city by city",
+   "face_clip": "-",
+   "camera": "Fast push",
+   "overlay": "UK map, red dots",
+   "sfx": [
+    {
+     "t": 5.807,
+     "name": "tick_rise"
+    }
+   ],
+   "music": "dip",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "3b",
+   "line": 3,
+   "start": 7.607,
+   "end": 9.107,
+   "dur": 1.5,
+   "set": "D",
+   "action": "A ring climbs from 0 to one third; '34%' lands in the middle; the sound cuts just before the number",
+   "face_clip": "-",
+   "camera": "Ring fills fast, number holds under 1 s",
+   "overlay": "'1 in 3' ring, 34%",
+   "sfx": [
+    {
+     "t": 8.807,
+     "name": "tick"
+    }
+   ],
+   "music": "dip",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "3c",
+   "line": 3,
+   "start": 9.107,
+   "end": 10.461,
+   "dur": 1.354,
+   "set": "A",
+   "action": "Cut to her face: the grimace as the caption 'targeted' lands",
+   "face_clip": "bus_dread",
+   "camera": "Push-in",
+   "overlay": "-",
+   "sfx": [],
+   "music": "dip",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "4a",
+   "line": 4,
+   "start": 10.461,
+   "end": 11.861,
+   "dur": 1.4,
+   "set": "A",
+   "action": "Her thumb hovers over the banner; she smirks, sure she would spot a fake",
+   "face_clip": "bus_hope",
+   "camera": "Over-the-shoulder drift",
+   "overlay": "-",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "4b",
+   "line": 4,
+   "start": 11.861,
+   "end": 13.386,
+   "dur": 1.525,
+   "set": "B",
+   "action": "The '\u00a32' on the banner shrinks to a tiny coin",
+   "face_clip": "-",
+   "camera": "Slow push",
+   "overlay": "Coin icon",
+   "sfx": [
+    {
+     "t": 11.961,
+     "name": "pop"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "5a",
+   "line": 5,
+   "start": 13.386,
+   "end": 14.986,
+   "dur": 1.6,
+   "set": "B",
+   "action": "MUSIC DROPS OUT. Slow push into the \u00a32 chip",
+   "face_clip": "-",
+   "camera": "Slow push",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 13.386,
+     "name": "silence"
+    }
+   ],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "5b",
+   "line": 5,
+   "start": 14.986,
+   "end": 16.586,
+   "dur": 1.6,
+   "set": "B",
+   "action": "The \u00a32 chip cracks open; a card icon sits behind it",
+   "face_clip": "-",
+   "camera": "Slow push, tiny shake on the crack",
+   "overlay": "Card icon",
+   "sfx": [
+    {
+     "t": 15.086,
+     "name": "crack"
+    }
+   ],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "5c",
+   "line": 5,
+   "start": 16.586,
+   "end": 18.154,
+   "dur": 1.568,
+   "set": "B",
+   "action": "A red dashed line starts from the card icon and runs off the screen edge",
+   "face_clip": "-",
+   "camera": "Slow pull",
+   "overlay": "Red dashed line, 'your card' tag",
+   "sfx": [],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "6a",
+   "line": 6,
+   "start": 18.154,
+   "end": 19.354,
+   "dur": 1.2,
+   "set": "B",
+   "action": "An orange tap ring hits the 'Pay \u00a32' link",
+   "face_clip": "-",
+   "camera": "Close-up on the thumb, fast",
+   "overlay": "Orange tap ring",
+   "sfx": [
+    {
+     "t": 18.354,
+     "name": "tap"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "6b",
+   "line": 6,
+   "start": 19.354,
+   "end": 20.531,
+   "dur": 1.177,
+   "set": "B",
+   "action": "The ParcelGo page loads full-frame (purple and yellow, no real courier look)",
+   "face_clip": "-",
+   "camera": "Whip into the screen",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 19.354,
+     "name": "whoosh"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "7a",
+   "line": 7,
+   "start": 20.531,
+   "end": 21.731,
+   "dur": 1.2,
+   "set": "B",
+   "action": "Fields fill one by one: Name, then Address",
+   "face_clip": "-",
+   "camera": "Fly-through the fields",
+   "overlay": "Orange boxes",
+   "sfx": [
+    {
+     "t": 20.631,
+     "name": "keys"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "7b",
+   "line": 7,
+   "start": 21.731,
+   "end": 22.907,
+   "dur": 1.176,
+   "set": "B",
+   "action": "Card number fills; the Done button lights",
+   "face_clip": "-",
+   "camera": "Fly-through, then push",
+   "overlay": "Orange box on Card number",
+   "sfx": [
+    {
+     "t": 21.731,
+     "name": "keys"
+    },
+    {
+     "t": 22.631,
+     "name": "confirm"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "8a",
+   "line": 8,
+   "start": 22.907,
+   "end": 24.107,
+   "dur": 1.2,
+   "set": "B",
+   "action": "MUSIC OUT. '\u00a32' ticks over to 'Paid'",
+   "face_clip": "-",
+   "camera": "Hard push",
+   "overlay": "'Paid' stamp",
+   "sfx": [
+    {
+     "t": 22.907,
+     "name": "silence"
+    },
+    {
+     "t": 23.207,
+     "name": "thud"
+    }
+   ],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "8b",
+   "line": 8,
+   "start": 24.107,
+   "end": 25.307,
+   "dur": 1.2,
+   "set": "B/D",
+   "action": "The red path runs from the card to a hooded silhouette at a glowing laptop (no face, no real person)",
+   "face_clip": "-",
+   "camera": "Pull back to reveal the silhouette",
+   "overlay": "Red path",
+   "sfx": [],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "8c",
+   "line": 8,
+   "start": 25.307,
+   "end": 26.566,
+   "dur": 1.259,
+   "set": "A",
+   "action": "Cut to her face as it lands: dread",
+   "face_clip": "bus_dread",
+   "camera": "Push-in",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 25.307,
+     "name": "thud"
+    }
+   ],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "9a",
+   "line": 9,
+   "start": 26.566,
+   "end": 27.966,
+   "dur": 1.4,
+   "set": "A",
+   "action": "R1 HARD CUT: her phone screen goes dark and her dread face is reflected in it (no pure-black frame)",
+   "face_clip": "bus_dread",
+   "camera": "Hard cut, locked-off, tiny drift",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 26.566,
+     "name": "silence"
+    }
+   ],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "9b",
+   "line": 9,
+   "start": 27.966,
+   "end": 29.505,
+   "dur": 1.539,
+   "set": "A",
+   "action": "Slow push into the reflection; a low pulse starts",
+   "face_clip": "-",
+   "camera": "Slow push",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 27.966,
+     "name": "pulse"
+    }
+   ],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "10a",
+   "line": 10,
+   "start": 29.505,
+   "end": 30.705,
+   "dur": 1.2,
+   "set": "C",
+   "action": "NEW SET: her kitchen, the clock reads 10:12, warm lamp, dark window",
+   "face_clip": "-",
+   "camera": "Wide drift",
+   "overlay": "Clock '10:12'",
+   "sfx": [
+    {
+     "t": 29.505,
+     "name": "room_tone"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "10b",
+   "line": 10,
+   "start": 30.705,
+   "end": 31.818,
+   "dur": 1.113,
+   "set": "C",
+   "action": "Whip pan to the counter: the phone rings, 'Fraud Team' on the screen",
+   "face_clip": "-",
+   "camera": "Whip pan",
+   "overlay": "Call card 'Fraud Team'",
+   "sfx": [
+    {
+     "t": 30.705,
+     "name": "ringtone"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "11a",
+   "line": 11,
+   "start": 31.818,
+   "end": 33.318,
+   "dur": 1.5,
+   "set": "C",
+   "action": "She answers; dread on her face as the voice starts",
+   "face_clip": "kit_dread",
+   "camera": "Push-in, 65-75 mm",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 31.818,
+     "name": "pulse"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "11b",
+   "line": 11,
+   "start": 33.318,
+   "end": 35.163,
+   "dur": 1.845,
+   "set": "B",
+   "action": "A dashed path from the fake page connects to the caller card; a masked card number scrolls past",
+   "face_clip": "-",
+   "camera": "Fast push",
+   "overlay": "Dashed path, masked digits",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "12a",
+   "line": 12,
+   "start": 35.163,
+   "end": 36.463,
+   "dur": 1.3,
+   "set": "B",
+   "action": "Bank screen: the 'SAFE ACCOUNT' button hovers under 'Move \u00a34,200'",
+   "face_clip": "-",
+   "camera": "Fast push",
+   "overlay": "Generic bank screen",
+   "sfx": [
+    {
+     "t": 35.463,
+     "name": "alarm_tick"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "12b",
+   "line": 12,
+   "start": 36.463,
+   "end": 37.563,
+   "dur": 1.1,
+   "set": "C",
+   "action": "Cut to her face: the shock snap (start the clip at frame 10); hold under 1 s",
+   "face_clip": "kit_shock",
+   "camera": "Fast push, hold under 1 s",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 36.463,
+     "name": "stab"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "12c",
+   "line": 12,
+   "start": 37.563,
+   "end": 38.857,
+   "dur": 1.294,
+   "set": "B",
+   "action": "The balance counter falls from \u00a34,200 toward \u00a30. MUSIC OUT half a beat before the turn",
+   "face_clip": "-",
+   "camera": "Push",
+   "overlay": "Balance counter",
+   "sfx": [
+    {
+     "t": 37.563,
+     "name": "alarm_tick"
+    }
+   ],
+   "music": "out_late",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "13a",
+   "line": 13,
+   "start": 38.857,
+   "end": 40.157,
+   "dur": 1.3,
+   "set": "B",
+   "action": "THE TURN: music hits back; a shield glows over the Messages icon; the call card fades out",
+   "face_clip": "-",
+   "camera": "Push into the phone",
+   "overlay": "Shield glow",
+   "sfx": [
+    {
+     "t": 38.857,
+     "name": "lock_click"
+    },
+    {
+     "t": 38.857,
+     "name": "music_hit"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "13b",
+   "line": 13,
+   "start": 40.157,
+   "end": 41.157,
+   "dur": 1.0,
+   "set": "C",
+   "action": "Her face goes from hope to the open grin",
+   "face_clip": "kit_hope_relief",
+   "camera": "Slow push",
+   "overlay": "-",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "13c",
+   "line": 13,
+   "start": 41.157,
+   "end": 42.037,
+   "dur": 0.88,
+   "set": "B",
+   "action": "Push into the phone; the Messages icon glows",
+   "face_clip": "-",
+   "camera": "Push-in",
+   "overlay": "-",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "14a",
+   "line": 14,
+   "start": 42.037,
+   "end": 43.437,
+   "dur": 1.4,
+   "set": "B",
+   "action": "MUSIC OUT. The scam banner slides into a folder labelled 'Unknown Senders'",
+   "face_clip": "-",
+   "camera": "Slow drift",
+   "overlay": "Folder label",
+   "sfx": [
+    {
+     "t": 42.137,
+     "name": "whoosh_soft"
+    }
+   ],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "14b",
+   "line": 14,
+   "start": 43.437,
+   "end": 44.937,
+   "dur": 1.5,
+   "set": "C",
+   "action": "The phone stays dark and silent on the counter; she watches, soft relief",
+   "face_clip": "kit_soft_relief",
+   "camera": "Slow drift",
+   "overlay": "-",
+   "sfx": [],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "14c",
+   "line": 14,
+   "start": 44.937,
+   "end": 46.165,
+   "dur": 1.228,
+   "set": "D",
+   "action": "The hooded silhouette at the laptop slumps",
+   "face_clip": "-",
+   "camera": "Slow push",
+   "overlay": "-",
+   "sfx": [],
+   "music": "out",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "15a",
+   "line": 15,
+   "start": 46.165,
+   "end": 47.465,
+   "dur": 1.3,
+   "set": "B",
+   "action": "Push into her phone, Messages open",
+   "face_clip": "-",
+   "camera": "Push-in",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 46.165,
+     "name": "rise"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "15b",
+   "line": 15,
+   "start": 47.465,
+   "end": 48.876,
+   "dur": 1.411,
+   "set": "B",
+   "action": "The Filters button glows with an orange box (the path starts here)",
+   "face_clip": "-",
+   "camera": "Push-in",
+   "overlay": "Orange box on Filters",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "16a",
+   "line": 16,
+   "start": 48.876,
+   "end": 52.476,
+   "dur": 3.6,
+   "set": "B",
+   "action": "SETTINGS CARD: three panels tick through Messages > Filters > Manage Filtering > Screen Unknown Senders, orange box on each",
+   "face_clip": "-",
+   "camera": "Hold 3.6 s, tiny drift only",
+   "overlay": "Orange boxes",
+   "sfx": [
+    {
+     "t": 49.676,
+     "name": "tick"
+    },
+    {
+     "t": 50.476,
+     "name": "tick"
+    },
+    {
+     "t": 51.276,
+     "name": "tick"
+    }
+   ],
+   "music": "on",
+   "limit_s": 4.0,
+   "over_limit": false
+  },
+  {
+   "id": "16b",
+   "line": 16,
+   "start": 52.476,
+   "end": 54.119,
+   "dur": 1.643,
+   "set": "B",
+   "action": "Close-up: the Screen Unknown Senders toggle slides on",
+   "face_clip": "-",
+   "camera": "Push-in",
+   "overlay": "Orange box on the toggle",
+   "sfx": [
+    {
+     "t": 53.076,
+     "name": "toggle_click"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "17a",
+   "line": 17,
+   "start": 54.119,
+   "end": 55.819,
+   "dur": 1.7,
+   "set": "B",
+   "action": "Her thumb opens the shop's own app (generic icon, no logo)",
+   "face_clip": "-",
+   "camera": "Over-the-shoulder",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 54.319,
+     "name": "tap"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "17b",
+   "line": 17,
+   "start": 55.819,
+   "end": 57.605,
+   "dur": 1.786,
+   "set": "B/C",
+   "action": "A real order status loads with a green tick; relief on her face in the corner",
+   "face_clip": "kit_relief",
+   "camera": "Push-in",
+   "overlay": "'Track it here' label",
+   "sfx": [
+    {
+     "t": 56.019,
+     "name": "tick"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "18a",
+   "line": 18,
+   "start": 57.605,
+   "end": 59.005,
+   "dur": 1.4,
+   "set": "D",
+   "action": "A text card 'iOS 26+' slides in",
+   "face_clip": "-",
+   "camera": "Static card, under 2.5 s",
+   "overlay": "'iOS 26+'",
+   "sfx": [
+    {
+     "t": 57.605,
+     "name": "whoosh"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "18b",
+   "line": 18,
+   "start": 59.005,
+   "end": 60.373,
+   "dur": 1.368,
+   "set": "C",
+   "action": "Cut to her nodding with the phone in her hand",
+   "face_clip": "kit_relief",
+   "camera": "Push-in",
+   "overlay": "-",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "19a",
+   "line": 19,
+   "start": 60.373,
+   "end": 61.873,
+   "dur": 1.5,
+   "set": "C",
+   "action": "Her face, soft relief and steady, as she says 'Already tapped?'",
+   "face_clip": "kit_soft_relief",
+   "camera": "Push-in",
+   "overlay": "-",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "19b",
+   "line": 19,
+   "start": 61.873,
+   "end": 63.373,
+   "dur": 1.5,
+   "set": "D",
+   "action": "The back of a bank card flips into view",
+   "face_clip": "-",
+   "camera": "Flip, push-in",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 61.873,
+     "name": "card_flip"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "19c",
+   "line": 19,
+   "start": 63.373,
+   "end": 64.208,
+   "dur": 0.835,
+   "set": "D",
+   "action": "An orange box lights the phone-number strip on the card back",
+   "face_clip": "-",
+   "camera": "Push-in",
+   "overlay": "Orange box on the number",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "20a",
+   "line": 20,
+   "start": 64.208,
+   "end": 65.608,
+   "dur": 1.4,
+   "set": "D",
+   "action": "A comment box opens and a cursor blinks",
+   "face_clip": "-",
+   "camera": "Fast push to the box",
+   "overlay": "Comment box",
+   "sfx": [
+    {
+     "t": 64.308,
+     "name": "pop"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "20b",
+   "line": 20,
+   "start": 65.608,
+   "end": 66.947,
+   "dur": 1.339,
+   "set": "C",
+   "action": "Her face: hope, waiting for an answer",
+   "face_clip": "kit_hope",
+   "camera": "Push-in",
+   "overlay": "-",
+   "sfx": [],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "21a",
+   "line": 21,
+   "start": 66.947,
+   "end": 68.847,
+   "dur": 1.9,
+   "set": "D",
+   "action": "A share arrow flies to a 'Mum' bubble",
+   "face_clip": "-",
+   "camera": "Fast push",
+   "overlay": "'Mum' bubble",
+   "sfx": [
+    {
+     "t": 67.047,
+     "name": "whoosh"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  },
+  {
+   "id": "21b",
+   "line": 21,
+   "start": 68.847,
+   "end": 69.45,
+   "dur": 0.603,
+   "set": "B",
+   "action": "LOOP: hard cut back to frame 1, the banner slams in",
+   "face_clip": "-",
+   "camera": "Cut to frame 1",
+   "overlay": "-",
+   "sfx": [
+    {
+     "t": 68.847,
+     "name": "buzz"
+    }
+   ],
+   "music": "on",
+   "limit_s": 2.5,
+   "over_limit": false
+  }
+ ]
+}

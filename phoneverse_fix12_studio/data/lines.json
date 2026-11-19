@@ -1,0 +1,38 @@
+{
+  "episode": "FIX #12",
+  "title": "Black Friday fake delivery text",
+  "format": "Threat story, HSERIA + CTA, second person, rule book v7",
+  "presets": {
+    "TENSE":     {"blend": {"af_bella": 0.9,  "af_nicole": 0.1},  "speed": 0.92, "gain_db": 0.0,  "pause_after": 0.55, "pause_before": 0.0},
+    "PUNCH":     {"blend": {"af_bella": 1.0},                     "speed": 1.10, "gain_db": 2.0,  "pause_after": 0.35, "pause_before": 0.0},
+    "STAKES":    {"blend": {"af_bella": 1.0},                     "speed": 0.94, "gain_db": 1.0,  "pause_after": 0.60, "pause_before": 0.3},
+    "DISBELIEF": {"blend": {"af_bella": 0.8,  "af_heart": 0.2},   "speed": 1.05, "gain_db": 1.0,  "pause_after": 0.45, "pause_before": 0.0},
+    "REVEAL":    {"blend": {"af_bella": 0.7,  "af_nicole": 0.3},  "speed": 0.88, "gain_db": -3.0, "pause_after": 0.80, "pause_before": 0.0},
+    "RELIEF":    {"blend": {"af_bella": 0.75, "af_heart": 0.25},  "speed": 0.92, "gain_db": 0.0,  "pause_after": 0.30, "pause_before": 0.0},
+    "LIST":      {"blend": {"af_bella": 1.0},                     "speed": 1.05, "gain_db": 1.0,  "pause_after": 0.40, "pause_before": 0.0},
+    "ASK":       {"blend": {"af_bella": 0.75, "af_heart": 0.25},  "speed": 1.00, "gain_db": 0.0,  "pause_after": 0.20, "pause_before": 0.0}
+  },
+  "lines": [
+    {"id": 1,  "block": "H",   "preset": "TENSE",     "text": "A two-pound text can empty your bank account.",                     "spoken": "A two-pound text can empty your bank account.",                     "star": "empty",    "face": "none"},
+    {"id": 2,  "block": "H",   "preset": "PUNCH",     "text": "Night bus, Peckham. Your phone buzzes.",                            "spoken": "Night bus, Peckham. Your phone buzzes.",                            "star": "buzzes",   "face": "hope"},
+    {"id": 3,  "block": "S",   "preset": "STAKES",    "text": "A third of UK adults have been targeted, or know someone caught.",   "spoken": "A third of UK adults have been targeted, or know someone caught.",   "star": "targeted", "face": "dread"},
+    {"id": 4,  "block": "S",   "preset": "DISBELIEF", "text": "It's only two pounds. You'd spot a fake, right?",                   "spoken": "It's only two pounds. You'd spot a fake, right?",                   "star": "right",    "face": "hope"},
+    {"id": 5,  "block": "E",   "preset": "REVEAL",    "text": "They don't want two pounds. Actually... they want your card.",      "spoken": "They don't want two pounds. Actually... they want your card.",      "star": "card",     "face": "none"},
+    {"id": 6,  "block": "E",   "preset": "PUNCH",     "text": "You tap the link. A page loads.",                                   "spoken": "You tap the link. A page loads.",                                   "star": "loads",    "face": "none"},
+    {"id": 7,  "block": "E",   "preset": "PUNCH",     "text": "Name. Address. Card number. Done.",                                 "spoken": "Name. Address. Card number. Done.",                                 "star": "Done",     "face": "none"},
+    {"id": 8,  "block": "E",   "preset": "REVEAL",    "text": "Two pounds gone. And they've got your card.",                       "spoken": "Two pounds gone. And they've got your card.",                       "star": "card",     "face": "dread"},
+    {"id": 9,  "block": "R1",  "preset": "TENSE",     "text": "But the phone call that follows is worse.",                         "spoken": "But the phone call that follows is worse.",                         "star": "worse",    "face": "dread"},
+    {"id": 10, "block": "I",   "preset": "PUNCH",     "text": "Ten minutes later. Your phone rings.",                              "spoken": "Ten minutes later. Your phone rings.",                              "star": "rings",    "face": "none"},
+    {"id": 11, "block": "I",   "preset": "TENSE",     "text": "It's your bank, they say. They know your card number.",             "spoken": "It's your bank, they say. They know your card number.",             "star": "number",   "face": "dread"},
+    {"id": 12, "block": "I",   "preset": "STAKES",    "text": "Move your savings to a safe account. Now.",                         "spoken": "Move your savings to a safe account. Now.",                         "star": "safe",     "face": "shock"},
+    {"id": 13, "block": "I",   "preset": "RELIEF",    "text": "But your iPhone can keep that text away from you.",                 "spoken": "But your iPhone can keep that text away from you.",                 "star": "you",      "face": "hope_then_relief"},
+    {"id": 14, "block": "I",   "preset": "REVEAL",    "text": "It lands in a quiet list. Usually no buzz.",                        "spoken": "It lands in a quiet list. Usually no buzz.",                        "star": "buzz",     "face": "soft_relief"},
+    {"id": 15, "block": "R2",  "preset": "RELIEF",    "text": "One setting. Ten seconds. Here's where.",                           "spoken": "One setting. Ten seconds. Here's where.",                           "star": "where",    "face": "none"},
+    {"id": 16, "block": "A",   "preset": "LIST",      "text": "Messages. Filters. Manage Filtering. Screen Unknown Senders. Turn it on.", "spoken": "Messages. Filters. Manage Filtering. Screen Unknown Senders. Turn it on.", "star": "Screen", "face": "none"},
+    {"id": 17, "block": "A",   "preset": "PUNCH",     "text": "Expecting a real parcel? Track it in the shop's own app.",          "spoken": "Expecting a real parcel? Track it in the shop's own app.",          "star": "own",      "face": "relief"},
+    {"id": 18, "block": "A",   "preset": "LIST",      "text": "iPhones on iOS twenty-six or newer.",                               "spoken": "iPhones on i O S twenty-six or newer.",                             "star": "newer",    "face": "none"},
+    {"id": 19, "block": "A",   "preset": "TENSE",     "text": "Already tapped? Call your bank on the number on your card.",        "spoken": "Already tapped? Call your bank on the number on your card.",        "star": "card",     "face": "soft_relief"},
+    {"id": 20, "block": "CTA", "preset": "ASK",       "text": "Did you almost tap one this week? Tell me below.",                  "spoken": "Did you almost tap one this week? Tell me below.",                  "star": "below",    "face": "hope"},
+    {"id": 21, "block": "CTA", "preset": "ASK",       "text": "Send this to your mum before Black Friday.",                        "spoken": "Send this to your mum before Black Friday.",                        "star": "mum",      "face": "relief"}
+  ]
+}

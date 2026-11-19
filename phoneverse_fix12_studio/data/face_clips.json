@@ -1,0 +1,18 @@
+{
+  "note": "8 clips, 48 frames each at 24 fps (2 s). Every face shot in shots.json is 1.8 s or shorter. Reuse a clip with a different crop, push or flip in 2D; do not re-render. All clips: lead = Rocketbox Female_Adult_01, PINK SHIRT, Cycles CPU, 14 samples + denoise, AgX, about 712x1267 then upscaled to 1080x1920.",
+  "background_sets": {
+    "bus": "Night bus top deck, Peckham: cool-dark interior, wet steamed window behind her, ~90 warm amber emissive bokeh spheres sliding left to right (moving), a faint cool rim light, her seat mid-frame. Different light from the kitchen so the R1 cut reads.",
+    "kitchen": "Her kitchen at 10:12 pm: warm lamp key from camera left, cool window rim from behind, dark window, a few warm out-of-focus practical lights, a kettle blur. Warmer and smaller than the bus."
+  },
+  "clips": [
+    {"clip": "bus_hope",        "set": "bus",     "expr": "hope",        "shots": ["2a", "4a"], "from": "look down at phone", "notes": "2a is a whip pan INTO her face; start the clip on the hold"},
+    {"clip": "bus_dread",       "set": "bus",     "expr": "dread",       "shots": ["3c", "8c", "9a"], "from": "neutral", "notes": "9a is a reflection in the dark phone screen: flip, darken and overlay in 2D"},
+    {"clip": "kit_dread",       "set": "kitchen", "expr": "dread",       "shots": ["11a"], "from": "neutral"},
+    {"clip": "kit_shock",       "set": "kitchen", "expr": "shock",       "shots": ["12b"], "from": "dread", "notes": "start at frame 10 (mid-snap); mouth light 0.4 W; hold under 1.1 s in the edit"},
+    {"clip": "kit_hope_relief", "set": "kitchen", "expr": "hope -> relief", "shots": ["13b"], "from": "shock", "notes": "hope for the first 0.4 s, then the open grin; head level"},
+    {"clip": "kit_soft_relief", "set": "kitchen", "expr": "soft_relief", "shots": ["14b", "19a"], "from": "relief"},
+    {"clip": "kit_relief",      "set": "kitchen", "expr": "relief",      "shots": ["17b", "18b"], "from": "soft_relief", "notes": "17b is a small inset in the corner over the shop app"},
+    {"clip": "kit_hope",        "set": "kitchen", "expr": "hope",        "shots": ["20b"], "from": "neutral"}
+  ],
+  "budget": "8 clips x 48 frames = 384 frames at about 25-30 s a frame on a 2-core machine is about 3 hours; render in resumable 12-frame batches and check each batch. Lower to 10 samples if time matters."
+}
