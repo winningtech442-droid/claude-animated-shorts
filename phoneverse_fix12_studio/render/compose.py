@@ -62,32 +62,29 @@ def shot_frame(s, t, test):
     """Returns the content of shot s at local time t (seconds). p = progress through the shot."""
     i, d_ = s["id"], s["dur"]; p = clamp(t / max(d_, 1e-3))
     if i == "1a": im = U.banner(ease(clamp(t / 0.25)), True); return zoom(im, 1.0 + 0.10 * p, 0.5, 0.6)
-    if i == "1b": return zoom(U.banner(1, True), 1.05 + 0.12 * p, 0.78, 0.7)
+    if i == "1b": return zoom(U.banner(1, True), 1.04 + 0.10 * p, 0.5, 0.62)            # C: centred push, no cropped words
     if i == "2a": return slide_in(face("bus_hope", t), p * 3, "r")
     if i == "2b":
         im = plate("bus", t + 5); dd = ImageDraw.Draw(im); U.rr(dd, (330, 820, 750, 1180), 40, fill=(30, 30, 50)); U.rr(dd, (350, 840, 730, 1160), 30, fill=(235, 235, 245)); U.text(dd, (540, 1000), "ParcelGo", 54, U.PURPLE, True, "mm"); return zoom(im, 1.0 + 0.04 * p)
     if i == "3a": return U.uk_map(p * 1.2, 0, None, 30)
-    if i == "3b": return U.uk_map(1, p * 1.5, "34%", 30)
+    if i == "3b": return zoom(U.uk_map(1, p * 1.5, "34%", 30), 1.35 - 0.1 * p, 0.5, 0.33)               # C: punch-in so the 3a->3b cut reads
     if i == "3c": return zoom(face("bus_dread", t), 1.0 + 0.08 * p, 0.5, 0.4)
     if i == "4a": return zoom(face("bus_hope", t + 0.5), 1.0 + 0.05 * p, 0.55, 0.4)
     if i == "4b":
         im = U.banner(1, False); dd = ImageDraw.Draw(im); r = int(70 * (1 - ease(p)) + 16); dd.ellipse((780 - r, 905 - r, 780 + r, 905 + r), fill=U.YELLOW, outline=U.INK, width=4); return zoom(im, 1.0 + 0.1 * p, 0.7, 0.7)
-    if i == "5a": return zoom(U.banner(1, False), 1.1 + 0.5 * p, 0.8, 0.72)
-    if i == "5b":
-        im = zoom(U.banner(1, False), 1.6 + 0.3 * p, 0.8, 0.72); dd = ImageDraw.Draw(im)
-        if p > 0.15:
-            dd.line([(700, 760), (760, 860), (720, 940), (800, 1040), (760, 1140)], fill=(0, 0, 0), width=10); U.rr(dd, (620, 880, 960, 1060), 28, fill=U.YELLOW); U.text(dd, (790, 970), "CARD", 70, U.INK, True, "mm")
-        return im
+    if i == "5a": return U.chip_closeup(p, 0)                                               # C: chip close-up, no mid-word crop
+    if i == "5b": return zoom(U.chip_closeup(1, clamp((p - 0.1) * 1.6)), 1.3 - 0.3 * ease(p), 0.5, 0.4)                           # C: the chip cracks open on the card
     if i == "5c":
         im = U.banner(1, False); im = dashed(im, [(780, 905), (900, 700), (1040, 560)], upto=ease(p)); U.text(ImageDraw.Draw(im), (560, 1130), "YOUR CARD", 70, U.RED, True, "mm", stroke=6, stroke_fill=(255, 255, 255)); return zoom(im, 1.0 + 0.1 * p)
-    if i == "6a": return tapring(zoom(U.banner(1, False), 1.2 + 0.2 * p, 0.8, 0.72), p, (840, 880))
+    if i == "6a": return tapring(zoom(U.banner(1, False), 1.0 + 0.08 * p, 0.5, 0.5), p, (865, 837))   # C: whole banner readable
     if i == "6b": return slide_in(U.parcelgo_page(0), p * 3, "r")
     if i == "7a": return zoom(U.parcelgo_page(p * 0.66), 1.0 + 0.1 * p, 0.5, 0.45)
     if i == "7b":
         im = U.parcelgo_page(0.66 + 0.34 * p); return U.glow_box(im, im.boxes[2], pulse=p) if p > 0.2 else im
     if i == "8a":
         im = U.parcelgo_page(1, paid=True); return zoom(im, 1.0 + 0.2 * p, 0.5, 0.8)
-    if i == "8b": return zoom(silhouette(t, 0, ease(p)), 1.25 - 0.25 * p, 0.5, 0.5)
+    if i == "8b":                                                                                # C: hooded figure, red path into the laptop
+        im = U.hooded_figure(0, 1); return zoom(dashed(im, [(80, 200), (260, 520), (420, 800), (540, 1060)], upto=ease(p), width=14), 1.18 - 0.18 * p, 0.5, 0.55)
     if i == "8c": return zoom(face("bus_dread", t + 0.3), 1.0 + 0.1 * p, 0.5, 0.4)
     if i in ("9a", "9b"):
         base = Image.new("RGB", (W, H), (12, 12, 18)); f = face("bus_dread", t + 0.4).transpose(Image.FLIP_LEFT_RIGHT).point(lambda v: int(v * 0.35)); im = Image.blend(base, f, 0.6)
@@ -110,14 +107,15 @@ def shot_frame(s, t, test):
     if i == "13c": return zoom(U.messages_list(0), 1.0 + 0.15 * p)
     if i == "14a": return U.unknown_folder(p)
     if i == "14b": return zoom(face("kit_soft_relief", t), 1.0 + 0.04 * p, 0.5, 0.4)
-    if i == "14c": return zoom(silhouette(t, p, 0), 1.0 + 0.10 * p, 0.5, 0.55)                                  # QC fix: linear slump + push so the end never freezes
+    if i == "14c": return zoom(U.hooded_figure(p, 1 - 0.35 * p), 1.0 + 0.10 * p, 0.5, 0.55)       # C: figure slumps as the screen dims                                  # QC fix: linear slump + push so the end never freezes
     if i == "15a": return zoom(U.messages_list(0), 1.0 + 0.2 * p, 0.85, 0.15)
     if i == "15b": return zoom(U.messages_list(0.6 + 0.4 * p), 1.7 + 0.25 * p, 0.85, 0.12)                     # QC fix: punch-in so the 15a->15b cut reads
     if i == "16a": return zoom(U.settings_card(1 if t < 0.8 else 2 if t < 1.6 else 3, False), 1.0 + 0.08 * p, 0.5, 0.62)   # QC fix: slow push, no frozen holds
     if i == "16b": return U.toggle_closeup(p * 1.3)
     if i == "17a": return tapring(U.shop_app(0), p, (540, 560))
     if i == "17b":
-        im = U.shop_app(p); f = face("kit_relief", t).resize((300, 533)).crop((20, 40, 280, 300)); im.paste(f, (740, 800)); return im
+        im = U.shop_app(p); f = face("kit_relief", t).resize((560, 996)).crop((80, 240, 480, 640)); dd = ImageDraw.Draw(im)     # C: inset 400 px, not 260
+        U.rr(dd, (594, 784, 1006, 1196), 30, fill=(255, 255, 255)); im.paste(f, (600, 790)); return im
     if i == "18a": return U.text_card("iOS 26+", None, p * 2)
     if i == "18b": return zoom(face("kit_relief", t), 1.0 + 0.05 * p, 0.5, 0.4)
     if i == "19a": return zoom(face("kit_soft_relief", t + 0.4), 1.0 + 0.04 * p, 0.5, 0.4)
@@ -129,11 +127,26 @@ def shot_frame(s, t, test):
     if i == "21b": return zoom(U.banner(ease(clamp(t / 0.25)), True), 1.0 + 0.1 * p, 0.5, 0.6)
     raise KeyError(i)
 
+HOOK_END = 3.323                        # end of shots 1a+1b
+def hud_at(t):
+    """C: live risk readout. Times are shot starts from data/shots.json (not re-timed)."""
+    st = {s["id"]: s for s in SHOTS}; T = lambda i: st[i]["start"]
+    if T("2a") <= t < T("5c"): return ("AT RISK", "£2")
+    if T("5c") <= t < T("8a"): return ("AT RISK", "£2 + CARD")
+    if T("8a") <= t < T("12a"): return ("LOST", "£2 + CARD")
+    if T("12a") <= t < T("12c"): return ("AT RISK", "£4,200")
+    if T("12c") <= t < T("13a"):
+        k = ease(clamp((t - T("12c")) / st["12c"]["dur"])); return ("LOST", f"£{int(4200 * k):,}")
+    if T("16b") <= t < T("19a"): return ("UNKNOWN TEXTS", "FILTERED", U.GREEN)
+    return None
 def caption_at(t):
     c = [x for x in CAPS if x["start"] <= t < x["end"]]; return c[-1] if c else None
 def frame(g, test=False):
     t = g / FPS; s = next(x for x in SHOTS if x["start"] <= t < x["end"]) if t < SHOTS[-1]["end"] else SHOTS[-1]
-    im = shot_frame(s, t - s["start"], test).convert("RGB"); im = U.corner_tag(im); c = caption_at(t)
+    im = shot_frame(s, t - s["start"], test).convert("RGB"); c = caption_at(t)               # C: corner tag removed (sat on the clock)
+    if t < HOOK_END: im = U.hook_title(im, t)
+    h = hud_at(t)
+    if h: im = U.hud(im, *h)
     if c: im = U.caption(im, c["words"], c["star"], (t - c["start"]) / 0.08)
     return im
 

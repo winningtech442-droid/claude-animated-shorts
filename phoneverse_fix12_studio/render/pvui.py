@@ -88,9 +88,9 @@ def messages_list(filters_glow=0.0):
 
 def panel(title, rows, glow_row=None, tint=(255, 255, 255)):
     im = Image.new("RGB", (900, 330), tint); d = ImageDraw.Draw(im); rr(d, (0, 0, 899, 329), 36, outline=(205, 205, 215), width=4)
-    text(d, (40, 18), title, 34, (120, 120, 135), True)
+    text(d, (40, 16), title, 44, (120, 120, 135), True)
     for i, r in enumerate(rows):
-        y = 80 + i * 76; rr(d, (30, y, 870, y + 64), 18, fill=(244, 244, 248)); text(d, (56, y + 32), r, 38, INK, True, "lm")
+        y = 84 + i * 104; rr(d, (24, y, 876, y + 90), 20, fill=(244, 244, 248)); text(d, (50, y + 45), r, 50 if len(r) < 20 else 44, INK, True, "lm")
     return im
 
 def settings_card(step=3, toggle_on=False):
@@ -103,9 +103,9 @@ def settings_card(step=3, toggle_on=False):
             if i < 2: text(d, (540, 290 + i * 290 + 300), "▼", 30, ORANGE, True, "mm")
     y0 = 290 + 2 * 290
     if step >= 3:
-        tg = (700, y0 + 76 + 6, 850, y0 + 76 + 58); rr(d, tg, 26, fill=(GREEN if toggle_on else (190, 190, 200)))
+        tg = (850, y0 + 84 + 18, 960, y0 + 84 + 72); rr(d, tg, 26, fill=(GREEN if toggle_on else (190, 190, 200)))
         kx = tg[2] - 26 if toggle_on else tg[0] + 26; d.ellipse((kx - 22, (tg[1] + tg[3]) // 2 - 22, kx + 22, (tg[1] + tg[3]) // 2 + 22), fill=(255, 255, 255))
-        im = glow_box(im, (110, y0 + 76 + 2, 880, y0 + 76 + 62))
+        im = glow_box(im, (110, y0 + 84, 970, y0 + 84 + 90))
     return im
 
 def toggle_closeup(p=1.0):
@@ -142,7 +142,9 @@ def uk_map(p=1.0, ring=0.0, pct=None, dots=24):
     if ring > 0:
         cx, cy, R = 540, 700, 250; d.ellipse((cx - R, cy - R, cx + R, cy + R), outline=(255, 255, 255), width=42)
         d.arc((cx - R, cy - R, cx + R, cy + R), -90, -90 + 360 * (1 / 3) * ease(clamp(ring)), fill=RED, width=42)
-        if pct and ring >= 1: text(d, (cx, cy), pct, 150, INK, True, "mm", stroke=10, stroke_fill=(255, 255, 255)); text(d, (cx, cy + 190), "1 in 3", 70, RED, True, "mm", stroke=8, stroke_fill=(255, 255, 255))
+        if pct:
+            n = int(round(int(pct.rstrip("%")) * ease(clamp(ring)))); text(d, (cx, cy), f"{n}%", 150, INK, True, "mm", stroke=10, stroke_fill=(255, 255, 255))
+            if ring >= 1: text(d, (cx, cy + 190), "1 in 3", 70, RED, True, "mm", stroke=8, stroke_fill=(255, 255, 255))
     return im
 
 def card_back(p=1.0, number_glow=True):
@@ -150,7 +152,7 @@ def card_back(p=1.0, number_glow=True):
     x0 = 540 - w // 2; rr(d, (x0, 560, x0 + w, 960), 40, fill=(40, 52, 96)); d.rectangle((x0, 640, x0 + w, 720), fill=(15, 15, 20))
     if p >= 1:
         rr(d, (x0 + 60, 790, x0 + 560, 870), 12, fill=(235, 235, 240)); text(d, (x0 + 80, 830), "Phone number", 34, INK, True, "lm")
-        text(d, (x0 + 60, 900), "Call this number, not the caller's", 30, (190, 200, 230), False, "lm")
+        text(d, (540, 1060), "Call THIS number,", 64, INK, True, "mm"); text(d, (540, 1140), "not the caller's.", 58, RED, True, "mm")
         if number_glow: im = glow_box(im, (x0 + 60, 790, x0 + 560, 870), r=14)
     return im
 
@@ -193,3 +195,63 @@ if __name__ == "__main__":      # contact sheet of every prop at phone size, for
     for i, (n, im) in enumerate(sheet):
         im = corner_tag(im.convert("RGB")); im = caption(im, ["Check", "this"], [False, True]); S.paste(im.resize((cw, ch)), (10 + (i % cols) * (cw + 10), 10 + (i // cols) * (ch + 10)))
     S.save("docs/props_contact_sheet.png"); print("saved docs/props_contact_sheet.png")
+
+
+# ---- FIX #12 polish pass (option C) -------------------------------------------------------------------------------------
+def chip_closeup(grow=0.0, crack=0.0):
+    """5a/5b: the £2 chip alone, filling the frame (replaces the mid-word crops of the banner). crack 0..1 splits it open on a card."""
+    im = canvas((18, 16, 40)); d = ImageDraw.Draw(im); g = ImageDraw.Draw(im)
+    for r in range(520, 0, -20): g.ellipse((540 - r, 760 - r, 540 + r, 760 + r), fill=(18 + (520 - r) // 14, 16, 40 + (520 - r) // 20))
+    k = 0.82 + 0.18 * ease(clamp(grow)); w, h = int(760 * k), int(300 * k); cx, cy = 540, 760; c = ease(clamp(crack))
+    if c > 0:                                                     # the card behind the chip
+        cw, ch_ = int(620 * (0.7 + 0.3 * c)), int(390 * (0.7 + 0.3 * c)); cb = (cx - cw // 2, cy - ch_ // 2, cx + cw // 2, cy + ch_ // 2)
+        rr(d, cb, 36, fill=(40, 52, 96)); rr(d, (cb[0] + 50, cb[1] + 90, cb[0] + 150, cb[1] + 165), 12, fill=YELLOW)
+        text(d, (cb[0] + 50, cb[3] - 70), "•••• •••• •••• ••••", 48, (230, 230, 240), True, "lm")
+        text(d, (cx, cb[3] + 90), "YOUR CARD", 84, YELLOW, True, "mm", stroke=6, stroke_fill=INK)
+    off = int(520 * c)
+    for side in (-1, 1):                                          # two halves slide apart
+        half = Image.new("RGBA", (w // 2, h), (0, 0, 0, 0)); hd = ImageDraw.Draw(half)
+        hd.rounded_rectangle((0 if side < 0 else -w // 2, 0, w // 2 if side < 0 else w // 2 - 1, h - 1), h // 2, fill=(230, 40, 60, 255))
+        x = cx - w // 2 + (0 if side < 0 else w // 2) + side * off
+        im.paste(half.rotate(side * 8 * c, expand=False), (x, cy - h // 2), half.rotate(side * 8 * c, expand=False))
+    if c < 0.35: text(d, (cx, cy), "£2", int(190 * k), (255, 255, 255), True, "mm")
+    return im
+
+def hooded_figure(slump=0.0, glow=1.0):
+    """8b/14c: a hooded figure behind a laptop, lit only by the screen (replaces the pentagon). No face, no real person."""
+    W_, H_ = W, H; im = Image.new("RGB", (W_, H_), (8, 10, 18)); y = int(640 + 70 * clamp(slump))
+    gl = Image.new("RGBA", (W_, H_), (0, 0, 0, 0)); g = ImageDraw.Draw(gl)
+    g.ellipse((140, y + 120, 940, y + 760), fill=(70, 130, 255, int(150 * glow)))                    # screen glow on the body
+    im = Image.alpha_composite(im.convert("RGBA"), gl.filter(ImageFilter.GaussianBlur(90))).convert("RGBA")
+    fig = Image.new("RGBA", (W_, H_), (0, 0, 0, 0)); f = ImageDraw.Draw(fig)
+    f.ellipse((170, y + 330, 910, y + 900), fill=(14, 16, 26, 255))                                     # shoulders
+    f.polygon([(540, y - 40), (700, y + 60), (735, y + 260), (690, y + 420), (390, y + 420), (345, y + 260), (380, y + 60)], fill=(14, 16, 26, 255))
+    f.ellipse((345, y + 20, 735, y + 430), fill=(14, 16, 26, 255))                                     # hood
+    f.ellipse((420, y + 140, 660, y + 400), fill=(3, 3, 6, 255))                                       # shadowed opening, no face
+    rim = Image.new("RGBA", (W_, H_), (0, 0, 0, 0)); ImageDraw.Draw(rim).bitmap((0, 0), fig.split()[3].filter(ImageFilter.FIND_EDGES), fill=(120, 170, 255, int(200 * glow)))
+    im = Image.alpha_composite(im, rim.filter(ImageFilter.GaussianBlur(3))); im = Image.alpha_composite(im, fig)
+    d = ImageDraw.Draw(im)
+    d.polygon([(300, 1060), (780, 1060), (830, 1290), (250, 1290)], fill=(34, 38, 52))                 # laptop lid (back), no logo
+    d.line([(300, 1060), (780, 1060)], fill=(120, 170, 255), width=4)
+    d.polygon([(200, 1290), (880, 1290), (960, 1340), (120, 1340)], fill=(22, 24, 34))                 # base
+    return im.convert("RGB")
+
+def hud(im, label, value, color=RED):
+    """Live readout, centred under the caption (in the style of the 'G-force' / 'fuel %' tags in the reference shorts)."""
+    out = im.convert("RGBA"); ov = Image.new("RGBA", im.size, (0, 0, 0, 0)); d = ImageDraw.Draw(ov)
+    fv, fl = font(56), font(30); lw = d.textlength(label + "  ", font=fl); vw = d.textlength(value, font=fv)   # one line, centred under the caption
+    w = int(lw + vw) + 64; x0 = (W - w) // 2; y0 = 1400
+    rr(d, (x0, y0, x0 + w, y0 + 92), 46, fill=(12, 12, 18, 220), outline=color + (255,), width=5)
+    d.text((x0 + 32, y0 + 48), label, font=fl, fill=(210, 210, 220, 255), anchor="lm"); d.text((x0 + 32 + lw, y0 + 48), value, font=fv, fill=color + (255,), anchor="lm")
+    out.alpha_composite(ov); return out.convert("RGB")
+
+def hook_title(im, p=1.0):
+    """On-screen hook for the first 3.3 s (from post/post_file.md). Replaces the hand-added TikTok text."""
+    out = im.convert("RGBA"); ov = Image.new("RGBA", im.size, (0, 0, 0, 0)); d = ImageDraw.Draw(ov); a = int(255 * ease(clamp(p * 5)))
+    rr(d, (50, 170, 1030, 470), 40, fill=(10, 10, 16, int(0.9 * a)))
+    f = font(70); y = 265
+    for line in (["THIS ", ("£2", YELLOW), " TEXT CAN"], ["EMPTY YOUR ACCOUNT"]):
+        parts = [(t, (255, 255, 255)) if isinstance(t, str) else t for t in line]; tw = sum(d.textlength(t, font=f) for t, _ in parts); x = (W - tw) / 2
+        for t, c in parts: d.text((x, y), t, font=f, fill=c + (a,), anchor="lm", stroke_width=6, stroke_fill=(0, 0, 0, a)); x += d.textlength(t, font=f)
+        y += 110
+    out.alpha_composite(ov); return out.convert("RGB")
