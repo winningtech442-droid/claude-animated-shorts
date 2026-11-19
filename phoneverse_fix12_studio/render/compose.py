@@ -110,10 +110,10 @@ def shot_frame(s, t, test):
     if i == "13c": return zoom(U.messages_list(0), 1.0 + 0.15 * p)
     if i == "14a": return U.unknown_folder(p)
     if i == "14b": return zoom(face("kit_soft_relief", t), 1.0 + 0.04 * p, 0.5, 0.4)
-    if i == "14c": return silhouette(t, ease(p), 0)
+    if i == "14c": return zoom(silhouette(t, p, 0), 1.0 + 0.10 * p, 0.5, 0.55)                                  # QC fix: linear slump + push so the end never freezes
     if i == "15a": return zoom(U.messages_list(0), 1.0 + 0.2 * p, 0.85, 0.15)
-    if i == "15b": return zoom(U.messages_list(0.6 + 0.4 * p), 1.1 + 0.2 * p, 0.85, 0.15)
-    if i == "16a": return U.settings_card(1 if t < 0.8 else 2 if t < 1.6 else 3, False) if t < 2.4 else U.settings_card(3, False)
+    if i == "15b": return zoom(U.messages_list(0.6 + 0.4 * p), 1.7 + 0.25 * p, 0.85, 0.12)                     # QC fix: punch-in so the 15a->15b cut reads
+    if i == "16a": return zoom(U.settings_card(1 if t < 0.8 else 2 if t < 1.6 else 3, False), 1.0 + 0.08 * p, 0.5, 0.62)   # QC fix: slow push, no frozen holds
     if i == "16b": return U.toggle_closeup(p * 1.3)
     if i == "17a": return tapring(U.shop_app(0), p, (540, 560))
     if i == "17b":
