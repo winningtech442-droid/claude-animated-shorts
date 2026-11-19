@@ -43,10 +43,28 @@ def empty(name, loc, parent=None):
 # desk: procedural wood, warm
 bpy.ops.mesh.primitive_plane_add(size=4, location=(0, 0.4, 0)); desk = bpy.context.active_object; desk.name = "desk"
 dm = bpy.data.materials.new("wood"); dm.use_nodes = True; nt = dm.node_tree; bs = nt.nodes["Principled BSDF"]
-wv = nt.nodes.new("ShaderNodeTexWave"); wv.inputs["Scale"].default_value = 60; wv.inputs["Distortion"].default_value = 6; wv.inputs["Detail"].default_value = 8
-cr = nt.nodes.new("ShaderNodeValToRGB"); cr.color_ramp.elements[0].color = (0.10, 0.045, 0.018, 1); cr.color_ramp.elements[1].color = (0.17, 0.075, 0.03, 1)
-nt.links.new(wv.outputs["Fac"], cr.inputs[0]); nt.links.new(cr.outputs[0], bs.inputs["Base Color"]); bs.inputs["Roughness"].default_value = 0.35
-bp = nt.nodes.new("ShaderNodeBump"); bp.inputs["Strength"].default_value = 0.15; nt.links.new(wv.outputs["Fac"], bp.inputs["Height"]); nt.links.new(bp.outputs[0], bs.inputs["Normal"])
+# Natural grain (v2, FIX #13): the old single wave texture read as regular corduroy stripes in wide shots. Now: object coords stretched
+# along x (long fibres), warped by a low-frequency noise so lines wander, a fine noise for fibre detail, and a broad noise for
+# board-to-board colour variation. No two lines are evenly spaced.
+tc = nt.nodes.new("ShaderNodeTexCoord"); mp = nt.nodes.new("ShaderNodeMapping"); mp.inputs["Scale"].default_value = (1.2, 26.0, 1.2)
+nt.links.new(tc.outputs["Object"], mp.inputs["Vector"])
+warp = nt.nodes.new("ShaderNodeTexNoise"); warp.inputs["Scale"].default_value = 1.6; warp.inputs["Detail"].default_value = 3; warp.inputs["Distortion"].default_value = 0.6
+nt.links.new(tc.outputs["Object"], warp.inputs["Vector"])
+wadd = nt.nodes.new("ShaderNodeVectorMath"); wadd.operation = "MULTIPLY_ADD"; wadd.inputs[1].default_value = (0.0, 2.2, 0.0)
+nt.links.new(warp.outputs["Color"], wadd.inputs[0]); nt.links.new(mp.outputs["Vector"], wadd.inputs[2])
+grain = nt.nodes.new("ShaderNodeTexNoise"); grain.inputs["Scale"].default_value = 2.4; grain.inputs["Detail"].default_value = 12; grain.inputs["Roughness"].default_value = 0.62; grain.inputs["Distortion"].default_value = 0.35
+nt.links.new(wadd.outputs["Vector"], grain.inputs["Vector"])
+cr = nt.nodes.new("ShaderNodeValToRGB"); el = cr.color_ramp.elements
+el[0].position = 0.30; el[0].color = (0.085, 0.036, 0.014, 1); el[1].position = 0.72; el[1].color = (0.19, 0.088, 0.036, 1)
+mid = el.new(0.52); mid.color = (0.13, 0.058, 0.022, 1)
+nt.links.new(grain.outputs["Fac"], cr.inputs[0])
+board = nt.nodes.new("ShaderNodeTexNoise"); board.inputs["Scale"].default_value = 0.9; board.inputs["Detail"].default_value = 1
+nt.links.new(tc.outputs["Object"], board.inputs["Vector"])
+tint = nt.nodes.new("ShaderNodeMix"); tint.data_type = "RGBA"; tint.blend_type = "MULTIPLY"
+nt.links.new(board.outputs["Fac"], tint.inputs["Factor"]); tint.inputs["Factor"].default_value = 0.5
+nt.links.new(cr.outputs[0], tint.inputs[6]); tint.inputs[7].default_value = (0.78, 0.74, 0.70, 1)
+nt.links.new(tint.outputs[2], bs.inputs["Base Color"]); bs.inputs["Roughness"].default_value = 0.42
+bp = nt.nodes.new("ShaderNodeBump"); bp.inputs["Strength"].default_value = 0.06; nt.links.new(grain.outputs["Fac"], bp.inputs["Height"]); nt.links.new(bp.outputs[0], bs.inputs["Normal"])
 desk.data.materials.append(dm)
 
 # hero phone at the origin, lying flat, top edge towards +y
@@ -103,20 +121,60 @@ for nm_, d_, l_ in (("tray_floor", (0.08, 0.06, 0.003), (0, 0, 0.0015)), ("tray_
                     ("tray_w3", (0.003, 0.06, 0.018), (0.0385, 0, 0.009)), ("tray_w4", (0.003, 0.06, 0.018), (-0.0385, 0, 0.009))):
     box(nm_, d_, TR + Vector(l_), traym)
 
+# ---- optional props, switched on per episode by the beat sheet header "props": [...]
+PROPS = set(B.get("props", []))
+def hide_all(objs, flag):
+    for o in objs: o.hide_render = flag; o.hide_viewport = flag
+# van with a fake mast that rises out of its roof (FIX #13, SMS blaster). Event "van": 0 = mast hidden in the roof, 1 = fully raised.
+VAN = Vector((0.205, 0.10, 0.0))
+vanm = mat("van", (0.78, 0.79, 0.80), 0.15, 0.45); glassm = mat("vanglass", (0.03, 0.04, 0.06), 0.1, 0.08); tyre = mat("tyre", (0.02, 0.02, 0.02), 0.0, 0.8)
+van_objs = [box("van_body", (0.115, 0.05, 0.048), VAN + Vector((0.008, 0, 0.031)), vanm, bevel=0.004),
+            box("van_cab", (0.03, 0.048, 0.034), VAN + Vector((-0.062, 0, 0.024)), vanm, bevel=0.005),
+            box("van_wind", (0.002, 0.042, 0.016), VAN + Vector((-0.0775, 0, 0.032)), glassm),
+            box("van_side_win", (0.022, 0.0505, 0.012), VAN + Vector((-0.062, 0, 0.033)), glassm)]
+for wx in (-0.055, 0.04):
+    for wy in (-0.026, 0.026):
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.011, depth=0.008, location=VAN + Vector((wx, wy, 0.011)), rotation=(math.pi / 2, 0, 0))
+        o = bpy.context.active_object; o.data.materials.append(tyre); van_objs.append(o)
+fake_root = empty("fake_root", VAN + Vector((0.02, 0, 0.055)))
+fakem = mat("fakemast", (0.35, 0.36, 0.40), 0.6, 0.4); fakered = mat("fakered", (0.4, 0.02, 0.02), emit=(1.0, 0.1, 0.06), strength=3)
+bpy.ops.mesh.primitive_cylinder_add(radius=0.0035, depth=0.12, location=(0, 0, 0.06)); fpole = bpy.context.active_object; fpole.data.materials.append(fakem); fpole.parent = fake_root
+fake_objs = [fpole]
+for k in range(3):
+    ang = k * 2 * math.pi / 3; p_ = box(f"fpanel{k}", (0.009, 0.003, 0.03), (0.009 * math.cos(ang), 0.009 * math.sin(ang), 0.105), fakered); p_.rotation_euler.z = ang + math.pi / 2; p_.parent = fake_root; fake_objs.append(p_)
+bpy.ops.mesh.primitive_uv_sphere_add(radius=0.0045, location=(0, 0, 0.123)); fblink = bpy.context.active_object; fblink.data.materials.append(mat("fblink", (1, 0.1, 0.1), emit=(1, 0.05, 0.03), strength=8)); fblink.parent = fake_root; fake_objs.append(fblink)
+hide_all(van_objs + fake_objs, "van" not in PROPS)
+# network filter: a ring around the real mast (the operator's spam filter). Event "netfilter": glow 0..1.
+bpy.ops.mesh.primitive_torus_add(major_radius=0.026, minor_radius=0.0028, location=(-0.15, 0.33, 0.19)); nring = bpy.context.active_object; nring.name = "netfilter"
+nringm = mat("netfilter", (0.05, 0.3, 0.12), emit=(0.15, 1.0, 0.35), strength=0.4); nring.data.materials.append(nringm); hide_all([nring], "netfilter" not in PROPS)
+# signal links: thin beams from the phone's modem to the real mast (blue) and to the fake mast (red). Event "link": 0 real, 1 fake.
+def beam(name, p0, p1, color):
+    d = p1 - p0; bpy.ops.mesh.primitive_cylinder_add(radius=0.0011, depth=d.length, location=(p0 + p1) / 2); o = bpy.context.active_object; o.name = name
+    o.rotation_euler = d.to_track_quat("Z", "Y").to_euler(); m = mat(name, (0, 0, 0), emit=color, strength=3); o.data.materials.append(m); o.visible_shadow = False; return o, m
+PHONE_ANT = Vector((0.02, 0.06, PH[2] + 0.004))
+link_real, link_real_m = beam("link_real", PHONE_ANT, Vector((-0.15, 0.33, 0.30)), (0.3, 0.6, 1.0))
+link_fake, link_fake_m = beam("link_fake", PHONE_ANT, VAN + Vector((0.02, 0, 0.055 + 0.105)), (1.0, 0.12, 0.08))
+hide_all([link_real, link_fake], "links" not in PROPS)
+
 # anchors for 2D labels (compose3d.py pins tags to these)
 ANCH = {"screen": (0, 0, PH[2] + 0.004), "modem": (0.02, 0.052, z0), "sim": (-0.019, 0.05, z0), "filter": (-0.016, 0.004, z0 + 0.002), "cpu": (0.004, 0.025, z0),
-        "mast": (-0.15, 0.33, 0.33), "laptop": (0.16, 0.407, 0.09), "tray": tuple(TR + Vector((0, 0, 0.02))), "phone": (0, -0.06, PH[2])}
+        "battery": (0, -0.038, z0 + 0.001), "mast": (-0.15, 0.33, 0.33), "laptop": (0.16, 0.407, 0.09), "tray": tuple(TR + Vector((0, 0, 0.02))), "phone": (0, -0.06, PH[2]),
+        "van": tuple(VAN + Vector((0.0, -0.025, 0.04))), "fakemast": tuple(VAN + Vector((0.02, 0, 0.055 + 0.125))), "netfilter": (-0.15, 0.33 - 0.026, 0.19)}
 for k, v in ANCH.items(): empty("anchor_" + k, v)
-NODES = {"mast": Vector((-0.15, 0.33, 0.335)), "phone": Vector((0.02, 0.052, z0 + 0.006)), "laptop": Vector((0.16, 0.38, 0.06)), "tray": TR + Vector((0, 0, 0.012))}
+NODES = {"mast": Vector((-0.15, 0.33, 0.335)), "phone": Vector((0.02, 0.052, z0 + 0.006)), "laptop": Vector((0.16, 0.38, 0.06)), "tray": TR + Vector((0, 0, 0.012)),
+         "van": VAN + Vector((0.02, 0, 0.055 + 0.125)), "netfilter": Vector((-0.15, 0.33, 0.19))}
 
 # packets: a glowing head + 5 trail beads per slot, 4 slots
 PCOL = {"text": (1.0, 0.75, 0.1), "card": (1.0, 0.1, 0.15), "call": (0.25, 0.55, 1.0)}
-PM = {k: mat("pk_" + k, (0, 0, 0), emit=c, strength=12) for k, c in PCOL.items()}
+# v2 (FIX #13): the old trail (6 beads, 3% apart, strength 12) bloomed into one white blob. Now 5 beads spaced 7% of the path apart,
+# shrinking, with emission falling off bead by bead (head 5, tail 1.2) so AgX keeps the colour and each bead reads on its own.
+NBEAD, BEAD_GAP = 5, 0.07
+PM = {(k, j): mat(f"pk_{k}_{j}", tuple(0.25 * x for x in c), emit=c, strength=5.0 * (0.7 ** j)) for k, c in PCOL.items() for j in range(NBEAD)}
 SLOTS = []
 for s_ in range(4):
     beads = []
-    for j in range(6):
-        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.0075 * (1 - j * 0.14), segments=16, ring_count=8); o = bpy.context.active_object; o.name = f"pk{s_}_{j}"; beads.append(o)
+    for j in range(NBEAD):
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.0068 * (1 - j * 0.15), segments=16, ring_count=8); o = bpy.context.active_object; o.name = f"pk{s_}_{j}"; beads.append(o)
         o.visible_shadow = False
     SLOTS.append(beads)
 
@@ -132,7 +190,12 @@ CAM = {"hero": ((0.15, -0.28, 0.19), (0, 0.01, 0), 42), "screen": ((0.0, -0.045,
        "screen_tilt": ((0.06, -0.19, 0.2), (0, 0.01, 0), 50), "macro": ((0.03, -0.055, 0.065), (-0.005, 0.02, 0.004), 35),
        "macro_filter": ((-0.005, -0.03, 0.045), (-0.016, 0.006, 0.004), 35), "mast": ((-0.05, 0.02, 0.16), (-0.15, 0.33, 0.25), 35),
        "laptop": ((0.08, 0.14, 0.12), (0.16, 0.39, 0.06), 35), "laptop_close": ((0.11, 0.19, 0.105), (0.16, 0.395, 0.058), 36), "wide": ((0.0, -0.52, 0.40), (0.0, 0.14, 0.08), 28), "tray": ((0.08, -0.34, 0.15), (0.12, -0.13, 0.01), 40),
-       "top": ((0.0, 0.06, 0.82), (0.0, 0.10, 0), 28)}
+       "top": ((0.0, 0.06, 0.82), (0.0, 0.10, 0), 28),
+       # FIX #13 additions: the van, the network filter ring, and a street-wide view that holds phone, real mast and van in one frame
+       "street": ((0.03, -0.56, 0.42), (0.03, 0.15, 0.06), 22), "van": ((0.09, -0.07, 0.11), (0.205, 0.10, 0.06), 35),
+       "van_close": ((0.12, -0.05, 0.10), (0.21, 0.10, 0.075), 35), "van_top": ((0.16, 0.0, 0.30), (0.215, 0.10, 0.10), 30),
+       "netfilter": ((-0.07, 0.16, 0.25), (-0.15, 0.33, 0.20), 35), "masts": ((0.0, -0.28, 0.14), (0.02, 0.26, 0.13), 24),
+       "macro_top": ((0.0, -0.01, 0.13), (0.0, 0.012, 0.0), 40)}
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
 
@@ -167,6 +230,14 @@ def apply(t):
     fv = track("filter", t); knob.location.x = -0.022 + 0.012 * fv; knob.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 6 * fv
     lv = track("laptop", t, 0.4); lapscr.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 1.0 + 2.0 * lv; lap_light.data.energy = 0.08 + 0.4 * lv
     blink.hide_render = int(t * 2) % 2 == 1
+    if "van" in PROPS:
+        vv = track("van", t); fake_root.location.z = 0.055 - 0.12 * (1 - vv); hide_all(fake_objs, vv < 0.02)
+        fblink.hide_render = vv < 0.02 or int(t * 3) % 2 == 1
+    if "netfilter" in PROPS: nringm.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 0.4 + 7 * track("netfilter", t)
+    if "links" in PROPS:
+        lk = track("link", t); on = track("linkon", t)
+        link_real_m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 3 * (1 - lk) * on; link_real.hide_render = (1 - lk) * on < 0.03
+        link_fake_m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 4 * lk * on; link_fake.hide_render = lk * on < 0.03
     active = [e for bb in BEATS for e in bb.get("events", []) if e["type"] == "packet" and e["t0"] <= t < e["t1"]]
     pk_pos = None
     for s_, beads in enumerate(SLOTS):
@@ -174,8 +245,10 @@ def apply(t):
         for j, o in enumerate(beads):
             o.hide_render = e is None
             if e is None: continue
-            frm, to = e["path"].split(">"); u = clamp((t - e["t0"]) / (e["t1"] - e["t0"]) - j * 0.03)
-            pos = bez(NODES[frm], NODES[to], e.get("arc", 0.18), ease(u)); o.location = pos; o.data.materials.clear(); o.data.materials.append(PM[e["kind"]])
+            frm, to = e["path"].split(">"); raw = (t - e["t0"]) / (e["t1"] - e["t0"]) * (1 + (NBEAD - 1) * BEAD_GAP) - j * BEAD_GAP
+            if raw < 0 or raw > 1: o.hide_render = True; continue        # not launched yet / already arrived: no pile-up at either end
+            uu = e["bounce"] * (1 - abs(1 - 2 * raw)) if e.get("bounce") else ease(raw)    # bounce: goes part-way, then back (blocked)
+            pos = bez(NODES[frm], NODES[to], e.get("arc", 0.18), uu); o.location = pos; o.data.materials.clear(); o.data.materials.append(PM[(e["kind"], j)])
             if j == 0 and s_ == 0: pk_pos = pos
     return b, pk_pos
 
@@ -185,7 +258,11 @@ def anchors(pk_pos):
         v = world_to_camera_view(sc, cam, bpy.data.objects["anchor_" + k].location)
         out[k] = [round(v.x, 4), round(1 - v.y, 4), round(v.z, 4)]
     if pk_pos is not None: v = world_to_camera_view(sc, cam, pk_pos); out["packet"] = [round(v.x, 4), round(1 - v.y, 4), round(v.z, 4)]
+    out["_lid"] = round(track("lid", CUR_T[0]), 3)                       # compose3d.py adds part labels while the lid is open
+    sv = world_to_camera_view(sc, cam, scr.matrix_world @ Vector((0.0345, 0.0745, 0))); sv0 = world_to_camera_view(sc, cam, scr.matrix_world @ Vector((-0.0345, -0.0745, 0)))
+    out["_screen_px"] = round(abs(sv.y - sv0.y), 4)                        # screen height as a fraction of the frame: compose adds an inset when it is small
     return out
+CUR_T = [0.0]
 
 # ------------------------------------------------------------------------------------------------ render
 sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = a.samples; sc.cycles.use_denoising = True; sc.render.use_persistent_data = True
@@ -198,6 +275,6 @@ os.makedirs(os.path.join(a.out, sub), exist_ok=True); os.makedirs(os.path.join(a
 for f in frames:
     pth = os.path.join(a.out, sub, f"{f:05d}.png")
     if os.path.exists(pth): continue
-    b, pk = apply(f / FPS); bpy.context.view_layer.update()
+    CUR_T[0] = f / FPS; b, pk = apply(f / FPS); bpy.context.view_layer.update()
     json.dump(anchors(pk), open(os.path.join(a.out, "anchors", f"{f:05d}.json"), "w"))
     sc.render.filepath = os.path.abspath(pth); bpy.ops.render.render(write_still=True); print("rendered", pth, flush=True)

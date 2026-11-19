@@ -1,0 +1,8 @@
+{
+  "note": "FIX #13: 3 reaction clips, 48 frames each at 24 fps (2 s). Set 'bus' = night street look (cool dark, moving amber bokeh): reads as Oxford Street at night. Lead = Rocketbox Female_Adult_01.",
+  "clips": [
+    {"clip": "st_hope",   "set": "bus", "expr": "hope",   "shots": ["line 2"],  "from": "neutral", "notes": "phone buzzes; she looks down, half-smile"},
+    {"clip": "st_shock",  "set": "bus", "expr": "shock",  "shots": ["line 11"], "from": "dread", "notes": "start at frame 10 (mid-snap)"},
+    {"clip": "st_relief", "set": "bus", "expr": "relief", "shots": ["line 18"], "from": "soft_relief"}
+  ]
+}

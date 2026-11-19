@@ -14,15 +14,15 @@ B = json.load(open(a.beats)); FPS = B.get("fps", 24); BEATS = B["beats"]; TOTAL 
 CAPS = json.load(open(B["captions"])) if B.get("captions") else []
 COLORS = {"RED": U.RED, "GREEN": U.GREEN, "ORANGE": U.ORANGE, "YELLOW": U.YELLOW, "BLUE": U.BLUE}
 ease, clamp = U.ease, U.clamp
-FACE_START = {"kit_shock": 10}                       # first frame of the clip worth showing (the snap)
+FACE_START = dict({"kit_shock": 10}, **B.get("face_start", {}))                       # first frame of the clip worth showing (the snap)
 
 def beat_at(t): return next((b for b in BEATS if b["t0"] <= t < b["t1"]), BEATS[-1])
 
-def label(im, xy, txt, dx=170, dy=-170, alpha=1.0):
+def label(im, xy, txt, dx=170, dy=-170, alpha=1.0, size=38):
     """Reference style: a small dot on the object, a thin leader line, a dark tag with an orange square."""
     if alpha <= 0: return im
     out = im.convert("RGBA"); ov = Image.new("RGBA", im.size, (0, 0, 0, 0)); d = ImageDraw.Draw(ov); A = int(255 * alpha)
-    f = U.font(38); tw = d.textlength(txt, font=f); x, y = xy; tx = max(30, min(W - tw - 90, x + dx)); ty = max(240, min(1180, y + dy))
+    f = U.font(size); tw = d.textlength(txt, font=f); x, y = xy; tx = max(30, min(W - tw - 90, x + dx)); ty = max(240, min(1180, y + dy))
     d.line([(x, y), (tx + (0 if dx >= 0 else tw + 60), ty + 32)], fill=(255, 255, 255, int(0.85 * A)), width=4)
     d.ellipse((x - 10, y - 10, x + 10, y + 10), fill=(255, 255, 255, A), outline=U.ORANGE + (A,), width=4)
     U.rr(d, (tx, ty, tx + tw + 60, ty + 64), 12, fill=(14, 14, 20, int(0.88 * A))); d.rectangle((tx + 16, ty + 24, tx + 32, ty + 40), fill=U.ORANGE + (A,))
@@ -42,9 +42,13 @@ def hook(im, t):
 def hud(im, b, t):
     h = b.get("hud")
     if not h or t < h.get("from", -1): return im
-    if "count" in h:
-        lo, hi, unit = h["count"]; v = int(round(lo + (hi - lo) * ease(clamp((t - b["t0"]) / (b["t1"] - b["t0"]) * (1.4 if unit == "%" else 1.0)))))
-        val = f"{v}%" if unit == "%" else f"{unit}{v:,}"
+    pr = clamp((t - max(b["t0"], h.get("from", b["t0"]))) / max(1e-3, h.get("until", b["t1"]) - max(b["t0"], h.get("from", b["t0"]))))
+    if "steps" in h: val = h["steps"][min(len(h["steps"]) - 1, int(pr * len(h["steps"])))]
+    elif "count" in h:
+        lo, hi, unit = h["count"]
+        if unit == "s": val = f"{lo + (hi - lo) * pr:.1f} s"                     # a live timer (linear, it is a clock)
+        else:
+            v = int(round(lo + (hi - lo) * ease(clamp(pr * (1.4 if unit == "%" else 1.0))))); val = f"{v}%" if unit == "%" else f"{unit}{v:,}"
     else: val = h["value"]
     return U.hud(im, h["label"], val, COLORS.get(h.get("color", "RED"), U.RED))
 
@@ -52,13 +56,47 @@ def base_frame(g, sub):
     t = g / FPS; b = beat_at(t)
     if b.get("face"):
         clip = b["face"]; f = min(47, FACE_START.get(clip, 14) + int((t - b["t0"]) * FPS)); p = os.path.join(B["faces"], clip, f"{f:04d}.png")
+        if not os.path.exists(p):                                     # clip still rendering: nearest existing frame, else a labelled placeholder
+            have = sorted(os.listdir(os.path.join(B["faces"], clip))) if os.path.isdir(os.path.join(B["faces"], clip)) else []
+            if not have:
+                ph = Image.new("RGB", (W, H), (30, 30, 40)); ImageDraw.Draw(ph).text((W // 2, H // 2), f"FACE: {clip}", font=U.font(60), fill=(200, 200, 210), anchor="mm"); return ph, None, b
+            p = os.path.join(B["faces"], clip, min(have, key=lambda n: abs(int(n[:4]) - f)))
         im = Image.open(p).convert("RGB").resize((W, H), Image.LANCZOS); k = 1 + 0.06 * (t - b["t0"]) / (b["t1"] - b["t0"])
         w, h = int(W / k), int(H / k); return im.crop(((W - w) // 2, int((H - h) * 0.4), (W - w) // 2 + w, int((H - h) * 0.4) + h)).resize((W, H), Image.LANCZOS), None, b
     p = os.path.join(a.build, sub, f"{g:05d}.png"); anc = os.path.join(a.build, "anchors", f"{g:05d}.json")
     return Image.open(p).convert("RGB").resize((W, H), Image.LANCZOS), (json.load(open(anc)) if os.path.exists(anc) else None), b
 
+PARTS = [("cpu", "CPU", 230, -330), ("modem", "MODEM", 210, -150), ("sim", "SIM", -250, -260), ("filter", "FILTER", -260, 60), ("battery", "BATTERY", 200, 120)]
+def part_labels(im, anc, b, t):
+    """v2 (FIX #13): while the lid is open (>60%), label the board parts automatically, unless the beat already pins that anchor
+    or sets "parts": false. Fades in with the lid."""
+    lid = anc.get("_lid", 0)
+    if lid < 0.6 or b.get("parts") is False: return im
+    have = {L["anchor"] for L in b.get("labels", [])}; al = clamp((lid - 0.6) / 0.3); want = b.get("parts") if isinstance(b.get("parts"), list) else None
+    for k, txt, dx, dy in PARTS:
+        if k in have or k not in anc or (want is not None and k not in want): continue
+        x, y, z = anc[k]
+        if z > 0 and 0.03 < x < 0.97 and 0.08 < y < 0.92: im = label(im, (int(x * W), int(y * H)), txt, dx, dy, al, size=32)
+    return im
+
+def screen_inset(im, b, t, anc):
+    """v2 (FIX #13): the hero phone's screen is unreadable in wide shots. When the beat asks ("inset": true) or the screen is small
+    on frame (< 22% of the height) and the beat shows a screen, draw the screen as a crisp card top-right with a leader line."""
+    if not b.get("screen") or b.get("inset") is False or not anc: return im
+    if not (b.get("inset") or anc.get("_screen_px", 1) < 0.22): return im
+    p = clamp((t - b["t0"]) / max(1e-3, b["t1"] - b["t0"])); scr = eval(b["screen"], {"U": U, "p": round(p * 48) / 48, "ease": ease, "clamp": clamp}).convert("RGB")
+    cw, ch = 340, 604; x0, y0 = b.get("inset_xy", [W - cw - 50, 210]); al = clamp((t - b["t0"]) / 0.2)
+    out = im.convert("RGBA"); ov = Image.new("RGBA", im.size, (0, 0, 0, 0)); d = ImageDraw.Draw(ov); A = int(255 * al)
+    if "screen" in anc and anc["screen"][2] > 0:
+        sx, sy = int(anc["screen"][0] * W), int(anc["screen"][1] * H); d.line([(sx, sy), (x0 + cw // 2, y0 + ch)], fill=(255, 255, 255, int(0.8 * A)), width=4)
+        d.ellipse((sx - 10, sy - 10, sx + 10, sy + 10), fill=(255, 255, 255, A), outline=U.ORANGE + (A,), width=4)
+    U.rr(d, (x0 - 10, y0 - 10, x0 + cw + 10, y0 + ch + 10), 34, fill=(14, 14, 20, int(0.92 * A))); out.alpha_composite(ov)
+    card = scr.resize((cw, ch), Image.LANCZOS).convert("RGBA"); m = Image.new("L", (cw, ch), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, cw - 1, ch - 1), 26, fill=A)
+    out.paste(card, (x0, y0), m); return out.convert("RGB")
+
 def frame(g, sub="frames"):
     t = g / FPS; im, anc, b = base_frame(g, sub)
+    if anc: im = part_labels(im, anc, b, t); im = screen_inset(im, b, t, anc)
     if anc:
         for L in b.get("labels", []):
             if t < L.get("from", -1) or L["anchor"] not in anc: continue

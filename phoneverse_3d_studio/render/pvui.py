@@ -255,3 +255,96 @@ def hook_title(im, p=1.0):
         for t, c in parts: d.text((x, y), t, font=f, fill=c + (a,), anchor="lm", stroke_width=6, stroke_fill=(0, 0, 0, a)); x += d.textlength(t, font=f)
         y += 110
     out.alpha_composite(ov); return out.convert("RGB")
+
+
+# ---- FIX #13 (fake mast / SMS blaster) screens ------------------------------------------------------------------------
+# Generic UI only: no real OS look, no logos. Sender names are plain text the way a scam text shows them.
+def net_bar(d, net="5G", bars=4, dark=True, warn=False):
+    """Status bar with signal bars and the network type, top right. warn=True paints the type red (the downgrade)."""
+    c = (255, 255, 255) if dark else INK; text(d, (72, 128), "18:42", 40, c, True, "la")
+    for i in range(5):
+        h = 12 + i * 9; x = 700 + i * 22; d.rectangle((x, 166 - h, x + 14, 166), fill=c if i < bars else (c[0] // 3, c[1] // 3, c[2] // 3))
+    text(d, (820, 128), net, 40, RED if warn else c, True, "la"); rr(d, (920, 134, 1000, 166), 8, outline=c, width=4); rr(d, (926, 140, 980, 160), 4, fill=c)
+
+def sms_notice(p=1.0, net="5G", bars=4, warn=False, tap=0.0):
+    """Lock screen at 18:42 with the fake refund text sliding in. p = slide-in progress, tap 0..1 = orange tap ring on the link."""
+    im = canvas((16, 20, 38)); d = ImageDraw.Draw(im)
+    for y in range(0, 1190, 6): d.line([(0, y), (W, y)], fill=(16 + y // 100, 20 + y // 120, 38 + y // 70))
+    net_bar(d, net, bars, True, warn); text(d, (540, 225), "18:42", 190, (255, 255, 255), True, "ma"); text(d, (540, 415), "Saturday", 44, (200, 200, 230), False, "ma")
+    s = ease(clamp(p)); cy = int(760 + (1 - s) * 420); box = (70, cy - 190, 1010, cy + 190)
+    rr(d, (box[0] + 8, box[1] + 14, box[2] + 8, box[3] + 14), 50, fill=(0, 0, 0)); rr(d, box, 50, fill=(255, 255, 255))
+    rr(d, (box[0] + 36, box[1] + 36, box[0] + 132, box[1] + 132), 26, fill=GREEN); text(d, (box[0] + 84, box[1] + 84), "✉", 60, (255, 255, 255), True, "mm")
+    text(d, (box[0] + 160, box[1] + 50), "HMRC", 50, INK, True); text(d, (box[2] - 40, box[1] + 56), "now", 36, (120, 120, 130), False, "ra")
+    text(d, (box[0] + 40, box[1] + 170), "You're owed a tax refund.", 52, INK, True)
+    lk = (box[0] + 40, box[1] + 250, box[0] + 640, box[1] + 330); text(d, (lk[0], lk[1] + 40), "Tap to claim: refund-hm…", 46, BLUE, True, "lm")
+    if tap > 0: im = glow_box(im, lk, pulse=clamp(tap * 2))
+    return im
+
+def network_card(net="5G", bars=4, fake=False, steps=None, p=1.0):
+    """Big network readout on the phone: bars + type. steps e.g. ['5G','4G','2G'] ticks through them with p (the downgrade)."""
+    if steps: net = steps[min(len(steps) - 1, int(clamp(p) * len(steps)))]; bars = 5 if fake else bars
+    im = canvas((14, 16, 26)); d = ImageDraw.Draw(im); net_bar(d, net, bars, True, net == "2G")
+    for i in range(5):
+        h = 90 + i * 70; x = 230 + i * 130; d.rounded_rectangle((x, 900 - h, x + 96, 900), 14, fill=(RED if fake else (255, 255, 255)) if i < bars else (60, 64, 80))
+    text(d, (540, 1040), net, 200, RED if net == "2G" else (255, 255, 255), True, "mm")
+    text(d, (540, 1180), "FAKE MAST" if fake else "MOBILE NETWORK", 52, RED if fake else (170, 180, 210), True, "mm")
+    return im
+
+def check_card(p=1.0):
+    """'Is this mast real?' check: on 4G/5G a green tick, on 2G the check is skipped (grey, crossed)."""
+    im = canvas((14, 16, 26)); d = ImageDraw.Draw(im); net_bar(d, "2G", 5, True, True)
+    text(d, (540, 360), "Is this mast real?", 70, (255, 255, 255), True, "ma")
+    rows = [("5G / 4G", "CHECKED", GREEN), ("2G", "NOT CHECKED", RED)]
+    for i, (n, v, c) in enumerate(rows):
+        y = 560 + i * 250; on = i == 0 or p > 0.35
+        rr(d, (90, y, 990, y + 190), 40, fill=(30, 34, 50)); text(d, (140, y + 95), n, 70, (255, 255, 255), True, "lm")
+        if on: text(d, (940, y + 95), v, 54, c, True, "rm")
+    return im
+
+def android_2g(step=1, p=0.0):
+    """Generic Android-style settings. step 1: search bar types '2G'. step 2: 'Allow 2G' result with the toggle sliding OFF with p."""
+    im = canvas((240, 243, 248)); d = ImageDraw.Draw(im); net_bar(d, "5G", 4, False); text(d, (80, 230), "Settings", 86, INK, True, "lm")
+    rr(d, (60, 330, 1020, 440), 55, fill=(255, 255, 255), outline=(200, 205, 220), width=4); d.ellipse((112, 360, 152, 400), outline=(110, 110, 130), width=6); d.line([(146, 394), (166, 414)], fill=(110, 110, 130), width=7)
+    typed = "2G"[: max(0, min(2, int(p * 3)))] if step == 1 else "2G"; text(d, (200, 385), typed or "Search settings", 50, INK if typed else (150, 150, 165), bool(typed), "lm")
+    if step == 1:
+        im = glow_box(im, (60, 330, 1020, 440), r=55)
+    if step >= 2:
+        rr(d, (60, 520, 1020, 760), 40, fill=(255, 255, 255)); text(d, (110, 600), "Allow 2G", 62, INK, True, "lm"); text(d, (110, 680), "Mobile network", 40, (120, 120, 135), False, "lm")
+        off = ease(clamp(p)); tg = (790, 600, 970, 690); c = tuple(int(a + (b - a) * off) for a, b in zip(GREEN, (190, 190, 200)))
+        rr(d, tg, 45, fill=c); kx = int(tg[2] - 45 - (tg[2] - tg[0] - 90) * off); d.ellipse((kx - 36, 609, kx + 36, 681), fill=(255, 255, 255))
+        text(d, (540, 900), "OFF" if off > 0.5 else "ON", 120, GREEN if off > 0.5 else (150, 150, 165), True, "mm")
+        if off > 0.5: text(d, (540, 1040), "Fake 2G masts ignored", 50, INK, True, "mm")
+        im = glow_box(im, tg, pad=16, r=50)
+    return im
+
+def lockdown_card(p=1.0):
+    """iPhone: no 2G switch; only Lockdown Mode blocks 2G (heavy: limits many features). Generic look."""
+    im = canvas((242, 242, 247)); d = ImageDraw.Draw(im); net_bar(d, "5G", 4, False); text(d, (540, 230), "iPhone", 80, INK, True, "ma")
+    rr(d, (80, 360, 1000, 560), 40, fill=(255, 255, 255)); text(d, (130, 460), "2G switch", 60, INK, True, "lm"); text(d, (950, 460), "NONE", 56, RED, True, "rm")
+    k = ease(clamp(p * 1.6))
+    if k > 0:
+        rr(d, (80, 620, 1000, 900), 40, fill=(255, 255, 255)); text(d, (130, 710), "Lockdown Mode", 60, INK, True, "lm"); text(d, (130, 800), "blocks 2G", 46, GREEN, True, "lm")
+        rr(d, (680, 770, 960, 840), 35, fill=ORANGE); text(d, (820, 805), "HEAVY", 40, (255, 255, 255), True, "mm")
+        text(d, (540, 1000), "Limits a lot of features", 46, (110, 110, 125), True, "mm")
+    return im
+
+def forward_7726(p=1.0):
+    """Forward the scam text to 7726 (free, UK networks). p: message bubble flies up to the 7726 thread."""
+    im = canvas((246, 247, 252)); d = ImageDraw.Draw(im); net_bar(d, "5G", 4, False)
+    rr(d, (0, 190, W, 360), 0, fill=(255, 255, 255)); text(d, (540, 250), "To:", 40, (120, 120, 135), False, "ma"); text(d, (540, 300), "7726", 72, INK, True, "ma")
+    k = ease(clamp(p)); y = int(1000 - 520 * k); rr(d, (220, y, 1010, y + 230), 46, fill=BLUE)
+    text(d, (260, y + 70), "HMRC: You're owed a", 44, (255, 255, 255), True, "lm"); text(d, (260, y + 140), "tax refund. Tap to…", 44, (255, 255, 255), True, "lm")
+    if k > 0.9: text(d, (990, y + 270), "Forwarded ✓", 40, GREEN, True, "ra")
+    text(d, (540, 1150), "FREE · SPELLS 'SPAM'", 46, ORANGE, True, "mm")
+    return im
+
+def ask_box(prompt="Had a refund text?", p=1.0):
+    im = comment_box(p); d = ImageDraw.Draw(im); k = ease(clamp(p)); y = int(1000 - 560 * k)
+    rr(d, (90, y + 30, 1000, y + 120), 20, fill=(255, 255, 255)); text(d, (110, y + 70), prompt, 48, (140, 140, 155), False, "lm")
+    if int(p * 14) % 2 == 0: d.rectangle((110 + int(d.textlength(prompt, font=font(48, False))) + 10, y + 40, 118 + int(d.textlength(prompt, font=font(48, False))) + 10, y + 100), fill=INK)
+    return im
+
+def share_to(name="Android friend", p=1.0):
+    im = canvas((246, 250, 255)); d = ImageDraw.Draw(im); k = ease(clamp(p)); rr(d, (420, 760, 1030, 900), 70, fill=GREEN); text(d, (725, 830), name, 60, (255, 255, 255), True, "mm")
+    x = int(90 + (300 - 90) * k); y = int(1000 - (1000 - 840) * k)
+    d.polygon([(x, y - 50), (x + 130, y), (x, y + 50), (x + 24, y)], fill=ORANGE); return im
