@@ -91,7 +91,7 @@ H = {"episode": "phoneverse_fix14",
      "fps": 24, "length_s": T["summary"]["take_length_s"], "props": ["duo", "fleet"],
      "audio": ["../phoneverse_fix14_studio/audio/mix_with_pad.wav", "../phoneverse_fix14_studio/audio/mix_voice_fx.wav"],
      "captions": "../phoneverse_fix14_studio/data/captions.json", "faces": "../phoneverse_fix14_studio/frames",
-     "hook": {"lines": [["YOUR ", "*£1,999", " IPHONE"], ["JUST BOUNCED"]], "until": 3.0},
+     "hook": {"lines": [["YOUR ", "*£1,999", " IPHONE"], ["JUST BOUNCED"]], "from": 0.55, "until": 3.0},
      "shake": [0.55, 0.99, 24.2, 28.7, 29.15], "scorecards": {"t0": 1.9, "t1": 3.1, "cards": ["10", "10", "9.9"]},
      "replay": [[28.036, 29.75]], "viewfinder": {"t0": 47.6, "t1": 48.9, "flash": 48.18}, "beats": BEATS}
 json.dump(H, open("data/beats_fix14.json", "w"), indent=1, ensure_ascii=False)

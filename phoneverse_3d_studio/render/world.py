@@ -297,7 +297,7 @@ CAM = {"hero": ((0.15, -0.28, 0.19), (0, 0.01, 0), 42), "screen": ((0.0, -0.045,
        "netfilter": ((-0.07, 0.16, 0.25), (-0.15, 0.33, 0.20), 35), "masts": ((0.0, -0.28, 0.14), (0.02, 0.26, 0.13), 24),
        "macro_top": ((0.0, -0.01, 0.13), (0.0, 0.012, 0.0), 40),
        # FIX #14 (Duo, open width 0.146 m)
-       "drop": ((0.04, -0.23, 0.07), (0.0, 0.0, 0.045), 30), "drop_low": ((-0.09, -0.21, 0.035), (0.0, 0.0, 0.02), 28),
+       "drop": ((0.0, -0.23, 0.07), (-0.04, 0.0, 0.08), 28), "drop_low": ((-0.09, -0.21, 0.035), (0.0, 0.0, 0.02), 28),
        "duo_hero": ((0.13, -0.24, 0.17), (0.0, 0.0, 0.0), 42), "duo_top": ((0.0, -0.04, 0.40), (0.0, 0.0, 0.0), 45),
        "duo_tilt": ((-0.09, -0.20, 0.19), (0.0, 0.005, 0.0), 45), "duo_seam": ((0.0, -0.055, 0.10), (0.0, 0.015, 0.006), 40),
        "duo_crack": ((0.03, -0.03, 0.07), (0.0, 0.02, 0.006), 35), "hinge": ((0.0, -0.11, 0.10), (0.0, -0.005, 0.006), 35),
@@ -343,7 +343,7 @@ def duo_screen(spec, p, which, tx, size, crop=None, mirror=False):
     tx.image = bpy.data.images.load(f, check_existing=True); DUO_LAST[which] = key
 def drop_pose(u):
     """Fall + two bounces, u 0..1 -> (height, tilt x, tilt y). Stylised slow motion; lands flat and still."""
-    if u < 0.38: k = u / 0.38; return 0.20 * (1 - k * k), math.radians(55) * (1 - k), math.radians(-25) * (1 - k)
+    if u < 0.38: k = u / 0.38; return 0.17 * (1 - k * k), math.radians(55) * (1 - k), math.radians(-25) * (1 - k)
     if u < 0.68: k = (u - 0.38) / 0.30; return 0.045 * 4 * k * (1 - k), math.radians(14) * math.sin(math.pi * k), 0.0
     if u < 0.86: k = (u - 0.68) / 0.18; return 0.012 * 4 * k * (1 - k), math.radians(-5) * math.sin(math.pi * k), 0.0
     return 0.0, 0.0, 0.0
@@ -377,7 +377,7 @@ def apply(t):
     lidv = track("lid", t); hinge.rotation_euler.x = math.radians(-75) * lidv; hinge.location.z = SZ + 0.012 * lidv
     fv = track("filter", t); knob.location.x = -0.022 + 0.012 * fv; knob.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 6 * fv
     lv = track("laptop", t, 0.4); lapscr.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 1.0 + 2.0 * lv; lap_light.data.energy = 0.08 + 0.4 * lv
-    blink.hide_render = int(t * 2) % 2 == 1
+    blink.hide_render = DUO or int(t * 2) % 2 == 1          # the mast is hidden in Duo episodes
     if "van" in PROPS:
         vv = track("van", t); fake_root.location.z = 0.055 - 0.12 * (1 - vv); hide_all(fake_objs, vv < 0.02)
         fblink.hide_render = vv < 0.02 or int(t * 3) % 2 == 1

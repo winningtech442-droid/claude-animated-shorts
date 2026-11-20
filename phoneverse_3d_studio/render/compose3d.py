@@ -30,8 +30,8 @@ def label(im, xy, txt, dx=170, dy=-170, alpha=1.0, size=48):
 
 def hook(im, t):
     h = B.get("hook")
-    if not h or t >= h["until"]: return im
-    out = im.convert("RGBA"); ov = Image.new("RGBA", im.size, (0, 0, 0, 0)); d = ImageDraw.Draw(ov); A = int(255 * ease(clamp(t * 5)))
+    if not h or t >= h["until"] or t < h.get("from", 0): return im          # "from": let frame 1 action (the drop) play clean first
+    out = im.convert("RGBA"); ov = Image.new("RGBA", im.size, (0, 0, 0, 0)); d = ImageDraw.Draw(ov); A = int(255 * ease(clamp((t - h.get("from", 0)) * 5)))
     U.rr(d, (50, 170, 1030, 470), 40, fill=(10, 10, 16, int(0.9 * A))); f = U.font(70); y = 265
     for line in h["lines"]:
         parts = [(p[1:], U.YELLOW) if p.startswith("*") else (p, (255, 255, 255)) for p in line]; x = (W - sum(d.textlength(p, font=f) for p, _ in parts)) / 2
