@@ -3,3 +3,7 @@ final/
 .venv
 __pycache__/
 build_fix13.log
+.venv_voice
+models/
+assets/
+*.log
