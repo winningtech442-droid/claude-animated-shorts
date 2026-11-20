@@ -156,11 +156,104 @@ link_real, link_real_m = beam("link_real", PHONE_ANT, Vector((-0.15, 0.33, 0.30)
 link_fake, link_fake_m = beam("link_fake", PHONE_ANT, VAN + Vector((0.02, 0, 0.055 + 0.105)), (1.0, 0.12, 0.08))
 hide_all([link_real, link_fake], "links" not in PROPS)
 
+
+# ---- iPhone Duo (FIX #14): a book-style foldable that replaces the hero phone when "duo" is in props.
+# duo_root carries the drop/bounce; the left half lies on the desk, the right half turns on a hinge along the long (y) edge at x = 0.
+# Event "open": 0 = closed (right half folded on top), 1 = flat open. "lid": lifts both inner-screen panels to show the hinge.
+# "hook": the hinge hook wiggles and glows (it catches on the screen as it opens). "drop": the fall + two bounces (0..1).
+# "flash": camera-flash light. Inner / outer screens come from the beat's "inner" / "outer" pvui expressions.
+DUO = "duo" in PROPS
+DUO_ANCH = {}
+if DUO:
+    hide_all([o for o in col.objects if o.name.startswith(("phone_body", "wall", "pcb", "cpu", "modem", "sim", "battery", "filter_", "screen"))] + [scr, glass_back], True)
+    hide_all([o for o in col.objects if o.name.startswith(("Cylinder", "panel", "Sphere", "laptop", "keyboard", "tray_"))] + [blink, lap_base, lid, lapscr], True)
+    lap_light.data.energy = 0
+    # v2 (user: "make it look like the real iPhone Duo"): Apple's product shot opens to a ~4:3 landscape screen with thin black bezels,
+    # rounded corners, a titanium frame and hinge cover, Ceramic Shield back, dual 48MP cameras in the top corner. Each half 81 x 122 x 4.5 mm.
+    DH = (0.081, 0.122, 0.0045)
+    import bmesh
+    def rbox(name, dims, loc, m, corner=0.0085, edge=0.0016):
+        """Box with rounded plan corners (vertical edges bevelled by `corner`) and softened rims (`edge`)."""
+        bpy.ops.mesh.primitive_cube_add(size=1, location=loc); o = bpy.context.active_object; o.name = name; o.scale = dims
+        bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+        bm = bmesh.new(); bm.from_mesh(o.data); vert_edges = [e for e in bm.edges if abs((e.verts[0].co - e.verts[1].co).normalized().z) > 0.99]
+        bmesh.ops.bevel(bm, geom=vert_edges, offset=corner, segments=8, affect="EDGES", profile=0.5); bm.to_mesh(o.data); bm.free()
+        md = o.modifiers.new("bev", "BEVEL"); md.width = edge; md.segments = 4; md.limit_method = "ANGLE"
+        o.data.materials.append(m); bpy.ops.object.shade_smooth(); return o
+    duo_root = empty("duo_root", (0, 0, 0))
+    titan = mat("titan", (0.70, 0.69, 0.67), 1.0, 0.22)                         # brushed-grade titanium frame
+    duo_back = mat("nightsky", (0.035, 0.045, 0.085), 0.25, 0.18)               # Night Sky ceramic back
+    glass_blk = mat("bezel", (0.004, 0.004, 0.006), 0.0, 0.05)                  # black front glass around the screens
+    lhalf = rbox("duo_left", DH, (-DH[0] / 2, 0, DH[2] / 2), titan); lhalf.parent = duo_root
+    rpiv = empty("duo_rpivot", (0, 0, DH[2]), duo_root)
+    rhalf = rbox("duo_right", DH, (DH[0] / 2, 0, -DH[2] / 2), titan); rhalf.parent = rpiv
+    for hb, par, x_, z_ in ((("duo_back_l"), duo_root, -DH[0] / 2, -0.00005), (("duo_back_r"), rpiv, DH[0] / 2, -DH[2] - 0.00005)):     # coloured back plates
+        bk = rbox(hb, (DH[0] - 0.0016, DH[1] - 0.0016, 0.0004), (x_, 0, z_ + 0.0002 if par is duo_root else z_ + 0.0002), duo_back, corner=0.0078, edge=0.0001); bk.parent = par
+    # dual camera plateau, top corner of the left half's back (faces the desk when open; shows when it falls or is closed upside down)
+    cam_pl = rbox("duo_campl", (0.026, 0.030, 0.0014), (-DH[0] + 0.017, DH[1] / 2 - 0.019, -0.0007), duo_back, corner=0.006, edge=0.0004); cam_pl.parent = duo_root
+    lensm = mat("lens", (0.01, 0.01, 0.015), 0.6, 0.05); ringm = mat("lensring", (0.75, 0.74, 0.72), 1.0, 0.2)
+    for ly in (0.0075, -0.0075):
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.0058, depth=0.0016, vertices=32, location=(-DH[0] + 0.017, DH[1] / 2 - 0.019 + ly, -0.0013)); r_ = bpy.context.active_object; r_.data.materials.append(ringm); r_.parent = duo_root
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.0043, depth=0.0018, vertices=32, location=(-DH[0] + 0.017, DH[1] / 2 - 0.019 + ly, -0.0014)); l_ = bpy.context.active_object; l_.data.materials.append(lensm); l_.parent = duo_root
+    # titanium hinge cover: the rounded spine you see when the phone is closed (hidden when open)
+    bpy.ops.mesh.primitive_cylinder_add(radius=DH[2] * 0.99, depth=DH[1] - 0.006, vertices=32, location=(0, 0, DH[2]), rotation=(math.pi / 2, 0, 0)); hcov = bpy.context.active_object
+    hcov.name = "duo_hingecover"; hcov.data.materials.append(titan); hcov.parent = duo_root; bpy.ops.object.shade_smooth()
+    # hinge spine + gears + the hook, sitting in a channel at the seam (hidden under the screen panels until the lid lifts)
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.0021, depth=0.112, location=(0, 0, DH[2] + 0.0004), rotation=(math.pi / 2, 0, 0)); spine = bpy.context.active_object
+    spine.name = "duo_spine"; spine.data.materials.append(mat("spine", (0.35, 0.36, 0.40), 1.0, 0.25)); spine.parent = duo_root
+    gearm = mat("gear", (0.75, 0.62, 0.3), 1.0, 0.3)
+    for gy in (-0.045, -0.015, 0.015, 0.045):
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.0034, depth=0.004, vertices=12, location=(0, gy, DH[2] + 0.0004), rotation=(math.pi / 2, 0, 0)); g_ = bpy.context.active_object
+        g_.data.materials.append(gearm); g_.parent = duo_root
+    HINGE_PARTS = [spine] + [o for o in col.objects if o.name.startswith("Cylinder") and o.parent is duo_root and o.data.materials and o.data.materials[0].name == "gear"]
+    hook_m = mat("hook", (0.9, 0.5, 0.1), 0.6, 0.3, emit=(1.0, 0.45, 0.05), strength=0.0)
+    hook_piv = empty("duo_hookpiv", (0, 0.0, DH[2] + 0.0018), duo_root)
+    hk = box("duo_hook", (0.0028, 0.006, 0.0012), (0, 0.0, 0.0012), hook_m, bevel=0.0004); hk.parent = hook_piv
+    hk2 = box("duo_hook_tip", (0.0028, 0.0022, 0.0022), (0, 0.0026, 0.0024), hook_m); hk2.parent = hook_piv
+    # inner screen: two thin panels (one per half), each showing its half of the inner image; outer screen on the back of the right half
+    def screen_panel(name, loc, parent, w=0.0795, l=0.1205):
+        bpy.ops.mesh.primitive_plane_add(size=1, location=loc); o = bpy.context.active_object; o.name = name; o.scale = (w, l, 1); bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+        o.parent = parent; m = bpy.data.materials.new(name); m.use_nodes = True; nt = m.node_tree
+        for nd in list(nt.nodes): nt.nodes.remove(nd)
+        tx = nt.nodes.new("ShaderNodeTexImage"); em = nt.nodes.new("ShaderNodeEmission"); em.inputs["Strength"].default_value = 1.5
+        gl = nt.nodes.new("ShaderNodeBsdfGlossy"); gl.inputs["Roughness"].default_value = 0.12; mx = nt.nodes.new("ShaderNodeMixShader"); mx.inputs[0].default_value = 0.015   # less glare: angled UI stays readable
+        ou = nt.nodes.new("ShaderNodeOutputMaterial"); nt.links.new(tx.outputs[0], em.inputs[0]); nt.links.new(em.outputs[0], mx.inputs[1]); nt.links.new(gl.outputs[0], mx.inputs[2]); nt.links.new(mx.outputs[0], ou.inputs[0])
+        o.data.materials.append(m); return o, tx
+    lpan_piv = empty("duo_lpanpiv", (-0.0003, 0, DH[2] + 0.0013), duo_root); rpan_piv = empty("duo_rpanpiv", (0.0003, 0, 0.0013), rpiv)
+    lpan, ltx = screen_panel("duo_inner_l", (-0.0003 - 0.0795 / 2, 0, 0), lpan_piv); rpan, rtx = screen_panel("duo_inner_r", (0.0003 + 0.0795 / 2, 0, 0), rpan_piv)
+    for pp, sx in ((lpan_piv, -1), (rpan_piv, 1)):
+        bk = box("duo_panel_back", (0.0795, 0.1205, 0.0012), (sx * (0.0003 + 0.0795 / 2), 0, -0.0007), glass_blk); bk.parent = pp
+    opan, otx = screen_panel("duo_outer", (DH[0] / 2, 0, -DH[2] - 0.0005), rpiv, 0.0785, 0.119); opan.rotation_euler.y = math.pi   # faces down when open, up when closed
+    flash_l = bpy.data.objects.new("flash", bpy.data.lights.new("flash", "POINT")); col.objects.link(flash_l); flash_l.location = (0.0, -0.12, 0.16); flash_l.data.energy = 0; flash_l.data.color = (1, 1, 1)
+    DUO_ANCH = {"screen": (lpan_piv, (-0.02, 0.025, 0.0005)), "seam": (duo_root, (0, 0.025, DH[2] + 0.002)), "hinge": (duo_root, (0, -0.04, DH[2] + 0.0004)),
+                "hook": (hook_piv, (0, 0.0026, 0.0035)), "phone": (duo_root, (-0.03, -0.05, DH[2]))}
+    # fleet: closed Duos in a 4 x 2 grid at the back of the desk ("a small number of phones"); one has a red, faulty outer screen
+    FLEET = Vector((0.0, 0.62, 0.0)); fleet_objs = []; fleet_red = None
+    for i in range(4):
+        for j in range(2):
+            c = FLEET + Vector((-0.165 + i * 0.11, -0.08 + j * 0.16, 0.0))
+            fb = rbox(f"fleet_{i}{j}", (0.081, 0.122, 0.009), c + Vector((0, 0, 0.0045)), titan); fleet_objs.append(fb)
+            red = (i, j) == (2, 0); fm = mat(f"fleetscr{i}{j}", (0.02, 0.02, 0.03), emit=(1.0, 0.02, 0.01) if red else (0.10, 0.18, 0.75), strength=0.9 if red else 0.7)
+            fs = rbox(f"fleet_scr_{i}{j}", (0.0765, 0.117, 0.0004), c + Vector((0, 0, 0.0091)), fm, corner=0.0075, edge=0.0001); fleet_objs.append(fs)
+            if red: fleet_red = fm
+    hide_all(fleet_objs, "fleet" not in PROPS)
+    # pound coins (visual joke on "two thousand solid British pounds"): event "coins" 0..1 rains them onto the desk
+    import random as _rc; _rc.seed(11); coin_m = mat("coin", (0.95, 0.72, 0.25), 1.0, 0.22); COINS = []
+    for i in range(16):
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.0115, depth=0.0028, vertices=24); co = bpy.context.active_object; co.name = f"coin{i}"; co.data.materials.append(coin_m)
+        x_ = _rc.uniform(-0.13, 0.13); y_ = _rc.uniform(-0.12, 0.13)
+        if abs(x_) < 0.095 and abs(y_) < 0.07: x_ = math.copysign(0.10 + abs(x_) * 0.3, x_)       # land around the phone, not on it
+        COINS.append((co, x_, y_, i * 0.045, _rc.uniform(0, 6.28), _rc.uniform(-0.25, 0.25))); co.hide_render = True
+    DUO_ANCH["fleetred"] = (None, tuple(FLEET + Vector((0.055, -0.08, 0.0095))))
+
 # anchors for 2D labels (compose3d.py pins tags to these)
 ANCH = {"screen": (0, 0, PH[2] + 0.004), "modem": (0.02, 0.052, z0), "sim": (-0.019, 0.05, z0), "filter": (-0.016, 0.004, z0 + 0.002), "cpu": (0.004, 0.025, z0),
         "battery": (0, -0.038, z0 + 0.001), "mast": (-0.15, 0.33, 0.33), "laptop": (0.16, 0.407, 0.09), "tray": tuple(TR + Vector((0, 0, 0.02))), "phone": (0, -0.06, PH[2]),
         "van": tuple(VAN + Vector((0.0, -0.025, 0.04))), "fakemast": tuple(VAN + Vector((0.02, 0, 0.055 + 0.125))), "netfilter": (-0.15, 0.33 - 0.026, 0.19)}
 for k, v in ANCH.items(): empty("anchor_" + k, v)
+if DUO:
+    for k in ("screen", "phone"): ANCH.pop(k); bpy.data.objects.remove(bpy.data.objects["anchor_" + k])
+    for k, (par, v) in DUO_ANCH.items(): empty("anchor_" + k, v, par); ANCH[k] = v
 NODES = {"mast": Vector((-0.15, 0.33, 0.335)), "phone": Vector((0.02, 0.052, z0 + 0.006)), "laptop": Vector((0.16, 0.38, 0.06)), "tray": TR + Vector((0, 0, 0.012)),
          "van": VAN + Vector((0.02, 0, 0.055 + 0.125)), "netfilter": Vector((-0.15, 0.33, 0.19))}
 
@@ -195,7 +288,15 @@ CAM = {"hero": ((0.15, -0.28, 0.19), (0, 0.01, 0), 42), "screen": ((0.0, -0.045,
        "street": ((0.03, -0.56, 0.42), (0.03, 0.15, 0.06), 22), "van": ((0.09, -0.07, 0.11), (0.205, 0.10, 0.06), 35),
        "van_close": ((0.12, -0.05, 0.10), (0.21, 0.10, 0.075), 35), "van_top": ((0.16, 0.0, 0.30), (0.215, 0.10, 0.10), 30),
        "netfilter": ((-0.07, 0.16, 0.25), (-0.15, 0.33, 0.20), 35), "masts": ((0.0, -0.28, 0.14), (0.02, 0.26, 0.13), 24),
-       "macro_top": ((0.0, -0.01, 0.13), (0.0, 0.012, 0.0), 40)}
+       "macro_top": ((0.0, -0.01, 0.13), (0.0, 0.012, 0.0), 40),
+       # FIX #14 (Duo, open width 0.146 m)
+       "drop": ((0.04, -0.23, 0.07), (0.0, 0.0, 0.045), 30), "drop_low": ((-0.09, -0.21, 0.035), (0.0, 0.0, 0.02), 28),
+       "duo_hero": ((0.13, -0.24, 0.17), (0.0, 0.0, 0.0), 42), "duo_top": ((0.0, -0.04, 0.40), (0.0, 0.0, 0.0), 45),
+       "duo_tilt": ((-0.09, -0.20, 0.19), (0.0, 0.005, 0.0), 45), "duo_seam": ((0.0, -0.055, 0.10), (0.0, 0.015, 0.006), 40),
+       "duo_crack": ((0.03, -0.03, 0.07), (0.0, 0.02, 0.006), 35), "hinge": ((0.0, -0.11, 0.10), (0.0, -0.005, 0.006), 35),
+       "hinge_low": ((-0.05, -0.10, 0.05), (0.0, -0.01, 0.006), 32), "hook_macro": ((0.012, -0.03, 0.034), (0.0, 0.002, 0.007), 35),
+       "fleet": ((0.0, 0.30, 0.40), (0.0, 0.62, 0.0), 35), "fleet_red": ((0.10, 0.44, 0.17), (0.055, 0.54, 0.0), 40),
+       "duo_side": ((0.30, -0.14, 0.11), (0.0, 0.0, 0.01), 38), "duo_wide": ((0.0, -0.42, 0.30), (0.0, 0.03, 0.0), 32)}
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
 
@@ -220,12 +321,52 @@ def set_screen(spec, p):
         im = eval(spec, {"U": U, "p": round(p * 48) / 48, "ease": ease, "clamp": clamp}); im.convert("RGB").resize((540, 960)).save(f)
     img = bpy.data.images.load(f, check_existing=True); img_node.image = img; _last[0] = key
 
+DUO_LAST = {}
+def duo_screen(spec, p, which, tx, size, crop=None, mirror=False):
+    import re
+    key = f"{which}|{spec}" + (f"@{round(p * 48) / 48:.4f}" if re.search(r"\bp\b", spec) else "")
+    if DUO_LAST.get(which) == key: return
+    f = os.path.join(SCREEN_DIR, which + "_" + hashlib.md5(key.encode()).hexdigest()[:12] + ".png")
+    if not os.path.exists(f):
+        im = U.bezel(eval(spec, {"U": U, "p": round(p * 48) / 48, "ease": ease, "clamp": clamp}).convert("RGB"))
+        if crop == "L": im = im.crop((0, 0, im.width // 2, im.height))
+        if crop == "R": im = im.crop((im.width // 2, 0, im.width, im.height))
+        if mirror: im = im.transpose(0)
+        im.resize(size).save(f)
+    tx.image = bpy.data.images.load(f, check_existing=True); DUO_LAST[which] = key
+def drop_pose(u):
+    """Fall + two bounces, u 0..1 -> (height, tilt x, tilt y). Stylised slow motion; lands flat and still."""
+    if u < 0.38: k = u / 0.38; return 0.20 * (1 - k * k), math.radians(55) * (1 - k), math.radians(-25) * (1 - k)
+    if u < 0.68: k = (u - 0.38) / 0.30; return 0.045 * 4 * k * (1 - k), math.radians(14) * math.sin(math.pi * k), 0.0
+    if u < 0.86: k = (u - 0.68) / 0.18; return 0.012 * 4 * k * (1 - k), math.radians(-5) * math.sin(math.pi * k), 0.0
+    return 0.0, 0.0, 0.0
+def apply_duo(t, b, p):
+    ov = track("open", t); rpiv.rotation_euler.y = -math.pi * (1 - ov); hcov.hide_render = ov > 0.5
+    dv = track("drop", t, 1.0); hz, rx, ry = drop_pose(dv); duo_root.location = (0, 0, hz + 0.0001); duo_root.rotation_euler = (rx, ry, 0)
+    lv = track("lid", t)                          # cutaway: the two screen panels slide apart and up, the seam (hinge + hook) shows between them
+    lpan_piv.location = (-0.0003 - 0.036 * lv, 0, DH[2] + 0.0013 + 0.03 * lv); lpan_piv.rotation_euler.y = math.radians(-18) * lv
+    rpan_piv.location = (0.0003 + 0.036 * lv, 0, 0.0013 + 0.03 * lv); rpan_piv.rotation_euler.y = math.radians(18) * lv
+    for o in HINGE_PARTS + [hk, hk2]: o.hide_render = lv < 0.05            # hinge internals only in the cutaway (they poked through the screen)
+    hv = track("hook", t); hook_piv.rotation_euler.x = math.radians(35) * hv * math.sin(t * 9); hook_m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 8 * hv
+    flash_l.data.energy = 20 * track("flash", t)
+    if fleet_red: fleet_red.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 0.6 + 0.8 * (int(t * 4) % 2)
+    cv = track("coins", t)
+    for co, x_, y_, d_, rz, tilt in COINS:
+        u = clamp((cv - d_) / 0.4); co.hide_render = cv <= d_
+        if u < 0.55: k = u / 0.55; z = 0.26 * (1 - k * k); spin = (1 - k) * 7
+        elif u < 0.8: k = (u - 0.55) / 0.25; z = 0.02 * 4 * k * (1 - k); spin = 0.0
+        else: z = 0.0; spin = 0.0
+        co.location = (x_, y_, z + 0.0014); co.rotation_euler = (spin + tilt * (1 - u), tilt * (1 - u), rz)
+    inner = b.get("inner") or "U.duo_home()"; outer = b.get("outer") or "U.duo_outer()"
+    duo_screen(inner, p, "innerL", ltx, (720, 1080), "L"); duo_screen(inner, p, "innerR", rtx, (720, 1080), "R"); duo_screen(outer, p, "outer", otx, (713, 1080), None, False)
+
 def apply(t):
     b = beat_at(t); p = clamp((t - b["t0"]) / max(1e-3, b["t1"] - b["t0"]))
     ca, cb = b["cam"] if isinstance(b["cam"], list) else (b["cam"], b["cam"]); A, Bc = CAM[ca], CAM[cb]; k = ease(p)
     loc = Vector(A[0]).lerp(Vector(Bc[0]), k); tgt = Vector(A[1]).lerp(Vector(Bc[1]), k); cam.data.lens = A[2] + (Bc[2] - A[2]) * k
-    cam.location = loc; cam.rotation_euler = (tgt - loc).to_track_quat("-Z", "Y").to_euler(); cam.data.dof.focus_distance = (tgt - loc).length
+    cam.location = loc; cam.rotation_euler = (tgt - loc).to_track_quat("-Z", "Y").to_euler(); cam.data.dof.focus_distance = (tgt - loc).length; cam.data.dof.use_dof = bool(b.get("dof", False))
     set_screen(b.get("screen"), p)
+    if DUO: apply_duo(t, b, p)
     lidv = track("lid", t); hinge.rotation_euler.x = math.radians(-75) * lidv; hinge.location.z = SZ + 0.012 * lidv
     fv = track("filter", t); knob.location.x = -0.022 + 0.012 * fv; knob.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 6 * fv
     lv = track("laptop", t, 0.4); lapscr.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 1.0 + 2.0 * lv; lap_light.data.energy = 0.08 + 0.4 * lv
@@ -255,10 +396,13 @@ def apply(t):
 def anchors(pk_pos):
     out = {}
     for k in ANCH:
-        v = world_to_camera_view(sc, cam, bpy.data.objects["anchor_" + k].location)
+        v = world_to_camera_view(sc, cam, bpy.data.objects["anchor_" + k].matrix_world.translation)
         out[k] = [round(v.x, 4), round(1 - v.y, 4), round(v.z, 4)]
     if pk_pos is not None: v = world_to_camera_view(sc, cam, pk_pos); out["packet"] = [round(v.x, 4), round(1 - v.y, 4), round(v.z, 4)]
     out["_lid"] = round(track("lid", CUR_T[0]), 3)                       # compose3d.py adds part labels while the lid is open
+    if DUO:
+        sv = world_to_camera_view(sc, cam, lpan.matrix_world @ Vector((0, 0.076, 0))); sv0 = world_to_camera_view(sc, cam, lpan.matrix_world @ Vector((0, -0.076, 0)))
+        out["_screen_px"] = round(abs(sv.y - sv0.y), 4); return out
     sv = world_to_camera_view(sc, cam, scr.matrix_world @ Vector((0.0345, 0.0745, 0))); sv0 = world_to_camera_view(sc, cam, scr.matrix_world @ Vector((-0.0345, -0.0745, 0)))
     out["_screen_px"] = round(abs(sv.y - sv0.y), 4)                        # screen height as a fraction of the frame: compose adds an inset when it is small
     return out

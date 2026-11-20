@@ -13,6 +13,7 @@ def font(size, bold=True):
     return ImageFont.load_default()
 ORANGE = (255, 150, 30); RED = (235, 50, 60); GREEN = (40, 190, 100); PURPLE = (92, 40, 170); YELLOW = (255, 214, 10)
 INK = (20, 20, 28); PAPER = (246, 246, 250); BLUE = (30, 120, 255)
+CLOCK = "19:40"                  # one clock on every screen in an episode (FIX #13 showed 22:04 on one screen, 18:42 on the rest)
 ease = lambda p: p * p * (3 - 2 * p)
 def clamp(p): return max(0.0, min(1.0, p))
 def rr(d, box, r, fill=None, outline=None, width=1): d.rounded_rectangle(box, r, fill=fill, outline=outline, width=width)
@@ -26,13 +27,13 @@ def glow_box(im, box, color=ORANGE, width=10, pad=14, r=26, pulse=1.0):
     out = im.convert("RGBA"); out.alpha_composite(ov.filter(ImageFilter.GaussianBlur(2))); return out.convert("RGB")
 def status_bar(d, dark=False):
     c = (255, 255, 255) if dark else INK
-    text(d, (72, 128), "22:04", 40, c, True, "la"); rr(d, (880, 134, 960, 166), 8, outline=c, width=4); rr(d, (886, 140, 940, 160), 4, fill=c)
+    text(d, (72, 128), CLOCK, 40, c, True, "la"); rr(d, (880, 134, 960, 166), 8, outline=c, width=4); rr(d, (886, 140, 940, 160), 4, fill=c)
 
 def banner(p=1.0, big=True):
     """ParcelGo text banner. p = slam-in progress (0 off-screen, 1 settled). big=True fills the frame (frame 1 / shot 1b)."""
     im = canvas((18, 16, 40)); d = ImageDraw.Draw(im)
     for y in range(0, 1190, 6): d.line([(0, y), (W, y)], fill=(18 + y // 90, 16 + y // 110, 40 + y // 60))
-    status_bar(d, True); text(d, (540, 225), "22:04", 190, (255, 255, 255), True, "ma"); text(d, (540, 415), "Thursday", 44, (200, 200, 230), False, "ma")
+    status_bar(d, True); text(d, (540, 225), CLOCK, 190, (255, 255, 255), True, "ma"); text(d, (540, 415), "Thursday", 44, (200, 200, 230), False, "ma")
     s = 1.0 if p >= 1 else ease(clamp(p)); k = 1.55 if big else 1.0
     cx, cy = 540, int(740 + (1 - s) * -520 * 0 + (1 - s) * 400)
     w, h = int(940 * (0.7 + 0.3 * s) * (1 if not big else 1)), int(330 * k)
@@ -261,7 +262,7 @@ def hook_title(im, p=1.0):
 # Generic UI only: no real OS look, no logos. Sender names are plain text the way a scam text shows them.
 def net_bar(d, net="5G", bars=4, dark=True, warn=False):
     """Status bar with signal bars and the network type, top right. warn=True paints the type red (the downgrade)."""
-    c = (255, 255, 255) if dark else INK; text(d, (72, 128), "18:42", 40, c, True, "la")
+    c = (255, 255, 255) if dark else INK; text(d, (72, 128), CLOCK, 40, c, True, "la")
     for i in range(5):
         h = 12 + i * 9; x = 700 + i * 22; d.rectangle((x, 166 - h, x + 14, 166), fill=c if i < bars else (c[0] // 3, c[1] // 3, c[2] // 3))
     text(d, (820, 128), net, 40, RED if warn else c, True, "la"); rr(d, (920, 134, 1000, 166), 8, outline=c, width=4); rr(d, (926, 140, 980, 160), 4, fill=c)
@@ -270,7 +271,7 @@ def sms_notice(p=1.0, net="5G", bars=4, warn=False, tap=0.0):
     """Lock screen at 18:42 with the fake refund text sliding in. p = slide-in progress, tap 0..1 = orange tap ring on the link."""
     im = canvas((16, 20, 38)); d = ImageDraw.Draw(im)
     for y in range(0, 1190, 6): d.line([(0, y), (W, y)], fill=(16 + y // 100, 20 + y // 120, 38 + y // 70))
-    net_bar(d, net, bars, True, warn); text(d, (540, 225), "18:42", 190, (255, 255, 255), True, "ma"); text(d, (540, 415), "Saturday", 44, (200, 200, 230), False, "ma")
+    net_bar(d, net, bars, True, warn); text(d, (540, 225), CLOCK, 190, (255, 255, 255), True, "ma"); text(d, (540, 415), "Saturday", 44, (200, 200, 230), False, "ma")
     s = ease(clamp(p)); cy = int(760 + (1 - s) * 420); box = (70, cy - 190, 1010, cy + 190)
     rr(d, (box[0] + 8, box[1] + 14, box[2] + 8, box[3] + 14), 50, fill=(0, 0, 0)); rr(d, box, 50, fill=(255, 255, 255))
     rr(d, (box[0] + 36, box[1] + 36, box[0] + 132, box[1] + 132), 26, fill=GREEN); text(d, (box[0] + 84, box[1] + 84), "✉", 60, (255, 255, 255), True, "mm")
@@ -348,3 +349,99 @@ def share_to(name="Android friend", p=1.0):
     im = canvas((246, 250, 255)); d = ImageDraw.Draw(im); k = ease(clamp(p)); rr(d, (420, 760, 1030, 900), 70, fill=GREEN); text(d, (725, 830), name, 60, (255, 255, 255), True, "mm")
     x = int(90 + (300 - 90) * k); y = int(1000 - (1000 - 840) * k)
     d.polygon([(x, y - 50), (x + 130, y), (x, y + 50), (x + 24, y)], fill=ORANGE); return im
+
+
+# ---- FIX #14 (iPhone Duo crackgate) screens: generic foldable UI, dark mode, bold high-contrast text ----------------------
+# No real OS look, no logos, no real app icons. The inner screen is near-square (open foldable): IW x IH, split down the middle
+# onto the two halves by world.py. The outer screen is a tall strip (OW x OH).
+IW, IH = 1440, 1080              # open inner screen is landscape, about 4:3 (Apple's product shot), fold down the middle
+OW, OH = 713, 1080
+_TILES = [(255, 150, 30), (40, 190, 100), (30, 120, 255), (235, 50, 60), (92, 40, 170), (255, 214, 10), (0, 170, 190), (230, 90, 160)]
+
+def _crack(d, crack, seam_x):
+    """A black crack down the fold with pixel bleed either side. crack 0..1 = how far it has run from the top."""
+    if crack <= 0: return
+    import random; r = random.Random(7); y_end = int(IH * clamp(crack)); x = seam_x; pts = [(x, 0)]
+    for y in range(40, y_end + 1, 40): x = seam_x + r.randint(-9, 9); pts.append((x, y))
+    for k, (w, c) in enumerate(((34, (0, 230, 120)), (22, (230, 0, 200)), (12, (10, 10, 12)))):     # green/magenta bleed, then the dead line
+        d.line(pts, fill=c, width=w)
+    for (px, py) in pts[2::3]:                                                                       # little side fractures
+        d.line([(px, py), (px + r.choice((-1, 1)) * r.randint(18, 46), py + r.randint(8, 30))], fill=(10, 10, 12), width=5)
+
+def _plaster(d, cx, cy, p):
+    """Sticking plaster slapped over the crack (visual joke). p 0..1 = slap-in."""
+    if p <= 0: return
+    s = 0.6 + 0.4 * ease(clamp(p * 2)); w, h = int(420 * s), int(130 * s)
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); g = ImageDraw.Draw(im)
+    g.rounded_rectangle((0, 0, w - 1, h - 1), h // 2, fill=(236, 186, 140, 255), outline=(190, 140, 100, 255), width=4)
+    g.rounded_rectangle((w // 3, 10, 2 * w // 3, h - 10), 14, fill=(250, 226, 200, 255))
+    for i in range(6):
+        for j in range(2): g.ellipse((w // 3 + 18 + i * (w // 3 - 30) // 6, 30 + j * (h - 80), w // 3 + 26 + i * (w // 3 - 30) // 6, 38 + j * (h - 80)), fill=(200, 160, 120, 255))
+    im = im.rotate(-28, expand=True, resample=Image.BICUBIC); d._image.paste(im, (cx - im.width // 2, cy - im.height // 2), im)
+
+def duo_home(crack=0.0, press=0.0, plaster=0.0, red=False):
+    """Open inner screen (landscape): a big clock widget on the left half, plain app tiles on the right, a faint crease at the fold.
+    press 0..1 = orange glow pushing up under the fold; crack 0..1 = the black line running down the fold; plaster = the joke fix."""
+    im = Image.new("RGB", (IW, IH), (14, 16, 30)); d = ImageDraw.Draw(im)
+    for y in range(0, IH, 6): d.line([(0, y), (IW, y)], fill=(18 + y // 50, 22 + y // 60, 44 + y // 28))
+    rr(d, (90, 120, 640, 560), 60, fill=(36, 42, 78)); text(d, (365, 190), CLOCK, 170, (255, 255, 255), True, "ma"); text(d, (365, 410), "Fri 20 Nov", 54, (215, 220, 245), True, "ma")
+    rr(d, (90, 620, 640, 960), 60, fill=(48, 36, 80)); text(d, (365, 700), "Sunny", 52, (255, 255, 255), True, "ma"); text(d, (365, 790), "12°", 110, YELLOW, True, "ma")
+    for i in range(4):
+        for j in range(4):
+            x0, y0 = 800 + i * 150, 150 + j * 210; rr(d, (x0, y0, x0 + 116, y0 + 116), 30, fill=_TILES[(i + 3 * j) % 8])
+    ov = Image.new("RGBA", (IW, IH), (0, 0, 0, 0)); g = ImageDraw.Draw(ov)                     # the crease: a soft light band at the fold
+    for k, a in ((26, 10), (12, 18), (4, 30)): g.rectangle((IW // 2 - k, 0, IW // 2 + k, IH), fill=(255, 255, 255, a))
+    if press > 0:
+        for k in range(8): g.ellipse((IW // 2 - 40 - k * 22, IH // 2 - 120 - k * 30, IW // 2 + 40 + k * 22, IH // 2 + 120 + k * 30), fill=(255, 140, 20, int(70 * press)))
+    im = Image.alpha_composite(im.convert("RGBA"), ov.filter(ImageFilter.GaussianBlur(10))).convert("RGB"); d = ImageDraw.Draw(im)
+    if red: d.rectangle((0, 0, IW, IH), outline=RED, width=30)
+    _crack(d, crack, IW // 2); _plaster(d, IW // 2, int(IH * 0.42), plaster)
+    return im
+
+def duo_card(title, big, sub=None, color=ORANGE, p=1.0, crack=0.0):
+    """Dark card on the inner screen: small title, one huge bold value, optional sub line. Readable at phone size."""
+    im = Image.new("RGB", (IW, IH), (12, 13, 22)); d = ImageDraw.Draw(im); k = ease(clamp(p * 3))
+    rr(d, (70, 90, IW - 70, IH - 90), 60, fill=(26, 28, 44), outline=color, width=10)
+    text(d, (IW // 2, 170), title, 72, (235, 236, 245), True, "ma")
+    text(d, (IW // 2, 330 + int((1 - k) * 60)), big, 300 if len(big) <= 4 else 230, color, True, "ma")
+    if sub: text(d, (IW // 2, 800), sub, 64, (235, 236, 245), True, "ma")
+    _crack(d, crack, IW // 2); return im
+
+def duo_camera(flash=0.0, crack=1.0):
+    """The camera app pointed at the crack: viewfinder frame + shutter. flash 0..1 = white-out."""
+    im = duo_home(crack); d = ImageDraw.Draw(im)
+    for (x, y, sx, sy) in ((90, 120, 1, 1), (IW - 90, 120, -1, 1), (90, IH - 260, 1, -1), (IW - 90, IH - 260, -1, -1)):
+        d.line([(x, y), (x + sx * 110, y)], fill=(255, 255, 255), width=12); d.line([(x, y), (x, y + sy * 110)], fill=(255, 255, 255), width=12)
+    rr(d, (0, IH - 200, IW, IH), 0, fill=(10, 10, 14)); d.ellipse((IW // 2 - 70, IH - 170, IW // 2 + 70, IH - 30), fill=(255, 255, 255), outline=(150, 150, 160), width=10)
+    text(d, (IW // 2, 60), "PHOTO", 50, YELLOW, True, "ma")
+    if flash > 0: im = Image.blend(im, Image.new("RGB", im.size, (255, 255, 255)), clamp(flash))
+    return im
+
+def duo_ask(prompt="Would you fold it every day?", p=1.0):
+    """Comment box, dark mode: bold white prompt, light-grey placeholder that reads at phone size (FIX #13 light card read blank)."""
+    im = Image.new("RGB", (IW, IH), (12, 13, 22)); d = ImageDraw.Draw(im); text(d, (IW // 2, 150), "Comments", 72, (255, 255, 255), True, "ma")
+    k = ease(clamp(p)); y = int(800 - 380 * k); rr(d, (60, y, IW - 60, y + 330), 50, fill=(30, 32, 50), outline=ORANGE, width=8)
+    text(d, (110, y + 95), prompt, 60, (255, 255, 255), True, "lm"); text(d, (110, y + 215), "Yes / No - tell me why", 54, (190, 192, 210), True, "lm")
+    if int(p * 14) % 2 == 0: d.rectangle((110, y + 250, 118, y + 300), fill=(255, 255, 255))
+    return im
+
+def duo_share(p=1.0):
+    im = Image.new("RGB", (IW, IH), (12, 13, 22)); d = ImageDraw.Draw(im); k = ease(clamp(p))
+    text(d, (IW // 2, 150), "Send to", 72, (255, 255, 255), True, "ma"); rr(d, (760, 460, 1300, 620), 80, fill=BLUE); text(d, (1030, 540), "New Duo owner", 56, (255, 255, 255), True, "mm")
+    x = int(150 + (600 - 150) * k); d.polygon([(x, 480), (x + 150, 540), (x, 600), (x + 28, 540)], fill=ORANGE); return im
+
+def duo_outer(alert=False):
+    """Outer (cover) screen: lock-screen clock, front-camera pill at the top."""
+    im = Image.new("RGB", (OW, OH), (16, 18, 34)); d = ImageDraw.Draw(im)
+    for y in range(0, OH, 6): d.line([(0, y), (OW, y)], fill=(18 + y // 50, 22 + y // 60, 44 + y // 28))
+    rr(d, (OW // 2 - 90, 34, OW // 2 + 90, 84), 25, fill=(0, 0, 0))
+    text(d, (OW // 2, 200), CLOCK, 170, (255, 255, 255), True, "ma"); text(d, (OW // 2, 400), "Fri 20 Nov", 50, (215, 220, 245), True, "ma")
+    if alert: rr(d, (60, 760, OW - 60, 940), 40, fill=RED); text(d, (OW // 2, 850), "FAULTY", 70, (255, 255, 255), True, "mm")
+    return im
+
+def bezel(im, margin=0.022, radius=0.075):
+    """Thin black bezel + rounded corners (applied to a whole screen image before it is split onto the panels)."""
+    w, h = im.size; m = int(min(w, h) * margin); r = int(min(w, h) * radius)
+    out = Image.new("RGB", (w, h), (0, 0, 0)); inner = im.resize((w - 2 * m, h - 2 * m), Image.LANCZOS)
+    mask = Image.new("L", inner.size, 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, inner.width - 1, inner.height - 1), r, fill=255)
+    out.paste(inner, (m, m), mask); return out

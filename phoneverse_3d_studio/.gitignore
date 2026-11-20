@@ -7,3 +7,5 @@ build_fix13.log
 models/
 assets/
 *.log
+build_dbg/
+build_test_fix14.log

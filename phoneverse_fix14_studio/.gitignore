@@ -1,0 +1,9 @@
+.venv/
+assets/
+frames/
+out/
+final/
+__pycache__/
+models/
+*.log
+audio/auditions/*.wav
