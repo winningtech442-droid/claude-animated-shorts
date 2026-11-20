@@ -42,7 +42,8 @@ def hook(im, t):
 def hud(im, b, t):
     h = b.get("hud")
     if not h or t < h.get("from", -1): return im
-    pr = clamp((t - max(b["t0"], h.get("from", b["t0"]))) / max(1e-3, h.get("until", b["t1"]) - max(b["t0"], h.get("from", b["t0"]))))
+    t0_ = h.get("from", b["t0"])                     # v2 (FIX #14): a count that spans two beats keeps counting across the cut (it reset to 0 before)
+    pr = clamp((t - t0_) / max(1e-3, h.get("until", b["t1"]) - t0_))
     if "steps" in h: val = h["steps"][min(len(h["steps"]) - 1, int(pr * len(h["steps"])))]
     elif "count" in h:
         lo, hi, unit = h["count"][:3]; suf = h["count"][3] if len(h["count"]) > 3 else ""
