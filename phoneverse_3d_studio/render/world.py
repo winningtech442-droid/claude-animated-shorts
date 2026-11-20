@@ -172,23 +172,30 @@ if DUO:
     # rounded corners, a titanium frame and hinge cover, Ceramic Shield back, dual 48MP cameras in the top corner. Each half 81 x 122 x 4.5 mm.
     DH = (0.081, 0.122, 0.0045)
     import bmesh
-    def rbox(name, dims, loc, m, corner=0.0085, edge=0.0016):
-        """Box with rounded plan corners (vertical edges bevelled by `corner`) and softened rims (`edge`)."""
+    def rbox(name, dims, loc, m, corner=0.0085, edge=0.0016, seam=0):
+        """Box with rounded plan corners and softened rims. seam = -1 / +1: that x side is the fold, and stays square and sharp
+        (no corner, no rim bevel) so the two halves join seamlessly like the real phone; 0 = round everything (fleet phones)."""
         bpy.ops.mesh.primitive_cube_add(size=1, location=loc); o = bpy.context.active_object; o.name = name; o.scale = dims
         bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
-        bm = bmesh.new(); bm.from_mesh(o.data); vert_edges = [e for e in bm.edges if abs((e.verts[0].co - e.verts[1].co).normalized().z) > 0.99]
-        bmesh.ops.bevel(bm, geom=vert_edges, offset=corner, segments=8, affect="EDGES", profile=0.5); bm.to_mesh(o.data); bm.free()
-        md = o.modifiers.new("bev", "BEVEL"); md.width = edge; md.segments = 4; md.limit_method = "ANGLE"
+        bm = bmesh.new(); bm.from_mesh(o.data); hx = dims[0] / 2
+        on_seam = lambda v: seam != 0 and abs(v.co.x - seam * hx) < 1e-6
+        vert_edges = [e for e in bm.edges if abs((e.verts[0].co - e.verts[1].co).normalized().z) > 0.99 and not on_seam(e.verts[0])]
+        bmesh.ops.bevel(bm, geom=vert_edges, offset=corner, segments=8, affect="EDGES", profile=0.5)
+        bw = bm.edges.layers.float.get("bevel_weight_edge") or bm.edges.layers.float.new("bevel_weight_edge")
+        for e in bm.edges: e[bw] = 0.0 if (on_seam(e.verts[0]) and on_seam(e.verts[1])) or (on_seam(e.verts[0]) or on_seam(e.verts[1])) and abs((e.verts[0].co - e.verts[1].co).normalized().x) < 0.5 and abs(e.verts[0].co.x - e.verts[1].co.x) < 1e-6 else 1.0
+        bm.to_mesh(o.data); bm.free()
+        md = o.modifiers.new("bev", "BEVEL"); md.width = edge; md.segments = 4; md.limit_method = "WEIGHT" if seam else "ANGLE"
         o.data.materials.append(m); bpy.ops.object.shade_smooth(); return o
     duo_root = empty("duo_root", (0, 0, 0))
     titan = mat("titan", (0.70, 0.69, 0.67), 1.0, 0.22)                         # brushed-grade titanium frame
     duo_back = mat("nightsky", (0.035, 0.045, 0.085), 0.25, 0.18)               # Night Sky ceramic back
     glass_blk = mat("bezel", (0.004, 0.004, 0.006), 0.0, 0.05)                  # black front glass around the screens
-    lhalf = rbox("duo_left", DH, (-DH[0] / 2, 0, DH[2] / 2), titan); lhalf.parent = duo_root
+    lhalf = rbox("duo_left", DH, (-DH[0] / 2, 0, DH[2] / 2), titan, seam=1); lhalf.parent = duo_root
     rpiv = empty("duo_rpivot", (0, 0, DH[2]), duo_root)
-    rhalf = rbox("duo_right", DH, (DH[0] / 2, 0, -DH[2] / 2), titan); rhalf.parent = rpiv
+    rhalf = rbox("duo_right", DH, (DH[0] / 2, 0, -DH[2] / 2), titan, seam=-1); rhalf.parent = rpiv
     for hb, par, x_, z_ in ((("duo_back_l"), duo_root, -DH[0] / 2, -0.00005), (("duo_back_r"), rpiv, DH[0] / 2, -DH[2] - 0.00005)):     # coloured back plates
-        bk = rbox(hb, (DH[0] - 0.0016, DH[1] - 0.0016, 0.0004), (x_, 0, z_ + 0.0002 if par is duo_root else z_ + 0.0002), duo_back, corner=0.0078, edge=0.0001); bk.parent = par
+        sd = 1 if par is duo_root else -1                                  # back plates also run square into the fold
+        bk = rbox(hb, (DH[0] - 0.0008, DH[1] - 0.0016, 0.0004), (x_ + sd * 0.0004, 0, z_ + 0.0002), duo_back, corner=0.0078, edge=0.0001, seam=sd); bk.parent = par
     # dual camera plateau, top corner of the left half's back (faces the desk when open; shows when it falls or is closed upside down)
     cam_pl = rbox("duo_campl", (0.026, 0.030, 0.0014), (-DH[0] + 0.017, DH[1] / 2 - 0.019, -0.0007), duo_back, corner=0.006, edge=0.0004); cam_pl.parent = duo_root
     lensm = mat("lens", (0.01, 0.01, 0.015), 0.6, 0.05); ringm = mat("lensring", (0.75, 0.74, 0.72), 1.0, 0.2)
@@ -219,10 +226,10 @@ if DUO:
         gl = nt.nodes.new("ShaderNodeBsdfGlossy"); gl.inputs["Roughness"].default_value = 0.12; mx = nt.nodes.new("ShaderNodeMixShader"); mx.inputs[0].default_value = 0.015   # less glare: angled UI stays readable
         ou = nt.nodes.new("ShaderNodeOutputMaterial"); nt.links.new(tx.outputs[0], em.inputs[0]); nt.links.new(em.outputs[0], mx.inputs[1]); nt.links.new(gl.outputs[0], mx.inputs[2]); nt.links.new(mx.outputs[0], ou.inputs[0])
         o.data.materials.append(m); return o, tx
-    lpan_piv = empty("duo_lpanpiv", (-0.0003, 0, DH[2] + 0.0013), duo_root); rpan_piv = empty("duo_rpanpiv", (0.0003, 0, 0.0013), rpiv)
-    lpan, ltx = screen_panel("duo_inner_l", (-0.0003 - 0.0795 / 2, 0, 0), lpan_piv); rpan, rtx = screen_panel("duo_inner_r", (0.0003 + 0.0795 / 2, 0, 0), rpan_piv)
+    lpan_piv = empty("duo_lpanpiv", (0.0, 0, DH[2] + 0.0013), duo_root); rpan_piv = empty("duo_rpanpiv", (0.0, 0, 0.0013), rpiv)
+    lpan, ltx = screen_panel("duo_inner_l", (-0.081 / 2, 0, 0), lpan_piv, 0.081, 0.1205); rpan, rtx = screen_panel("duo_inner_r", (0.081 / 2, 0, 0), rpan_piv, 0.081, 0.1205)
     for pp, sx in ((lpan_piv, -1), (rpan_piv, 1)):
-        bk = box("duo_panel_back", (0.0795, 0.1205, 0.0012), (sx * (0.0003 + 0.0795 / 2), 0, -0.0007), glass_blk); bk.parent = pp
+        bk = box("duo_panel_back", (0.081, 0.1205, 0.0012), (sx * 0.081 / 2, 0, -0.0007), glass_blk); bk.parent = pp
     opan, otx = screen_panel("duo_outer", (DH[0] / 2, 0, -DH[2] - 0.0005), rpiv, 0.0785, 0.119); opan.rotation_euler.y = math.pi   # faces down when open, up when closed
     flash_l = bpy.data.objects.new("flash", bpy.data.lights.new("flash", "POINT")); col.objects.link(flash_l); flash_l.location = (0.0, -0.12, 0.16); flash_l.data.energy = 0; flash_l.data.color = (1, 1, 1)
     DUO_ANCH = {"screen": (lpan_piv, (-0.02, 0.025, 0.0005)), "seam": (duo_root, (0, 0.025, DH[2] + 0.002)), "hinge": (duo_root, (0, -0.04, DH[2] + 0.0004)),
@@ -344,8 +351,8 @@ def apply_duo(t, b, p):
     ov = track("open", t); rpiv.rotation_euler.y = -math.pi * (1 - ov); hcov.hide_render = ov > 0.5
     dv = track("drop", t, 1.0); hz, rx, ry = drop_pose(dv); duo_root.location = (0, 0, hz + 0.0001); duo_root.rotation_euler = (rx, ry, 0)
     lv = track("lid", t)                          # cutaway: the two screen panels slide apart and up, the seam (hinge + hook) shows between them
-    lpan_piv.location = (-0.0003 - 0.036 * lv, 0, DH[2] + 0.0013 + 0.03 * lv); lpan_piv.rotation_euler.y = math.radians(-18) * lv
-    rpan_piv.location = (0.0003 + 0.036 * lv, 0, 0.0013 + 0.03 * lv); rpan_piv.rotation_euler.y = math.radians(18) * lv
+    lpan_piv.location = (-0.036 * lv, 0, DH[2] + 0.0013 + 0.03 * lv); lpan_piv.rotation_euler.y = math.radians(-18) * lv
+    rpan_piv.location = (0.036 * lv, 0, 0.0013 + 0.03 * lv); rpan_piv.rotation_euler.y = math.radians(18) * lv
     for o in HINGE_PARTS + [hk, hk2]: o.hide_render = lv < 0.05            # hinge internals only in the cutaway (they poked through the screen)
     hv = track("hook", t); hook_piv.rotation_euler.x = math.radians(35) * hv * math.sin(t * 9); hook_m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 8 * hv
     flash_l.data.energy = 20 * track("flash", t)

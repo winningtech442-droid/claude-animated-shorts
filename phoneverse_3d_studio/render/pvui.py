@@ -380,7 +380,7 @@ def _plaster(d, cx, cy, p):
     im = im.rotate(-28, expand=True, resample=Image.BICUBIC); d._image.paste(im, (cx - im.width // 2, cy - im.height // 2), im)
 
 def duo_home(crack=0.0, press=0.0, plaster=0.0, red=False):
-    """Open inner screen (landscape): a big clock widget on the left half, plain app tiles on the right, a faint crease at the fold.
+    """Open inner screen (landscape): a big clock widget on the left half, plain app tiles on the right; one continuous screen.
     press 0..1 = orange glow pushing up under the fold; crack 0..1 = the black line running down the fold; plaster = the joke fix."""
     im = Image.new("RGB", (IW, IH), (14, 16, 30)); d = ImageDraw.Draw(im)
     for y in range(0, IH, 6): d.line([(0, y), (IW, y)], fill=(18 + y // 50, 22 + y // 60, 44 + y // 28))
@@ -389,8 +389,7 @@ def duo_home(crack=0.0, press=0.0, plaster=0.0, red=False):
     for i in range(4):
         for j in range(4):
             x0, y0 = 800 + i * 150, 150 + j * 210; rr(d, (x0, y0, x0 + 116, y0 + 116), 30, fill=_TILES[(i + 3 * j) % 8])
-    ov = Image.new("RGBA", (IW, IH), (0, 0, 0, 0)); g = ImageDraw.Draw(ov)                     # the crease: a soft light band at the fold
-    for k, a in ((26, 10), (12, 18), (4, 30)): g.rectangle((IW // 2 - k, 0, IW // 2 + k, IH), fill=(255, 255, 255, a))
+    ov = Image.new("RGBA", (IW, IH), (0, 0, 0, 0)); g = ImageDraw.Draw(ov)                     # no crease line: the real Duo's fold reads as one screen
     if press > 0:
         for k in range(8): g.ellipse((IW // 2 - 40 - k * 22, IH // 2 - 120 - k * 30, IW // 2 + 40 + k * 22, IH // 2 + 120 + k * 30), fill=(255, 140, 20, int(70 * press)))
     im = Image.alpha_composite(im.convert("RGBA"), ov.filter(ImageFilter.GaussianBlur(10))).convert("RGB"); d = ImageDraw.Draw(im)
