@@ -1,0 +1,714 @@
+{
+ "episode": "phoneverse_fix15",
+ "note": "FIX #15 'Wallet hijack' (a texted code lets a scammer add your card to their phone's wallet). Times = measured voice slots from phoneverse_fix15_studio/data/timings.json; nothing re-timed. Props: wallet (your card, the glowing copy, the scammer's phone; tray hidden). Character beats (char) render with render/char_scene.py (user asked for characters acting).",
+ "fps": 24,
+ "length_s": 66.54,
+ "props": [
+  "wallet"
+ ],
+ "chars": "data/chars_fix15.json",
+ "char_frames": "build/chars",
+ "audio": [
+  "../phoneverse_fix15_studio/audio/mix_with_pad.wav",
+  "../phoneverse_fix15_studio/audio/mix_voice_fx.wav"
+ ],
+ "captions": "../phoneverse_fix15_studio/data/captions.json",
+ "hook": {
+  "lines": [
+   [
+    "YOUR ",
+    "*CARD",
+    " JUST JUMPED"
+   ],
+   [
+    "ONTO THEIR PHONE"
+   ]
+  ],
+  "from": 1.45,
+  "until": 3.05
+ },
+ "shake": [
+  1.45,
+  39.75
+ ],
+ "beats": [
+  {
+   "t0": 0.0,
+   "t1": 1.55,
+   "line": 1,
+   "cam": [
+    "card_macro",
+    "path_wide"
+   ],
+   "screen": "U.lock_plain()",
+   "scam": "U.scam_wallet('home')",
+   "events": [
+    {
+     "type": "ghost",
+     "from": 0,
+     "to": 1,
+     "t0": 0.05,
+     "t1": 1.45
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 1.55,
+   "t1": 3.093,
+   "line": 1,
+   "cam": [
+    "scam",
+    "scam_close"
+   ],
+   "scam": "U.scam_wallet('ready', p * 2)",
+   "labels": [
+    {
+     "anchor": "scamphone",
+     "text": "A STRANGER'S PHONE",
+     "dx": -300,
+     "dy": -360,
+     "from": 1.8
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 3.093,
+   "t1": 5.285,
+   "line": 2,
+   "char": "c02_pocket",
+   "events": [
+    {
+     "type": "ghost",
+     "from": 1,
+     "to": 0,
+     "t0": 3.1,
+     "t1": 3.11
+    }
+   ]
+  },
+  {
+   "t0": 5.285,
+   "t1": 7.477,
+   "line": 3,
+   "cam": [
+    "screen_close",
+    "screen_tilt"
+   ],
+   "screen": "U.big_code(p * 2)",
+   "inset": false,
+   "labels": [
+    {
+     "anchor": "screen",
+     "text": "THAT'S ALL IT TOOK",
+     "dx": -360,
+     "dy": 330,
+     "from": 6.0
+    }
+   ]
+  },
+  {
+   "t0": 7.477,
+   "t1": 9.6,
+   "line": 4,
+   "char": "c04_deal"
+  },
+  {
+   "t0": 9.6,
+   "t1": 11.2,
+   "line": 4,
+   "cam": [
+    "hero",
+    "screen"
+   ],
+   "screen": "U.deal_notice(p)"
+  },
+  {
+   "t0": 11.2,
+   "t1": 12.635,
+   "line": 4,
+   "cam": [
+    "screen_tilt",
+    "screen_close"
+   ],
+   "screen": "U.deal_page(p)",
+   "hud": {
+    "label": "BLACK FRIDAY",
+    "value": "-70%",
+    "color": "ORANGE",
+    "from": 11.4
+   }
+  },
+  {
+   "t0": 12.635,
+   "t1": 14.3,
+   "line": 5,
+   "cam": [
+    "screen",
+    "screen_close"
+   ],
+   "screen": "U.checkout(p * 1.1)"
+  },
+  {
+   "t0": 14.3,
+   "t1": 15.552,
+   "line": 5,
+   "char": "c05_type"
+  },
+  {
+   "t0": 15.552,
+   "t1": 17.4,
+   "line": 6,
+   "char": "c06_hood"
+  },
+  {
+   "t0": 17.4,
+   "t1": 19.2,
+   "line": 6,
+   "cam": [
+    "wide",
+    "laptop"
+   ],
+   "screen": "U.checkout(1)",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "card",
+     "path": "phone>laptop",
+     "t0": 17.45,
+     "t1": 18.55,
+     "arc": 0.18
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "laptop",
+     "text": "SCAMMER",
+     "dx": -340,
+     "dy": -300,
+     "from": 18.3
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 19.2,
+   "t1": 20.752,
+   "line": 6,
+   "cam": [
+    "scam_tilt",
+    "scam_close"
+   ],
+   "scam": "U.scam_wallet('add', p)",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "card",
+     "path": "laptop>scamphone",
+     "t0": 19.0,
+     "t1": 19.9,
+     "arc": 0.08
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "scamphone",
+     "text": "THEIR PHONE",
+     "dx": -320,
+     "dy": -340,
+     "from": 19.5
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 20.752,
+   "t1": 22.4,
+   "line": 7,
+   "cam": [
+    "mast",
+    "hero"
+   ],
+   "screen": "U.lock_plain()",
+   "scam": "U.scam_wallet('add', 1)",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "text",
+     "path": "mast>phone",
+     "t0": 20.85,
+     "t1": 22.1,
+     "arc": 0.18
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "mast",
+     "text": "YOUR BANK'S TEXT",
+     "dx": 60,
+     "dy": -260,
+     "from": 21.0
+    }
+   ]
+  },
+  {
+   "t0": 22.4,
+   "t1": 24.037,
+   "line": 7,
+   "cam": [
+    "screen_tilt",
+    "screen_close"
+   ],
+   "screen": "U.code_sms()"
+  },
+  {
+   "t0": 24.037,
+   "t1": 25.9,
+   "line": 8,
+   "cam": [
+    "screen",
+    "screen_tilt"
+   ],
+   "screen": "U.otp_page(p)"
+  },
+  {
+   "t0": 25.9,
+   "t1": 27.6,
+   "line": 8,
+   "cam": [
+    "hero",
+    "screen_close"
+   ],
+   "screen": "U.call_ring('Fraud Team')",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "call",
+     "path": "laptop>phone",
+     "t0": 25.95,
+     "t1": 27.0,
+     "arc": 0.18
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "screen",
+     "text": "FAKE",
+     "dx": 120,
+     "dy": -380,
+     "from": 26.6
+    }
+   ]
+  },
+  {
+   "t0": 27.6,
+   "t1": 29.984,
+   "line": 8,
+   "char": "c08_call"
+  },
+  {
+   "t0": 29.984,
+   "t1": 31.7,
+   "line": 9,
+   "cam": [
+    "screen_tilt",
+    "path_wide"
+   ],
+   "screen": "U.otp_page(1)",
+   "scam": "U.scam_wallet('add', 1)",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "text",
+     "path": "phone>laptop",
+     "t0": 30.0,
+     "t1": 30.75,
+     "arc": 0.18
+    },
+    {
+     "type": "ghost",
+     "from": 0,
+     "to": 1,
+     "t0": 30.55,
+     "t1": 31.65
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "packet",
+     "text": "THE CODE",
+     "dx": 120,
+     "dy": -260,
+     "from": 30.1
+    }
+   ]
+  },
+  {
+   "t0": 31.7,
+   "t1": 33.888,
+   "line": 9,
+   "cam": [
+    "scam",
+    "scam_close"
+   ],
+   "scam": "U.scam_wallet('ready', p * 2)",
+   "labels": [
+    {
+     "anchor": "ghost",
+     "text": "LIVE",
+     "dx": 200,
+     "dy": -330,
+     "from": 32.2
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 33.888,
+   "t1": 35.7,
+   "line": 10,
+   "cam": [
+    "scam_tilt",
+    "scam"
+   ],
+   "scam": "U.scam_wallet('paid', p)",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "card",
+     "path": "scamphone>mast",
+     "t0": 34.0,
+     "t1": 34.9,
+     "arc": 0.12
+    },
+    {
+     "type": "packet",
+     "kind": "card",
+     "path": "scamphone>mast",
+     "t0": 34.5,
+     "t1": 35.4,
+     "arc": 0.12
+    }
+   ],
+   "hud": {
+    "label": "SPENT",
+    "count": [
+     0,
+     3499,
+     "£"
+    ],
+    "color": "RED",
+    "from": 34.0,
+    "until": 37.3
+   },
+   "inset": false
+  },
+  {
+   "t0": 35.7,
+   "t1": 37.573,
+   "line": 10,
+   "char": "c10_hood",
+   "hud": {
+    "label": "SPENT",
+    "count": [
+     0,
+     3499,
+     "£"
+    ],
+    "color": "RED",
+    "from": 34.0,
+    "until": 37.3
+   }
+  },
+  {
+   "t0": 37.573,
+   "t1": 39.4,
+   "line": 11,
+   "cam": [
+    "path_wide",
+    "top"
+   ],
+   "screen": "U.lock_plain()",
+   "scam": "U.scam_wallet('paid', 1)",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "card",
+     "path": "scamphone>mast",
+     "t0": 37.6,
+     "t1": 38.4,
+     "arc": 0.12
+    },
+    {
+     "type": "packet",
+     "kind": "card",
+     "path": "scamphone>mast",
+     "t0": 37.9,
+     "t1": 38.7,
+     "arc": 0.12
+    },
+    {
+     "type": "packet",
+     "kind": "card",
+     "path": "scamphone>mast",
+     "t0": 38.2,
+     "t1": 39.0,
+     "arc": 0.12
+    }
+   ],
+   "hud": {
+    "label": "ONE MAN LOST",
+    "count": [
+     0,
+     18000,
+     "£"
+    ],
+    "color": "RED",
+    "from": 37.7,
+    "until": 39.2
+   },
+   "inset": false
+  },
+  {
+   "t0": 39.4,
+   "t1": 41.755,
+   "line": 11,
+   "char": "c11_shock",
+   "hud": {
+    "label": "ONE MAN LOST",
+    "value": "£18,000",
+    "color": "RED"
+   }
+  },
+  {
+   "t0": 41.755,
+   "t1": 43.3,
+   "line": 12,
+   "cam": [
+    "hero",
+    "screen_close"
+   ],
+   "screen": "U.code_sms()",
+   "hud": {
+    "label": "YOUR SHIELD",
+    "value": "READ IT ALL",
+    "color": "GREEN",
+    "from": 42.0
+   }
+  },
+  {
+   "t0": 43.3,
+   "t1": 44.907,
+   "line": 12,
+   "char": "c12_read",
+   "hud": {
+    "label": "YOUR SHIELD",
+    "value": "READ IT ALL",
+    "color": "GREEN"
+   }
+  },
+  {
+   "t0": 44.907,
+   "t1": 47.0,
+   "line": 13,
+   "cam": [
+    "screen_close",
+    "screen"
+   ],
+   "screen": "U.code_sms(hl=p * 1.5)"
+  },
+  {
+   "t0": 47.0,
+   "t1": 48.6,
+   "line": 13,
+   "cam": [
+    "screen_tilt",
+    "hero"
+   ],
+   "screen": "U.code_sms(hl=1, stop=clamp((p - 0.25) * 2))"
+  },
+  {
+   "t0": 48.6,
+   "t1": 50.128,
+   "line": 13,
+   "char": "c13_stop"
+  },
+  {
+   "t0": 50.128,
+   "t1": 51.7,
+   "line": 14,
+   "cam": [
+    "wide",
+    "screen_tilt"
+   ],
+   "screen": "U.call_ring('Fraud Team', blocked=clamp((p - 0.2) * 1.5))",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "call",
+     "path": "laptop>phone",
+     "t0": 50.15,
+     "t1": 51.4,
+     "arc": 0.18,
+     "bounce": 0.6
+    }
+   ]
+  },
+  {
+   "t0": 51.7,
+   "t1": 53.136,
+   "line": 14,
+   "cam": [
+    "screen",
+    "screen_close"
+   ],
+   "screen": "U.bank_never(p)"
+  },
+  {
+   "t0": 53.136,
+   "t1": 55.0,
+   "line": 15,
+   "cam": [
+    "screen_tilt",
+    "hero"
+   ],
+   "screen": "U.wallet_alert(p)"
+  },
+  {
+   "t0": 55.0,
+   "t1": 56.3,
+   "line": 15,
+   "cam": [
+    "card_top",
+    "card_macro"
+   ],
+   "screen": "U.wallet_alert(1)",
+   "events": [
+    {
+     "type": "cardflip",
+     "from": 0,
+     "to": 1,
+     "t0": 55.05,
+     "t1": 55.8
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "card",
+     "text": "THIS NUMBER",
+     "dx": 80,
+     "dy": -380,
+     "from": 55.6
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 56.3,
+   "t1": 57.717,
+   "line": 15,
+   "char": "c15_callbank"
+  },
+  {
+   "t0": 57.717,
+   "t1": 59.2,
+   "line": 16,
+   "cam": [
+    "scam_tilt",
+    "scam"
+   ],
+   "scam": "U.scam_wallet('ready' if p < 0.45 else 'removed')",
+   "events": [
+    {
+     "type": "packet",
+     "kind": "call",
+     "path": "mast>scamphone",
+     "t0": 57.75,
+     "t1": 58.5,
+     "arc": 0.12
+    },
+    {
+     "type": "freeze",
+     "from": 0,
+     "to": 1,
+     "t0": 58.35,
+     "t1": 59.15
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "scamphone",
+     "text": "SWITCHED OFF",
+     "dx": -320,
+     "dy": -340,
+     "from": 58.6
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 59.2,
+   "t1": 60.571,
+   "line": 16,
+   "cam": [
+    "path_side",
+    "path_wide"
+   ],
+   "screen": "U.lock_plain()",
+   "scam": "U.scam_wallet('removed')",
+   "hud": {
+    "label": "THEIR COPY",
+    "value": "OFF",
+    "color": "GREEN",
+    "from": 59.3
+   },
+   "inset": false
+  },
+  {
+   "t0": 60.571,
+   "t1": 62.0,
+   "line": 17,
+   "char": "c17_relief"
+  },
+  {
+   "t0": 62.0,
+   "t1": 63.493,
+   "line": 17,
+   "cam": [
+    "hero",
+    "screen"
+   ],
+   "screen": "U.ask_dark('Would you have read it out?', p * 1.5)"
+  },
+  {
+   "t0": 63.493,
+   "t1": 65.0,
+   "line": 18,
+   "cam": [
+    "screen_close",
+    "screen_tilt"
+   ],
+   "screen": "U.share_dark('Jess', p * 1.4)"
+  },
+  {
+   "t0": 65.0,
+   "t1": 66.544,
+   "line": 18,
+   "cam": [
+    "hero",
+    "wide"
+   ],
+   "screen": "U.share_dark('Jess', 1)",
+   "events": [
+    {
+     "type": "cardflip",
+     "from": 1,
+     "to": 0,
+     "t0": 65.1,
+     "t1": 65.8
+    }
+   ]
+  }
+ ]
+}

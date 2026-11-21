@@ -444,3 +444,153 @@ def bezel(im, margin=0.022, radius=0.075):
     out = Image.new("RGB", (w, h), (0, 0, 0)); inner = im.resize((w - 2 * m, h - 2 * m), Image.LANCZOS)
     mask = Image.new("L", inner.size, 0); ImageDraw.Draw(mask).rounded_rectangle((0, 0, inner.width - 1, inner.height - 1), r, fill=255)
     out.paste(inner, (m, m), mask); return out
+
+
+# ---- FIX #15 (wallet hijack) screens: invented brands only ('DealDash' shop, 'MyBank'), no logos, no real card digits -----------
+CODE = "482 913"
+def _lock_bg(d):
+    for y in range(0, H, 6): d.line([(0, y), (W, y)], fill=(16 + y // 110, 20 + y // 130, 38 + y // 70))
+    status_bar(d, True); text(d, (540, 225), CLOCK, 190, (255, 255, 255), True, "ma"); text(d, (540, 415), "Friday", 44, (200, 200, 230), False, "ma")
+def _notice(d, y, app, color, glyph, lines, big=True):
+    box = (60, y, 1020, y + 190 + 78 * len(lines)); rr(d, (box[0] + 8, box[1] + 14, box[2] + 8, box[3] + 14), 50, fill=(0, 0, 0)); rr(d, box, 50, fill=(255, 255, 255))
+    rr(d, (box[0] + 36, box[1] + 30, box[0] + 126, box[1] + 120), 24, fill=color); text(d, (box[0] + 81, box[1] + 75), glyph, 56, (255, 255, 255), True, "mm")
+    text(d, (box[0] + 150, box[1] + 50), app, 48, INK, True); text(d, (box[2] - 40, box[1] + 56), "now", 36, (120, 120, 130), False, "ra")
+    for i, ln in enumerate(lines): text(d, (box[0] + 40, box[1] + 150 + i * 78), ln, 54 if big else 46, INK, True)
+    return box
+
+def deal_notice(p=1.0):
+    """Lock screen: the Black Friday deal text slides in."""
+    im = canvas((16, 20, 38)); d = ImageDraw.Draw(im); _lock_bg(d); s = ease(clamp(p * 2.5)); y = int(600 + (1 - s) * 700)
+    _notice(d, y, "DealDash", ORANGE, "%", ["BLACK FRIDAY: 70% off!", "Ends tonight. Tap to shop"]); return im
+
+def deal_page(p=1.0):
+    im = canvas((255, 247, 236)); d = ImageDraw.Draw(im); status_bar(d)
+    rr(d, (60, 170, 1020, 250), 40, fill=(235, 235, 240)); text(d, (110, 210), "dealdash-black-fri…", 38, (90, 90, 100), False, "lm")
+    rr(d, (0, 290, W, 450), 0, fill=INK); text(d, (540, 370), "BLACK FRIDAY", 80, YELLOW, True, "mm")
+    k = ease(clamp(p * 2)); text(d, (540, 560 + int((1 - k) * 40)), "70% OFF", 210, RED, True, "ma")
+    rr(d, (300, 830, 780, 1010), 40, fill=(225, 228, 240)); d.ellipse((380, 860, 500, 980), outline=INK, width=16); d.ellipse((580, 860, 700, 980), outline=INK, width=16); d.arc((380, 800, 700, 1000), 200, 340, fill=INK, width=16)
+    text(d, (540, 1050), "Headphones  £29.99", 54, INK, True, "ma"); text(d, (540, 1110), "was £99.99", 40, (130, 130, 140), False, "ma")
+    btn = (140, 1150, 940, 1230); rr(d, btn, 40, fill=GREEN); text(d, (540, 1190), "BUY NOW", 52, (255, 255, 255), True, "mm"); return im
+
+def checkout(p=1.0):
+    """Fake checkout: name, card number, expiry, then the button. p fills the fields in turn."""
+    im = canvas((255, 250, 240)); d = ImageDraw.Draw(im); status_bar(d)
+    rr(d, (60, 170, 1020, 250), 40, fill=(235, 235, 240)); text(d, (110, 210), "dealdash-black-fri…", 38, (90, 90, 100), False, "lm")
+    text(d, (80, 330), "Checkout", 80, INK, True, "lm")
+    F = [("Name on card", "A MORGAN"), ("Card number", "4000 0000 0000 0000"), ("Expiry   CVC", "09/29   •••")]
+    for i, (lab, val) in enumerate(F):
+        y = 460 + i * 200; text(d, (80, y - 44), lab, 38, (110, 110, 120), False); rr(d, (80, y, 1000, y + 120), 24, fill=(255, 255, 255), outline=(200, 200, 210), width=4)
+        seg = clamp(p * 3.2 - i)
+        if seg > 0: text(d, (116, y + 60), val[: max(1, int(len(val) * seg))], 54, INK, True, "lm")
+    if 0 < p < 1:
+        i = min(2, int(p * 3.2)); im = glow_box(im, (80, 460 + i * 200, 1000, 580 + i * 200), pad=8, r=24)
+        d = ImageDraw.Draw(im)
+    btn = (80, 1080, 1000, 1200); rr(d, btn, 40, fill=GREEN if p >= 0.95 else (180, 180, 190)); text(d, (540, 1140), "Pay £29.99", 58, (255, 255, 255), True, "mm"); return im
+
+def _messages_head(d, who="MyBank"):
+    rr(d, (0, 180, W, 360), 0, fill=(246, 246, 250)); d.ellipse((470, 196, 610, 336), fill=(30, 60, 140)); text(d, (540, 266), "M", 70, (255, 255, 255), True, "mm")
+    text(d, (540, 345), who, 34, INK, True, "ma")
+
+def code_sms(hl=0.0, stop=0.0, big=False):
+    """The bank's code text. hl 0..1: orange glow on the line that says what the code is FOR. stop: red STOP stamp."""
+    im = canvas(); d = ImageDraw.Draw(im); status_bar(d); _messages_head(d)
+    box = (60, 440, 1000, 1000); rr(d, box, 50, fill=(232, 233, 240))
+    L = [(f"{CODE} is your code", INK), ("to ADD YOUR CARD", RED if hl > 0 else INK), ("TO A DIGITAL WALLET.", RED if hl > 0 else INK), ("Never share this code.", INK)]
+    for i, (ln, c) in enumerate(L): text(d, (110, 520 + i * 110), ln, 64, c, True, "lm")
+    if hl > 0: im = glow_box(im, (90, 620, 980, 800), pulse=clamp(hl * 2), r=24); d = ImageDraw.Draw(im)
+    if stop > 0:
+        k = ease(clamp(stop * 3)); s_ = 1.6 - 0.6 * k; w, h = int(620 * s_), int(260 * s_)
+        st = Image.new("RGBA", (w, h), (0, 0, 0, 0)); g = ImageDraw.Draw(st); g.rounded_rectangle((0, 0, w - 1, h - 1), 40, outline=RED + (255,), width=max(8, int(22 * s_)), fill=(255, 255, 255, 215))
+        g.text((w // 2, h // 2), "STOP", font=font(int(170 * s_)), fill=RED + (255,), anchor="mm"); st = st.rotate(-12, expand=True, resample=Image.BICUBIC)
+        im = im.convert("RGBA"); im.alpha_composite(st, (540 - st.width // 2, 1060 - st.height // 2)); im = im.convert("RGB")
+    return im
+
+def big_code(p=1.0):
+    im = canvas((14, 16, 30)); d = ImageDraw.Draw(im); status_bar(d, True); text(d, (540, 470), "ONE CODE", 70, (200, 205, 230), True, "ma")
+    n = int(len(CODE) * clamp(p * 1.6)); rr(d, (60, 640, 1020, 900), 50, fill=(30, 34, 56), outline=YELLOW, width=10)
+    text(d, (540, 770), CODE[:n] if n else " ", 170, YELLOW, True, "mm"); return im
+
+def otp_page(p=1.0):
+    im = canvas((255, 250, 240)); d = ImageDraw.Draw(im); status_bar(d)
+    rr(d, (60, 170, 1020, 250), 40, fill=(235, 235, 240)); text(d, (110, 210), "dealdash-black-fri…", 38, (90, 90, 100), False, "lm")
+    text(d, (540, 380), "Verify payment", 76, INK, True, "ma"); text(d, (540, 490), "Enter the code", 52, (90, 90, 100), True, "ma"); text(d, (540, 555), "we just texted you", 52, (90, 90, 100), True, "ma")
+    digits = CODE.replace(" ", ""); n = int(6 * clamp(p * 1.3))
+    for i in range(6):
+        x = 95 + i * 155; rr(d, (x, 700, x + 130, 870), 24, fill=(255, 255, 255), outline=ORANGE if i == n else (200, 200, 210), width=6)
+        if i < n: text(d, (x + 65, 785), digits[i], 100, INK, True, "mm")
+    btn = (80, 1060, 1000, 1180); rr(d, btn, 40, fill=GREEN if n >= 6 else (180, 180, 190)); text(d, (540, 1120), "Confirm", 58, (255, 255, 255), True, "mm"); return im
+
+def call_ring(name="Fraud Team", blocked=0.0):
+    im = call_card(name); d = ImageDraw.Draw(im); text(d, (540, 900), "'Read me the code'", 52, YELLOW, True, "ma")
+    if blocked > 0:
+        k = ease(clamp(blocked * 2)); w = int(26 * k) + 1
+        d.line([(200, 300), (880, 980)], fill=RED, width=w * 2); d.line([(880, 300), (200, 980)], fill=RED, width=w * 2)
+        if k > 0.6: rr(d, (140, 1010, 940, 1150), 40, fill=RED); text(d, (540, 1080), "NOT YOUR BANK", 64, (255, 255, 255), True, "mm")
+    return im
+
+def bank_never(p=1.0):
+    im = canvas((238, 244, 255)); d = ImageDraw.Draw(im); status_bar(d)
+    rr(d, (60, 200, 1020, 330), 30, fill=(30, 60, 140)); text(d, (110, 265), "MyBank", 54, (255, 255, 255), True, "lm")
+    text(d, (540, 470), "We will", 70, INK, True, "ma"); k = ease(clamp(p * 2.5)); text(d, (540, 570 + int((1 - k) * 50)), "NEVER", 190, RED, True, "ma")
+    text(d, (540, 820), "ask for your code.", 70, INK, True, "ma"); text(d, (540, 940), "Not by text. Not by phone.", 50, (90, 100, 130), True, "ma"); return im
+
+def wallet_alert(p=1.0):
+    im = canvas((16, 20, 38)); d = ImageDraw.Draw(im); _lock_bg(d); s = ease(clamp(p * 2.5)); y = int(560 + (1 - s) * 700)
+    _notice(d, y, "MyBank", (30, 60, 140), "M", ["Your card was added to", "a wallet on a NEW device.", "Not you? Call us."], big=False)
+    if p > 0.5: im = glow_box(im, (60, y, 1020, y + 190 + 78 * 3), color=RED, pulse=clamp((p - 0.5) * 3))
+    return im
+
+def ask_dark(prompt="Would you have read it out?", p=1.0):
+    im = canvas((12, 13, 22)); d = ImageDraw.Draw(im); status_bar(d, True); text(d, (540, 260), "Comments", 72, (255, 255, 255), True, "ma")
+    k = ease(clamp(p)); y = int(980 - 480 * k); rr(d, (50, y, 1030, y + 330), 50, fill=(30, 32, 50), outline=ORANGE, width=8)
+    text(d, (90, y + 95), prompt, 52, (255, 255, 255), True, "lm"); text(d, (90, y + 215), "Yes / No - tell me", 50, (190, 192, 210), True, "lm")
+    if int(p * 14) % 2 == 0: d.rectangle((90, y + 250, 98, y + 300), fill=(255, 255, 255))
+    return im
+
+def share_dark(name="Jess", p=1.0):
+    im = canvas((12, 13, 22)); d = ImageDraw.Draw(im); status_bar(d, True); k = ease(clamp(p))
+    text(d, (540, 300), "Send to", 72, (255, 255, 255), True, "ma"); rr(d, (420, 760, 1000, 920), 80, fill=BLUE); text(d, (710, 840), name, 70, (255, 255, 255), True, "mm")
+    text(d, (540, 1060), "shopping on Black Friday", 46, (190, 192, 210), True, "ma")
+    x = int(90 + (270 - 90) * k); d.polygon([(x, 790), (x + 150, 840), (x, 890), (x + 28, 840)], fill=ORANGE); return im
+
+def card_face(w=1712, h=1080):
+    """Your bank card (front), generic: navy, chip, contactless mark, masked number. Used as the 3D card texture."""
+    im = Image.new("RGB", (w, h), (24, 40, 98)); d = ImageDraw.Draw(im)
+    for x in range(0, w, 8): d.line([(x, 0), (x - 400, h)], fill=(24 + x // 60, 40 + x // 70, 98 + x // 40), width=8)
+    text(d, (90, 80), "MyBank", 96, (255, 255, 255), True); text(d, (w - 90, 90), "DEBIT", 70, (200, 210, 240), True, "ra")
+    rr(d, (130, 360, 330, 520), 26, fill=(222, 182, 90)); d.line([(130, 440), (330, 440)], fill=(170, 130, 50), width=6); d.line([(230, 360), (230, 520)], fill=(170, 130, 50), width=6)
+    for r in (40, 70, 100): d.arc((380 - r, 440 - r, 380 + r, 440 + r), -50, 50, fill=(255, 255, 255), width=12)
+    text(d, (130, 720), "••••  ••••  ••••  4821", 104, (255, 255, 255), True); text(d, (130, 900), "A MORGAN", 70, (220, 225, 245), True)
+    return im
+
+def card_reverse(w=1712, h=1080):
+    im = Image.new("RGB", (w, h), (30, 46, 104)); d = ImageDraw.Draw(im); d.rectangle((0, 120, w, 300), fill=(12, 12, 16))
+    rr(d, (90, 400, 1100, 520), 12, fill=(238, 238, 244)); text(d, (130, 460), "Signature", 50, (120, 120, 130), False, "lm")
+    rr(d, (90, 640, w - 90, 900), 30, fill=(255, 214, 10)); text(d, (w // 2, 720), "LOST, STOLEN OR FRAUD?", 70, INK, True, "mm")
+    text(d, (w // 2, 820), "CALL THE NUMBER HERE", 80, INK, True, "mm"); return im
+
+def scam_wallet(state="home", p=1.0):
+    """The scammer's phone (dark red theme). state: home | add (your card number typed in with p) | ready | paid (payments stack up with p) | removed."""
+    im = canvas((22, 8, 10)); d = ImageDraw.Draw(im); status_bar(d, True); text(d, (540, 250), "Wallet", 84, (255, 255, 255), True, "ma")
+    def card(y, grey=False):
+        c = (70, 70, 76) if grey else (24, 40, 98); rr(d, (110, y, 970, y + 520), 50, fill=c); rr(d, (170, y + 170, 330, y + 290), 20, fill=(150, 150, 150) if grey else (222, 182, 90))
+        text(d, (170, y + 400), "••••  4821", 90, (200, 200, 200) if grey else (255, 255, 255), True, "lm")
+    if state == "home":
+        rr(d, (110, 400, 970, 920), 50, outline=(120, 60, 60), width=8); text(d, (540, 660), "+ Add card", 80, (200, 120, 120), True, "mm")
+    elif state == "add":
+        text(d, (540, 400), "Add card", 70, (255, 200, 200), True, "ma"); digits = "4000 0000 0000 0000"; n = int(len(digits) * clamp(p * 1.25))
+        rr(d, (80, 560, 1000, 700), 26, fill=(50, 20, 24), outline=RED, width=6); text(d, (120, 630), digits[:n] or " ", 66, (255, 255, 255), True, "lm")
+        rr(d, (80, 780, 1000, 920), 26, fill=(50, 20, 24), outline=(120, 60, 60), width=6); text(d, (120, 850), "Code: waiting…", 56, (200, 150, 150), True, "lm")
+    elif state == "ready":
+        k = ease(clamp(p * 2)); card(380); d.ellipse((440, 990, 640, 1190), fill=GREEN); text(d, (540, 1090), "✓", 130, (255, 255, 255), True, "mm")
+        text(d, (540, 1240), "Ready to pay", 70, GREEN, True, "ma") if k > 0.3 else None
+    elif state == "paid":
+        card(330); n = 1 + int(4 * clamp(p))
+        for i, amt in enumerate(["£249.00", "£899.99", "£1,240.00", "£2,050.00", "£3,499.00"][:n]):
+            y = 900 + i * 62; text(d, (130, y), "Paid", 48, (255, 200, 200), True, "lm"); text(d, (950, y), amt, 48, (255, 255, 255), True, "rm")
+    elif state == "removed":
+        card(380, grey=True); rr(d, (110, 980, 970, 1150), 40, fill=(60, 60, 66)); text(d, (540, 1065), "Card removed by bank", 56, (255, 255, 255), True, "mm")
+    return im
+
+def lock_plain():
+    im = canvas((16, 20, 38)); d = ImageDraw.Draw(im); _lock_bg(d); return im

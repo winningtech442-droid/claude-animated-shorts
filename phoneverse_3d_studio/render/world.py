@@ -253,6 +253,57 @@ if DUO:
         COINS.append((co, x_, y_, i * 0.045, _rc.uniform(0, 6.28), _rc.uniform(-0.25, 0.25))); co.hide_render = True
     DUO_ANCH["fleetred"] = (None, tuple(FLEET + Vector((0.055, -0.08, 0.0095))))
 
+# ---- wallet hijack (FIX #15): your real bank card on the desk, a glowing copy of it ("ghost") that flies onto the scammer's phone,
+# and the scammer's phone itself (lying by their laptop, its screen driven by the beat's "scam" pvui expression).
+# Events: "ghost" 0 = copy sits on your card (hidden), 1 = landed on their phone; "freeze" 0..1 = the bank switches the copy off
+# (it greys out and sinks away); "cardflip" 0..1 = your card turns over to show the number on the back.
+WALLET = "wallet" in PROPS
+WAL_ANCH = {}
+if WALLET:
+    hide_all([o for o in col.objects if o.name.startswith("tray_")], True)
+    CARD0 = Vector((-0.112, -0.015, 0.0)); SCAM0 = Vector((0.035, 0.27, 0.0)); CD = (0.0856, 0.054, 0.0008)
+    def plane_img(name, w, l, img_path, parent, z, flip=False, emit=0.0, alpha=None):
+        bpy.ops.mesh.primitive_plane_add(size=1, location=(0, 0, z)); o = bpy.context.active_object; o.name = name; o.scale = (w, l, 1)
+        if flip: o.rotation_euler.x = math.pi
+        bpy.ops.object.transform_apply(scale=True, rotation=True); o.parent = parent
+        m = bpy.data.materials.new(name); m.use_nodes = True; nt = m.node_tree; bs = nt.nodes["Principled BSDF"]
+        tx = nt.nodes.new("ShaderNodeTexImage"); tx.image = bpy.data.images.load(os.path.abspath(img_path)); nt.links.new(tx.outputs[0], bs.inputs["Base Color"])
+        bs.inputs["Roughness"].default_value = 0.35; bs.inputs["Specular IOR Level"].default_value = 0.6
+        if emit: nt.links.new(tx.outputs[0], bs.inputs["Emission Color"]); bs.inputs["Emission Strength"].default_value = emit
+        o.data.materials.append(m); return o, m
+    cimg = os.path.join(a.out, "card_front.png"); bimg = os.path.join(a.out, "card_back.png")
+    U.card_face().save(cimg); U.card_reverse().rotate(180).save(bimg)      # the flip turns the back plane by 180 deg
+    card_root = empty("card_root", CARD0 + Vector((0, 0, CD[2] / 2))); card_root.rotation_euler.z = math.radians(9)
+    cbody = box("card_body", CD, (0, 0, 0), mat("cardedge", (0.06, 0.08, 0.2), 0.2, 0.4), bevel=0.0003); cbody.parent = card_root
+    plane_img("card_front", CD[0], CD[1], cimg, card_root, CD[2] / 2 + 0.00005, emit=0.15)
+    plane_img("card_back", CD[0], CD[1], bimg, card_root, -CD[2] / 2 - 0.00005, flip=True, emit=0.15)
+    # the copy: same card, glowing cyan, semi-transparent
+    ghost_root = empty("ghost_root", CARD0)
+    gm = bpy.data.materials.new("ghost"); gm.use_nodes = True; nt = gm.node_tree
+    for nd in list(nt.nodes): nt.nodes.remove(nd)
+    gtx = nt.nodes.new("ShaderNodeTexImage"); gtx.image = bpy.data.images.load(os.path.abspath(cimg))
+    gmixc = nt.nodes.new("ShaderNodeMix"); gmixc.data_type = "RGBA"; gmixc.inputs[0].default_value = 0.35; gmixc.inputs[7].default_value = (0.3, 0.85, 1.0, 1)
+    nt.links.new(gtx.outputs[0], gmixc.inputs[6])
+    gem = nt.nodes.new("ShaderNodeEmission"); gem.inputs["Strength"].default_value = 3.0; nt.links.new(gmixc.outputs[2], gem.inputs[0])
+    gtr = nt.nodes.new("ShaderNodeBsdfTransparent"); gmx = nt.nodes.new("ShaderNodeMixShader"); gmx.inputs[0].default_value = 0.8
+    gout = nt.nodes.new("ShaderNodeOutputMaterial"); nt.links.new(gtr.outputs[0], gmx.inputs[1]); nt.links.new(gem.outputs[0], gmx.inputs[2]); nt.links.new(gmx.outputs[0], gout.inputs[0])
+    bpy.ops.mesh.primitive_plane_add(size=1); ghost = bpy.context.active_object; ghost.name = "ghost"; ghost.scale = (CD[0], CD[1], 1)
+    bpy.ops.object.transform_apply(scale=True); ghost.data.materials.append(gm); ghost.parent = ghost_root; ghost.visible_shadow = False
+    md = ghost.modifiers.new("solid", "SOLIDIFY"); md.thickness = 0.001
+    # the scammer's phone: graphite slab + emissive screen (image set per frame)
+    scam_root = empty("scam_root", SCAM0); scam_root.rotation_euler.z = math.radians(-16)
+    sb = box("scam_body", PH, (0, 0, PH[2] / 2), mat("graphite2", (0.05, 0.055, 0.065), 0.85, 0.28), bevel=0.006); sb.parent = scam_root
+    bpy.ops.mesh.primitive_plane_add(size=1, location=(0, 0, PH[2] + 0.0002)); sscr = bpy.context.active_object; sscr.name = "scam_screen"
+    sscr.scale = (0.069, 0.149, 1); bpy.ops.object.transform_apply(scale=True); sscr.parent = scam_root
+    ssm = bpy.data.materials.new("scam_screen"); ssm.use_nodes = True; nt = ssm.node_tree
+    for nd in list(nt.nodes): nt.nodes.remove(nd)
+    scam_tx = nt.nodes.new("ShaderNodeTexImage"); sem = nt.nodes.new("ShaderNodeEmission"); sem.inputs["Strength"].default_value = 1.6
+    sout = nt.nodes.new("ShaderNodeOutputMaterial"); nt.links.new(scam_tx.outputs[0], sem.inputs[0]); nt.links.new(sem.outputs[0], sout.inputs[0]); sscr.data.materials.append(ssm)
+    scam_light = bpy.data.objects.new("scam_light", bpy.data.lights.new("scam_light", "POINT")); col.objects.link(scam_light); scam_light.location = SCAM0 + Vector((0, 0, 0.05))
+    scam_light.data.color = (1.0, 0.3, 0.25); scam_light.data.energy = 0.6
+    GHOST_A = CARD0 + Vector((0, 0, 0.004)); GHOST_B = SCAM0 + Vector((0, 0, PH[2] + 0.006))
+    WAL_ANCH = {"card": tuple(CARD0 + Vector((0.0, 0.0, 0.002))), "scamphone": tuple(SCAM0 + Vector((0, -0.03, PH[2]))), "ghost": None}
+
 # anchors for 2D labels (compose3d.py pins tags to these)
 ANCH = {"screen": (0, 0, PH[2] + 0.004), "modem": (0.02, 0.052, z0), "sim": (-0.019, 0.05, z0), "filter": (-0.016, 0.004, z0 + 0.002), "cpu": (0.004, 0.025, z0),
         "battery": (0, -0.038, z0 + 0.001), "mast": (-0.15, 0.33, 0.33), "laptop": (0.16, 0.407, 0.09), "tray": tuple(TR + Vector((0, 0, 0.02))), "phone": (0, -0.06, PH[2]),
@@ -261,8 +312,13 @@ for k, v in ANCH.items(): empty("anchor_" + k, v)
 if DUO:
     for k in ("screen", "phone"): ANCH.pop(k); bpy.data.objects.remove(bpy.data.objects["anchor_" + k])
     for k, (par, v) in DUO_ANCH.items(): empty("anchor_" + k, v, par); ANCH[k] = v
+if WALLET:
+    for k, v in WAL_ANCH.items():
+        if v is not None: empty("anchor_" + k, v); ANCH[k] = v
+    empty("anchor_ghost", (0, 0, 0), ghost_root); ANCH["ghost"] = (0, 0, 0)
 NODES = {"mast": Vector((-0.15, 0.33, 0.335)), "phone": Vector((0.02, 0.052, z0 + 0.006)), "laptop": Vector((0.16, 0.38, 0.06)), "tray": TR + Vector((0, 0, 0.012)),
          "van": VAN + Vector((0.02, 0, 0.055 + 0.125)), "netfilter": Vector((-0.15, 0.33, 0.19))}
+if WALLET: NODES["scamphone"] = SCAM0 + Vector((0, 0, PH[2] + 0.006)); NODES["card"] = CARD0 + Vector((0, 0, 0.004))
 
 # packets: a glowing head + 5 trail beads per slot, 4 slots
 PCOL = {"text": (1.0, 0.75, 0.1), "card": (1.0, 0.1, 0.15), "call": (0.25, 0.55, 1.0)}
@@ -303,7 +359,12 @@ CAM = {"hero": ((0.15, -0.28, 0.19), (0, 0.01, 0), 42), "screen": ((0.0, -0.045,
        "duo_crack": ((0.03, -0.03, 0.07), (0.0, 0.02, 0.006), 35), "hinge": ((0.0, -0.11, 0.10), (0.0, -0.005, 0.006), 35),
        "hinge_low": ((-0.05, -0.10, 0.05), (0.0, -0.01, 0.006), 32), "hook_macro": ((0.012, -0.03, 0.034), (0.0, 0.002, 0.007), 35),
        "fleet": ((0.0, 0.30, 0.40), (0.0, 0.62, 0.0), 35), "fleet_red": ((0.10, 0.44, 0.17), (0.055, 0.54, 0.0), 40),
-       "duo_side": ((0.30, -0.14, 0.11), (0.0, 0.0, 0.01), 38), "duo_wide": ((0.0, -0.42, 0.30), (0.0, 0.03, 0.0), 32)}
+       "duo_side": ((0.30, -0.14, 0.11), (0.0, 0.0, 0.01), 38), "duo_wide": ((0.0, -0.42, 0.30), (0.0, 0.03, 0.0), 32),
+       # FIX #15 (wallet hijack): your card, the path the copy flies, the scammer's phone
+       "card_macro": ((-0.10, -0.13, 0.075), (-0.105, -0.01, 0.0), 40), "card_top": ((-0.112, -0.03, 0.17), (-0.112, -0.012, 0.0), 45),
+       "path_wide": ((-0.05, -0.40, 0.30), (-0.02, 0.13, 0.03), 30), "path_side": ((-0.30, -0.10, 0.22), (-0.03, 0.14, 0.03), 30),
+       "scam": ((0.02, 0.08, 0.17), (0.035, 0.27, 0.0), 40), "scam_close": ((0.035, 0.205, 0.12), (0.035, 0.27, 0.0), 42),
+       "scam_tilt": ((0.12, 0.15, 0.12), (0.035, 0.27, 0.0), 40)}
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
 
@@ -367,6 +428,22 @@ def apply_duo(t, b, p):
     inner = b.get("inner") or "U.duo_home()"; outer = b.get("outer") or "U.duo_outer()"
     duo_screen(inner, p, "innerL", ltx, (720, 1080), "L"); duo_screen(inner, p, "innerR", rtx, (720, 1080), "R"); duo_screen(outer, p, "outer", otx, (713, 1080), None, False)
 
+SCAM_LAST = [None]
+def apply_wallet(t, b, p):
+    gv = track("ghost", t); fz = track("freeze", t)
+    pos = bez(GHOST_A, GHOST_B, 0.16, gv); ghost_root.location = pos + Vector((0, 0, -0.03 * fz))
+    ghost_root.rotation_euler = (math.radians(25) * math.sin(math.pi * gv), 0, math.radians(9) + (math.radians(-25) - math.radians(9)) * gv + 2 * math.pi * ease(gv) * (1 if 0 < gv < 1 else 0))
+    ghost.hide_render = gv < 0.02 or gv > 0.985 or fz > 0.98          # only in flight: once landed it IS the card on their screen
+    gmixc.inputs[0].default_value = 0.35 + 0.65 * fz; gmixc.inputs[7].default_value = (0.3 + 0.2 * fz, 0.85 - 0.45 * fz, 1.0 - 0.6 * fz, 1)
+    gem.inputs["Strength"].default_value = 1.7 * (1 - 0.8 * fz) * (1 + 0.6 * math.sin(math.pi * gv)); gmx.inputs[0].default_value = 0.8 * (1 - fz)
+    cf = track("cardflip", t); card_root.rotation_euler = (0, math.pi * ease(cf), math.radians(9)); card_root.location.z = CD[2] / 2 + 0.035 * math.sin(math.pi * cf)
+    spec = b.get("scam") or "U.scam_wallet('home')"; import re
+    key = spec + (f"@{round(p * 48) / 48:.4f}" if re.search(r"\bp\b", spec) else "")
+    if key != SCAM_LAST[0]:
+        f = os.path.join(SCREEN_DIR, "scam_" + hashlib.md5(key.encode()).hexdigest()[:12] + ".png")
+        if not os.path.exists(f): eval(spec, {"U": U, "p": round(p * 48) / 48, "ease": ease, "clamp": clamp}).convert("RGB").resize((540, 960)).save(f)
+        scam_tx.image = bpy.data.images.load(f, check_existing=True); SCAM_LAST[0] = key
+
 def apply(t):
     b = beat_at(t); p = clamp((t - b["t0"]) / max(1e-3, b["t1"] - b["t0"]))
     ca, cb = b["cam"] if isinstance(b["cam"], list) else (b["cam"], b["cam"]); A, Bc = CAM[ca], CAM[cb]; k = ease(p)
@@ -374,6 +451,7 @@ def apply(t):
     cam.location = loc; cam.rotation_euler = (tgt - loc).to_track_quat("-Z", "Y").to_euler(); cam.data.dof.focus_distance = (tgt - loc).length; cam.data.dof.use_dof = bool(b.get("dof", False))
     set_screen(b.get("screen"), p)
     if DUO: apply_duo(t, b, p)
+    if WALLET: apply_wallet(t, b, p)
     lidv = track("lid", t); hinge.rotation_euler.x = math.radians(-75) * lidv; hinge.location.z = SZ + 0.012 * lidv
     fv = track("filter", t); knob.location.x = -0.022 + 0.012 * fv; knob.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 6 * fv
     lv = track("laptop", t, 0.4); lapscr.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 1.0 + 2.0 * lv; lap_light.data.energy = 0.08 + 0.4 * lv
@@ -420,8 +498,8 @@ sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = a.sam
 sc.render.resolution_x, sc.render.resolution_y = a.res; sc.view_settings.view_transform = "AgX"; sc.view_settings.look = "AgX - Medium High Contrast"
 total = int(round(B["length_s"] * FPS))
 if a.one is not None: frames = [a.one]; sub = "one"
-elif a.test: frames = [int(((b["t0"] + b["t1"]) / 2) * FPS) for b in BEATS if not b.get("face")]; sub = "test"
-else: frames = [f for f in range(a.frames[0], min(a.frames[1] + 1, total)) if not beat_at(f / FPS).get("face")]; sub = "frames"
+elif a.test: frames = [int(((b["t0"] + b["t1"]) / 2) * FPS) for b in BEATS if not (b.get("face") or b.get("char"))]; sub = "test"
+else: frames = [f for f in range(a.frames[0], min(a.frames[1] + 1, total)) if not (beat_at(f / FPS).get("face") or beat_at(f / FPS).get("char"))]; sub = "frames"
 os.makedirs(os.path.join(a.out, sub), exist_ok=True); os.makedirs(os.path.join(a.out, "anchors"), exist_ok=True)
 for f in frames:
     pth = os.path.join(a.out, sub, f"{f:05d}.png")

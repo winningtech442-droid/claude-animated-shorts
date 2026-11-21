@@ -64,6 +64,15 @@ def base_frame(g, sub):
             p = os.path.join(B["faces"], clip, min(have, key=lambda n: abs(int(n[:4]) - f)))
         im = Image.open(p).convert("RGB").resize((W, H), Image.LANCZOS); k = 1 + 0.06 * (t - b["t0"]) / (b["t1"] - b["t0"])
         w, h = int(W / k), int(H / k); return im.crop(((W - w) // 2, int((H - h) * 0.4), (W - w) // 2 + w, int((H - h) * 0.4) + h)).resize((W, H), Image.LANCZOS), None, b
+    if b.get("char"):                                                  # FIX #15: character acting clip (render/char_scene.py), local frame index
+        d_ = os.path.join(B.get("char_frames", "build/chars"), b["char"]); f = g - int(round(b["t0"] * FPS))
+        p = os.path.join(d_, f"{f:04d}.png")
+        if not os.path.exists(p):
+            have = sorted(os.listdir(d_)) if os.path.isdir(d_) else []
+            if not have:
+                ph = Image.new("RGB", (W, H), (30, 30, 40)); ImageDraw.Draw(ph).text((W // 2, H // 2), f"CHAR: {b['char']}", font=U.font(60), fill=(200, 200, 210), anchor="mm"); return ph, None, b
+            p = os.path.join(d_, min(have, key=lambda n: abs(int(n[:4]) - f)))
+        return Image.open(p).convert("RGB").resize((W, H), Image.LANCZOS), None, b
     p = os.path.join(a.build, sub, f"{g:05d}.png"); anc = os.path.join(a.build, "anchors", f"{g:05d}.json")
     return Image.open(p).convert("RGB").resize((W, H), Image.LANCZOS), (json.load(open(anc)) if os.path.exists(anc) else None), b
 
@@ -146,7 +155,7 @@ if __name__ == "__main__":
         S = Image.new("RGB", (cols * (cw + 6) + 6, rows * (ch + 24) + 6), (40, 40, 48)); dd = ImageDraw.Draw(S)
         for k, (g, b) in enumerate(zip(gs, BEATS)):
             x, y = 6 + (k % cols) * (cw + 6), 6 + (k // cols) * (ch + 24); S.paste(frame(g, "test").resize((cw, ch)), (x, y))
-            dd.text((x + 4, y + ch + 4), f'L{b["line"]}  {b["t0"]:.1f}-{b["t1"]:.1f}s  {"face" if b.get("face") else "->".join(b["cam"]) if isinstance(b["cam"], list) else b["cam"]}', fill=(255, 255, 255))
+            dd.text((x + 4, y + ch + 4), f'L{b["line"]}  {b["t0"]:.1f}-{b["t1"]:.1f}s  {"face" if b.get("face") else ("CHAR " + b["char"]) if b.get("char") else "->".join(b["cam"]) if isinstance(b["cam"], list) else b["cam"]}', fill=(255, 255, 255))
         os.makedirs("docs", exist_ok=True); S.save("docs/storyboard_3d.png"); print("docs/storyboard_3d.png", len(gs), "beats")
     elif a.range:
         os.makedirs(os.path.join(a.build, "out"), exist_ok=True)
