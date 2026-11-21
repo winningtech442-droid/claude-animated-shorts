@@ -243,7 +243,7 @@ def act(S, t):
                 s = abs(math.sin(t * 15.0)) * (0.55 + 0.45 * math.sin(t * 3.7)) * 0.42
                 for tok, w in (("jawOpen", 1.0), ("mouthFunnel", 0.25), ("mouthLowerDownLeft", 0.4), ("mouthLowerDownRight", 0.4)):
                     for kk in key(KB, tok): vals[kk.name] = vals.get(kk.name, 0) + s * w
-    blink = 1.0 if (t % 3.1) < 0.12 else 0.0                                                    # a blink every ~3 s
+    blink = 1.0 if ((t + 1.4) % 3.1) < 0.12 else 0.0                                            # a blink every ~3 s, never on a clip's first frames
     for tok in ("eyeBlinkLeft", "eyeBlinkRight"):
         for kk in key(KB, tok): vals[kk.name] = max(vals.get(kk.name, 0), blink)
     for k in KB:

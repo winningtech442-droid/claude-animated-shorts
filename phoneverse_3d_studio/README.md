@@ -46,3 +46,12 @@ Render cost on this 4-core box: about 6 s a frame at 540x960 / 16 samples, so ab
   the call screen at 30.5 s is too small to read.
 - Not done yet: sound design for packets (whoosh/ding per packet is the obvious next step),
   a richer desk set (lamp, mug) and a stronger laptop look.
+
+## FIX #15 additions (21 Nov 2026)
+- render/char_scene.py: character acting clips (beat key `char`), with the lead on a sofa and the hooded figure from behind. Arms use
+  an analytic two-bone IK because Biped bones are unconnected; hands are oriented per pose; faces use the approved recipes.
+  world.py skips char beats, and compose3d.py reads build/chars/<clip>/NNNN.png.
+- world.py prop `wallet`: your bank card (flips to show the number on the back), a glowing copy that flies to the scammer's phone
+  (events `ghost`, `freeze`, `cardflip`), and the scammer's phone, whose screen comes from the beat key `scam`. Packet nodes `card`
+  and `scamphone`; camera presets card_macro, card_top, path_wide, path_side, scam, scam_close, scam_tilt.
+- build_fix15.sh renders the character clips first, then the desk frames, then compose, assemble, QC and the phone-size sheet.

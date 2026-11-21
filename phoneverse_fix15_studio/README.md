@@ -53,3 +53,14 @@ named m023_*). Render time on 4 cores: characters about 11 s a frame, desk about
 - A bank or card issuer can suspend the card in a wallet on another device; removing it from one device does not remove it from others,
   so call the bank (Bitdefender / Apple guidance).
 - For the caption: report scam texts to 7726; Report Fraud (reportfraud.police.uk) or 101 in Scotland.
+
+## Result (21 Nov 2026)
+- Finals (gitignored): ../phoneverse_3d_studio/final/phoneverse_fix15_mix_with_pad.mp4 and phoneverse_fix15_mix_voice_fx.mp4. 1597 frames, 66.54 s.
+- QC, both mixes: every row passes. Length 66.54 s, tail 0.32 s, pace 3.09 w/s, -14.1 LUFS, true peak -2.4 dB (pad mix) / -2.9 dB (voice+fx),
+  loudness range 3.9 / 3.0 LU (the voice+fx mix sits exactly on the 3.0 limit), 38 cuts, longest shot 2.38 s, no black or frozen frames.
+- Phone-size check: ../phoneverse_3d_studio/docs/phone_size_check_fix15.png. Weak spots:
+  - The pinned labels ("THAT'S ALL IT TOOK", "SCAMMER", "THEIR PHONE") and the HUD's small left-hand word are tiny at phone size.
+  - 34.5 s: a packet head over the scammer's phone reads as a pink smudge.
+  - The wide shot at 60.5 s is small. The two hooded-figure shots are dark (on purpose), but the laptop glow keeps the silhouette.
+  - Phone-pose clips (c05, c11, c13): her hands at the bottom edge are soft blobs; they are cropped, but still visible.
+- Render took about 4.5 h on this 4-core box (characters ~10 s a frame, desk ~8-12 s a frame at 540x960 / 16 samples).
