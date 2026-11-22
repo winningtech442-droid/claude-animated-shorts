@@ -1,8 +1,19 @@
 # Phoneverse FIX #16: Gold in your iPhone (every upgrade, you throw away real gold): studio package
 
 **Format test** (a treasure/curiosity video, not a threat story). HSERIA + CTA, second person, rule book v8 (format A), with **4 character beats**.
-Status: **script locked for a voice take, nothing rendered.** Draft 22 Nov 2026.
-20 lines, 198 words. At FIX #15's pace (0.36 s a word including pauses) that comes to about **71 s**: measure the take. If it runs over 70 s, cut line 4 first, then shorten line 19.
+Status: **voice take locked (22 Nov 2026); captions built; nothing rendered.**
+**Take 4: 69.02 s, 185 words, speech pace 3.00 words/s, tail 0.32 s.** Every make_voice limit passes. Raw voice is -21.2 LUFS; the mix takes it to -14.
+Kokoro af_heart (voice B), the same model as #15: re-voicing #15 lines 1-3 matched its recorded durations exactly.
+
+### How the take was locked (never re-time after this)
+| Take | Length | Pace | What changed |
+|---|---|---|---|
+| 1 | 85.2 s | 2.56 wps | #15 presets as they were. Its slow presets suited one-syllable lines; our short, choppy sentences read slowly. |
+| 2 | 69.7 s | 3.04 wps | Presets sped up (TELL 0.95, PUNCH 1.0, SURPRISE 0.97, SHOCK 1.02, EMPH 0.92, RELIEF 0.92, ASK 0.98); 10 words cut. |
+| 3 | 68.5 s | 3.02 wps | Line 15 (bar) on EMPH, SHOCK 0.96, ASK 0.92, TELL pause after 0.32; "Look closer." and "So" cut. |
+| 4 | **69.0 s** | **3.00 wps** | New **AWE** preset (0.82, +2.5 dB) for line 15 so the fantasy peak breathes (3.35 wps); ASK 0.88. |
+Lines still on the fast side: 6 (battery, 3.45 wps) and 20 (question, 3.58 wps). Check them by ear.
+Captions: 103 cards, one yellow word per line. Our copy of build_captions.py now turns only the first match yellow (line 14 says "gold" three times).
 Post: Fri 27 Nov (Black Friday), 19:20 UK. **Log this as the one change** for this post: the format, not a threat story.
 
 ## Why this topic (daily intel, 22 Nov 2026)
@@ -76,11 +87,23 @@ flash and LiDAR on the right), smaller Dynamic Island, Camera Control button, **
 - Gold-plated contacts and gold bond wires in **some** chips: standard; "some" is the hedge.
 
 ## Files
-- data/lines.json (20 lines; presets copied from #15, blocks, starred words, character clips), script.txt (lines only).
-- Not built yet: tools/ (copy make_voice.py, build_captions.py, make_sound.py, qc.py from ../phoneverse_fix15_studio), timings.json,
-  captions.json, ../phoneverse_3d_studio/data/make_beats_fix16.py, the new world.py props and char_scene.py clips.
+- data/lines.json (20 lines, #16 presets incl. AWE, blocks, starred words, character clips), data/timings.json (measured, **locked**),
+  data/captions.json (103 cards), script.txt (lines only).
+- audio/voice_take.wav|mp3, audio/lines/line_NN.wav.
+- tools/: make_voice.py, build_captions.py (one-yellow fix), qc.py, plus make_sound.py, which is **still #15's cue sheet**. It must be
+  rewritten for #16's sounds (clatter, shimmer, battery hiss/whoomph, fizz, sparkle, 3 splashes, snow hush, torch roar, pour, CLINK, coin,
+  drawer slide) once the beat sheet exists.
+- Not built yet: ../phoneverse_3d_studio/data/make_beats_fix16.py, the new world.py props and the char_scene.py clips.
+
+## Run
+```
+# voice models (gitignored): kokoro-v1.0.onnx + voices-v1.0.bin from github.com/thewh1teagle/kokoro-onnx releases (model-files-v1.0),
+# linked as ../phoneverse_3d_studio/models/kokoro.onnx and voices.bin; venv: uv venv -p 3.11 .venv_voice && uv pip install kokoro-onnx soundfile numpy scipy
+../phoneverse_3d_studio/.venv_voice/bin/python tools/make_voice.py --models ../phoneverse_3d_studio/models
+python3 tools/build_captions.py
+```
 
 ## Next steps
-1. Voice take (Kokoro af_heart, #15 presets), measure the timings and lock them. Check the length is 60-70 s.
-2. Build the props and the yard dressing, then render `--test` stills and check docs/storyboard_3d.png at phone size first.
-3. Character clips c01-c04, the full render, QC (-14 LUFS, 1080×1920), phone-size sheet, post caption.
+1. Listen to audio/voice_take.mp3 (lines 6 and 20 especially). If a line needs changing, re-voice it and re-lock before any beat timing.
+2. Beat sheet make_beats_fix16.py from timings.json, the props and the yard dressing, then `--test` stills; check storyboard_3d.png at phone size first.
+3. #16 make_sound.py, character clips c01-c04, the full render, QC (-14 LUFS, 1080×1920), phone-size sheet, post caption.

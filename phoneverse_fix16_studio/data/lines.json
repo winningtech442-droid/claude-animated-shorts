@@ -2,22 +2,22 @@
  "episode": "FIX #16",
  "title": "Gold in your iPhone: every upgrade, you throw away real gold",
  "format": "Treasure/curiosity format test (not a threat story), HSERIA + CTA, second person, rule book v8 (format A), 4 character beats",
- "voice": "Kokoro af_heart (voice B), slower presets for #15 (short words read fast)",
+ "voice": "Kokoro af_heart (voice B); presets sped up for #16 (short, choppy sentences read slow at #15's presets)",
  "presets": {
   "TELL": {
    "blend": {
     "af_heart": 1.0
    },
-   "speed": 0.8,
+   "speed": 0.95,
    "gain_db": 0.0,
    "pause_before": 0.0,
-   "pause_after": 0.4
+   "pause_after": 0.32
   },
   "PUNCH": {
    "blend": {
     "af_heart": 1.0
    },
-   "speed": 0.87,
+   "speed": 1.0,
    "gain_db": 1.5,
    "pause_before": 0.0,
    "pause_after": 0.32
@@ -26,7 +26,7 @@
    "blend": {
     "af_heart": 1.0
    },
-   "speed": 0.85,
+   "speed": 0.97,
    "gain_db": 2.5,
    "pause_before": 0.15,
    "pause_after": 0.4
@@ -35,7 +35,7 @@
    "blend": {
     "af_heart": 1.0
    },
-   "speed": 0.92,
+   "speed": 0.96,
    "gain_db": 2.5,
    "pause_before": 0.0,
    "pause_after": 0.4
@@ -44,7 +44,7 @@
    "blend": {
     "af_heart": 1.0
    },
-   "speed": 0.8,
+   "speed": 0.92,
    "gain_db": 2.5,
    "pause_before": 0.1,
    "pause_after": 0.4
@@ -53,7 +53,7 @@
    "blend": {
     "af_heart": 1.0
    },
-   "speed": 0.8,
+   "speed": 0.92,
    "gain_db": 0.5,
    "pause_before": 0.0,
    "pause_after": 0.4
@@ -62,10 +62,19 @@
    "blend": {
     "af_heart": 1.0
    },
-   "speed": 0.84,
+   "speed": 0.88,
    "gain_db": 1.0,
    "pause_before": 0.0,
    "pause_after": 0.32
+  },
+  "AWE": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.82,
+   "gain_db": 2.5,
+   "pause_before": 0.15,
+   "pause_after": 0.4
   }
  },
  "lines": [
@@ -91,8 +100,8 @@
    "id": 3,
    "block": "S",
    "preset": "TELL",
-   "text": "Recycling plants do this. Please don't try it at home.",
-   "spoken": "Recycling plants do this. Please don't try it at home.",
+   "text": "Recycling plants do this. Don't try it at home.",
+   "spoken": "Recycling plants do this. Don't try it at home.",
    "star": "Recycling",
    "face": "none"
   },
@@ -127,8 +136,8 @@
    "id": 7,
    "block": "E",
    "preset": "TELL",
-   "text": "Look closer. These shiny pins? Gold.",
-   "spoken": "Look closer. These shiny pins? Gold.",
+   "text": "These shiny pins? Gold.",
+   "spoken": "These shiny pins? Gold.",
    "star": "Gold",
    "face": "none"
   },
@@ -145,8 +154,8 @@
    "id": 9,
    "block": "E",
    "preset": "TELL",
-   "text": "Next, the board goes in a liquid. Slowly, slowly, it turns blue.",
-   "spoken": "Next, the board goes in a liquid. Slowly, slowly, it turns blue.",
+   "text": "The board goes in a liquid. Slowly, slowly, it turns blue.",
+   "spoken": "The board goes in a liquid. Slowly, slowly, it turns blue.",
    "star": "blue",
    "face": "none"
   },
@@ -154,8 +163,8 @@
    "id": 10,
    "block": "E",
    "preset": "TELL",
-   "text": "It falls apart into black, ugly mud.",
-   "spoken": "It falls apart into black, ugly mud.",
+   "text": "It falls apart into ugly mud.",
+   "spoken": "It falls apart into ugly mud.",
    "star": "mud",
    "face": "none"
   },
@@ -181,8 +190,8 @@
    "id": 13,
    "block": "E",
    "preset": "TELL",
-   "text": "One more powder. Once the bubbling stops again, brown dust falls down.",
-   "spoken": "One more powder. Once the bubbling stops again, brown dust falls down.",
+   "text": "Once the bubbling stops again, brown dust falls down.",
+   "spoken": "Once the bubbling stops again, brown dust falls down.",
    "star": "brown",
    "face": "none"
   },
@@ -190,15 +199,15 @@
    "id": 14,
    "block": "R1",
    "preset": "EMPH",
-   "text": "This brown dust? Pure gold. Gold sand, gold dust, whatever, it's gold.",
-   "spoken": "This brown dust? Pure gold. Gold sand, gold dust, whatever, it's gold.",
+   "text": "This brown dust? Pure gold. Gold sand, gold dust, whatever.",
+   "spoken": "This brown dust? Pure gold. Gold sand, gold dust, whatever.",
    "star": "gold",
    "face": "none"
   },
   {
    "id": 15,
    "block": "R1",
-   "preset": "PUNCH",
+   "preset": "AWE",
    "text": "Heat it, pour it, and there it is. A real gold bar.",
    "spoken": "Heat it, pour it, and there it is. A real gold bar.",
    "star": "bar",
@@ -217,8 +226,8 @@
    "id": 17,
    "block": "I",
    "preset": "PUNCH",
-   "text": "So for this bar? About thirty thousand more phones.",
-   "spoken": "So for this bar? About thirty thousand more phones.",
+   "text": "For this bar? About thirty thousand more phones.",
+   "spoken": "For this bar? About thirty thousand more phones.",
    "star": "thousand",
    "face": "none"
   },
@@ -235,8 +244,8 @@
    "id": 19,
    "block": "A",
    "preset": "TELL",
-   "text": "Selling or recycling one? Erase it first. Your photos and bank apps are still inside.",
-   "spoken": "Selling or recycling one? Erase it first. Your photos and bank apps are still inside.",
+   "text": "Erase it before you recycle. Your photos and bank apps are still inside.",
+   "spoken": "Erase it before you recycle. Your photos and bank apps are still inside.",
    "star": "Erase",
    "face": "none"
   },

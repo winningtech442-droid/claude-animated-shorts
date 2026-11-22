@@ -1,0 +1,1299 @@
+[
+ {
+  "line": 1,
+  "start": 0.0,
+  "end": 0.607,
+  "words": [
+   "Every",
+   "time"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 0.607,
+  "end": 1.282,
+  "words": [
+   "you",
+   "upgrade"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 1,
+  "start": 1.282,
+  "end": 2.16,
+  "words": [
+   "your",
+   "iPhone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 2.16,
+  "end": 2.7,
+  "words": [
+   "you",
+   "throw"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 2.7,
+  "end": 3.24,
+  "words": [
+   "away",
+   "real"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 3.24,
+  "end": 3.712,
+  "words": [
+   "gold"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 4.032,
+  "end": 4.839,
+  "words": [
+   "Real",
+   "gold"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 2,
+  "start": 4.839,
+  "end": 5.572,
+  "words": [
+   "Inside",
+   "your"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 5.572,
+  "end": 6.379,
+  "words": [
+   "old",
+   "phone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 6.699,
+  "end": 7.297,
+  "words": [
+   "Recycling"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 3,
+  "start": 7.297,
+  "end": 7.829,
+  "words": [
+   "plants",
+   "do"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 7.829,
+  "end": 8.295,
+  "words": [
+   "this"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 8.295,
+  "end": 8.827,
+  "words": [
+   "Don't",
+   "try"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 8.827,
+  "end": 9.093,
+  "words": [
+   "it",
+   "at"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 9.093,
+  "end": 9.558,
+  "words": [
+   "home"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 9.877,
+  "end": 10.278,
+  "words": [
+   "It",
+   "only"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 10.278,
+  "end": 10.946,
+  "words": [
+   "takes",
+   "three"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 10.946,
+  "end": 11.882,
+  "words": [
+   "simple",
+   "steps"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 12.203,
+  "end": 12.88,
+  "words": [
+   "First",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 12.88,
+  "end": 13.618,
+  "words": [
+   "battery",
+   "comes"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 13.618,
+  "end": 13.988,
+  "words": [
+   "out"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 13.988,
+  "end": 14.665,
+  "words": [
+   "Very",
+   "very"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 14.665,
+  "end": 15.403,
+  "words": [
+   "important"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 15.723,
+  "end": 15.975,
+  "words": [
+   "If",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 15.975,
+  "end": 16.669,
+  "words": [
+   "gets",
+   "crushed"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 16.669,
+  "end": 16.795,
+  "words": [
+   "or"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 16.795,
+  "end": 17.552,
+  "words": [
+   "punctured"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 17.552,
+  "end": 17.867,
+  "words": [
+   "it",
+   "can"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 17.867,
+  "end": 18.624,
+  "words": [
+   "catch",
+   "fire"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 7,
+  "start": 19.024,
+  "end": 19.753,
+  "words": [
+   "These",
+   "shiny"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 19.753,
+  "end": 20.263,
+  "words": [
+   "pins"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 20.263,
+  "end": 20.773,
+  "words": [
+   "Gold"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 8,
+  "start": 21.093,
+  "end": 21.646,
+  "words": [
+   "Some",
+   "chips"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 21.646,
+  "end": 22.138,
+  "words": [
+   "have",
+   "gold"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 22.138,
+  "end": 22.875,
+  "words": [
+   "wires",
+   "thinner"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 22.875,
+  "end": 23.244,
+  "words": [
+   "than",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 23.244,
+  "end": 23.674,
+  "words": [
+   "hair"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 9,
+  "start": 23.995,
+  "end": 24.525,
+  "words": [
+   "The",
+   "board"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 24.525,
+  "end": 24.922,
+  "words": [
+   "goes",
+   "in"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 24.922,
+  "end": 25.651,
+  "words": [
+   "a",
+   "liquid"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 25.651,
+  "end": 26.844,
+  "words": [
+   "Slowly",
+   "slowly"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 26.844,
+  "end": 27.307,
+  "words": [
+   "it",
+   "turns"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 27.307,
+  "end": 27.771,
+  "words": [
+   "blue"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 10,
+  "start": 28.091,
+  "end": 28.62,
+  "words": [
+   "It",
+   "falls"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 28.62,
+  "end": 29.299,
+  "words": [
+   "apart",
+   "into"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 29.299,
+  "end": 30.054,
+  "words": [
+   "ugly",
+   "mud"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 11,
+  "start": 30.523,
+  "end": 30.958,
+  "words": [
+   "Once",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 30.958,
+  "end": 31.456,
+  "words": [
+   "bubbling"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 31.456,
+  "end": 32.14,
+  "words": [
+   "stops",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 32.14,
+  "end": 32.7,
+  "words": [
+   "mud",
+   "starts"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 32.7,
+  "end": 33.446,
+  "words": [
+   "to",
+   "sparkle"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 12,
+  "start": 33.846,
+  "end": 34.449,
+  "words": [
+   "Wash",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 34.449,
+  "end": 35.12,
+  "words": [
+   "rinse",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 35.12,
+  "end": 35.522,
+  "words": [
+   "wash",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 35.522,
+  "end": 36.059,
+  "words": [
+   "again"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 36.059,
+  "end": 36.729,
+  "words": [
+   "A",
+   "stronger"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 36.729,
+  "end": 37.332,
+  "words": [
+   "acid",
+   "turns"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 37.332,
+  "end": 38.07,
+  "words": [
+   "it",
+   "yellow"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 13,
+  "start": 38.39,
+  "end": 38.856,
+  "words": [
+   "Once",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 38.856,
+  "end": 39.389,
+  "words": [
+   "bubbling"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 39.389,
+  "end": 40.255,
+  "words": [
+   "stops",
+   "again"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 40.255,
+  "end": 40.855,
+  "words": [
+   "brown",
+   "dust"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 40.855,
+  "end": 41.654,
+  "words": [
+   "falls",
+   "down"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 42.074,
+  "end": 42.708,
+  "words": [
+   "This",
+   "brown"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 42.708,
+  "end": 43.2,
+  "words": [
+   "dust"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 43.2,
+  "end": 43.975,
+  "words": [
+   "Pure",
+   "gold"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 14,
+  "start": 43.975,
+  "end": 44.749,
+  "words": [
+   "Gold",
+   "sand"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 44.749,
+  "end": 45.524,
+  "words": [
+   "gold",
+   "dust"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 45.524,
+  "end": 46.298,
+  "words": [
+   "whatever"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 46.848,
+  "end": 47.506,
+  "words": [
+   "Heat",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 47.506,
+  "end": 48.165,
+  "words": [
+   "pour",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 48.165,
+  "end": 48.75,
+  "words": [
+   "and",
+   "there"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 48.75,
+  "end": 49.262,
+  "words": [
+   "it",
+   "is"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 49.262,
+  "end": 49.701,
+  "words": [
+   "A",
+   "real"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 49.701,
+  "end": 50.432,
+  "words": [
+   "gold",
+   "bar"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 16,
+  "start": 50.832,
+  "end": 51.664,
+  "words": [
+   "Honest",
+   "part"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 51.664,
+  "end": 52.176,
+  "words": [
+   "One",
+   "phone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 52.176,
+  "end": 52.816,
+  "words": [
+   "gives",
+   "about"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 52.816,
+  "end": 53.52,
+  "words": [
+   "three",
+   "pounds"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 16,
+  "start": 53.52,
+  "end": 54.096,
+  "words": [
+   "of",
+   "gold"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 54.496,
+  "end": 54.911,
+  "words": [
+   "For",
+   "this"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 54.911,
+  "end": 55.266,
+  "words": [
+   "bar"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 55.266,
+  "end": 55.918,
+  "words": [
+   "About",
+   "thirty"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 55.918,
+  "end": 56.393,
+  "words": [
+   "thousand"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 17,
+  "start": 56.393,
+  "end": 57.163,
+  "words": [
+   "more",
+   "phones"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 57.483,
+  "end": 57.991,
+  "words": [
+   "Tonne",
+   "for"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 57.991,
+  "end": 58.691,
+  "words": [
+   "tonne",
+   "old"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 58.691,
+  "end": 59.39,
+  "words": [
+   "phones",
+   "still"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 59.39,
+  "end": 59.771,
+  "words": [
+   "beat",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 59.771,
+  "end": 60.47,
+  "words": [
+   "gold",
+   "mine"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 19,
+  "start": 60.869,
+  "end": 61.354,
+  "words": [
+   "Erase",
+   "it"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 61.354,
+  "end": 61.978,
+  "words": [
+   "before",
+   "you"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 61.978,
+  "end": 62.672,
+  "words": [
+   "recycle"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 62.672,
+  "end": 63.365,
+  "words": [
+   "Your",
+   "photos"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 63.365,
+  "end": 63.85,
+  "words": [
+   "and",
+   "bank"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 63.85,
+  "end": 64.335,
+  "words": [
+   "apps",
+   "are"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 64.335,
+  "end": 65.306,
+  "words": [
+   "still",
+   "inside"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 65.627,
+  "end": 66.075,
+  "words": [
+   "How",
+   "many"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 66.075,
+  "end": 66.651,
+  "words": [
+   "old",
+   "phones"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 66.651,
+  "end": 66.971,
+  "words": [
+   "are",
+   "in"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 66.971,
+  "end": 67.803,
+  "words": [
+   "your",
+   "drawer"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 20,
+  "start": 67.803,
+  "end": 68.187,
+  "words": [
+   "Tell",
+   "me"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 68.187,
+  "end": 68.699,
+  "words": [
+   "below"
+  ],
+  "star": [
+   false
+  ]
+ }
+]
