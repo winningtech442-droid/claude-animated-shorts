@@ -1,7 +1,10 @@
 # Phoneverse FIX #16: Gold in your iPhone (every upgrade, you throw away real gold): studio package
 
 **Format test** (a treasure/curiosity video, not a threat story). HSERIA + CTA, second person, rule book v8 (format A), with **4 character beats**.
-Status: **voice take locked (22 Nov 2026); captions built; nothing rendered.**
+Status: **rendered 22 Nov 2026; QC passes on both finals** (69.00 s, -14.1 LUFS, TP -2.0/-2.5 dB, LRA 3.5, 39 cuts, longest shot 3.29 s, 0 black/frozen).
+Finals (gitignored): ../phoneverse_3d_studio/final/phoneverse_fix16_mix_with_pad.mp4 (post this one) and _mix_voice_fx.mp4. Phone-size sheet: ../phoneverse_3d_studio/docs/phone_size_check_fix16.png.
+Character beats are **desk stand-ins** (no yard set or Rocketbox clips yet). Molten gold was re-lit mid-render (AgX turned it peach): PV_MOLT=1.0,0.25,0.0.
+Known weak spots at phone size: battery flame reads pale; 30.5 s tub frame is almost all black between lines; 54.5 s ("For this bar?") the bar is small in frame.
 **Take 4: 69.02 s, 185 words, speech pace 3.00 words/s, tail 0.32 s.** Every make_voice limit passes. Raw voice is -21.2 LUFS; the mix takes it to -14.
 Kokoro af_heart (voice B), the same model as #15: re-voicing #15 lines 1-3 matched its recorded durations exactly.
 
