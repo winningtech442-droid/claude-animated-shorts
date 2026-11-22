@@ -348,7 +348,7 @@ if GOLD:
             wv = bpy.context.active_object; wv.name = f"bondwire{side}{k}"; wv.data.materials.append(gold_glow); wv.parent = phone_root; WIRES.append(wv)
     hair = cyl("hair", 0.00028, 0.034, (0.002, 0.024, z0 + 0.0016), mat("hairm", (0.09, 0.05, 0.03), 0.0, 0.5), verts=8, rot=(0, math.pi / 2, math.radians(24))); hair.parent = phone_root
     # battery fire (cutaway): the loose battery swells and a flame licks up from it
-    flame_m = emat("flame", (1.0, 0.35, 0.05), (1.0, 0.42, 0.06), 0.0)
+    flame_m = emat("flame", (1.0, 0.25, 0.03), (1.0, 0.28, 0.02), 0.0)
     bpy.ops.mesh.primitive_cone_add(radius1=0.014, radius2=0.0, depth=0.05, vertices=24); flame = bpy.context.active_object; flame.name = "flame"; flame.data.materials.append(flame_m); flame.visible_shadow = False
     fire_l = bpy.data.objects.new("fire_light", bpy.data.lights.new("fire_light", "POINT")); col.objects.link(fire_l); fire_l.data.color = (1.0, 0.45, 0.12); fire_l.data.energy = 0
     BATT_OUT = Vector((0.105, -0.115, 0.0011))
@@ -403,7 +403,7 @@ if GOLD:
     for nm_, d_, l_ in (("mould_floor", (0.064, 0.112, 0.006), (0, 0, 0.003)), ("mould_w1", (0.064, 0.008, 0.026), (0, 0.052, 0.013)), ("mould_w2", (0.064, 0.008, 0.026), (0, -0.052, 0.013)),
                         ("mould_w3", (0.008, 0.096, 0.026), (0.028, 0, 0.013)), ("mould_w4", (0.008, 0.096, 0.026), (-0.028, 0, 0.013))):
         box(nm_, d_, MOU + Vector(l_), steel, bevel=0.0008)
-    stream = cyl("stream", 0.0035, 0.06, (0, 0, 0), emat("streamm", (1.0, 0.45, 0.06), (1.0, 0.36, 0.04), 2.2), verts=16); stream.visible_shadow = False
+    stream = cyl("stream", 0.0035, 0.06, (0, 0, 0), emat("streamm", (1.0, 0.4, 0.04), (1.0, 0.33, 0.02), 6.0), verts=16); stream.visible_shadow = False
     bar_m = emat("barm", (1.0, 0.66, 0.16), (1.0, 0.36, 0.04), 0.0, metal=1.0, rough=0.2)
     bar_root = empty("bar_root", MOU + Vector((0, 0, 0.006)))
     bar = box("bar", (0.046, 0.094, 0.018), (0, 0, 0.009), bar_m, bevel=0.003); bar.parent = bar_root
@@ -411,7 +411,7 @@ if GOLD:
     _st = _Ig.new("RGB", (460, 940), (232, 168, 60)); _ds = _Dg.Draw(_st)
     _ds.rounded_rectangle((26, 26, 434, 914), 40, outline=(150, 96, 22), width=10)
     for _y, _s, _z in ((300, "FINE GOLD", 62), (470, "999.9", 96), (640, "1 kg", 80)): _ds.text((230, _y), _s, font=U.font(_z), fill=(140, 88, 20), anchor="mm")
-    _stp = os.path.join(a.out, "bar_stamp.png"); _st.rotate(180).save(_stp)
+    _stp = os.path.join(a.out, "bar_stamp.png"); _st.save(_stp)
     bpy.ops.mesh.primitive_plane_add(size=1, location=(0, 0, 0.0181)); stamp = bpy.context.active_object; stamp.name = "stamp"; stamp.scale = (0.040, 0.088, 1)
     bpy.ops.object.transform_apply(scale=True); stamp.parent = bar_root
     st_m = bpy.data.materials.new("stampm"); st_m.use_nodes = True; _n = st_m.node_tree; _b = _n.nodes["Principled BSDF"]; _tx = _n.nodes.new("ShaderNodeTexImage")
@@ -639,7 +639,7 @@ def apply_gold(t, b, p):
     bsdf(batt_m).inputs["Emission Color"].default_value = (1.0, 0.35, 0.05, 1); bsdf(batt_m).inputs["Emission Strength"].default_value = 3 * bf
     flame.hide_render = bf < 0.05; fl_ = bf * (0.85 + 0.2 * math.sin(t * 23) + 0.1 * math.sin(t * 41))
     flame.location = batt.matrix_world.translation + Vector((0, 0, 0.006 + 0.022 * fl_)); flame.scale = (fl_, fl_, fl_ * 1.2)
-    bsdf(flame_m).inputs["Emission Strength"].default_value = 14 * bf; fire_l.location = flame.location + Vector((0, 0, 0.02)); fire_l.data.energy = 9 * bf
+    bsdf(flame_m).inputs["Emission Strength"].default_value = 4.5 * bf; fire_l.location = flame.location + Vector((0, 0, 0.02)); fire_l.data.energy = 9 * bf
     dk = track("dunk", t); dv = track("dissolve", t)
     board_root.location = TUB + Vector((0, 0, 0.30 - 0.245 * ease(dk) - 0.02 * dv)); board_root.rotation_euler.z = 0.3 * dk; board_root.scale = (1 - 0.3 * dv, 1, max(0.05, 1 - 0.9 * dv))
     hide_all(board_root.children_recursive, dk < 0.01 or dv > 0.97)
@@ -668,7 +668,7 @@ def apply_gold(t, b, p):
     d_ = p1 - p0; stream.location = (p0 + p1) / 2; stream.rotation_euler = d_.to_track_quat("Z", "Y").to_euler(); stream.scale = (1, 1, d_.length / 0.06)
     fl = track("fill", t); cl = track("cool", t); li = track("lift", t)
     hide_all(bar_root.children_recursive, fl < 0.01); bar_root.scale = (1, 1, max(0.03, fl)); stamp.hide_render = fl < 0.01 or cl < 0.6
-    bsdf(bar_m).inputs["Emission Strength"].default_value = 2.5 * fl * (1 - cl); bsdf(bar_m).inputs["Roughness"].default_value = 0.6 - 0.42 * cl
+    bsdf(bar_m).inputs["Emission Strength"].default_value = 6.0 * fl * (1 - cl); bsdf(bar_m).inputs["Roughness"].default_value = 0.6 - 0.42 * cl
     bsdf(bar_m).inputs["Base Color"].default_value = (1.0, 0.45 + 0.21 * cl, 0.06 + 0.10 * cl, 1)
     bar_root.location = MOU + Vector((0, 0, 0.006 + 0.05 * ease(li))); bar_root.rotation_euler = (math.radians(10) * ease(li), 0, math.radians(-22) * ease(li))
     pv = track("piles", t); piles_root.scale = (max(0.001, ease(pv)),) * 3; hide_all(piles_root.children_recursive, pv < 0.02)
@@ -734,6 +734,9 @@ CUR_T = [0.0]
 # ------------------------------------------------------------------------------------------------ render
 sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = a.samples; sc.cycles.use_denoising = True; sc.render.use_persistent_data = True
 sc.render.resolution_x, sc.render.resolution_y = a.res; sc.view_settings.view_transform = "AgX"; sc.view_settings.look = "AgX - Medium High Contrast"
+if GOLD:                                                   # FIX #16: the glass tub + liquid make Cycles slow; cap bounces, no caustics
+    cy = sc.cycles; cy.max_bounces = 6; cy.diffuse_bounces = 2; cy.glossy_bounces = 3; cy.transmission_bounces = 6; cy.volume_bounces = 0
+    cy.transparent_max_bounces = 6; cy.caustics_reflective = False; cy.caustics_refractive = False; cy.blur_glossy = 1.0
 total = int(round(B["length_s"] * FPS))
 if a.one is not None: frames = [a.one]; sub = "one"
 elif a.test: frames = [int(((b["t0"] + b["t1"]) / 2) * FPS) for b in BEATS if not (b.get("face") or b.get("char"))]; sub = "test"

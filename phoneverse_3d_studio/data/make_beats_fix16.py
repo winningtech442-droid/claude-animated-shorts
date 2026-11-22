@@ -16,7 +16,7 @@ BEATS = [
  # L1 every time you upgrade your iPhone, you throw away real gold (frame 1: the old phone is already flying in, tumbling, then bounces)
  dict(t0=0.0, t1=1.6, line=1, cam=["g_drop", "g_hero"], screen="U.lock_plain()", events=[ev("toss", 0, 1, 0.0, 1.5)]),
  dict(t0=1.6, t1=2.9, line=1, char="c01_toss"),
- dict(t0=2.9, t1=4.032, line=1, cam=["g_hero", "g_wide"], screen="U.lock_plain()", labels=[{"anchor": "heap", "text": "OLD PHONES", "dx": 120, "dy": -260, "from": 3.2}]),
+ dict(t0=2.9, t1=4.032, line=1, cam=["g_hero", "g_wide"], screen="U.lock_plain()"),
  # L2 real gold. inside your old phone (the lid lifts, the gold glows)
  dict(t0=4.032, t1=5.5, line=2, cam=["g_drop", "g_open"], parts=False, events=[ev("lid", 0, 1, 4.1, 5.1), ev("goldglow", 0, 1, 4.6, 5.4)]),
  dict(t0=5.5, t1=6.699, line=2, cam=["g_pins", "g_hero"], parts=False, labels=[{"anchor": "pins", "text": "REAL GOLD", "dx": 140, "dy": -300, "from": 5.7}]),
@@ -33,7 +33,7 @@ BEATS = [
  # L6 if it gets crushed or punctured, it can catch fire (cutaway: the loose battery swells and flames)
  dict(t0=15.723, t1=17.2, line=6, cam=["g_hero", "g_batt_close"], parts=False, events=[ev("battfire", 0, 1, 15.9, 16.8)],
       labels=[{"anchor": "battery", "text": "FIRE RISK", "dx": -360, "dy": -320, "from": 16.3}]),
- dict(t0=17.2, t1=19.024, line=6, char="c02_recoil", events=[ev("battfire", 1, 0, 18.9, 18.95)]),
+ dict(t0=17.2, t1=19.024, line=6, char="c02_recoil", events=[ev("battfire", 1, 0, 19.0, 19.02)]),
  # L7 these shiny pins? gold
  dict(t0=19.024, t1=21.093, line=7, cam=["g_open", "g_pins"], parts=False, hud=GRAMS, labels=[{"anchor": "pins", "text": "GOLD-PLATED PINS", "dx": -330, "dy": -330, "from": 19.7}]),
  # L8 some chips have gold wires thinner than a hair
@@ -89,7 +89,14 @@ BEATS = [
       events=[ev("drawer", 1, 0, 67.45, 68.2), ev("gone", 1, 0, 67.4, 67.42), ev("lid", 1, 0, 67.4, 67.42), ev("goldglow", 1, 0, 67.4, 67.42),
               ev("battout", 1, 0, 67.4, 67.42), ev("hair", 1, 0, 67.4, 67.42), ev("toss", 1, 0.0, 67.6, 69.0)]),
 ]
-for b in BEATS: b.setdefault("inset", False)       # no screen insets: the old phone's lock screen is not the story here
+# STAND-INS: the character clips need the Rocketbox assets + a "yard" set in char_scene.py, neither available yet. Until they exist, each
+# character beat renders as a desk shot of the same moment (flagged "standin_for"); set STANDIN = False and re-render those frames to swap them in.
+STANDIN = True
+STAND = {"c01_toss": ["g_wide", "g_drop"], "c02_recoil": ["g_batt", "g_hero"], "c03_delight": ["g_pour", "g_bar_top"], "c04_shrug": ["g_bar", "g_pour"]}
+if STANDIN:
+    for b in BEATS:
+        if b.get("char"): c = b.pop("char"); b["standin_for"] = c; b["cam"] = STAND[c]; b.setdefault("screen", "U.lock_plain()")
+for b in BEATS: b.setdefault("inset", False); b["parts"] = False   # no auto part tags (CPU/BATTERY) in this episode       # no screen insets: the old phone's lock screen is not the story here
 for a, b in zip(BEATS, BEATS[1:]): assert abs(a["t1"] - b["t0"]) < 1e-6, (a["t0"], b["t0"])
 for b in BEATS: assert b["t1"] - b["t0"] <= 2.5, b["t0"]
 for a, b in zip(BEATS, BEATS[1:]):
@@ -105,7 +112,7 @@ CLIPS = [
  {"clip": "c03_delight", "set": "yard", "pose": "cheer", "notes": "the gold bar rises: delight", "expr": [[0, "delight", 1.0]], "face": "delight"},
  {"clip": "c04_shrug", "set": "yard", "pose": "shrug", "notes": "'Honest part?' three pounds: a shrug, half a smile", "expr": [[0, "smug", 0.6]], "face": "smug"},
 ]
-assert {c["clip"] for c in CLIPS} == {b["char"] for b in BEATS if b.get("char")}
+assert {c["clip"] for c in CLIPS} == {b.get("char") or b.get("standin_for") for b in BEATS if b.get("char") or b.get("standin_for")}
 json.dump({"recipes": "../phoneverse_fix15_studio/data/face_recipes.json", "clips": CLIPS, "status": "intent only: needs a 'yard' set in char_scene.py"},
           open("data/chars_fix16.json", "w"), indent=1)
 H = {"episode": "phoneverse_fix16",
@@ -118,4 +125,4 @@ H = {"episode": "phoneverse_fix16",
      "cards": [{"t0": 6.75, "t1": 9.8, "title": "DON'T TRY THIS AT HOME", "sub": "Toxic fumes & acid · recycling plants only", "color": "RED"}],
      "shake": [0.6, 16.1, 49.7], "beats": BEATS}
 json.dump(H, open("data/beats_fix16.json", "w"), indent=1, ensure_ascii=False)
-print(len(BEATS), "beats,", sum(1 for b in BEATS if b.get("char")), "character beats (%.1f s); longest %.2f s" % (sum(b["t1"] - b["t0"] for b in BEATS if b.get("char")), max(b["t1"] - b["t0"] for b in BEATS)))
+print(len(BEATS), "beats,", sum(1 for b in BEATS if b.get("char") or b.get("standin_for")), "character beats (%.1f s); longest %.2f s" % (sum(b["t1"] - b["t0"] for b in BEATS if b.get("char") or b.get("standin_for")), max(b["t1"] - b["t0"] for b in BEATS)))
