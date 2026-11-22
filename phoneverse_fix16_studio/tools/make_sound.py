@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Synthesised sound for FIX #15 (from FIX #14) (adapted from FIX #13 / FIX #12 (all original, no samples): rain-and-bus bed, kitchen tone, effects, a dark pad with a low pulse,
-mixed with the directed voice. Reads data/shots.json + data/timings.json. Writes audio/mix_with_pad.wav and audio/mix_voice_fx.wav
+"""Synthesised sound for FIX #16 "Gold in your iPhone" (adapted from FIX #15; all original, no samples): a daytime recycling-yard bed (wind, distant birds),
+workbench effects (clatter, shimmer, battery hiss/whoomph, fizz, sparkle, splashes, dust hush, torch roar, pour sizzle, bar clink, drawer slide), a bright pad with a soft pulse,
+mixed with the directed voice. Reads ../phoneverse_3d_studio/data/beats_fix16.json + data/timings.json. Writes audio/mix_with_pad.wav and audio/mix_voice_fx.wav
 (voice + bed + effects, no pad: for adding a TikTok sound by hand). Both are normalised to -14 LUFS, true peak -1.5 dB (two-pass loudnorm).
 Music rules (rule book 5): music out under every REVEAL line, on re-hooks, half a beat before the turn; it hits back on the turn."""
 import json, os, subprocess, numpy as np, soundfile as sf
 from scipy.signal import butter, sosfilt, resample_poly
 SR = 48000; rng = np.random.default_rng(12)
-T = json.load(open("data/timings.json")); BS = json.load(open("../phoneverse_3d_studio/data/beats_fix15.json")); BEATS = BS["beats"]
+T = json.load(open("data/timings.json")); BS = json.load(open("../phoneverse_3d_studio/data/beats_fix16.json")); BEATS = BS["beats"]
 END = T["summary"]["take_length_s"]; N = int((END + 0.4) * SR)
 # voice presence (review: the narrator read too soft): gentle 3:1 compression + a small presence lift, before the mix
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", "audio/voice_take.wav", "-af", "acompressor=threshold=-22dB:ratio=3:attack=4:release=90:makeup=2,equalizer=f=3200:t=q:w=1.2:g=2.5", "audio/voice_comp.wav"], check=True)
@@ -76,42 +77,75 @@ def fx(name):
         d = 0.5; tt = t(d); return (np.sin(2 * np.pi * (90 - 40 * tt / d) * tt) * env(len(tt), 0.001, 0.09) + hp(noise(d), 2500) * env(len(tt), 0.0003, 0.01) * 0.8) * 1.0
     if name == "rewind":                                 # replay rewind: falling warble
         d = 0.6; tt = t(d); f = 1800 - 1400 * tt / d; return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(2 * np.pi * 14 * tt) ** 2 * np.sin(np.pi * tt / d) * 0.35
-    return None  # silence / room_tone / bus_hum handled elsewhere
+    # ---- FIX #16 workbench sounds
+    if name == "clatter":                                # the old phone skitters to rest: a few hard little clicks
+        x = np.zeros(int(0.45 * SR))
+        for k, g in enumerate((1.0, 0.6, 0.45, 0.3)): put(x, hp(noise(0.03), 1800) * env(int(0.03 * SR), 0.0003, 0.007), 0.05 * k + 0.02 * k * k, g)
+        return x * 0.9
+    if name == "shimmer":                                # gold glints: a rising cluster of soft bells
+        d = 1.0; x = np.zeros(int(d * SR))
+        for k, f0 in enumerate((1760, 2217, 2637, 3136, 3520)): put(x, np.sin(2 * np.pi * f0 * t(0.6)) * env(int(0.6 * SR), 0.002, 0.18), 0.09 * k, 0.22)
+        return x
+    if name == "sparkle":                                # flecks catching the light: scattered high pings
+        d = 1.0; x = np.zeros(int(d * SR))
+        for k in range(9): put(x, np.sin(2 * np.pi * rng.uniform(2800, 5200) * t(0.25)) * env(int(0.25 * SR), 0.001, 0.05), rng.uniform(0, 0.8), 0.2)
+        return x
+    if name == "hiss": d = 0.9; return hp(noise(d), 2500) * (t(d) / d) ** 1.5 * 0.45                       # the battery venting
+    if name == "whoomph": d = 0.8; tt = t(d); return (lp(noise(d), 500) * env(len(tt), 0.004, 0.25) * 1.6 + np.sin(2 * np.pi * (70 - 30 * tt / d) * tt) * env(len(tt), 0.003, 0.3)) * 0.9
+    if name == "fizz":                                   # bubbling in the tub: dense tiny crackle
+        d = 2.0; x = bp(noise(d), 2500, 9000) * 0.12; tt = t(d)
+        for k in range(70): put(x, hp(noise(0.004), 3000) * env(int(0.004 * SR), 0.0002, 0.001), rng.uniform(0, d - 0.01), rng.uniform(0.2, 0.6))
+        return x * np.minimum(1, np.minimum(tt / 0.2, (d - tt) / 0.4))
+    if name == "plop": d = 0.4; tt = t(d); f = 320 - 200 * tt / d; return (np.sin(2 * np.pi * np.cumsum(f) / SR) * env(len(tt), 0.002, 0.08) + lp(noise(d), 2500) * env(len(tt), 0.001, 0.05) * 0.5) * 0.8
+    if name == "splash": d = 0.45; tt = t(d); return (bp(noise(d), 400, 6000) * env(len(tt), 0.003, 0.12) + lp(noise(d), 300) * env(len(tt), 0.002, 0.08) * 0.6) * 0.75
+    if name == "snow": d = 1.4; return hp(noise(d), 1500) * np.sin(np.pi * t(d) / d) ** 2 * 0.16                # dust drifting down
+    if name == "roar":                                   # gas torch: steady breathy roar with a little flutter
+        d = 1.8; tt = t(d); return bp(noise(d), 180, 3200) * (1 + 0.15 * np.sin(2 * np.pi * 9 * tt)) * np.minimum(1, np.minimum(tt / 0.08, (d - tt) / 0.25)) * 0.55
+    if name == "sizzle": d = 1.1; tt = t(d); return hp(noise(d), 3500) * (0.6 + 0.4 * np.sin(2 * np.pi * 23 * tt) ** 2) * np.sin(np.pi * tt / d) * 0.35
+    if name == "clink":                                  # the bar: a weighty metallic ring
+        d = 1.2; tt = t(d); return (np.sin(2 * np.pi * 1180 * tt) + 0.7 * np.sin(2 * np.pi * 1180 * 2.76 * tt) + 0.4 * np.sin(2 * np.pi * 1180 * 5.4 * tt)) * env(len(tt), 0.0005, 0.35) * 0.3
+    if name == "drawer": d = 0.6; tt = t(d); return (lp(noise(d), 900) * 0.9 + np.sin(2 * np.pi * 95 * tt) * 0.2) * np.sin(np.pi * tt / d) * 0.6
+    if name == "stamp":
+        x = np.zeros(int(0.6 * SR)); put(x, fx("thud"), 0.0, 0.8); put(x, fx("slap"), 0.0, 0.7); return x
+    return None  # silence handled elsewhere
 
-# ---- effects: packets from the beat sheet (launch whoosh, arrival ding; a blocked 'bounce' packet gets a dull block) + hand cues
-FX = np.zeros(N); cues = []
-for b in BEATS:
-    for e in b.get("events", []):
-        if e["type"] != "packet": continue
-        cues.append((e["t0"], "launch", 0.45))
-        if e.get("bounce"): cues.append(((e["t0"] + e["t1"]) / 2, "block", 0.6))
-        else: cues.append((e["t1"] - 0.05, "ding", 0.5))
-cues += [(0.05, "whoosh_soft", 0.7), (0.3, "rise", 0.5), (1.45, "impact", 0.5), (1.5, "confirm", 0.6), (1.9, "pop", 0.5),
-         (5.4, "tick_rise", 0.6), (6.1, "pop", 0.4), (7.65, "buzz", 0.6), (8.1, "pop", 0.4), (9.65, "pop", 0.5), (11.3, "pop", 0.5),
-         (12.7, "keys", 0.5), (13.4, "keys", 0.5), (14.4, "keys", 0.45), (15.6, "keys", 0.5), (16.3, "keys", 0.5), (17.0, "keys", 0.45),
-         (19.3, "keys", 0.5), (20.1, "keys", 0.45), (22.45, "buzz", 0.6), (24.2, "tap", 0.6), (24.6, "tap", 0.5), (25.0, "tap", 0.5),
-         (25.95, "ringtone", 0.45), (27.7, "tap", 0.5), (30.55, "whoosh", 0.6), (31.65, "confirm", 0.6), (32.2, "pop", 0.5),
-         (34.0, "confirm", 0.45), (34.5, "confirm", 0.45), (35.0, "confirm", 0.45), (37.6, "tick_rise", 0.6), (38.4, "tick_rise", 0.6),
-         (39.75, "music_hit", 0.8), (39.75, "stab", 0.6), (42.0, "pop", 0.5), (44.95, "rise", 0.5), (47.4, "slap", 0.9),
-         (48.9, "whoosh_soft", 0.4), (50.6, "stab", 0.5), (51.8, "pop", 0.5), (53.2, "buzz", 0.6), (55.05, "card_flip", 0.7), (55.6, "pop", 0.5),
-         (56.4, "tap", 0.5), (58.35, "lock_click", 0.8), (59.3, "confirm", 0.6), (60.7, "pop", 0.4), (62.1, "keys", 0.45),
-         (63.6, "whoosh", 0.5), (65.1, "card_flip", 0.5), (66.3, "tap", 0.5)]
+# ---- effects: cues from the beat sheet's events + a few hand cues (times in seconds on the locked take)
+FX = np.zeros(N)
+def evs(kind): return [e for b in BEATS for e in b.get("events", []) if e["type"] == kind]
+cues = [(0.0, "whoosh_soft", 0.7), (0.6, "impact", 0.9), (1.04, "clatter", 0.6), (1.3, "tick", 0.35), (1.5, "pop", 0.45),          # toss, bounces, hook title
+        (4.1, "whoosh_soft", 0.45), (4.6, "shimmer", 0.8), (5.7, "pop", 0.4), (6.75, "stamp", 0.8), (10.0, "pop", 0.5),            # lid, glow, label, warning card, 3 steps
+        (12.4, "whoosh_soft", 0.5), (13.9, "tap", 0.6), (14.3, "pop", 0.45), (15.9, "hiss", 0.8), (16.25, "whoomph", 0.9),          # battery out, battery fire
+        (19.3, "shimmer", 0.6), (19.7, "pop", 0.4), (21.2, "tick", 0.4), (21.5, "pop", 0.4), (22.9, "pop", 0.4),                    # pins, chip, hair
+        (24.0, "whoosh", 0.45), (25.25, "plop", 0.8), (25.7, "fizz", 0.35), (28.1, "fizz", 0.6), (29.1, "fizz", 0.55),              # dunk, blue, mud
+        (32.0, "sparkle", 0.8), (32.7, "pop", 0.4), (33.9, "splash", 0.6), (34.57, "splash", 0.6), (35.23, "splash", 0.6),          # sparkle, wash rinse wash
+        (36.1, "fizz", 0.55), (37.0, "fizz", 0.45), (38.6, "snow", 0.6), (40.1, "snow", 0.9), (42.6, "pop", 0.45), (44.4, "pop", 0.45), (45.7, "pop", 0.4),
+        (46.75, "roar", 0.7), (48.15, "sizzle", 0.7), (49.45, "sizzle", 0.4), (49.55, "rise", 0.4), (49.7, "clink", 1.0), (49.7, "music_hit", 0.7), (49.8, "shimmer", 0.6),
+        (52.6, "coin", 0.9), (52.9, "pop", 0.4), (54.9, "tick_rise", 0.6), (56.0, "whoosh", 0.55), (56.5, "pop", 0.4),
+        (57.6, "pop", 0.45), (58.2, "pop", 0.4), (58.5, "pop", 0.4), (59.3, "confirm", 0.6),
+        (60.9, "drawer", 0.8), (61.2, "pop", 0.3), (62.9, "pop", 0.4), (64.1, "tick_rise", 0.45), (64.94, "confirm", 0.6), (65.8, "pop", 0.45),
+        (67.45, "drawer", 0.6), (67.6, "whoosh_soft", 0.6)]
+for e in evs("dust"): pass                                              # (dust, powder and fizz are placed by hand above, on the event times)
 for at, n, g in cues:
     x = fx(n)
     if x is not None: put(FX, x, at, g)
 
-# ---- bed: Friday night indoors (low room rumble + faint city wash through the window), constant
-city = lp(noise(END + 0.4), 140, 2) * 3.0 + hp(lp(noise(END + 0.4), 2500), 300) * 0.25
-BED = city[:N] * 0.10
+# ---- bed: a daytime yard (soft wind with slow gusts + a distant bird now and then), constant
+tt_ = t(END + 0.4); wind = lp(noise(END + 0.4), 380, 2) * (0.7 + 0.3 * np.sin(2 * np.pi * 0.11 * tt_) * np.sin(2 * np.pi * 0.047 * tt_ + 1))
+BIRDS = np.zeros(len(tt_))
+for at in np.arange(2.3, END, 6.7):
+    for k in range(3):
+        d = 0.09; f = np.linspace(3600, 4600, int(d * SR)) if k % 2 == 0 else np.linspace(4400, 3500, int(d * SR))
+        put(BIRDS, np.sin(2 * np.pi * np.cumsum(f) / SR) * env(int(d * SR), 0.004, 0.04), at + k * 0.13 + rng.uniform(0, 0.4), 0.35)
+BED = (wind * 2.2 + BIRDS * 0.06)[:N] * 0.10
 
-# ---- music pad + pulse, gated per line: out under REVEAL lines and R1, out half a beat before the turn (R2), back hard on it
+# ---- music: a bright major pad + soft pulse, gated per line: out under REVEAL lines and R1, out half a beat before the turn (R2), back hard on it
 tt = t(END + 0.4)
 def saw(f, ph=0): return 2 * ((tt * f + ph) % 1.0) - 1
-pad = sum(saw(f * (1 + dt), ph) * a for f, dt, ph, a in [(55, 0.0, 0.0, 0.5), (55, 0.004, 0.3, 0.4), (82.4, 0.0, 0.1, 0.3), (110, 0.003, 0.7, 0.25), (130.8, 0.002, 0.2, 0.15)])
-pad = lp(pad, 900, 2)
+pad = sum(saw(f * (1 + dt), ph) * a for f, dt, ph, a in [(110, 0.0, 0.0, 0.45), (110, 0.004, 0.3, 0.35), (138.6, 0.0, 0.1, 0.3), (164.8, 0.003, 0.7, 0.28), (220, 0.002, 0.2, 0.15)])
+pad = lp(pad, 1400, 2)
 pulse = np.zeros(len(tt))
-for k in np.arange(0.5, END, 1.0): put(pulse, fx("thud"), k, 0.35)
-MUS = (pad * 0.22 + pulse[: len(pad)] * 0.5)
+for k in np.arange(0.5, END, 1.0): put(pulse, fx("thud"), k, 0.25)
+MUS = (pad * 0.22 + pulse[: len(pad)] * 0.4)
 gate = np.ones(len(tt))
 for l in T["lines"]:
     g = 0.0 if l["preset"] == "REVEAL" or l["block"] == "R1" else (0.45 if l["block"] in ("A",) else 1.0)

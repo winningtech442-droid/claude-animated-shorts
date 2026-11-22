@@ -594,3 +594,35 @@ def scam_wallet(state="home", p=1.0):
 
 def lock_plain():
     im = canvas((16, 20, 38)); d = ImageDraw.Draw(im); _lock_bg(d); return im
+
+
+# ---- FIX #16 (gold in your iPhone) screens: the old phone in the drawer. Generic UI only: no real OS look, no logos.
+def photo_gallery(p=1.0):
+    """Your old phone still holds your life: a photo grid that pops in, then a row of money apps (all invented, no brands)."""
+    import random
+    im = canvas((14, 14, 20)); d = ImageDraw.Draw(im); status_bar(d, dark=True); text(d, (72, 230), "Photos", 76, (255, 255, 255))
+    random.seed(7); tile = 300; gap = 18; x0 = (W - 3 * tile - 2 * gap) // 2
+    for i in range(9):
+        k = clamp(p * 1.6 - i * 0.07)
+        if k <= 0: continue
+        r_, c_ = divmod(i, 3); x = x0 + c_ * (tile + gap); y = 340 + r_ * (tile + gap); s = int(tile * (0.6 + 0.4 * ease(k))); o = (tile - s) // 2
+        sky = random.choice([(120, 180, 255), (255, 170, 120), (160, 220, 190), (250, 210, 120), (200, 160, 240)])
+        rr(d, (x + o, y + o, x + o + s, y + o + s), 22, fill=sky)
+        d.polygon([(x + o, y + o + s), (x + o + s // 3, y + o + s // 2), (x + o + 2 * s // 3, y + o + 3 * s // 4), (x + o + s, y + o + s // 2), (x + o + s, y + o + s)], fill=(60, 120, 80))
+        d.ellipse((x + o + s - s // 3, y + o + s // 8, x + o + s - s // 8, y + o + s // 3), fill=(255, 240, 160))
+    k = clamp(p * 1.6 - 0.75)
+    if k > 0:
+        for j, (nm, col) in enumerate((("BANK", GREEN), ("PAY", BLUE), ("CARDS", ORANGE))):
+            x = 120 + j * 300; y = 1360 - int(40 * (1 - ease(k)))
+            rr(d, (x, y, x + 220, y + 220), 50, fill=col); text(d, (x + 110, y + 110), "£", 110, (255, 255, 255), True, "mm"); text(d, (x + 110, y + 270), nm, 40, (255, 255, 255), True, "mm")
+    return im
+def erase_hello(p=1.0):
+    """Erase before you recycle: a plain progress card, then a plain white 'Hello' on black (generic font, not any OS's welcome screen)."""
+    im = canvas((8, 8, 12)); d = ImageDraw.Draw(im)
+    if p < 0.55:
+        k = clamp(p / 0.5); status_bar(d, dark=True)
+        text(d, (W // 2, 760), "Erase all content?", 66, (255, 255, 255), True, "mm"); text(d, (W // 2, 850), "Photos, apps, accounts", 44, (190, 190, 200), False, "mm")
+        rr(d, (140, 1000, W - 140, 1060), 30, fill=(50, 50, 60)); rr(d, (140, 1000, 140 + int((W - 280) * ease(k)), 1060), 30, fill=GREEN)
+    else:
+        a = ease(clamp((p - 0.55) / 0.3)); c = int(255 * a); text(d, (W // 2, H // 2 - 60), "Hello", 150, (c, c, c), False, "mm")
+    return im

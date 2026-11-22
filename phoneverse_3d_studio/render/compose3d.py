@@ -133,6 +133,13 @@ def extras(im, t):
             d.line([(x, y), (x + sx * 140, y)], fill=(255, 255, 255, 255), width=14); d.line([(x, y), (x, y + sy * 140)], fill=(255, 255, 255, 255), width=14)
         f = clamp(1 - abs(t - vf["flash"]) / 0.18)
         if f > 0: d.rectangle((0, 0, W, H), fill=(255, 255, 255, int(235 * f)))
+    for c in B.get("cards", []):                                          # FIX #16: a stamped warning card ("DON'T TRY THIS AT HOME"), same box as the hook
+        if c["t0"] <= t < c["t1"]:
+            A = int(255 * ease(clamp((t - c["t0"]) * 6)) * ease(clamp((c["t1"] - t) * 6))); col = COLORS.get(c.get("color", "RED"), U.RED); k = 1 + 0.25 * (1 - ease(clamp((t - c["t0"]) * 5)))
+            bw, bh = int(980 * k), int(300 * k); x0, y0 = (W - bw) // 2, 320 - bh // 2
+            U.rr(d, (x0, y0, x0 + bw, y0 + bh), 40, fill=(10, 10, 16, int(0.92 * A)), outline=col + (A,), width=10)
+            d.text((W // 2, y0 + int(bh * 0.40)), c["title"], font=U.font(int(66 * k)), fill=col + (A,), anchor="mm", stroke_width=4, stroke_fill=(0, 0, 0, A))
+            if c.get("sub"): d.text((W // 2, y0 + int(bh * 0.72)), c["sub"], font=U.font(int(40 * k), False), fill=(235, 235, 240, A), anchor="mm")
     out.alpha_composite(ov); return out.convert("RGB")
 
 def frame(g, sub="frames"):

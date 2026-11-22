@@ -304,6 +304,166 @@ if WALLET:
     GHOST_A = CARD0 + Vector((0, 0, 0.004)); GHOST_B = SCAM0 + Vector((0, 0, PH[2] + 0.006))
     WAL_ANCH = {"card": tuple(CARD0 + Vector((0.0, 0.0, 0.002))), "scamphone": tuple(SCAM0 + Vector((0, -0.03, PH[2]))), "ghost": None}
 
+# ---- gold (FIX #16, "Gold in your iPhone"): the desk becomes a workbench in a sunny recycling yard, with a mountain of old phones behind it.
+# The hero phone is the OLD generic phone (tossed in on frame 1). Events (all 0..1 unless noted):
+#  "toss"  the phone flies in from the left and bounces flat     "goldglow" pins + chip bond wires glow     "hair" a hair lies across the chip
+#  "battout" battery lifts out of the phone onto the bench        "battfire" the loose battery puffs up and flames (cutaway)
+#  "dunk"  a board drops into the tub     "dissolve" it crumbles away     "liq" liquid colour 0 clear, 1 blue, 2 murky, 3 yellow (0..3)
+#  "mud"   black mud layer     "sparkle" gold flecks glow in the mud     "bubble" bubbles rise     "rinse" 3 water pulses     "powder" white grains
+#  "dust"  brown dust snows to the bottom     "torch" flame on     "heat" crucible contents glow     "pour" crucible tilts, molten stream
+#  "fill"  molten gold fills the mould      "cool" it cools to polished gold      "lift" the bar rises out of the mould
+#  "piles" phone pile vs rock pile appear    "drawer" a drawer of old phones slides in (its lit phone's screen = beat key "dscreen")
+#  "gone"  the hero phone is cleared away (after the board went into the tub)
+GOLD = "gold" in PROPS
+GOLD_ANCH = {}
+if GOLD:
+    import random as _rg; _rg.seed(16)
+    hide_all([o for o in col.objects if o.name.startswith(("Cylinder", "panel", "Sphere", "laptop", "keyboard", "tray_"))] + [blink, lap_base, lid, lapscr], True)
+    def cyl(name, r, depth, loc, m, fill="NGON", verts=48, rot=(0, 0, 0)):
+        bpy.ops.mesh.primitive_cylinder_add(radius=r, depth=depth, location=loc, vertices=verts, end_fill_type=fill, rotation=rot); o = bpy.context.active_object; o.name = name
+        if m: o.data.materials.append(m)
+        bpy.ops.object.shade_smooth(); return o
+    def glassm(name, color=(0.92, 0.96, 1.0), rough=0.02, ior=1.45, tw=1.0):
+        m = mat(name, color, 0.0, rough); bs = m.node_tree.nodes["Principled BSDF"]; bs.inputs["Transmission Weight"].default_value = tw; bs.inputs["IOR"].default_value = ior; return m
+    def emat(name, color, emit, strength=0.0, metal=0.0, rough=0.4): return mat(name, color, metal, rough, emit=emit, strength=strength)
+    def bsdf(m): return m.node_tree.nodes["Principled BSDF"]
+    # the hero phone becomes one tossable object: parent every part to phone_root (at the origin, so nothing moves on parenting)
+    phone_root = empty("phone_root", (0, 0, 0))
+    PHONE_PARTS = [o for o in col.objects if o.name.startswith(("phone_body", "wall", "pcb", "cpu", "modem", "sim", "battery", "filter_"))] + [hinge]
+    for o in PHONE_PARTS: o.parent = phone_root
+    batt = bpy.data.objects["battery"]; batt_m = batt.active_material; BATT0 = Vector(batt.location)
+    # charging port + its gold pins on the bottom edge of the board; gold bond wires looping off the CPU's edges; one hair for scale
+    gold_glow = emat("goldglow", (0.95, 0.68, 0.22), (1.0, 0.72, 0.2), 0.0, metal=1.0, rough=0.2)
+    port = box("port", (0.013, 0.005, 0.0026), (0, -PH[1] / 2 + 0.0035, z0 + 0.0004), mat("porthouse", (0.55, 0.56, 0.6), 0.9, 0.3)); port.parent = phone_root
+    PINS = []
+    for k in range(8):
+        pn = box(f"pin{k}", (0.0007, 0.0042, 0.0005), (-0.0045 + k * 0.0013, -PH[1] / 2 + 0.0072, z0 + 0.0006), gold_glow); pn.parent = phone_root; PINS.append(pn)
+    WIRES = []
+    for side in range(4):
+        for k in range(5):
+            u = -0.0076 + k * 0.0038; cx, cy = 0.004, 0.025
+            loc = (cx + u, cy + 0.0108, z0 + 0.0006) if side == 0 else (cx + u, cy - 0.0108, z0 + 0.0006) if side == 1 else (cx + 0.0108, cy + u, z0 + 0.0006) if side == 2 else (cx - 0.0108, cy + u, z0 + 0.0006)
+            bpy.ops.mesh.primitive_torus_add(major_radius=0.0014, minor_radius=0.00011, major_segments=14, minor_segments=4, location=loc,
+                                             rotation=(math.pi / 2, 0, 0 if side < 2 else math.pi / 2))
+            wv = bpy.context.active_object; wv.name = f"bondwire{side}{k}"; wv.data.materials.append(gold_glow); wv.parent = phone_root; WIRES.append(wv)
+    hair = cyl("hair", 0.00028, 0.034, (0.002, 0.024, z0 + 0.0016), mat("hairm", (0.09, 0.05, 0.03), 0.0, 0.5), verts=8, rot=(0, math.pi / 2, math.radians(24))); hair.parent = phone_root
+    # battery fire (cutaway): the loose battery swells and a flame licks up from it
+    flame_m = emat("flame", (1.0, 0.35, 0.05), (1.0, 0.42, 0.06), 0.0)
+    bpy.ops.mesh.primitive_cone_add(radius1=0.014, radius2=0.0, depth=0.05, vertices=24); flame = bpy.context.active_object; flame.name = "flame"; flame.data.materials.append(flame_m); flame.visible_shadow = False
+    fire_l = bpy.data.objects.new("fire_light", bpy.data.lights.new("fire_light", "POINT")); col.objects.link(fire_l); fire_l.data.color = (1.0, 0.45, 0.12); fire_l.data.energy = 0
+    BATT_OUT = Vector((0.105, -0.115, 0.0011))
+    # the tub (open glass), its liquid, mud, sparkle flecks, bubbles, rinse stream, powder and dust
+    TUB = Vector((-0.17, 0.12, 0.0)); TR_, TH_ = 0.065, 0.11
+    tub = cyl("tub", TR_, TH_, TUB + Vector((0, 0, TH_ / 2)), glassm("tubglass", ior=1.12), fill="NOTHING", verts=64)
+    sd = tub.modifiers.new("solid", "SOLIDIFY"); sd.thickness = 0.0025
+    cyl("tub_floor", TR_, 0.003, TUB + Vector((0, 0, 0.0015)), glassm("tubfloor"), verts=64)
+    liq_m = glassm("liquid", (0.9, 0.95, 1.0), 0.04, 1.08); liq = cyl("liquid", TR_ - 0.003, 0.08, TUB + Vector((0, 0, 0.0035 + 0.04)), liq_m, verts=64)
+    liq_glow = bsdf(liq_m)
+    mud = cyl("mud", TR_ - 0.004, 0.02, TUB + Vector((0, 0, 0.004 + 0.01)), mat("mud", (0.03, 0.025, 0.02), 0.0, 0.85), verts=48)
+    FLECK_M = [emat(f"fleck{k}", (1.0, 0.75, 0.25), (1.0, 0.72, 0.18), 0.0, metal=1.0, rough=0.2) for k in range(4)]; FLECKS = []
+    for i in range(44):
+        rr_ = (TR_ - 0.012) * math.sqrt(_rg.random()); th = _rg.uniform(0, 6.283)
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rg.uniform(0.0011, 0.0022), subdivisions=1, location=TUB + Vector((rr_ * math.cos(th), rr_ * math.sin(th), 0.0)))
+        fo = bpy.context.active_object; fo.name = f"fleck{i}"; fo.data.materials.append(FLECK_M[i % 4]); FLECKS.append(fo)
+    bub_m = glassm("bubble", (1, 1, 1), 0.0, 1.1); BUBS = []
+    for i in range(22):
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=_rg.uniform(0.0018, 0.0035), segments=12, ring_count=6); bo = bpy.context.active_object; bo.name = f"bub{i}"; bo.data.materials.append(bub_m)
+        rr_ = (TR_ - 0.01) * math.sqrt(_rg.random()); th = _rg.uniform(0, 6.283); BUBS.append((bo, rr_ * math.cos(th), rr_ * math.sin(th), _rg.random()))
+    rinse = cyl("rinse", 0.0045, 0.2, TUB + Vector((0.012, 0, 0.08 + 0.1)), glassm("water", (0.85, 0.93, 1.0), 0.05, 1.33), verts=16)
+    hose = cyl("hose", 0.007, 0.03, TUB + Vector((0.012, 0, 0.295)), mat("hosem", (0.1, 0.45, 0.2), 0.0, 0.5), verts=16)
+    GRAIN_W = mat("grainw", (0.95, 0.95, 0.95), 0.0, 0.6); GRAIN_B = mat("grainb", (0.33, 0.17, 0.06), 0.1, 0.7); POWDER, DUST = [], []
+    for i in range(30):
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=0.0012, subdivisions=1); g_ = bpy.context.active_object; g_.name = f"powder{i}"; g_.data.materials.append(GRAIN_W)
+        POWDER.append((g_, _rg.uniform(-0.02, 0.02), _rg.uniform(-0.02, 0.02), _rg.random() * 0.5))
+    for i in range(60):
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rg.uniform(0.0012, 0.002), subdivisions=1); g_ = bpy.context.active_object; g_.name = f"dust{i}"; g_.data.materials.append(GRAIN_B)
+        rr_ = (TR_ - 0.012) * math.sqrt(_rg.random()); th = _rg.uniform(0, 6.283); DUST.append((g_, rr_ * math.cos(th), rr_ * math.sin(th), _rg.random() * 0.6))
+    dustbed = cyl("dustbed", TR_ - 0.005, 0.004, TUB + Vector((0, 0, 0.006)), mat("dustbedm", (0.30, 0.15, 0.05), 0.1, 0.75), verts=48)
+    # the board that goes into the tub (stands upright in the liquid)
+    board_root = empty("board_root", TUB + Vector((0, 0, 0.3)))
+    bb_ = box("tubboard", (0.055, 0.0016, 0.085), (0, 0, 0), mat("pcb2", (0.02, 0.22, 0.13), 0.1, 0.45)); bb_.parent = board_root
+    for k, (bx, bz, bw) in enumerate(((0.0, 0.015, 0.018), (-0.012, -0.02, 0.01), (0.014, -0.022, 0.012))):
+        c_ = box(f"tubchip{k}", (bw, 0.003, bw), (bx, -0.0015, bz), chipm); c_.parent = board_root
+    for k in range(6):
+        gp = box(f"tubpin{k}", (0.0016, 0.0032, 0.007), (-0.012 + k * 0.0048, -0.0005, -0.036), gold); gp.parent = board_root
+    # crucible on a brick stand, torch, the mould and the bar
+    CRU = Vector((0.17, 0.15, 0.045))
+    brick = box("brick", (0.075, 0.075, 0.045), (0.17, 0.15, 0.0225), mat("brickm", (0.42, 0.16, 0.08), 0.0, 0.9), bevel=0.002)
+    cru_root = empty("cru_root", CRU + Vector((0, -0.033, 0.036)))          # pivot on the front lip: it tilts forward (-y) to pour
+    cru = cyl("crucible", 0.033, 0.036, (0, 0.033, -0.018), mat("ceramic", (0.78, 0.74, 0.68), 0.0, 0.85), fill="NOTHING"); cru.parent = cru_root
+    sd = cru.modifiers.new("solid", "SOLIDIFY"); sd.thickness = 0.004
+    crf = cyl("cru_floor", 0.033, 0.004, (0, 0.033, -0.034), mat("ceramic2", (0.78, 0.74, 0.68), 0.0, 0.85)); crf.parent = cru_root
+    melt_m = emat("melt", (0.28, 0.14, 0.05), (1.0, 0.5, 0.1), 0.0, metal=0.3, rough=0.6)
+    melt = cyl("melt", 0.028, 0.008, (0, 0.033, -0.027), melt_m); melt.parent = cru_root
+    torch_body = cyl("torch", 0.008, 0.07, (0.27, 0.15, 0.075), mat("torchm", (0.75, 0.15, 0.1), 0.3, 0.4), verts=20, rot=(0, math.pi / 2, 0))
+    tflame_m = emat("tflame", (0.3, 0.5, 1.0), (0.35, 0.6, 1.0), 0.0)
+    bpy.ops.mesh.primitive_cone_add(radius1=0.008, radius2=0.0, depth=0.05, vertices=20, location=(0.211, 0.15, 0.075), rotation=(0, -math.pi / 2, 0))
+    tflame = bpy.context.active_object; tflame.name = "torchflame"; tflame.data.materials.append(tflame_m); tflame.visible_shadow = False
+    MOU = Vector((0.17, 0.035, 0.0)); steel = mat("steel", (0.55, 0.56, 0.6), 0.9, 0.35)
+    for nm_, d_, l_ in (("mould_floor", (0.064, 0.112, 0.006), (0, 0, 0.003)), ("mould_w1", (0.064, 0.008, 0.026), (0, 0.052, 0.013)), ("mould_w2", (0.064, 0.008, 0.026), (0, -0.052, 0.013)),
+                        ("mould_w3", (0.008, 0.096, 0.026), (0.028, 0, 0.013)), ("mould_w4", (0.008, 0.096, 0.026), (-0.028, 0, 0.013))):
+        box(nm_, d_, MOU + Vector(l_), steel, bevel=0.0008)
+    stream = cyl("stream", 0.0035, 0.06, (0, 0, 0), emat("streamm", (1.0, 0.45, 0.06), (1.0, 0.36, 0.04), 2.2), verts=16); stream.visible_shadow = False
+    bar_m = emat("barm", (1.0, 0.66, 0.16), (1.0, 0.36, 0.04), 0.0, metal=1.0, rough=0.2)
+    bar_root = empty("bar_root", MOU + Vector((0, 0, 0.006)))
+    bar = box("bar", (0.046, 0.094, 0.018), (0, 0, 0.009), bar_m, bevel=0.003); bar.parent = bar_root
+    from PIL import Image as _Ig, ImageDraw as _Dg
+    _st = _Ig.new("RGB", (460, 940), (232, 168, 60)); _ds = _Dg.Draw(_st)
+    _ds.rounded_rectangle((26, 26, 434, 914), 40, outline=(150, 96, 22), width=10)
+    for _y, _s, _z in ((300, "FINE GOLD", 62), (470, "999.9", 96), (640, "1 kg", 80)): _ds.text((230, _y), _s, font=U.font(_z), fill=(140, 88, 20), anchor="mm")
+    _stp = os.path.join(a.out, "bar_stamp.png"); _st.rotate(180).save(_stp)
+    bpy.ops.mesh.primitive_plane_add(size=1, location=(0, 0, 0.0181)); stamp = bpy.context.active_object; stamp.name = "stamp"; stamp.scale = (0.040, 0.088, 1)
+    bpy.ops.object.transform_apply(scale=True); stamp.parent = bar_root
+    st_m = bpy.data.materials.new("stampm"); st_m.use_nodes = True; _n = st_m.node_tree; _b = _n.nodes["Principled BSDF"]; _tx = _n.nodes.new("ShaderNodeTexImage")
+    _tx.image = bpy.data.images.load(os.path.abspath(_stp)); _n.links.new(_tx.outputs[0], _b.inputs["Base Color"]); _b.inputs["Metallic"].default_value = 1.0; _b.inputs["Roughness"].default_value = 0.18
+    stamp.data.materials.append(st_m)
+    # phones: generic old slabs in mixed colours (no logos), used by the drawer, the comparison pile and the mountain behind the bench
+    SLAB_COL = [(0.05, 0.055, 0.065), (0.75, 0.76, 0.78), (0.82, 0.68, 0.52), (0.12, 0.2, 0.42), (0.55, 0.08, 0.12), (0.9, 0.9, 0.88), (0.1, 0.35, 0.3)]
+    SLAB_M = [mat(f"slab{k}", c, 0.7 if k < 3 else 0.2, 0.35) for k, c in enumerate(SLAB_COL)]; SCR_M = mat("deadscr", (0.01, 0.01, 0.015), 0.1, 0.12)
+    def slab(name, loc, rot, k, bevel=0.004, parent=None):
+        o = box(name, PH, (0, 0, 0), SLAB_M[k % len(SLAB_M)], bevel=bevel); o.location = loc; o.rotation_euler = rot
+        s_ = box(name + "_scr", (PH[0] - 0.006, PH[1] - 0.008, 0.0008), (0, 0, PH[2] / 2 + 0.0003), SCR_M); s_.parent = o
+        if parent: o.parent = parent
+        return o
+    MOUNT = []
+    for i in range(520):                                              # a heap behind the bench: packed from the ground up, peaked in the middle
+        r = 0.62 * math.sqrt(_rg.random()); th = _rg.uniform(0, math.pi); x = r * math.cos(th) * 1.5; y = 0.95 + r * math.sin(th) * 0.5
+        top = 0.40 * max(0.0, 1 - (r / 0.62) ** 1.4); z = top * (1 - _rg.random() ** 2.2) + 0.005      # most slabs sit near the surface of the heap
+        MOUNT.append(slab(f"heap{i}", (x, y, z), (_rg.uniform(-0.6, 0.6), _rg.uniform(-0.6, 0.6), _rg.uniform(0, 6.28)), _rg.randrange(7), bevel=0.0))
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=1.0, location=(0.0, 1.1, -0.02), segments=32, ring_count=16); core = bpy.context.active_object; core.name = "heapcore"
+    core.scale = (0.72, 0.16, 0.27); core.data.materials.append(SLAB_M[0])                    # a dark core so no sky shows through the gaps
+    drawer_root = empty("drawer_root", (-0.16, -0.16, 0.0)); wood2 = mat("drawerwood", (0.62, 0.45, 0.28), 0.0, 0.55)
+    for nm_, d_, l_ in (("drw_floor", (0.20, 0.13, 0.004), (0, 0, 0.002)), ("drw_w1", (0.20, 0.008, 0.045), (0, 0.061, 0.0225)), ("drw_w2", (0.20, 0.012, 0.05), (0, -0.061, 0.025)),
+                        ("drw_w3", (0.008, 0.13, 0.045), (0.096, 0, 0.0225)), ("drw_w4", (0.008, 0.13, 0.045), (-0.096, 0, 0.0225))):
+        o = box(nm_, d_, l_, wood2, bevel=0.0015); o.parent = drawer_root
+    knobd = cyl("drw_knob", 0.006, 0.012, (0, -0.072, 0.03), mat("brass", (0.8, 0.6, 0.3), 1.0, 0.3), verts=16, rot=(math.pi / 2, 0, 0)); knobd.parent = drawer_root
+    for k, (x_, y_, rz, tilt) in enumerate(((-0.055, 0.02, 0.3, 0.12), (0.0, -0.01, -0.2, -0.15), (0.05, 0.025, 0.15, 0.2), (-0.04, -0.03, 1.4, -0.1), (0.055, -0.03, 1.7, 0.1))):
+        slab(f"drw_phone{k}", (x_, y_, 0.014 + 0.004 * k), (tilt, 0.0, rz), k + 1, parent=drawer_root)
+    dph = slab("drw_lit", (0.0, 0.0, 0.04), (0.0, 0.0, 0.0), 0, parent=drawer_root)                 # the one that lights up (lies on top)
+    bpy.ops.mesh.primitive_plane_add(size=1, location=(0, 0, PH[2] / 2 + 0.0009)); dscr = bpy.context.active_object; dscr.name = "drw_screen"; dscr.scale = (0.069, 0.149, 1)
+    bpy.ops.object.transform_apply(scale=True); dscr.parent = dph
+    dsm = bpy.data.materials.new("drw_screen"); dsm.use_nodes = True; _n = dsm.node_tree
+    for nd in list(_n.nodes): _n.nodes.remove(nd)
+    dtx = _n.nodes.new("ShaderNodeTexImage"); _em = _n.nodes.new("ShaderNodeEmission"); _em.inputs["Strength"].default_value = 1.4; _o = _n.nodes.new("ShaderNodeOutputMaterial")
+    _n.links.new(dtx.outputs[0], _em.inputs[0]); _n.links.new(_em.outputs[0], _o.inputs[0]); dscr.data.materials.append(dsm)
+    # comparison: a little heap of phones (gold flecks all through it) next to a heap of rock (one fleck)
+    piles_root = empty("piles_root", (0.0, 0.30, 0.0)); PFL = emat("pilefleck", (1.0, 0.75, 0.25), (1.0, 0.72, 0.18), 6.0, metal=1.0, rough=0.2)
+    for i in range(16):
+        o = slab(f"cmp_phone{i}", (-0.075 + _rg.uniform(-0.035, 0.035), _rg.uniform(-0.03, 0.03), 0.004 + 0.007 * (i // 4)), (_rg.uniform(-0.4, 0.4), _rg.uniform(-0.4, 0.4), _rg.uniform(0, 6.28)), i, bevel=0.0, parent=piles_root)
+        o.scale = (0.55, 0.55, 0.55)
+    for i in range(14):
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=0.0018, subdivisions=1, location=(-0.075 + _rg.uniform(-0.03, 0.03), _rg.uniform(-0.025, 0.025), _rg.uniform(0.006, 0.03)))
+        o = bpy.context.active_object; o.data.materials.append(PFL); o.parent = piles_root
+    rock_m = mat("rock", (0.38, 0.36, 0.34), 0.0, 0.9)
+    for i in range(16):
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rg.uniform(0.010, 0.017), subdivisions=2, location=(0.075 + _rg.uniform(-0.035, 0.035), _rg.uniform(-0.03, 0.03), 0.008 + 0.009 * (i // 5)))
+        o = bpy.context.active_object; o.data.materials.append(rock_m); o.parent = piles_root; o.scale = (1.0, _rg.uniform(0.7, 1.2), _rg.uniform(0.6, 0.9))
+    bpy.ops.mesh.primitive_ico_sphere_add(radius=0.0018, subdivisions=1, location=(0.082, -0.012, 0.03)); o = bpy.context.active_object; o.data.materials.append(PFL); o.parent = piles_root
+    GOLD_ANCH = {"pins": (phone_root, (0, -PH[1] / 2 + 0.0072, z0 + 0.001)), "chip": (phone_root, (0.004, 0.025, z0 + 0.002)), "hair": (phone_root, (0.012, 0.028, z0 + 0.0018)),
+                 "battery": (batt, (0, 0, 0.0015)), "tub": (None, tuple(TUB + Vector((0, 0, 0.115)))), "mud": (None, tuple(TUB + Vector((0, -0.04, 0.02)))),
+                 "crucible": (cru_root, (0, 0.033, 0.002)), "bar": (bar_root, (0, -0.02, 0.019)), "drawer": (drawer_root, (0.0, -0.06, 0.05)), "dphone": (dph, (0, 0, 0.005)),
+                 "phonepile": (piles_root, (-0.075, 0, 0.035)), "rockpile": (piles_root, (0.075, 0, 0.035)), "heap": (None, (0.0, 0.95, 0.3))}
+
 # anchors for 2D labels (compose3d.py pins tags to these)
 ANCH = {"screen": (0, 0, PH[2] + 0.004), "modem": (0.02, 0.052, z0), "sim": (-0.019, 0.05, z0), "filter": (-0.016, 0.004, z0 + 0.002), "cpu": (0.004, 0.025, z0),
         "battery": (0, -0.038, z0 + 0.001), "mast": (-0.15, 0.33, 0.33), "laptop": (0.16, 0.407, 0.09), "tray": tuple(TR + Vector((0, 0, 0.02))), "phone": (0, -0.06, PH[2]),
@@ -316,7 +476,11 @@ if WALLET:
     for k, v in WAL_ANCH.items():
         if v is not None: empty("anchor_" + k, v); ANCH[k] = v
     empty("anchor_ghost", (0, 0, 0), ghost_root); ANCH["ghost"] = (0, 0, 0)
-NODES = {"mast": Vector((-0.15, 0.33, 0.335)), "phone": Vector((0.02, 0.052, z0 + 0.006)), "laptop": Vector((0.16, 0.38, 0.06)), "tray": TR + Vector((0, 0, 0.012)),
+if GOLD:
+    for k in ("battery", "mast", "laptop", "tray", "van", "fakemast", "netfilter", "modem", "sim", "filter"):
+        ANCH.pop(k, None); bpy.data.objects.remove(bpy.data.objects["anchor_" + k])
+    for k, (par, v) in GOLD_ANCH.items(): empty("anchor_" + k, v, par); ANCH[k] = v
+NODES ={"mast": Vector((-0.15, 0.33, 0.335)), "phone": Vector((0.02, 0.052, z0 + 0.006)), "laptop": Vector((0.16, 0.38, 0.06)), "tray": TR + Vector((0, 0, 0.012)),
          "van": VAN + Vector((0.02, 0, 0.055 + 0.125)), "netfilter": Vector((-0.15, 0.33, 0.19))}
 if WALLET: NODES["scamphone"] = SCAM0 + Vector((0, 0, PH[2] + 0.006)); NODES["card"] = CARD0 + Vector((0, 0, 0.004))
 
@@ -340,6 +504,11 @@ def area(name, loc, energy, color, size):
     o.rotation_euler = (Vector((0, 0.1, 0)) - Vector(loc)).to_track_quat("-Z", "Y").to_euler(); return o
 area("key", (-0.5, -0.4, 0.8), 30, (1.0, 0.78, 0.55), 0.6); area("rim", (0.5, 0.9, 0.5), 45, (0.5, 0.65, 1.0), 0.6); area("fill", (0.6, -0.6, 0.4), 10, (0.8, 0.85, 1.0), 1.0)
 w = bpy.data.worlds.new("w"); sc.world = w; w.use_nodes = True; w.node_tree.nodes["Background"].inputs[0].default_value = (0.012, 0.014, 0.03, 1)
+if GOLD:                                                   # daylight: pale sky, warm low sun from the front-left, the night rim light toned down
+    w.node_tree.nodes["Background"].inputs[0].default_value = (0.52, 0.66, 0.86, 1); w.node_tree.nodes["Background"].inputs[1].default_value = 0.9
+    sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN")); col.objects.link(sun); sun.data.energy = 3.2; sun.data.color = (1.0, 0.9, 0.76); sun.data.angle = 0.06
+    sun.rotation_euler = (math.radians(52), math.radians(-18), math.radians(-35))
+    bpy.data.objects["rim"].data.energy = 12; bpy.data.objects["rim"].data.color = (1.0, 0.95, 0.9)
 
 # camera presets: (location, target, lens mm). Portrait 9:16, vertical sensor 36 mm.
 CAM = {"hero": ((0.15, -0.28, 0.19), (0, 0.01, 0), 42), "screen": ((0.0, -0.045, 0.27), (0, 0.0, 0), 50), "screen_close": ((0.0, -0.03, 0.19), (0, 0.005, 0), 50),
@@ -365,6 +534,15 @@ CAM = {"hero": ((0.15, -0.28, 0.19), (0, 0.01, 0), 42), "screen": ((0.0, -0.045,
        "path_wide": ((-0.05, -0.40, 0.30), (-0.02, 0.13, 0.03), 30), "path_side": ((-0.30, -0.10, 0.22), (-0.03, 0.14, 0.03), 30),
        "scam": ((0.02, 0.08, 0.17), (0.035, 0.27, 0.0), 40), "scam_close": ((0.035, 0.205, 0.12), (0.035, 0.27, 0.0), 42),
        "scam_tilt": ((0.12, 0.15, 0.12), (0.035, 0.27, 0.0), 40)}
+CAM.update({   # FIX #16 (gold): bench + phone mountain; tub at (-0.17, 0.12), crucible on its brick (0.17, 0.15), mould (0.17, 0.035), drawer (-0.16, -0.16)
+       "g_drop": ((0.02, -0.26, 0.07), (0.0, 0.0, 0.04), 26), "g_hero": ((0.13, -0.30, 0.16), (0.0, 0.06, 0.02), 34), "g_wide": ((0.0, -0.62, 0.34), (0.0, 0.30, 0.08), 22),
+       "g_open": ((0.0, -0.11, 0.22), (0.0, 0.0, 0.0), 42), "g_batt": ((0.15, -0.21, 0.10), (0.08, -0.08, 0.005), 34), "g_batt_close": ((0.13, -0.17, 0.05), (0.105, -0.115, 0.012), 38),
+       "g_pins": ((0.0, -0.125, 0.042), (0.0, -0.072, 0.009), 36), "g_chip": ((0.022, -0.01, 0.055), (0.004, 0.025, 0.006), 38), "g_chip_close": ((0.012, 0.008, 0.03), (0.005, 0.025, 0.007), 40),
+       "g_tub": ((-0.17, -0.13, 0.085), (-0.17, 0.12, 0.05), 34), "g_tub_top": ((-0.17, 0.05, 0.26), (-0.17, 0.12, 0.02), 34), "g_tub_low": ((-0.07, -0.08, 0.035), (-0.17, 0.12, 0.035), 30),
+       "g_tub_macro": ((-0.15, -0.17, 0.05), (-0.17, 0.12, 0.028), 62), "g_tub_side": ((-0.38, 0.0, 0.10), (-0.17, 0.12, 0.05), 32),
+       "g_cru": ((0.08, -0.04, 0.16), (0.17, 0.15, 0.07), 34), "g_pour": ((0.33, -0.06, 0.12), (0.17, 0.07, 0.05), 30), "g_bar": ((0.11, -0.13, 0.05), (0.17, 0.03, 0.025), 32),
+       "g_bar_top": ((0.17, -0.06, 0.15), (0.17, 0.035, 0.0), 40), "g_pull": ((0.0, -1.05, 0.62), (0.0, 0.55, 0.20), 22), "g_cmp": ((0.0, 0.08, 0.17), (0.0, 0.30, 0.015), 30),
+       "g_drawer": ((-0.10, -0.40, 0.20), (-0.16, -0.16, 0.0), 32), "g_drawer_close": ((-0.16, -0.24, 0.13), (-0.16, -0.16, 0.035), 40)})
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
 
@@ -444,6 +622,65 @@ def apply_wallet(t, b, p):
         if not os.path.exists(f): eval(spec, {"U": U, "p": round(p * 48) / 48, "ease": ease, "clamp": clamp}).convert("RGB").resize((540, 960)).save(f)
         scam_tx.image = bpy.data.images.load(f, check_existing=True); SCAM_LAST[0] = key
 
+LIQ_STOPS = [((0.92, 0.96, 1.0), 1.0), ((0.04, 0.22, 1.0), 0.85), ((0.09, 0.075, 0.06), 0.35), ((1.0, 0.76, 0.10), 0.85)]   # clear, blue, murky, yellow
+DLAST = [None]
+def toss_pose(u):
+    """FIX #16 frame 1: tossed in from the left, tumbling, then the drop_pose bounces. -> (loc, rot)."""
+    if u < 0.4:
+        k = u / 0.4; return Vector((-0.28 * (1 - k), 0.05 * (1 - k), 0.15 * (1 - k * k) + 0.0001)), (0.7 * (1 - k), 4 * math.pi * (1 - k), 0.6 * (1 - k))
+    hz, rx, ry = drop_pose(0.38 + (u - 0.4) / 0.6 * 0.62); return Vector((0, 0, hz + 0.0001)), (rx, ry, 0.0)
+def apply_gold(t, b, p):
+    loc, rot = toss_pose(track("toss", t, 1.0)); phone_root.location = loc; phone_root.rotation_euler = rot
+    hide_all(phone_root.children_recursive, track("gone", t) > 0.5); hide_all([knob, bpy.data.objects["filter_track"]], True)   # FIX #12's filter switch has no place in a generic old phone
+    gg = track("goldglow", t); bsdf(gold_glow).inputs["Emission Strength"].default_value = 7 * gg * (0.75 + 0.25 * math.sin(t * 6))
+    hair.hide_render = track("hair", t) < 0.5 or track("gone", t) > 0.5
+    bo = track("battout", t); bf = track("battfire", t)
+    batt.location = BATT0.lerp(BATT_OUT, ease(bo)) + Vector((0, 0, 0.045 * math.sin(math.pi * bo))); batt.scale = (1 + 0.15 * bf, 1 + 0.15 * bf, 1 + 2.4 * bf)
+    bsdf(batt_m).inputs["Emission Color"].default_value = (1.0, 0.35, 0.05, 1); bsdf(batt_m).inputs["Emission Strength"].default_value = 3 * bf
+    flame.hide_render = bf < 0.05; fl_ = bf * (0.85 + 0.2 * math.sin(t * 23) + 0.1 * math.sin(t * 41))
+    flame.location = batt.matrix_world.translation + Vector((0, 0, 0.006 + 0.022 * fl_)); flame.scale = (fl_, fl_, fl_ * 1.2)
+    bsdf(flame_m).inputs["Emission Strength"].default_value = 14 * bf; fire_l.location = flame.location + Vector((0, 0, 0.02)); fire_l.data.energy = 9 * bf
+    dk = track("dunk", t); dv = track("dissolve", t)
+    board_root.location = TUB + Vector((0, 0, 0.30 - 0.245 * ease(dk) - 0.02 * dv)); board_root.rotation_euler.z = 0.3 * dk; board_root.scale = (1 - 0.3 * dv, 1, max(0.05, 1 - 0.9 * dv))
+    hide_all(board_root.children_recursive, dk < 0.01 or dv > 0.97)
+    lv = clamp(track("liq", t) / 3) * 3; i0 = min(2, int(lv)); f_ = lv - i0; (c0, w0), (c1, w1) = LIQ_STOPS[i0], LIQ_STOPS[i0 + 1]
+    liq_glow.inputs["Base Color"].default_value = (*[c0[j] + (c1[j] - c0[j]) * f_ for j in range(3)], 1); liq_glow.inputs["Transmission Weight"].default_value = w0 + (w1 - w0) * f_
+    m_ = track("mud", t); mud.hide_render = m_ < 0.02; mud.scale.z = max(0.02, m_)
+    sp = track("sparkle", t); top = 0.004 + 0.02 * m_
+    for fo in FLECKS: fo.location.z = top - 0.0006; fo.hide_render = sp < 0.02 or m_ < 0.1
+    for k, fm in enumerate(FLECK_M): bsdf(fm).inputs["Emission Strength"].default_value = 11 * sp * (0.55 + 0.45 * math.sin(t * 8 + k * 1.7))
+    bu = track("bubble", t)
+    for bo_, x_, y_, ph in BUBS: bo_.hide_render = bu < 0.02; bo_.location = TUB + Vector((x_, y_, 0.012 + ((t * 0.7 + ph) % 1.0) * 0.07)); bo_.scale = (bu, bu, bu)
+    rn = track("rinse", t); live = 0 < rn < 1; rinse.hide_render = not (live and int(rn * 6) % 2 == 0); hose.hide_render = not live
+    pw = track("powder", t)
+    for g_, x_, y_, d_ in POWDER:
+        u = clamp((pw - d_) / 0.5); g_.hide_render = pw <= d_ or u >= 1 or pw >= 1; g_.location = TUB + Vector((x_, y_, 0.22 - (0.22 - 0.083) * u * u))
+    du = track("dust", t)
+    for g_, x_, y_, d_ in DUST:
+        u = clamp((du - d_) / 0.4); g_.hide_render = du <= d_; g_.location = TUB + Vector((x_, y_, 0.08 - 0.071 * ease(u)))
+    dustbed.hide_render = du < 0.25; dustbed.scale.z = max(0.05, clamp((du - 0.25) / 0.75))
+    tc = track("torch", t); tflame.hide_render = tc < 0.02; torch_body.hide_render = tc < 0.02; tflame.scale = (tc, tc * (1 + 0.08 * math.sin(t * 31)), tc)
+    bsdf(tflame_m).inputs["Emission Strength"].default_value = 10 * tc
+    h = track("heat", t); bsdf(melt_m).inputs["Emission Color"].default_value = (1.0, 0.45 + 0.4 * h, 0.08 + 0.3 * h, 1); bsdf(melt_m).inputs["Emission Strength"].default_value = 16 * h
+    bsdf(melt_m).inputs["Base Color"].default_value = (0.28 + 0.6 * h, 0.14 + 0.5 * h, 0.05 + 0.15 * h, 1)
+    po = track("pour", t); cru_root.rotation_euler.x = math.radians(68) * ease(po)
+    stream.hide_render = not (0.3 < po < 0.97); p0, p1 = Vector((0.17, 0.112, 0.078)), Vector((0.17, 0.075, 0.012 + 0.016 * track("fill", t)))
+    d_ = p1 - p0; stream.location = (p0 + p1) / 2; stream.rotation_euler = d_.to_track_quat("Z", "Y").to_euler(); stream.scale = (1, 1, d_.length / 0.06)
+    fl = track("fill", t); cl = track("cool", t); li = track("lift", t)
+    hide_all(bar_root.children_recursive, fl < 0.01); bar_root.scale = (1, 1, max(0.03, fl)); stamp.hide_render = fl < 0.01 or cl < 0.6
+    bsdf(bar_m).inputs["Emission Strength"].default_value = 2.5 * fl * (1 - cl); bsdf(bar_m).inputs["Roughness"].default_value = 0.6 - 0.42 * cl
+    bsdf(bar_m).inputs["Base Color"].default_value = (1.0, 0.45 + 0.21 * cl, 0.06 + 0.10 * cl, 1)
+    bar_root.location = MOU + Vector((0, 0, 0.006 + 0.05 * ease(li))); bar_root.rotation_euler = (math.radians(10) * ease(li), 0, math.radians(-22) * ease(li))
+    pv = track("piles", t); piles_root.scale = (max(0.001, ease(pv)),) * 3; hide_all(piles_root.children_recursive, pv < 0.02)
+    dr = track("drawer", t); drawer_root.location.x = -0.16 - 0.42 * (1 - ease(dr)); hide_all(drawer_root.children_recursive, dr < 0.01)
+    spec = b.get("dscreen") or "U.lock_plain()"; import re
+    key = spec + (f"@{round(p * 48) / 48:.4f}" if re.search(r"\bp\b", spec) else "")
+    if key != DLAST[0]:
+        f = os.path.join(SCREEN_DIR, "drw_" + hashlib.md5(key.encode()).hexdigest()[:12] + ".png")
+        if not os.path.exists(f): eval(spec, {"U": U, "p": round(p * 48) / 48, "ease": ease, "clamp": clamp}).convert("RGB").resize((540, 960)).save(f)
+        dtx.image = bpy.data.images.load(f, check_existing=True); DLAST[0] = key
+    lap_light.data.energy = 0
+
 def apply(t):
     b = beat_at(t); p = clamp((t - b["t0"]) / max(1e-3, b["t1"] - b["t0"]))
     ca, cb = b["cam"] if isinstance(b["cam"], list) else (b["cam"], b["cam"]); A, Bc = CAM[ca], CAM[cb]; k = ease(p)
@@ -455,7 +692,8 @@ def apply(t):
     lidv = track("lid", t); hinge.rotation_euler.x = math.radians(-75) * lidv; hinge.location.z = SZ + 0.012 * lidv
     fv = track("filter", t); knob.location.x = -0.022 + 0.012 * fv; knob.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 6 * fv
     lv = track("laptop", t, 0.4); lapscr.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 1.0 + 2.0 * lv; lap_light.data.energy = 0.08 + 0.4 * lv
-    blink.hide_render = DUO or int(t * 2) % 2 == 1          # the mast is hidden in Duo episodes
+    blink.hide_render = DUO or GOLD or int(t * 2) % 2 == 1  # the mast is hidden in Duo and gold episodes
+    if GOLD: apply_gold(t, b, p)
     if "van" in PROPS:
         vv = track("van", t); fake_root.location.z = 0.055 - 0.12 * (1 - vv); hide_all(fake_objs, vv < 0.02)
         fblink.hide_render = vv < 0.02 or int(t * 3) % 2 == 1
