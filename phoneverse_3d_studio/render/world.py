@@ -403,7 +403,7 @@ if GOLD:
     for nm_, d_, l_ in (("mould_floor", (0.064, 0.112, 0.006), (0, 0, 0.003)), ("mould_w1", (0.064, 0.008, 0.026), (0, 0.052, 0.013)), ("mould_w2", (0.064, 0.008, 0.026), (0, -0.052, 0.013)),
                         ("mould_w3", (0.008, 0.096, 0.026), (0.028, 0, 0.013)), ("mould_w4", (0.008, 0.096, 0.026), (-0.028, 0, 0.013))):
         box(nm_, d_, MOU + Vector(l_), steel, bevel=0.0008)
-    stream = cyl("stream", 0.0035, 0.06, (0, 0, 0), emat("streamm", (1.0, 0.4, 0.04), (1.0, 0.33, 0.02), 6.0), verts=16); stream.visible_shadow = False
+    stream = cyl("stream", 0.0035, 0.06, (0, 0, 0), emat("streamm", (1.0, 0.4, 0.04), (1.0, 0.33, 0.02), 3.5), verts=16); stream.visible_shadow = False
     bar_m = emat("barm", (1.0, 0.66, 0.16), (1.0, 0.36, 0.04), 0.0, metal=1.0, rough=0.2)
     bar_root = empty("bar_root", MOU + Vector((0, 0, 0.006)))
     bar = box("bar", (0.046, 0.094, 0.018), (0, 0, 0.009), bar_m, bevel=0.003); bar.parent = bar_root
@@ -660,16 +660,18 @@ def apply_gold(t, b, p):
         u = clamp((du - d_) / 0.4); g_.hide_render = du <= d_; g_.location = TUB + Vector((x_, y_, 0.08 - 0.071 * ease(u)))
     dustbed.hide_render = du < 0.25; dustbed.scale.z = max(0.05, clamp((du - 0.25) / 0.75))
     tc = track("torch", t); tflame.hide_render = tc < 0.02; torch_body.hide_render = tc < 0.02; tflame.scale = (tc, tc * (1 + 0.08 * math.sin(t * 31)), tc)
-    bsdf(tflame_m).inputs["Emission Strength"].default_value = 10 * tc
-    h = track("heat", t); bsdf(melt_m).inputs["Emission Color"].default_value = (1.0, 0.45 + 0.4 * h, 0.08 + 0.3 * h, 1); bsdf(melt_m).inputs["Emission Strength"].default_value = 16 * h
-    bsdf(melt_m).inputs["Base Color"].default_value = (0.28 + 0.6 * h, 0.14 + 0.5 * h, 0.05 + 0.15 * h, 1)
+    bsdf(tflame_m).inputs["Emission Strength"].default_value = 3.5 * tc
+    # molten gold: a deep orange-gold glow (16x clipped to white under AgX and lit the crucible white); it leaves the crucible as the mould fills
+    h = track("heat", t) * (1 - track("fill", t)); melt.hide_render = track("fill", t) > 0.97
+    bsdf(melt_m).inputs["Emission Color"].default_value = (1.0, 0.36 + 0.14 * h, 0.03 + 0.03 * h, 1); bsdf(melt_m).inputs["Emission Strength"].default_value = 4.0 * h
+    bsdf(melt_m).inputs["Base Color"].default_value = (0.28 + 0.62 * h, 0.14 + 0.36 * h, 0.05 + 0.03 * h, 1)
     po = track("pour", t); cru_root.rotation_euler.x = math.radians(68) * ease(po)
     stream.hide_render = not (0.3 < po < 0.97); p0, p1 = Vector((0.17, 0.112, 0.078)), Vector((0.17, 0.075, 0.012 + 0.016 * track("fill", t)))
     d_ = p1 - p0; stream.location = (p0 + p1) / 2; stream.rotation_euler = d_.to_track_quat("Z", "Y").to_euler(); stream.scale = (1, 1, d_.length / 0.06)
     fl = track("fill", t); cl = track("cool", t); li = track("lift", t)
     hide_all(bar_root.children_recursive, fl < 0.01); bar_root.scale = (1, 1, max(0.03, fl)); stamp.hide_render = fl < 0.01 or cl < 0.6
-    bsdf(bar_m).inputs["Emission Strength"].default_value = 6.0 * fl * (1 - cl); bsdf(bar_m).inputs["Roughness"].default_value = 0.6 - 0.42 * cl
-    bsdf(bar_m).inputs["Base Color"].default_value = (1.0, 0.45 + 0.21 * cl, 0.06 + 0.10 * cl, 1)
+    bsdf(bar_m).inputs["Emission Strength"].default_value = 2.2 * fl * (1 - cl); bsdf(bar_m).inputs["Roughness"].default_value = 0.6 - 0.42 * cl
+    bsdf(bar_m).inputs["Base Color"].default_value = (1.0, 0.42 + 0.24 * cl, 0.04 + 0.12 * cl, 1)
     bar_root.location = MOU + Vector((0, 0, 0.006 + 0.05 * ease(li))); bar_root.rotation_euler = (math.radians(10) * ease(li), 0, math.radians(-22) * ease(li))
     pv = track("piles", t); piles_root.scale = (max(0.001, ease(pv)),) * 3; hide_all(piles_root.children_recursive, pv < 0.02)
     dr = track("drawer", t); drawer_root.location.x = -0.16 - 0.42 * (1 - ease(dr)); hide_all(drawer_root.children_recursive, dr < 0.01)
