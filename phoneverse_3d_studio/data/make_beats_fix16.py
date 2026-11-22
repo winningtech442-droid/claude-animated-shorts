@@ -47,7 +47,7 @@ BEATS = [
  dict(t0=28.091, t1=30.373, line=10, cam=["g_tub", "g_tub_side"],
       events=[ev("bubble", 0, 1, 28.1, 28.5), ev("dissolve", 0, 1, 28.2, 30.0), ev("liq", 1, 2, 28.2, 29.8), ev("mud", 0, 1, 28.4, 30.1)]),
  # L11 once the bubbling stops, the mud starts to sparkle
- dict(t0=30.373, t1=32.0, line=11, cam=["g_tub_macro", "g_tub_low"], events=[ev("bubble", 1, 0, 30.5, 31.3)]),
+ dict(t0=30.373, t1=32.0, line=11, cam=["g_tub", "g_tub_low"], events=[ev("bubble", 1, 0, 30.5, 31.3)]),
  dict(t0=32.0, t1=33.846, line=11, cam=["g_tub_top", "g_tub_macro"], events=[ev("sparkle", 0, 1, 32.0, 32.8)],
       labels=[{"anchor": "mud", "text": "THAT'S GOLD", "dx": 120, "dy": -330, "from": 32.7}]),
  # L12 wash it, rinse it, wash it again. a stronger acid turns it yellow
@@ -62,7 +62,7 @@ BEATS = [
  dict(t0=44.0, t1=45.4, line=14, cam=["g_tub_side", "g_tub_top"], labels=[{"anchor": "mud", "text": "GOLD SAND? GOLD DUST?", "dx": -330, "dy": -360, "from": 44.4}]),
  dict(t0=45.4, t1=46.698, line=14, cam=["g_wide", "g_cru"], labels=[{"anchor": "crucible", "text": "INTO THE POT", "dx": -330, "dy": -330, "from": 45.7}]),
  # L15 heat it, pour it, and there it is. a real gold bar  (fantasy peak)
- dict(t0=46.698, t1=48.1, line=15, cam=["g_pour", "g_cru"], events=[ev("torch", 0, 1, 46.75, 47.05), ev("heat", 0, 1, 46.8, 47.9)]),
+ dict(t0=46.698, t1=48.1, line=15, cam=["g_cru_top", "g_cru_in"], events=[ev("torch", 0, 1, 46.75, 47.05), ev("heat", 0, 1, 46.8, 47.9)]),
  dict(t0=48.1, t1=49.4, line=15, cam=["g_pour", "g_bar"], events=[ev("pour", 0, 1, 48.15, 49.1), ev("fill", 0, 1, 48.4, 49.3), ev("torch", 1, 0, 48.2, 48.5)]),
  dict(t0=49.4, t1=50.4, line=15, cam=["g_bar_top", "g_bar"], events=[ev("pour", 1, 0, 49.45, 49.9), ev("cool", 0, 1, 49.45, 49.9), ev("lift", 0, 1, 49.55, 50.35)],
       hud={"label": "REAL GOLD BAR", "value": "1 kg", "color": "YELLOW", "from": 49.8}),
@@ -72,7 +72,7 @@ BEATS = [
  dict(t0=52.6, t1=54.496, line=16, cam=["g_bar_top", "g_pour"], hud={"label": "GOLD IN 1 PHONE", "value": "≈ £3", "color": "YELLOW", "from": 52.6},
       labels=[{"anchor": "bar", "text": "1 kg", "dx": 140, "dy": -300, "from": 52.9}]),
  # L17 for this bar? about thirty thousand more phones (big pull-back to the mountain)
- dict(t0=54.496, t1=56.0, line=17, cam=["g_hero", "g_bar"], hud=PHONES),
+ dict(t0=54.496, t1=56.0, line=17, cam=["g_bar_top", "g_bar_push"], hud=PHONES),
  dict(t0=56.0, t1=57.483, line=17, cam=["g_wide", "g_pull"], hud=PHONES, labels=[{"anchor": "heap", "text": "≈ 30,000 PHONES", "dx": 100, "dy": -300, "from": 56.5}]),
  # L18 tonne for tonne, old phones still beat a gold mine
  dict(t0=57.483, t1=59.2, line=18, cam=["g_hero", "g_cmp"], events=[ev("piles", 0, 1, 57.5, 58.3)],

@@ -488,7 +488,7 @@
    "t1": 32.0,
    "line": 11,
    "cam": [
-    "g_tub_macro",
+    "g_tub",
     "g_tub_low"
    ],
    "events": [
@@ -705,8 +705,8 @@
    "t1": 48.1,
    "line": 15,
    "cam": [
-    "g_pour",
-    "g_cru"
+    "g_cru_top",
+    "g_cru_in"
    ],
    "events": [
     {
@@ -858,8 +858,8 @@
    "t1": 56.0,
    "line": 17,
    "cam": [
-    "g_hero",
-    "g_bar"
+    "g_bar_top",
+    "g_bar_push"
    ],
    "hud": {
     "label": "PHONES NEEDED",

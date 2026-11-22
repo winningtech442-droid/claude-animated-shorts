@@ -351,7 +351,12 @@ if GOLD:
     # battery fire (cutaway): the loose battery swells and a flame licks up from it
     flame_m = emat("flame", (1.0, 0.25, 0.03), (1.0, 0.28, 0.02), 0.0)
     bpy.ops.mesh.primitive_cone_add(radius1=0.014, radius2=0.0, depth=0.05, vertices=24); flame = bpy.context.active_object; flame.name = "flame"; flame.data.materials.append(flame_m); flame.visible_shadow = False
-    fire_l = bpy.data.objects.new("fire_light", bpy.data.lights.new("fire_light", "POINT")); col.objects.link(fire_l); fire_l.data.color = (1.0, 0.45, 0.12); fire_l.data.energy = 0
+    # AgX washes bright emission to white, so the flame is a dim, deep red-orange outer cone with a yellow-orange core in front
+    fcore_m = emat("flamecore", (1.0, 0.5, 0.05), (1.0, 0.45, 0.02), 0.0)
+    for _m in (flame_m, fcore_m):   # emission only: a lit base colour or a specular sheen next to the fire light blows out to white
+        bsdf(_m).inputs["Base Color"].default_value = (0, 0, 0, 1); bsdf(_m).inputs["Specular IOR Level"].default_value = 0.0
+    bpy.ops.mesh.primitive_cone_add(radius1=0.009, radius2=0.0, depth=0.034, vertices=24); fcore = bpy.context.active_object; fcore.name = "flamecore"; fcore.data.materials.append(fcore_m); fcore.visible_shadow = False
+    fire_l = bpy.data.objects.new("fire_light", bpy.data.lights.new("fire_light", "POINT")); col.objects.link(fire_l); fire_l.data.color = (1.0, 0.3, 0.05); fire_l.data.energy = 0
     BATT_OUT = Vector((0.105, -0.115, 0.0011))
     # the tub (open glass), its liquid, mud, sparkle flecks, bubbles, rinse stream, powder and dust
     TUB = Vector((-0.17, 0.12, 0.0)); TR_, TH_ = 0.065, 0.11
@@ -541,8 +546,8 @@ CAM.update({   # FIX #16 (gold): bench + phone mountain; tub at (-0.17, 0.12), c
        "g_pins": ((0.0, -0.125, 0.042), (0.0, -0.072, 0.009), 36), "g_chip": ((0.022, -0.01, 0.055), (0.004, 0.025, 0.006), 38), "g_chip_close": ((0.012, 0.008, 0.03), (0.005, 0.025, 0.007), 40),
        "g_tub": ((-0.17, -0.13, 0.085), (-0.17, 0.12, 0.05), 34), "g_tub_top": ((-0.17, 0.05, 0.26), (-0.17, 0.12, 0.02), 34), "g_tub_low": ((-0.07, -0.08, 0.035), (-0.17, 0.12, 0.035), 30),
        "g_tub_macro": ((-0.15, -0.17, 0.05), (-0.17, 0.12, 0.028), 62), "g_tub_side": ((-0.38, 0.0, 0.10), (-0.17, 0.12, 0.05), 32),
-       "g_cru": ((0.08, -0.04, 0.16), (0.17, 0.15, 0.07), 34), "g_pour": ((0.33, -0.06, 0.12), (0.17, 0.07, 0.05), 30), "g_bar": ((0.11, -0.13, 0.05), (0.17, 0.03, 0.025), 32),
-       "g_bar_top": ((0.17, -0.06, 0.15), (0.17, 0.035, 0.0), 40), "g_pull": ((0.0, -1.05, 0.62), (0.0, 0.55, 0.20), 22), "g_cmp": ((0.0, 0.08, 0.17), (0.0, 0.30, 0.015), 30),
+       "g_cru": ((0.08, -0.04, 0.16), (0.17, 0.15, 0.07), 34), "g_cru_top": ((0.11, 0.0, 0.24), (0.17, 0.15, 0.06), 40), "g_cru_in": ((0.15, 0.07, 0.17), (0.17, 0.15, 0.055), 46), "g_pour": ((0.33, -0.06, 0.12), (0.17, 0.07, 0.05), 30), "g_bar": ((0.11, -0.13, 0.05), (0.17, 0.03, 0.025), 32),
+       "g_bar_top": ((0.17, -0.06, 0.15), (0.17, 0.035, 0.0), 40), "g_bar_push": ((0.17, -0.03, 0.125), (0.17, 0.04, 0.03), 46), "g_pull": ((0.0, -1.05, 0.62), (0.0, 0.55, 0.20), 22), "g_cmp": ((0.0, 0.08, 0.17), (0.0, 0.30, 0.015), 30),
        "g_drawer": ((-0.10, -0.40, 0.20), (-0.16, -0.16, 0.0), 32), "g_drawer_close": ((-0.16, -0.24, 0.13), (-0.16, -0.16, 0.035), 40)})
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
@@ -637,10 +642,13 @@ def apply_gold(t, b, p):
     hair.hide_render = track("hair", t) < 0.5 or track("gone", t) > 0.5
     bo = track("battout", t); bf = track("battfire", t)
     batt.location = BATT0.lerp(BATT_OUT, ease(bo)) + Vector((0, 0, 0.045 * math.sin(math.pi * bo))); batt.scale = (1 + 0.15 * bf, 1 + 0.15 * bf, 1 + 2.4 * bf)
-    bsdf(batt_m).inputs["Emission Color"].default_value = (1.0, 0.35, 0.05, 1); bsdf(batt_m).inputs["Emission Strength"].default_value = 3 * bf
-    flame.hide_render = bf < 0.05; fl_ = bf * (0.85 + 0.2 * math.sin(t * 23) + 0.1 * math.sin(t * 41))
+    bsdf(batt_m).inputs["Emission Color"].default_value = (1.0, 0.12, 0.0, 1); bsdf(batt_m).inputs["Emission Strength"].default_value = 0.8 * bf
+    bpy.context.view_layer.update()   # batt.matrix_world must be this frame's (stale in --one renders)
+    flame.hide_render = fcore.hide_render = bf < 0.05; fl_ = bf * (0.85 + 0.2 * math.sin(t * 23) + 0.1 * math.sin(t * 41))
     flame.location = batt.matrix_world.translation + Vector((0, 0, 0.006 + 0.022 * fl_)); flame.scale = (fl_, fl_, fl_ * 1.2)
-    bsdf(flame_m).inputs["Emission Strength"].default_value = 4.5 * bf; fire_l.location = flame.location + Vector((0, 0, 0.02)); fire_l.data.energy = 9 * bf
+    fcore.location = flame.location + Vector((0, -0.008 * fl_, -0.007 * fl_)); fc_ = fl_ * (0.9 + 0.15 * math.sin(t * 37)); fcore.scale = (fc_, fc_, fc_ * 1.1)   # core sits in front of the outer flame (cameras are at -y)
+    bsdf(flame_m).inputs["Emission Color"].default_value = (1.0, 0.13, 0.0, 1); bsdf(flame_m).inputs["Emission Strength"].default_value = 0.8 * bf
+    bsdf(fcore_m).inputs["Emission Strength"].default_value = 1.3 * bf; fire_l.location = flame.location + Vector((0, 0, 0.02)); fire_l.data.energy = 1.2 * bf
     dk = track("dunk", t); dv = track("dissolve", t)
     board_root.location = TUB + Vector((0, 0, 0.30 - 0.245 * ease(dk) - 0.02 * dv)); board_root.rotation_euler.z = 0.3 * dk; board_root.scale = (1 - 0.3 * dv, 1, max(0.05, 1 - 0.9 * dv))
     hide_all(board_root.children_recursive, dk < 0.01 or dv > 0.97)
