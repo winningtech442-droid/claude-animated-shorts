@@ -1,0 +1,253 @@
+{
+ "episode": "FIX #16",
+ "title": "Gold in your iPhone: every upgrade, you throw away real gold",
+ "format": "Treasure/curiosity format test (not a threat story), HSERIA + CTA, second person, rule book v8 (format A), 4 character beats",
+ "voice": "Kokoro af_heart (voice B), slower presets for #15 (short words read fast)",
+ "presets": {
+  "TELL": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.8,
+   "gain_db": 0.0,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "PUNCH": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.87,
+   "gain_db": 1.5,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  },
+  "SURPRISE": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.85,
+   "gain_db": 2.5,
+   "pause_before": 0.15,
+   "pause_after": 0.4
+  },
+  "SHOCK": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.92,
+   "gain_db": 2.5,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "EMPH": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.8,
+   "gain_db": 2.5,
+   "pause_before": 0.1,
+   "pause_after": 0.4
+  },
+  "RELIEF": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.8,
+   "gain_db": 0.5,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "ASK": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.84,
+   "gain_db": 1.0,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  }
+ },
+ "lines": [
+  {
+   "id": 1,
+   "block": "H",
+   "preset": "PUNCH",
+   "text": "Every time you upgrade your iPhone, you throw away real gold.",
+   "spoken": "Every time you upgrade your iPhone, you throw away real gold.",
+   "star": "upgrade",
+   "face": "c01_toss"
+  },
+  {
+   "id": 2,
+   "block": "H",
+   "preset": "TELL",
+   "text": "Real gold. Inside your old phone.",
+   "spoken": "Real gold. Inside your old phone.",
+   "star": "gold",
+   "face": "none"
+  },
+  {
+   "id": 3,
+   "block": "S",
+   "preset": "TELL",
+   "text": "Recycling plants do this. Please don't try it at home.",
+   "spoken": "Recycling plants do this. Please don't try it at home.",
+   "star": "Recycling",
+   "face": "none"
+  },
+  {
+   "id": 4,
+   "block": "S",
+   "preset": "TELL",
+   "text": "It only takes three simple steps.",
+   "spoken": "It only takes three simple steps.",
+   "star": "simple",
+   "face": "none"
+  },
+  {
+   "id": 5,
+   "block": "S",
+   "preset": "PUNCH",
+   "text": "First, the battery comes out. Very, very important.",
+   "spoken": "First, the battery comes out. Very, very important.",
+   "star": "battery",
+   "face": "none"
+  },
+  {
+   "id": 6,
+   "block": "S",
+   "preset": "SHOCK",
+   "text": "If it gets crushed or punctured, it can catch fire.",
+   "spoken": "If it gets crushed or punctured, it can catch fire.",
+   "star": "fire",
+   "face": "c02_recoil"
+  },
+  {
+   "id": 7,
+   "block": "E",
+   "preset": "TELL",
+   "text": "Look closer. These shiny pins? Gold.",
+   "spoken": "Look closer. These shiny pins? Gold.",
+   "star": "Gold",
+   "face": "none"
+  },
+  {
+   "id": 8,
+   "block": "E",
+   "preset": "TELL",
+   "text": "Some chips have gold wires thinner than a hair.",
+   "spoken": "Some chips have gold wires thinner than a hair.",
+   "star": "hair",
+   "face": "none"
+  },
+  {
+   "id": 9,
+   "block": "E",
+   "preset": "TELL",
+   "text": "Next, the board goes in a liquid. Slowly, slowly, it turns blue.",
+   "spoken": "Next, the board goes in a liquid. Slowly, slowly, it turns blue.",
+   "star": "blue",
+   "face": "none"
+  },
+  {
+   "id": 10,
+   "block": "E",
+   "preset": "TELL",
+   "text": "It falls apart into black, ugly mud.",
+   "spoken": "It falls apart into black, ugly mud.",
+   "star": "mud",
+   "face": "none"
+  },
+  {
+   "id": 11,
+   "block": "E",
+   "preset": "SURPRISE",
+   "text": "Once the bubbling stops, the mud starts to sparkle.",
+   "spoken": "Once the bubbling stops, the mud starts to sparkle.",
+   "star": "sparkle",
+   "face": "none"
+  },
+  {
+   "id": 12,
+   "block": "E",
+   "preset": "TELL",
+   "text": "Wash it, rinse it, wash it again. A stronger acid turns it yellow.",
+   "spoken": "Wash it, rinse it, wash it again. A stronger acid turns it yellow.",
+   "star": "yellow",
+   "face": "none"
+  },
+  {
+   "id": 13,
+   "block": "E",
+   "preset": "TELL",
+   "text": "One more powder. Once the bubbling stops again, brown dust falls down.",
+   "spoken": "One more powder. Once the bubbling stops again, brown dust falls down.",
+   "star": "brown",
+   "face": "none"
+  },
+  {
+   "id": 14,
+   "block": "R1",
+   "preset": "EMPH",
+   "text": "This brown dust? Pure gold. Gold sand, gold dust, whatever, it's gold.",
+   "spoken": "This brown dust? Pure gold. Gold sand, gold dust, whatever, it's gold.",
+   "star": "gold",
+   "face": "none"
+  },
+  {
+   "id": 15,
+   "block": "R1",
+   "preset": "PUNCH",
+   "text": "Heat it, pour it, and there it is. A real gold bar.",
+   "spoken": "Heat it, pour it, and there it is. A real gold bar.",
+   "star": "bar",
+   "face": "c03_delight"
+  },
+  {
+   "id": 16,
+   "block": "I",
+   "preset": "SHOCK",
+   "text": "Honest part? One phone gives about three pounds of gold.",
+   "spoken": "Honest part? One phone gives about three pounds of gold.",
+   "star": "pounds",
+   "face": "c04_shrug"
+  },
+  {
+   "id": 17,
+   "block": "I",
+   "preset": "PUNCH",
+   "text": "So for this bar? About thirty thousand more phones.",
+   "spoken": "So for this bar? About thirty thousand more phones.",
+   "star": "thousand",
+   "face": "none"
+  },
+  {
+   "id": 18,
+   "block": "R2",
+   "preset": "RELIEF",
+   "text": "Tonne for tonne, old phones still beat a gold mine.",
+   "spoken": "Tonne for tonne, old phones still beat a gold mine.",
+   "star": "mine",
+   "face": "none"
+  },
+  {
+   "id": 19,
+   "block": "A",
+   "preset": "TELL",
+   "text": "Selling or recycling one? Erase it first. Your photos and bank apps are still inside.",
+   "spoken": "Selling or recycling one? Erase it first. Your photos and bank apps are still inside.",
+   "star": "Erase",
+   "face": "none"
+  },
+  {
+   "id": 20,
+   "block": "CTA",
+   "preset": "ASK",
+   "text": "How many old phones are in your drawer? Tell me below.",
+   "spoken": "How many old phones are in your drawer? Tell me below.",
+   "star": "drawer",
+   "face": "none"
+  }
+ ]
+}
