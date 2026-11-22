@@ -1,0 +1,235 @@
+{
+ "episode": "FIX #15",
+ "title": "Wallet hijack: one code puts your card on a stranger's phone",
+ "format": "Threat story, HSERIA + CTA, second person, rule book v8 (format A), no face beats",
+ "voice": "Kokoro af_heart (voice B), slower presets for #15 (short words read fast)",
+ "presets": {
+  "TELL": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.8,
+   "gain_db": 0.0,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "PUNCH": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.87,
+   "gain_db": 1.5,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  },
+  "SURPRISE": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.85,
+   "gain_db": 2.5,
+   "pause_before": 0.15,
+   "pause_after": 0.4
+  },
+  "SHOCK": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.92,
+   "gain_db": 2.5,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "EMPH": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.8,
+   "gain_db": 2.5,
+   "pause_before": 0.1,
+   "pause_after": 0.4
+  },
+  "RELIEF": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.8,
+   "gain_db": 0.5,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "ASK": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.84,
+   "gain_db": 1.0,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  }
+ },
+ "lines": [
+  {
+   "id": 1,
+   "block": "H",
+   "preset": "PUNCH",
+   "text": "Your card just jumped onto a stranger's phone.",
+   "spoken": "Your card just jumped onto a stranger's phone.",
+   "star": "stranger's",
+   "face": "none"
+  },
+  {
+   "id": 2,
+   "block": "H",
+   "preset": "TELL",
+   "text": "But it's still in your pocket.",
+   "spoken": "But it's still in your pocket.",
+   "star": "pocket",
+   "face": "none"
+  },
+  {
+   "id": 3,
+   "block": "H",
+   "preset": "SHOCK",
+   "text": "One code. That's all it took.",
+   "spoken": "One code. That's all it took.",
+   "star": "code",
+   "face": "none"
+  },
+  {
+   "id": 4,
+   "block": "S",
+   "preset": "TELL",
+   "text": "It starts with a text: a Black Friday deal. 70% off.",
+   "spoken": "It starts with a text: a Black Friday deal. Seventy percent off.",
+   "star": "deal",
+   "face": "none"
+  },
+  {
+   "id": 5,
+   "block": "S",
+   "preset": "TELL",
+   "text": "You tap the link and type in your card.",
+   "spoken": "You tap the link and type in your card.",
+   "star": "card",
+   "face": "none"
+  },
+  {
+   "id": 6,
+   "block": "E",
+   "preset": "TELL",
+   "text": "At that same moment, a scammer types it into a wallet on their phone.",
+   "spoken": "At that same moment, a scammer types it into a wallet on their phone.",
+   "star": "wallet",
+   "face": "none"
+  },
+  {
+   "id": 7,
+   "block": "E",
+   "preset": "PUNCH",
+   "text": "Your bank isn't sure it's you, so it texts you a code.",
+   "spoken": "Your bank isn't sure it's you, so it texts you a code.",
+   "star": "code",
+   "face": "none"
+  },
+  {
+   "id": 8,
+   "block": "E",
+   "preset": "TELL",
+   "text": "The page asks for it. Or a fake fraud team calls and asks you to read it out.",
+   "spoken": "The page asks for it. Or a fake fraud team calls and asks you to read it out.",
+   "star": "read",
+   "face": "none"
+  },
+  {
+   "id": 9,
+   "block": "E",
+   "preset": "PUNCH",
+   "text": "You hand it over... and your card goes live on their phone.",
+   "spoken": "You hand it over... and your card goes live, on their phone.",
+   "star": "live",
+   "face": "none"
+  },
+  {
+   "id": 10,
+   "block": "R1",
+   "preset": "TELL",
+   "text": "Now they tap to pay, in shops and online.",
+   "spoken": "Now they tap to pay, in shops and online.",
+   "star": "tap",
+   "face": "none"
+  },
+  {
+   "id": 11,
+   "block": "I",
+   "preset": "PUNCH",
+   "text": "One man lost over £18,000 in a few hours.",
+   "spoken": "One man lost over eighteen thousand pounds, in a few hours.",
+   "star": "£18,000",
+   "face": "none"
+  },
+  {
+   "id": 12,
+   "block": "R2",
+   "preset": "RELIEF",
+   "text": "Here's your shield. Read the whole text.",
+   "spoken": "Here's your shield. Read the whole text.",
+   "star": "Read",
+   "face": "none"
+  },
+  {
+   "id": 13,
+   "block": "R2",
+   "preset": "TELL",
+   "text": "If it mentions adding a card to a wallet and that's not you? Stop.",
+   "spoken": "If it mentions adding a card to a wallet and that's not you? Stop.",
+   "star": "Stop",
+   "face": "none"
+  },
+  {
+   "id": 14,
+   "block": "R2",
+   "preset": "PUNCH",
+   "text": "No real bank will ever ask you for that code.",
+   "spoken": "No real bank will ever ask you for that code.",
+   "star": "ever",
+   "face": "none"
+  },
+  {
+   "id": 15,
+   "block": "A",
+   "preset": "TELL",
+   "text": "Got an alert that a card was added? Call the number on your card.",
+   "spoken": "Got an alert that a card was added? Call the number on your card.",
+   "star": "Call",
+   "face": "none"
+  },
+  {
+   "id": 16,
+   "block": "A",
+   "preset": "TELL",
+   "text": "Your bank can switch off their copy.",
+   "spoken": "Your bank can switch off their copy.",
+   "star": "switch",
+   "face": "none"
+  },
+  {
+   "id": 17,
+   "block": "CTA",
+   "preset": "ASK",
+   "text": "Would you have read the code out? Tell me below.",
+   "spoken": "Would you have read the code out? Tell me below.",
+   "star": "code",
+   "face": "none"
+  },
+  {
+   "id": 18,
+   "block": "CTA",
+   "preset": "ASK",
+   "text": "Send this to anyone shopping this Black Friday.",
+   "spoken": "Send this to anyone shopping this Black Friday.",
+   "star": "Send",
+   "face": "none"
+  }
+ ]
+}

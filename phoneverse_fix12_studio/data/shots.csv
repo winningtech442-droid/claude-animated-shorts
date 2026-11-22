@@ -1,0 +1,50 @@
+shot,line,start_s,end_s,dur_s,set,what_you_see,face_clip,camera,overlay,sfx,music
+1a,1,0.0,1.6,1.6,B/A,"Her hands grip the phone; the ParcelGo banner SLAMS in and fills the screen, a £2 chip pulses (frame 1 is mid-slam)",-,"Close-up, fast push-in",Corner tag PHONEVERSE · FIX #12,buzz@0.0; bus_hum@0.0,on
+1b,1,1.6,3.323,1.723,B,Banner text 'Missed parcel. Pay £2 to redeliver.' fills the frame; the £2 chip swells and glows red,-,Slow push on the chip,£2 chip glow,tick_rise@1.7,on
+2a,2,3.323,4.523,1.2,A,Whip pan from the phone to her face as the buzz hits; amber lights streak behind the wet window,bus_hope,"Whip pan, then hold under 1 s",Starred caption 'buzzes',buzz@3.423; whoosh@3.423,on
+2b,2,4.523,5.807,1.284,A,"Over-the-shoulder: her thumb lifts the phone; the bus rocks, rain runs down the glass",-,Over-the-shoulder drift,-,,on
+3a,3,5.807,7.607,1.8,D,A UK map fills the frame; red dots spread over it city by city,-,Fast push,"UK map, red dots",tick_rise@5.807,dip
+3b,3,7.607,9.107,1.5,D,A ring climbs from 0 to one third; '34%' lands in the middle; the sound cuts just before the number,-,"Ring fills fast, number holds under 1 s","'1 in 3' ring, 34%",tick@8.807,dip
+3c,3,9.107,10.461,1.354,A,Cut to her face: the grimace as the caption 'targeted' lands,bus_dread,Push-in,-,,dip
+4a,4,10.461,11.861,1.4,A,"Her thumb hovers over the banner; she smirks, sure she would spot a fake",bus_hope,Over-the-shoulder drift,-,,on
+4b,4,11.861,13.386,1.525,B,The '£2' on the banner shrinks to a tiny coin,-,Slow push,Coin icon,pop@11.961,on
+5a,5,13.386,14.986,1.6,B,MUSIC DROPS OUT. Slow push into the £2 chip,-,Slow push,-,silence@13.386,out
+5b,5,14.986,16.586,1.6,B,The £2 chip cracks open; a card icon sits behind it,-,"Slow push, tiny shake on the crack",Card icon,crack@15.086,out
+5c,5,16.586,18.154,1.568,B,A red dashed line starts from the card icon and runs off the screen edge,-,Slow pull,"Red dashed line, 'your card' tag",,out
+6a,6,18.154,19.354,1.2,B,An orange tap ring hits the 'Pay £2' link,-,"Close-up on the thumb, fast",Orange tap ring,tap@18.354,on
+6b,6,19.354,20.531,1.177,B,"The ParcelGo page loads full-frame (purple and yellow, no real courier look)",-,Whip into the screen,-,whoosh@19.354,on
+7a,7,20.531,21.731,1.2,B,"Fields fill one by one: Name, then Address",-,Fly-through the fields,Orange boxes,keys@20.631,on
+7b,7,21.731,22.907,1.176,B,Card number fills; the Done button lights,-,"Fly-through, then push",Orange box on Card number,keys@21.731; confirm@22.631,on
+8a,8,22.907,24.107,1.2,B,MUSIC OUT. '£2' ticks over to 'Paid',-,Hard push,'Paid' stamp,silence@22.907; thud@23.207,out
+8b,8,24.107,25.307,1.2,B/D,"The red path runs from the card to a hooded silhouette at a glowing laptop (no face, no real person)",-,Pull back to reveal the silhouette,Red path,,out
+8c,8,25.307,26.566,1.259,A,Cut to her face as it lands: dread,bus_dread,Push-in,-,thud@25.307,out
+9a,9,26.566,27.966,1.4,A,R1 HARD CUT: her phone screen goes dark and her dread face is reflected in it (no pure-black frame),bus_dread,"Hard cut, locked-off, tiny drift",-,silence@26.566,out
+9b,9,27.966,29.505,1.539,A,Slow push into the reflection; a low pulse starts,-,Slow push,-,pulse@27.966,out
+10a,10,29.505,30.705,1.2,C,"NEW SET: her kitchen, the clock reads 10:12, warm lamp, dark window",-,Wide drift,Clock '10:12',room_tone@29.505,on
+10b,10,30.705,31.818,1.113,C,"Whip pan to the counter: the phone rings, 'Fraud Team' on the screen",-,Whip pan,Call card 'Fraud Team',ringtone@30.705,on
+11a,11,31.818,33.318,1.5,C,She answers; dread on her face as the voice starts,kit_dread,"Push-in, 65-75 mm",-,pulse@31.818,on
+11b,11,33.318,35.163,1.845,B,A dashed path from the fake page connects to the caller card; a masked card number scrolls past,-,Fast push,"Dashed path, masked digits",,on
+12a,12,35.163,36.463,1.3,B,"Bank screen: the 'SAFE ACCOUNT' button hovers under 'Move £4,200'",-,Fast push,Generic bank screen,alarm_tick@35.463,on
+12b,12,36.463,37.563,1.1,C,Cut to her face: the shock snap (start the clip at frame 10); hold under 1 s,kit_shock,"Fast push, hold under 1 s",-,stab@36.463,on
+12c,12,37.563,38.857,1.294,B,"The balance counter falls from £4,200 toward £0. MUSIC OUT half a beat before the turn",-,Push,Balance counter,alarm_tick@37.563,out_late
+13a,13,38.857,40.157,1.3,B,THE TURN: music hits back; a shield glows over the Messages icon; the call card fades out,-,Push into the phone,Shield glow,lock_click@38.857; music_hit@38.857,on
+13b,13,40.157,41.157,1.0,C,Her face goes from hope to the open grin,kit_hope_relief,Slow push,-,,on
+13c,13,41.157,42.037,0.88,B,Push into the phone; the Messages icon glows,-,Push-in,-,,on
+14a,14,42.037,43.437,1.4,B,MUSIC OUT. The scam banner slides into a folder labelled 'Unknown Senders',-,Slow drift,Folder label,whoosh_soft@42.137,out
+14b,14,43.437,44.937,1.5,C,"The phone stays dark and silent on the counter; she watches, soft relief",kit_soft_relief,Slow drift,-,,out
+14c,14,44.937,46.165,1.228,D,The hooded silhouette at the laptop slumps,-,Slow push,-,,out
+15a,15,46.165,47.465,1.3,B,"Push into her phone, Messages open",-,Push-in,-,rise@46.165,on
+15b,15,47.465,48.876,1.411,B,The Filters button glows with an orange box (the path starts here),-,Push-in,Orange box on Filters,,on
+16a,16,48.876,52.476,3.6,B,"SETTINGS CARD: three panels tick through Messages > Filters > Manage Filtering > Screen Unknown Senders, orange box on each",-,"Hold 3.6 s, tiny drift only",Orange boxes,tick@49.676; tick@50.476; tick@51.276,on
+16b,16,52.476,54.119,1.643,B,Close-up: the Screen Unknown Senders toggle slides on,-,Push-in,Orange box on the toggle,toggle_click@53.076,on
+17a,17,54.119,55.819,1.7,B,"Her thumb opens the shop's own app (generic icon, no logo)",-,Over-the-shoulder,-,tap@54.319,on
+17b,17,55.819,57.605,1.786,B/C,A real order status loads with a green tick; relief on her face in the corner,kit_relief,Push-in,'Track it here' label,tick@56.019,on
+18a,18,57.605,59.005,1.4,D,A text card 'iOS 26+' slides in,-,"Static card, under 2.5 s",'iOS 26+',whoosh@57.605,on
+18b,18,59.005,60.373,1.368,C,Cut to her nodding with the phone in her hand,kit_relief,Push-in,-,,on
+19a,19,60.373,61.873,1.5,C,"Her face, soft relief and steady, as she says 'Already tapped?'",kit_soft_relief,Push-in,-,,on
+19b,19,61.873,63.373,1.5,D,The back of a bank card flips into view,-,"Flip, push-in",-,card_flip@61.873,on
+19c,19,63.373,64.208,0.835,D,An orange box lights the phone-number strip on the card back,-,Push-in,Orange box on the number,,on
+20a,20,64.208,65.608,1.4,D,A comment box opens and a cursor blinks,-,Fast push to the box,Comment box,pop@64.308,on
+20b,20,65.608,66.947,1.339,C,"Her face: hope, waiting for an answer",kit_hope,Push-in,-,,on
+21a,21,66.947,68.847,1.9,D,A share arrow flies to a 'Mum' bubble,-,Fast push,'Mum' bubble,whoosh@67.047,on
+21b,21,68.847,69.45,0.603,B,"LOOP: hard cut back to frame 1, the banner slams in",-,Cut to frame 1,-,buzz@68.847,on

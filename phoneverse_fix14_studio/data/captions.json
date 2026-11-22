@@ -1,0 +1,1154 @@
+[
+ {
+  "line": 1,
+  "start": 0.0,
+  "end": 0.719,
+  "words": [
+   "Your",
+   "two-grand"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 0.719,
+  "end": 1.318,
+  "words": [
+   "iPhone",
+   "just"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 1.318,
+  "end": 1.917,
+  "words": [
+   "bounced"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 1,
+  "start": 1.917,
+  "end": 2.217,
+  "words": [
+   "Not",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 2.217,
+  "end": 2.816,
+  "words": [
+   "scratch"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 3.136,
+  "end": 3.612,
+  "words": [
+   "Then",
+   "you"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 3.612,
+  "end": 4.224,
+  "words": [
+   "open",
+   "it"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 4.754,
+  "end": 5.522,
+  "words": [
+   "Wait"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 4,
+  "start": 6.372,
+  "end": 6.809,
+  "words": [
+   "What",
+   "was"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 6.809,
+  "end": 7.247,
+  "words": [
+   "that"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 5,
+  "start": 7.747,
+  "end": 8.44,
+  "words": [
+   "Owners",
+   "report"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 8.44,
+  "end": 9.017,
+  "words": [
+   "a",
+   "click"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 9.017,
+  "end": 9.363,
+  "words": [
+   "then",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 9.363,
+  "end": 9.883,
+  "words": [
+   "black",
+   "line"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 5,
+  "start": 9.883,
+  "end": 10.287,
+  "words": [
+   "down",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 10.287,
+  "end": 10.691,
+  "words": [
+   "fold"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 11.071,
+  "end": 11.658,
+  "words": [
+   "Some",
+   "within"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 11.658,
+  "end": 12.069,
+  "words": [
+   "hours",
+   "of"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 12.069,
+  "end": 12.714,
+  "words": [
+   "buying",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 13.033,
+  "end": 13.41,
+  "words": [
+   "So",
+   "what"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 13.41,
+  "end": 13.912,
+  "words": [
+   "snaps"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 13.912,
+  "end": 14.54,
+  "words": [
+   "Look",
+   "inside"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 14.54,
+  "end": 15.23,
+  "words": [
+   "the",
+   "hinge"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 8,
+  "start": 15.611,
+  "end": 16.241,
+  "words": [
+   "One",
+   "repair"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 16.241,
+  "end": 17.081,
+  "words": [
+   "expert",
+   "thinks"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 17.081,
+  "end": 17.5,
+  "words": [
+   "a",
+   "tiny"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 17.5,
+  "end": 18.27,
+  "words": [
+   "hook",
+   "catches"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 18.27,
+  "end": 18.55,
+  "words": [
+   "as",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 18.55,
+  "end": 19.11,
+  "words": [
+   "opens"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 19.489,
+  "end": 20.098,
+  "words": [
+   "Fold",
+   "after"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 20.098,
+  "end": 20.706,
+  "words": [
+   "fold",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 20.706,
+  "end": 21.248,
+  "words": [
+   "pushes",
+   "on"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 21.248,
+  "end": 21.856,
+  "words": [
+   "the",
+   "screen"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 21.856,
+  "end": 22.668,
+  "words": [
+   "from",
+   "below"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 23.048,
+  "end": 23.907,
+  "words": [
+   "Until",
+   "snap"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 23.907,
+  "end": 24.48,
+  "words": [
+   "The",
+   "panel"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 24.48,
+  "end": 25.267,
+  "words": [
+   "gives",
+   "way"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 25.587,
+  "end": 26.09,
+  "words": [
+   "Apple",
+   "says"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 26.09,
+  "end": 26.426,
+  "words": [
+   "it's",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 26.426,
+  "end": 27.041,
+  "words": [
+   "small",
+   "number"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 27.041,
+  "end": 27.656,
+  "words": [
+   "of",
+   "phones"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 28.036,
+  "end": 28.451,
+  "words": [
+   "But",
+   "if"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 28.451,
+  "end": 29.365,
+  "words": [
+   "Apple",
+   "thinks"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 29.365,
+  "end": 30.196,
+  "words": [
+   "you",
+   "dropped"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 30.196,
+  "end": 30.612,
+  "words": [
+   "it"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 30.612,
+  "end": 31.276,
+  "words": [
+   "The",
+   "inner"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 31.276,
+  "end": 32.19,
+  "words": [
+   "screen",
+   "costs"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 32.19,
+  "end": 32.772,
+  "words": [
+   "\u00a3999"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 13,
+  "start": 33.192,
+  "end": 33.724,
+  "words": [
+   "Half",
+   "of"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 33.724,
+  "end": 34.7,
+  "words": [
+   "two",
+   "thousand"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 34.7,
+  "end": 35.765,
+  "words": [
+   "solid",
+   "British"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 35.765,
+  "end": 36.563,
+  "words": [
+   "pounds"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 37.113,
+  "end": 39.19,
+  "words": [
+   "Frame",
+   "damage"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 39.19,
+  "end": 40.377,
+  "words": [
+   "\u00a31,499"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 15,
+  "start": 40.697,
+  "end": 41.034,
+  "words": [
+   "With"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 41.034,
+  "end": 41.794,
+  "words": [
+   "AppleCare"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 41.794,
+  "end": 42.721,
+  "words": [
+   "Plus",
+   "that"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 42.721,
+  "end": 43.818,
+  "words": [
+   "same",
+   "screen"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 43.818,
+  "end": 44.324,
+  "words": [
+   "\u00a379"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 16,
+  "start": 44.723,
+  "end": 45.142,
+  "words": [
+   "That's",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 45.142,
+  "end": 45.747,
+  "words": [
+   "difference"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 17,
+  "start": 46.067,
+  "end": 47.014,
+  "words": [
+   "Cracked",
+   "already"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 47.014,
+  "end": 47.572,
+  "words": [
+   "Photograph"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 17,
+  "start": 47.572,
+  "end": 48.018,
+  "words": [
+   "it",
+   "before"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 48.018,
+  "end": 48.408,
+  "words": [
+   "you",
+   "hand"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 48.408,
+  "end": 48.798,
+  "words": [
+   "it",
+   "in"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 49.178,
+  "end": 49.655,
+  "words": [
+   "Bought",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 49.655,
+  "end": 49.953,
+  "words": [
+   "in",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 49.953,
+  "end": 50.548,
+  "words": [
+   "last",
+   "thirty"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 50.548,
+  "end": 50.966,
+  "words": [
+   "days"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 50.966,
+  "end": 51.323,
+  "words": [
+   "You",
+   "can"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 51.323,
+  "end": 51.8,
+  "words": [
+   "reject",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 51.8,
+  "end": 52.098,
+  "words": [
+   "for",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 52.098,
+  "end": 52.634,
+  "words": [
+   "refund"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 19,
+  "start": 53.014,
+  "end": 53.36,
+  "words": [
+   "For",
+   "six"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 19,
+  "start": 53.36,
+  "end": 54.051,
+  "words": [
+   "months",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 54.051,
+  "end": 54.455,
+  "words": [
+   "fault",
+   "is"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 54.455,
+  "end": 54.916,
+  "words": [
+   "presumed"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 54.916,
+  "end": 55.146,
+  "words": [
+   "to",
+   "be"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 55.146,
+  "end": 55.665,
+  "words": [
+   "there",
+   "from"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 55.665,
+  "end": 56.299,
+  "words": [
+   "the",
+   "start"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 56.679,
+  "end": 57.142,
+  "words": [
+   "Would",
+   "you"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 57.142,
+  "end": 57.489,
+  "words": [
+   "fold",
+   "a"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 57.489,
+  "end": 57.952,
+  "words": [
+   "two-grand"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 57.952,
+  "end": 58.53,
+  "words": [
+   "phone",
+   "every"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 58.53,
+  "end": 58.877,
+  "words": [
+   "day"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 58.877,
+  "end": 59.224,
+  "words": [
+   "Tell",
+   "me"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 59.224,
+  "end": 59.687,
+  "words": [
+   "below"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 60.007,
+  "end": 60.485,
+  "words": [
+   "Send",
+   "this"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 60.485,
+  "end": 60.963,
+  "words": [
+   "to",
+   "anyone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 60.963,
+  "end": 61.381,
+  "words": [
+   "who",
+   "just"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 61.381,
+  "end": 62.098,
+  "words": [
+   "bought",
+   "one"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ }
+]

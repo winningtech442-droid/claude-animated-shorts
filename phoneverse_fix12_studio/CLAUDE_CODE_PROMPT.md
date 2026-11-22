@@ -1,0 +1,3 @@
+You are building one TikTok short, Phoneverse FIX #12, from this studio folder. Read README.md and BUILD_BRIEF.md first.
+Do, in order: (1) download the Rocketbox face assets into assets/; (2) run render/face_scene.py for one clip and show me a frame before doing the rest; (3) render all face clips; (4) python render/compose.py --test and show me docs/storyboard_preview.png; (5) compose all frames and assemble; (6) run tools/qc.py on both finals and report every FAIL; (7) tell me honestly what looks wrong at phone size.
+Do not alter audio/, data/timings.json or the script wording. Do not post anything. Be brutal and honest in the report; if a check fails, say so and fix only that.

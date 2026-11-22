@@ -1,0 +1,262 @@
+{
+ "episode": "FIX #14",
+ "title": "Crackgate: the iPhone Duo screen that cracks when you open it",
+ "format": "Threat story, HSERIA + CTA, second person, rule book v8 (format A), no face beats",
+ "voice": "Kokoro af_heart (voice B, picked 20 Nov 2026 after the 'too soft' review)",
+ "presets": {
+  "TELL": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 1.03,
+   "gain_db": 0.0,
+   "pause_before": 0.0,
+   "pause_after": 0.38
+  },
+  "PUNCH": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 1.08,
+   "gain_db": 1.5,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  },
+  "SURPRISE": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.92,
+   "gain_db": 2.5,
+   "pause_before": 0.15,
+   "pause_after": 0.85
+  },
+  "SHOCK": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 1.14,
+   "gain_db": 2.5,
+   "pause_before": 0.0,
+   "pause_after": 0.5
+  },
+  "EMPH": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.84,
+   "gain_db": 2.5,
+   "pause_before": 0.1,
+   "pause_after": 0.55
+  },
+  "RELIEF": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 1.0,
+   "gain_db": 0.5,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "ASK": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 1.05,
+   "gain_db": 1.0,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  }
+ },
+ "lines": [
+  {
+   "id": 1,
+   "block": "H",
+   "preset": "PUNCH",
+   "text": "Your two-grand iPhone just bounced. Not a scratch.",
+   "spoken": "Your two-grand iPhone just bounced. Not a scratch.",
+   "star": "bounced",
+   "face": "none"
+  },
+  {
+   "id": 2,
+   "block": "H",
+   "preset": "TELL",
+   "text": "Then you open it.",
+   "spoken": "Then you open it.",
+   "star": "open",
+   "face": "none"
+  },
+  {
+   "id": 3,
+   "block": "H",
+   "preset": "SURPRISE",
+   "text": "Wait!",
+   "spoken": "Wait!",
+   "star": "Wait",
+   "face": "none"
+  },
+  {
+   "id": 4,
+   "block": "H",
+   "preset": "SHOCK",
+   "text": "What was that?!",
+   "spoken": "What was that?!",
+   "star": "that",
+   "face": "none"
+  },
+  {
+   "id": 5,
+   "block": "S",
+   "preset": "TELL",
+   "text": "Owners report a click, then a black line down the fold.",
+   "spoken": "Owners report a click, then a black line down the fold.",
+   "star": "line",
+   "face": "none"
+  },
+  {
+   "id": 6,
+   "block": "S",
+   "preset": "PUNCH",
+   "text": "Some within hours of buying it.",
+   "spoken": "Some within hours of buying it.",
+   "star": "hours",
+   "face": "none"
+  },
+  {
+   "id": 7,
+   "block": "E",
+   "preset": "TELL",
+   "text": "So what snaps? Look inside the hinge.",
+   "spoken": "So what snaps? Look inside the hinge.",
+   "star": "hinge",
+   "face": "none"
+  },
+  {
+   "id": 8,
+   "block": "E",
+   "preset": "TELL",
+   "text": "One repair expert thinks a tiny hook catches as it opens.",
+   "spoken": "One repair expert thinks a tiny hook catches as it opens.",
+   "star": "hook",
+   "face": "none"
+  },
+  {
+   "id": 9,
+   "block": "E",
+   "preset": "TELL",
+   "text": "Fold after fold, it pushes on the screen from below.",
+   "spoken": "Fold after fold, it pushes on the screen from below.",
+   "star": "pushes",
+   "face": "none"
+  },
+  {
+   "id": 10,
+   "block": "E",
+   "preset": "PUNCH",
+   "text": "Until... snap. The panel gives way.",
+   "spoken": "Until... snap! The panel gives way.",
+   "star": "gives",
+   "face": "none"
+  },
+  {
+   "id": 11,
+   "block": "R1",
+   "preset": "TELL",
+   "text": "Apple says it's a small number of phones.",
+   "spoken": "Apple says it's a small number of phones.",
+   "star": "small",
+   "face": "none"
+  },
+  {
+   "id": 12,
+   "block": "I",
+   "preset": "PUNCH",
+   "text": "But if Apple thinks you dropped it? The inner screen costs £999.",
+   "spoken": "But if Apple thinks you dropped it? The inner screen costs nine hundred and ninety-nine pounds.",
+   "star": "£999",
+   "face": "none"
+  },
+  {
+   "id": 13,
+   "block": "I",
+   "preset": "EMPH",
+   "text": "Half of two thousand solid British pounds!",
+   "spoken": "Half of two thousand... solid... British pounds!",
+   "star": "solid",
+   "face": "none"
+  },
+  {
+   "id": 14,
+   "block": "I",
+   "preset": "PUNCH",
+   "text": "Frame damage? £1,499.",
+   "spoken": "Frame damage? One thousand, four hundred and ninety-nine.",
+   "star": "£1,499",
+   "face": "none"
+  },
+  {
+   "id": 15,
+   "block": "R2",
+   "preset": "RELIEF",
+   "text": "With AppleCare Plus, that same screen? £79.",
+   "spoken": "With Apple Care Plus, that same screen? Seventy-nine pounds.",
+   "star": "£79",
+   "face": "none"
+  },
+  {
+   "id": 16,
+   "block": "R2",
+   "preset": "PUNCH",
+   "text": "That's the difference.",
+   "spoken": "That's the difference.",
+   "star": "difference",
+   "face": "none"
+  },
+  {
+   "id": 17,
+   "block": "A",
+   "preset": "TELL",
+   "text": "Cracked already? Photograph it before you hand it in.",
+   "spoken": "Cracked already? Photograph it before you hand it in.",
+   "star": "Photograph",
+   "face": "none"
+  },
+  {
+   "id": 18,
+   "block": "A",
+   "preset": "TELL",
+   "text": "Bought it in the last thirty days? You can reject it for a refund.",
+   "spoken": "Bought it in the last thirty days? You can reject it for a refund.",
+   "star": "refund",
+   "face": "none"
+  },
+  {
+   "block": "A",
+   "preset": "TELL",
+   "text": "For six months, the fault is presumed to be there from the start.",
+   "spoken": "For six months, the fault is presumed to be there from the start.",
+   "star": "six",
+   "face": "none",
+   "id": 19
+  },
+  {
+   "id": 20,
+   "block": "CTA",
+   "preset": "ASK",
+   "text": "Would you fold a two-grand phone every day? Tell me below.",
+   "spoken": "Would you fold a two-grand phone every day? Tell me below.",
+   "star": "fold",
+   "face": "none"
+  },
+  {
+   "id": 21,
+   "block": "CTA",
+   "preset": "ASK",
+   "text": "Send this to anyone who just bought one.",
+   "spoken": "Send this to anyone who just bought one.",
+   "star": "Send",
+   "face": "none"
+  }
+ ]
+}

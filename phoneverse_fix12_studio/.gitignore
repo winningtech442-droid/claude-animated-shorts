@@ -1,0 +1,6 @@
+.venv/
+assets/
+frames/
+out/
+final/
+__pycache__/

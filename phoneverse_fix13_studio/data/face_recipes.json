@@ -1,0 +1,17 @@
+{
+  "note": "From 'Phoneverse face rig - approved expressions' (approved 17 Nov 2026). Values are BASE values; multiply by 'mult' at render (1.4 for all, 1.5 for shock per the reset plan), cap 1.7, slider max 2. If the first test frame is weaker or stronger than the approved FIX #10 look, the multiplier is the first thing to check. Keys are ARKit names; AK_nn = ARKit index + 1 (AK_03 = browInnerUp). AU_nn are FACS keys. Head/neck/spine are bone rotations in degrees, z positive = looking down.",
+  "mult": {"shock": 1.5, "default": 1.4},
+  "expressions": {
+    "shock": {"keys": {"browInnerUp": 1.0, "browOuterUpLeft": 1.0, "browOuterUpRight": 1.0, "eyeWideLeft": 1.0, "eyeWideRight": 1.0, "jawOpen": 0.62, "mouthLowerDownLeft": 0.6, "mouthLowerDownRight": 0.6, "mouthStretchLeft": 0.55, "mouthStretchRight": 0.55, "mouthShrugUpper": 0.25, "mouthUpperUpLeft": 0.3, "mouthUpperUpRight": 0.3, "AU_01": 0.4, "AU_05": 0.5, "eyeLookOutLeft": 0.45, "eyeLookInRight": 0.45},
+              "head": [0, -8, -6], "head_settle": [0, -7, -2], "mouth_light_w": 0.4, "start_clip_at_frame": 10},
+    "dread": {"keys": {"browInnerUp": 0.95, "browDownLeft": 0.25, "browDownRight": 0.25, "mouthFrownLeft": 0.9, "mouthFrownRight": 0.9, "mouthPressLeft": 0.35, "mouthPressRight": 0.35, "eyeWideLeft": 0.45, "eyeWideRight": 0.45, "AU_15": 0.7, "AU_17": 0.5, "mouthShrugLower": 0.35, "eyeLookDownLeft": 0.25, "eyeLookDownRight": 0.25, "AU_01": 0.5},
+              "head": [0, 0, 5], "neck": [0, 0, 3], "spine2": [0, 0, 2], "mouth_light_w": 0.0},
+    "hope": {"keys": {"browInnerUp": 1.0, "browOuterUpLeft": 0.55, "browOuterUpRight": 0.55, "eyeWideLeft": 0.5, "eyeWideRight": 0.5, "mouthSmileLeft": 0.55, "mouthSmileRight": 0.55, "AU_06": 0.3, "jawOpen": 0.14, "mouthLowerDownLeft": 0.15, "mouthLowerDownRight": 0.15, "eyeLookUpLeft": 0.4, "eyeLookUpRight": 0.4, "AU_01": 0.6},
+             "head": [0, 0, -4], "neck": [0, 0, -2], "spine2": [0, 0, -1], "mouth_light_w": 0.08},
+    "relief": {"keys": {"mouthSmileLeft": 1.0, "mouthSmileRight": 1.0, "AU_12": 0.6, "cheekSquintLeft": 0.8, "cheekSquintRight": 0.8, "AU_06": 0.6, "jawOpen": 0.28, "eyeSquintLeft": 0.35, "eyeSquintRight": 0.35, "browInnerUp": 0.3, "mouthDimpleLeft": 0.4, "mouthDimpleRight": 0.4, "mouthUpperUpLeft": 0.35, "mouthUpperUpRight": 0.35},
+               "head": [0, 0, 0], "mouth_light_w": 0.08, "note": "Open grin. Keep the head LEVEL (roll makes it look lopsided). Do not push mouthStretch or AU_20 above 0.5."},
+    "soft_relief": {"keys": {"mouthSmileLeft": 0.85, "mouthSmileRight": 0.85, "cheekSquintLeft": 0.7, "cheekSquintRight": 0.7, "AU_06": 0.5, "eyeSquintLeft": 0.45, "eyeSquintRight": 0.45, "browInnerUp": 0.35, "jawOpen": 0.1, "eyeLookDownLeft": 0.3, "eyeLookDownRight": 0.3, "eyeBlinkLeft": 0.25, "eyeBlinkRight": 0.25},
+                    "head": [0, 0, 5], "neck": [0, 0, 3], "spine2": [0, 0, 2], "mouth_light_w": 0.08}
+  },
+  "timing": {"fps": 24, "frames": 48, "start_state": "look down at the phone (eyeLookDown 0.55, slight smile) or the previous expression", "snap_frame": [6, 10], "snap": "55% within 4 frames, overshoot 112%, settle by about frame 20", "push_in_m": [1.0, 0.88], "lens_mm": [65, 75], "fstop": 2.0}
+}

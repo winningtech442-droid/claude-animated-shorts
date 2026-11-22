@@ -1,0 +1,1149 @@
+[
+ {
+  "line": 1,
+  "start": 0.0,
+  "end": 0.512,
+  "words": [
+   "This",
+   "scam"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 0.512,
+  "end": 1.088,
+  "words": [
+   "text",
+   "never"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 1.088,
+  "end": 1.792,
+  "words": [
+   "touched",
+   "your"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 1.792,
+  "end": 2.432,
+  "words": [
+   "network"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 2,
+  "start": 2.982,
+  "end": 3.611,
+  "words": [
+   "Saturday"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 3.611,
+  "end": 4.469,
+  "words": [
+   "Oxford",
+   "Street"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 4.469,
+  "end": 4.984,
+  "words": [
+   "Your",
+   "phone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 4.984,
+  "end": 5.499,
+  "words": [
+   "buzzes"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 3,
+  "start": 6.149,
+  "end": 6.815,
+  "words": [
+   "HMRC",
+   "says"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 6.815,
+  "end": 7.649,
+  "words": [
+   "you're",
+   "owed"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 7.649,
+  "end": 8.565,
+  "words": [
+   "a",
+   "refund"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 3,
+  "start": 8.565,
+  "end": 8.982,
+  "words": [
+   "Tap",
+   "to"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 8.982,
+  "end": 9.648,
+  "words": [
+   "claim"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 10.248,
+  "end": 11.282,
+  "words": [
+   "Parked",
+   "nearby"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 11.282,
+  "end": 11.627,
+  "words": [
+   "is",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 11.627,
+  "end": 12.144,
+  "words": [
+   "van"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 4,
+  "start": 12.144,
+  "end": 13.092,
+  "words": [
+   "Inside",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 13.092,
+  "end": 13.609,
+  "words": [
+   "a",
+   "fake"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 13.609,
+  "end": 14.643,
+  "words": [
+   "phone",
+   "mast"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 15.443,
+  "end": 15.931,
+  "words": [
+   "It",
+   "shouts"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 15.931,
+  "end": 16.54,
+  "words": [
+   "louder",
+   "than"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 16.54,
+  "end": 16.967,
+  "words": [
+   "the",
+   "real"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 16.967,
+  "end": 17.393,
+  "words": [
+   "mast"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 17.393,
+  "end": 17.942,
+  "words": [
+   "Your",
+   "phone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 17.942,
+  "end": 18.429,
+  "words": [
+   "switches"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 5,
+  "start": 18.429,
+  "end": 18.856,
+  "words": [
+   "over"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 19.206,
+  "end": 19.646,
+  "words": [
+   "Then",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 19.646,
+  "end": 20.307,
+  "words": [
+   "drags",
+   "your"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 20.307,
+  "end": 20.968,
+  "words": [
+   "phone",
+   "down"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 20.968,
+  "end": 21.335,
+  "words": [
+   "to",
+   "old"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 21.335,
+  "end": 21.702,
+  "words": [
+   "2G"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 7,
+  "start": 22.252,
+  "end": 22.836,
+  "words": [
+   "On",
+   "2G"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 22.836,
+  "end": 23.586,
+  "words": [
+   "your",
+   "phone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 23.586,
+  "end": 24.587,
+  "words": [
+   "doesn't",
+   "check"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 7,
+  "start": 24.587,
+  "end": 25.171,
+  "words": [
+   "the",
+   "mast"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 25.171,
+  "end": 25.921,
+  "words": [
+   "is",
+   "real"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 26.721,
+  "end": 27.279,
+  "words": [
+   "Text",
+   "in"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 27.279,
+  "end": 28.272,
+  "words": [
+   "Phone",
+   "released"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 28.272,
+  "end": 28.768,
+  "words": [
+   "Under",
+   "ten"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 8,
+  "start": 28.768,
+  "end": 29.388,
+  "words": [
+   "seconds"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 29.738,
+  "end": 30.112,
+  "words": [
+   "So",
+   "your"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 30.112,
+  "end": 30.673,
+  "words": [
+   "network's"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 30.673,
+  "end": 31.296,
+  "words": [
+   "spam",
+   "filter"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 31.296,
+  "end": 31.794,
+  "words": [
+   "never",
+   "saw"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 31.794,
+  "end": 32.106,
+  "words": [
+   "it"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 32.956,
+  "end": 33.589,
+  "words": [
+   "UK",
+   "police"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 33.589,
+  "end": 34.301,
+  "words": [
+   "have",
+   "found"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 34.301,
+  "end": 35.171,
+  "words": [
+   "these",
+   "hidden"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 35.171,
+  "end": 35.566,
+  "words": [
+   "in",
+   "car"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 35.566,
+  "end": 36.199,
+  "words": [
+   "boots",
+   "and"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 36.199,
+  "end": 36.753,
+  "words": [
+   "vans"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 37.653,
+  "end": 38.092,
+  "words": [
+   "Tap",
+   "that"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 38.092,
+  "end": 38.72,
+  "words": [
+   "link",
+   "and"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 38.72,
+  "end": 39.222,
+  "words": [
+   "your",
+   "card"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 11,
+  "start": 39.222,
+  "end": 39.786,
+  "words": [
+   "details",
+   "go"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 39.786,
+  "end": 40.288,
+  "words": [
+   "straight"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 40.288,
+  "end": 40.853,
+  "words": [
+   "to",
+   "them"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 41.453,
+  "end": 41.834,
+  "words": [
+   "But",
+   "you"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 41.834,
+  "end": 42.277,
+  "words": [
+   "can",
+   "shut"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 42.277,
+  "end": 42.975,
+  "words": [
+   "that",
+   "door"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 12,
+  "start": 42.975,
+  "end": 43.736,
+  "words": [
+   "Here's",
+   "how"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 44.036,
+  "end": 45.023,
+  "words": [
+   "On",
+   "Android"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 45.023,
+  "end": 46.256,
+  "words": [
+   "open",
+   "Settings"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 46.256,
+  "end": 47.161,
+  "words": [
+   "Search",
+   "2G"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 47.161,
+  "end": 47.737,
+  "words": [
+   "Turn",
+   "off"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 13,
+  "start": 47.737,
+  "end": 48.559,
+  "words": [
+   "Allow",
+   "2G"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 48.959,
+  "end": 49.603,
+  "words": [
+   "Your",
+   "phone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 49.603,
+  "end": 50.39,
+  "words": [
+   "then",
+   "ignores"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 14,
+  "start": 50.39,
+  "end": 50.819,
+  "words": [
+   "fake",
+   "2G"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 50.819,
+  "end": 51.391,
+  "words": [
+   "masts"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 51.791,
+  "end": 52.73,
+  "words": [
+   "iPhones",
+   "have"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 52.73,
+  "end": 53.071,
+  "words": [
+   "no",
+   "2G"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 53.071,
+  "end": 54.18,
+  "words": [
+   "switch",
+   "only"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 54.18,
+  "end": 55.29,
+  "words": [
+   "heavy",
+   "Lockdown"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 15,
+  "start": 55.29,
+  "end": 55.887,
+  "words": [
+   "Mode"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 56.437,
+  "end": 57.328,
+  "words": [
+   "So",
+   "everyone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 57.328,
+  "end": 58.04,
+  "words": [
+   "a",
+   "refund"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 58.04,
+  "end": 58.575,
+  "words": [
+   "text",
+   "in"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 58.575,
+  "end": 59.465,
+  "words": [
+   "a",
+   "crowd"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 59.465,
+  "end": 60.445,
+  "words": [
+   "Don't",
+   "tap"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 60.445,
+  "end": 61.246,
+  "words": [
+   "Forward",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 61.246,
+  "end": 62.048,
+  "words": [
+   "to",
+   "7726"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 17,
+  "start": 62.397,
+  "end": 62.709,
+  "words": [
+   "Had",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 62.709,
+  "end": 63.333,
+  "words": [
+   "refund",
+   "text"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 63.333,
+  "end": 64.019,
+  "words": [
+   "this",
+   "week"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 64.019,
+  "end": 64.394,
+  "words": [
+   "Tell",
+   "me"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 64.394,
+  "end": 64.893,
+  "words": [
+   "below"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 18,
+  "start": 65.093,
+  "end": 65.574,
+  "words": [
+   "Send",
+   "this"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 65.574,
+  "end": 66.115,
+  "words": [
+   "to",
+   "someone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 66.115,
+  "end": 66.476,
+  "words": [
+   "with",
+   "an"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 66.476,
+  "end": 67.077,
+  "words": [
+   "Android"
+  ],
+  "star": [
+   true
+  ]
+ }
+]

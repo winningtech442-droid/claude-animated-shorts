@@ -1,0 +1,248 @@
+{
+ "episode": "FIX #13",
+ "title": "The fake mast in a van (SMS blaster)",
+ "format": "Threat story, HSERIA + CTA, second person, rule book v8 (format A)",
+ "presets": {
+  "TENSE": {
+   "blend": {
+    "af_bella": 0.9,
+    "af_nicole": 0.1
+   },
+   "speed": 0.92,
+   "gain_db": 0.0,
+   "pause_after": 0.55,
+   "pause_before": 0.0
+  },
+  "PUNCH": {
+   "blend": {
+    "af_bella": 1.0
+   },
+   "speed": 1.1,
+   "gain_db": 2.0,
+   "pause_after": 0.35,
+   "pause_before": 0.0
+  },
+  "STAKES": {
+   "blend": {
+    "af_bella": 1.0
+   },
+   "speed": 0.94,
+   "gain_db": 1.0,
+   "pause_after": 0.6,
+   "pause_before": 0.3
+  },
+  "DISBELIEF": {
+   "blend": {
+    "af_bella": 0.8,
+    "af_heart": 0.2
+   },
+   "speed": 1.05,
+   "gain_db": 1.0,
+   "pause_after": 0.45,
+   "pause_before": 0.0
+  },
+  "REVEAL": {
+   "blend": {
+    "af_bella": 0.7,
+    "af_nicole": 0.3
+   },
+   "speed": 0.88,
+   "gain_db": -3.0,
+   "pause_after": 0.8,
+   "pause_before": 0.0
+  },
+  "RELIEF": {
+   "blend": {
+    "af_bella": 0.75,
+    "af_heart": 0.25
+   },
+   "speed": 0.92,
+   "gain_db": 0.0,
+   "pause_after": 0.3,
+   "pause_before": 0.0
+  },
+  "LIST": {
+   "blend": {
+    "af_bella": 1.0
+   },
+   "speed": 1.05,
+   "gain_db": 1.0,
+   "pause_after": 0.4,
+   "pause_before": 0.0
+  },
+  "ASK": {
+   "blend": {
+    "af_bella": 0.75,
+    "af_heart": 0.25
+   },
+   "speed": 1.0,
+   "gain_db": 0.0,
+   "pause_after": 0.2,
+   "pause_before": 0.0
+  }
+ },
+ "lines": [
+  {
+   "id": 1,
+   "block": "H",
+   "preset": "TENSE",
+   "text": "This scam text never touched your network.",
+   "spoken": "This scam text never touched your network.",
+   "star": "network",
+   "face": "none"
+  },
+  {
+   "id": 2,
+   "block": "H",
+   "preset": "PUNCH",
+   "text": "Saturday, Oxford Street. Your phone buzzes.",
+   "spoken": "Saturday, Oxford Street. Your phone buzzes.",
+   "star": "buzzes",
+   "face": "hope"
+  },
+  {
+   "id": 3,
+   "block": "S",
+   "preset": "STAKES",
+   "text": "HMRC says you're owed a refund. Tap to claim.",
+   "spoken": "H M R C says you're owed a refund. Tap to claim.",
+   "star": "refund",
+   "face": "none"
+  },
+  {
+   "id": 4,
+   "block": "E",
+   "preset": "REVEAL",
+   "text": "Parked nearby is a van. Inside it, a fake phone mast.",
+   "spoken": "Parked nearby is a van. Inside it, a fake phone mast.",
+   "star": "van",
+   "face": "none"
+  },
+  {
+   "id": 5,
+   "block": "E",
+   "preset": "PUNCH",
+   "text": "It shouts louder than the real mast. Your phone switches over.",
+   "spoken": "It shouts louder than the real mast. Your phone switches over.",
+   "star": "switches",
+   "face": "none"
+  },
+  {
+   "id": 6,
+   "block": "E",
+   "preset": "TENSE",
+   "text": "Then it drags your phone down to old 2G.",
+   "spoken": "Then it drags your phone down to old two G.",
+   "star": "2G",
+   "face": "none"
+  },
+  {
+   "id": 7,
+   "block": "E",
+   "preset": "REVEAL",
+   "text": "On 2G, your phone doesn't check the mast is real.",
+   "spoken": "On two G, your phone doesn't check the mast is real.",
+   "star": "check",
+   "face": "none"
+  },
+  {
+   "id": 8,
+   "block": "E",
+   "preset": "PUNCH",
+   "text": "Text in. Phone released. Under ten seconds.",
+   "spoken": "Text in. Phone released. Under ten seconds.",
+   "star": "ten",
+   "face": "none"
+  },
+  {
+   "id": 9,
+   "block": "R1",
+   "preset": "TENSE",
+   "text": "So your network's spam filter never saw it.",
+   "spoken": "So your network's spam filter never saw it.",
+   "star": "never",
+   "face": "none"
+  },
+  {
+   "id": 10,
+   "block": "I",
+   "preset": "STAKES",
+   "text": "UK police have found these hidden in car boots and vans.",
+   "spoken": "U K police have found these hidden in car boots and vans.",
+   "star": "boots",
+   "face": "none"
+  },
+  {
+   "id": 11,
+   "block": "I",
+   "preset": "STAKES",
+   "text": "Tap that link, and your card details go straight to them.",
+   "spoken": "Tap that link, and your card details go straight to them.",
+   "star": "card",
+   "face": "shock"
+  },
+  {
+   "id": 12,
+   "block": "R2",
+   "preset": "RELIEF",
+   "text": "But you can shut that door. Here's how.",
+   "spoken": "But you can shut that door. Here's how.",
+   "star": "door",
+   "face": "none"
+  },
+  {
+   "id": 13,
+   "block": "A",
+   "preset": "LIST",
+   "text": "On Android, open Settings. Search 2G. Turn off Allow 2G.",
+   "spoken": "On Android, open Settings. Search two G. Turn off, Allow two G.",
+   "star": "off",
+   "face": "none"
+  },
+  {
+   "id": 14,
+   "block": "A",
+   "preset": "LIST",
+   "text": "Your phone then ignores fake 2G masts.",
+   "spoken": "Your phone then ignores fake two G masts.",
+   "star": "ignores",
+   "face": "none"
+  },
+  {
+   "id": 15,
+   "block": "A",
+   "preset": "TENSE",
+   "text": "iPhones have no 2G switch, only heavy Lockdown Mode.",
+   "spoken": "iPhones have no two G switch, only heavy Lockdown Mode.",
+   "star": "Lockdown",
+   "face": "none"
+  },
+  {
+   "id": 16,
+   "block": "A",
+   "preset": "PUNCH",
+   "text": "So everyone: a refund text in a crowd? Don't tap. Forward it to 7726.",
+   "spoken": "So everyone. A refund text in a crowd? Don't tap. Forward it to seven seven two six.",
+   "star": "7726",
+   "face": "none"
+  },
+  {
+   "id": 17,
+   "block": "CTA",
+   "preset": "ASK",
+   "text": "Had a refund text this week? Tell me below.",
+   "spoken": "Had a refund text this week? Tell me below.",
+   "star": "below",
+   "face": "none"
+  },
+  {
+   "id": 18,
+   "block": "CTA",
+   "preset": "ASK",
+   "text": "Send this to someone with an Android.",
+   "spoken": "Send this to someone with an Android.",
+   "star": "Android",
+   "face": "relief"
+  }
+ ]
+}
