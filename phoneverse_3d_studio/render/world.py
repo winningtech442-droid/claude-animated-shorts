@@ -315,7 +315,7 @@ if WALLET:
 #  "piles" phone pile vs rock pile appear    "drawer" a drawer of old phones slides in (its lit phone's screen = beat key "dscreen")
 #  "gone"  the hero phone is cleared away (after the board went into the tub)
 GOLD = "gold" in PROPS
-MOLT = [float(v) for v in os.environ.get("PV_MOLT", "2.0,0.30,0.02").split(",")]   # molten gold: emission strength, green, blue (red = 1)
+MOLT = [float(v) for v in os.environ.get("PV_MOLT", "1.0,0.25,0.0").split(",")]   # molten gold: emission strength, green, blue (red = 1)
 GOLD_ANCH = {}
 if GOLD:
     import random as _rg; _rg.seed(16)
