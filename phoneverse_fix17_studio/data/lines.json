@@ -1,0 +1,262 @@
+{
+ "episode": "FIX #17",
+ "title": "Your phone is made of sand: the glowing crystal inside your iPhone's brain",
+ "format": "Treasure/curiosity series (after #16), HSERIA + CTA, second person, rule book v8 (format A), 3 character beats",
+ "voice": "Kokoro af_heart (voice B); #16 presets unchanged, incl. AWE for the crystal peak",
+ "presets": {
+  "TELL": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.95,
+   "gain_db": 0.0,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  },
+  "PUNCH": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 1.0,
+   "gain_db": 1.5,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  },
+  "SURPRISE": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.97,
+   "gain_db": 2.5,
+   "pause_before": 0.15,
+   "pause_after": 0.4
+  },
+  "SHOCK": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.96,
+   "gain_db": 2.5,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "EMPH": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.92,
+   "gain_db": 2.5,
+   "pause_before": 0.1,
+   "pause_after": 0.4
+  },
+  "RELIEF": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.92,
+   "gain_db": 0.5,
+   "pause_before": 0.0,
+   "pause_after": 0.4
+  },
+  "ASK": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.88,
+   "gain_db": 1.0,
+   "pause_before": 0.0,
+   "pause_after": 0.32
+  },
+  "AWE": {
+   "blend": {
+    "af_heart": 1.0
+   },
+   "speed": 0.82,
+   "gain_db": 2.5,
+   "pause_before": 0.15,
+   "pause_after": 0.4
+  }
+ },
+ "lines": [
+  {
+   "id": 1,
+   "block": "H",
+   "preset": "PUNCH",
+   "text": "Your phone's brain is made of sand.",
+   "spoken": "Your phone's brain is made of sand.",
+   "star": "sand",
+   "face": "c01_hold"
+  },
+  {
+   "id": 2,
+   "block": "H",
+   "preset": "TELL",
+   "text": "Sand. Inside your phone. Thinking for you.",
+   "spoken": "Sand. Inside your phone. Thinking for you.",
+   "star": "Thinking",
+   "face": "none"
+  },
+  {
+   "id": 3,
+   "block": "S",
+   "preset": "TELL",
+   "text": "Giant factories do this. Never at home.",
+   "spoken": "Giant factories do this. Never at home.",
+   "star": "factories",
+   "face": "none"
+  },
+  {
+   "id": 4,
+   "block": "S",
+   "preset": "TELL",
+   "text": "Only three steps. I said that last time.",
+   "spoken": "Only three steps. I said that last time.",
+   "star": "three",
+   "face": "none"
+  },
+  {
+   "id": 5,
+   "block": "S",
+   "preset": "PUNCH",
+   "text": "First, cook it with coal. Out comes grey metal.",
+   "spoken": "First, cook it with coal. Out comes grey metal.",
+   "star": "metal",
+   "face": "none"
+  },
+  {
+   "id": 6,
+   "block": "S",
+   "preset": "SHOCK",
+   "text": "Still way, way too dirty for a chip.",
+   "spoken": "Still way, way too dirty for a chip.",
+   "star": "dirty",
+   "face": "none"
+  },
+  {
+   "id": 7,
+   "block": "E",
+   "preset": "TELL",
+   "text": "So they clean it, clean it, and clean it again.",
+   "spoken": "So they clean it, clean it, and clean it again.",
+   "star": "clean",
+   "face": "none"
+  },
+  {
+   "id": 8,
+   "block": "E",
+   "preset": "EMPH",
+   "text": "A gold bar? Four nines pure. This? Nine nines, even eleven.",
+   "spoken": "A gold bar? Four nines pure. This? Nine nines, even eleven.",
+   "star": "nines",
+   "face": "none"
+  },
+  {
+   "id": 9,
+   "block": "E",
+   "preset": "TELL",
+   "text": "Now melt it. Hotter than lava.",
+   "spoken": "Now melt it. Hotter than lava.",
+   "star": "lava",
+   "face": "none"
+  },
+  {
+   "id": 10,
+   "block": "E",
+   "preset": "TELL",
+   "text": "Dip in a tiny seed. Pull it up, slowly, slowly.",
+   "spoken": "Dip in a tiny seed. Pull it up, slowly, slowly.",
+   "star": "seed",
+   "face": "none"
+  },
+  {
+   "id": 11,
+   "block": "E",
+   "preset": "TELL",
+   "text": "Spin it one way, the pot the other. Or the other way. Whatever.",
+   "spoken": "Spin it one way, the pot the other. Or the other way. Whatever.",
+   "star": "Spin",
+   "face": "none"
+  },
+  {
+   "id": 12,
+   "block": "E",
+   "preset": "SURPRISE",
+   "text": "Slower than a snail. About two days.",
+   "spoken": "Slower than a snail. About two days.",
+   "star": "snail",
+   "face": "none"
+  },
+  {
+   "id": 13,
+   "block": "R1",
+   "preset": "AWE",
+   "text": "Out comes one giant glowing crystal, tall as you.",
+   "spoken": "Out comes one giant glowing crystal, tall as you.",
+   "star": "crystal",
+   "face": "c02_delight"
+  },
+  {
+   "id": 14,
+   "block": "R1",
+   "preset": "EMPH",
+   "text": "Heavy as a piano. Perfect, all the way through.",
+   "spoken": "Heavy as a piano. Perfect, all the way through.",
+   "star": "piano",
+   "face": "none"
+  },
+  {
+   "id": 15,
+   "block": "R1",
+   "preset": "TELL",
+   "text": "A wire saw slices it like cheese, thin as a bank card.",
+   "spoken": "A wire saw slices it like cheese, thin as a bank card.",
+   "star": "slices",
+   "face": "none"
+  },
+  {
+   "id": 16,
+   "block": "R1",
+   "preset": "SURPRISE",
+   "text": "Polish it to a mirror. Hundreds of phone brains fit on one.",
+   "spoken": "Polish it to a mirror. Hundreds of phone brains fit on one.",
+   "star": "mirror",
+   "face": "none"
+  },
+  {
+   "id": 17,
+   "block": "I",
+   "preset": "SHOCK",
+   "text": "Honest part? Not beach sand. Pure quartz rock. Most sand's too dirty.",
+   "spoken": "Honest part? Not beach sand. Pure quartz rock. Most sand's too dirty.",
+   "star": "beach",
+   "face": "c03_shrug"
+  },
+  {
+   "id": 18,
+   "block": "R2",
+   "preset": "RELIEF",
+   "text": "Rock or sand, mostly the same stuff. Still thinking for you.",
+   "spoken": "Rock or sand, mostly the same stuff. Still thinking for you.",
+   "star": "thinking",
+   "face": "none"
+  },
+  {
+   "id": 19,
+   "block": "A",
+   "preset": "TELL",
+   "text": "Phone hot while charging? Take the case off.",
+   "spoken": "Phone hot while charging? Take the case off.",
+   "star": "case",
+   "face": "none"
+  },
+  {
+   "id": 20,
+   "block": "CTA",
+   "preset": "ASK",
+   "text": "Did you know your phone started as rock? Yes or no below.",
+   "spoken": "Did you know your phone started as rock? Yes or no below.",
+   "star": "rock",
+   "face": "none"
+  }
+ ]
+}
