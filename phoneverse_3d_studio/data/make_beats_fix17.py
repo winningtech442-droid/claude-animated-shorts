@@ -37,15 +37,15 @@ BEATS = [
  dict(t0=12.6, t1=S[6], line=5, cam=["s_metal_wide", "s_metal"], events=[ev("metal", 0, 1, 12.75, 13.6)], labels=[lab("metal", "SILICON METAL", 120, -320, 13.2)]),
  # L6 still way, way too dirty for a chip
  dict(t0=S[6], t1=15.5, line=6, cam=["s_metal_macro", "s_metal"], labels=[lab("dirt", "DIRT", -320, -320, 14.4)]),
- dict(t0=15.5, t1=S[7], line=6, cam=["g_tub_top", "g_tub_side"], events=[ev("chunks", 0, 1, 15.55, 15.6), ev("liq", 0, 2, 15.6, 16.3), ev("metal", 1, 0, 15.5, 15.55)]),
+ dict(t0=15.5, t1=S[7], line=6, cam=["g_tub_top", "g_tub_side"], events=[ev("chunks", 0, 1, 15.55, 15.6), ev("murk", 0, 1, 15.6, 16.3), ev("metal", 1, 0, 15.5, 15.55)]),
  # L7 they clean it, clean it, clean it again (three rinses, murky to clear)
- dict(t0=S[7], t1=18.0, line=7, cam=["g_tub", "g_tub_low"], events=[ev("rinse", 0, 1, 16.8, 19.2), ev("liq", 2, 0, 16.9, 19.1), ev("shine", 0, 1, 17.0, 19.2)]),
+ dict(t0=S[7], t1=18.0, line=7, cam=["g_tub", "g_tub_low"], events=[ev("rinse", 0, 1, 16.8, 19.2), ev("murk", 1, 0, 16.9, 19.1), ev("shine", 0, 1, 17.0, 19.2)]),
  dict(t0=18.0, t1=S[8], line=7, cam=["g_tub_macro", "g_tub_top"]),
  # L8 a gold bar? four nines pure. this? nine nines, even eleven (the gold bar from #16, then the clean silicon)
  dict(t0=S[8], t1=21.2, line=8, cam=["g_bar_top", "g_bar_push"], events=[ev("fill", 0, 1, 19.3, 19.32), ev("cool", 0, 1, 19.3, 19.32)],
       hud={"label": "GOLD BAR", "value": "99.99 %", "color": "YELLOW", "from": 19.4}),
  dict(t0=21.2, t1=22.7, line=8, cam=["g_tub_low", "g_tub_macro"], hud=PURITY, events=[ev("fill", 1, 0, 21.2, 21.22), ev("cool", 1, 0, 21.2, 21.22)]),
- dict(t0=22.7, t1=S[9], line=8, cam=["g_tub_top", "g_cru"], hud=PURITY, events=[ev("chunks", 1, 0, 23.9, 23.95)]),
+ dict(t0=22.7, t1=S[9], line=8, cam=["g_tub_side", "g_tub_macro"], hud=PURITY, events=[ev("chunks", 1, 0, 23.9, 23.95)]),
  # L9 now melt it. hotter than lava
  dict(t0=S[9], t1=25.3, line=9, cam=["g_cru_top", "g_cru_in"], events=[ev("heat", 0, 1, 24.15, 25.2)], hud={"label": "MELT", "count": [0, 1414, "", " °C"], "color": "ORANGE", "from": 24.2, "until": 25.4}),
  dict(t0=25.3, t1=S[10], line=9, cam=["s_seed", "g_cru"], hud={"label": "MELT", "value": "1,414 °C", "color": "ORANGE"}, labels=[lab("melt", "HOTTER THAN LAVA", 120, -320, 25.5)]),
@@ -60,8 +60,8 @@ BEATS = [
  dict(t0=S[12], t1=35.0, line=12, cam=["s_snail", "s_snail2"], hud=PULL, events=[ev("snail", 0, 1, 33.65, 35.0), ev("grow", 0.3, 0.55, 33.6, 36.3)], labels=[lab("snail", "FASTER", 120, -300, 34.0)]),
  dict(t0=35.0, t1=S[13], line=12, cam=["s_ingot_low", "s_ingot"], hud=PULL, events=[ev("snail", 1, 1, 35.0, 35.01)]),
  # L13 now, press the Follow button to keep watching our videos! (mid-video CTA on the cliffhanger: the melt flares so the crystal stays hidden)
- dict(t0=S[13], t1=38.2, line=13, cam=["g_cru", "g_cru_top"], hud=FOLLOW, events=[ev("glare", 0, 1, 36.4, 36.9), ev("grow", 0.55, 1, 36.4, 39.6)]),
- dict(t0=38.2, t1=S[14], line=13, cam=["g_drop", "g_hero"], screen="U.lock_plain()", hud=FOLLOW, events=[ev("glare", 1, 0, 39.6, 39.9)]),
+ dict(t0=S[13], t1=38.2, line=13, cam=["g_hero", "g_open"], screen="U.follow_card(0.2)", hud=FOLLOW, events=[ev("grow", 0.55, 1, 36.4, 39.6)]),
+ dict(t0=38.2, t1=S[14], line=13, cam=["g_wide", "g_hero"], screen="U.follow_card(0.3 + 0.7 * p)", hud=FOLLOW),
  # L14 out comes one giant glowing crystal, tall as you (fantasy peak, AWE)
  dict(t0=S[14], t1=41.0, line=14, char="c02_delight", events=[ev("out", 0, 1, 40.0, 41.8)]),
  dict(t0=41.0, t1=42.5, line=14, cam=["s_ingot_low", "s_ingot"], labels=[lab("ingot", "ONE GIANT CRYSTAL", 140, -300, 41.3)]),
@@ -85,7 +85,7 @@ BEATS = [
  dict(t0=61.4, t1=S[20], line=19, cam=["g_chip_close", "g_open"], events=[ev("lid", 0, 1, 61.4, 61.45), ev("brain", 0, 1, 61.5, 62.2)], labels=[lab("chip", "STILL THINKING", 120, -320, 62.0)]),
  # L20 phone hot while charging? take the case off (Apple's own advice; never slipped)
  dict(t0=S[20], t1=65.2, line=20, cam=["s_case", "g_hero"], screen="U.lock_plain()",
-      events=[ev("lid", 1, 0, 63.73, 63.75), ev("brain", 1, 0, 63.73, 63.75), ev("case", 0, 1, 63.73, 63.75), ev("charging", 0, 1, 63.73, 63.75), ev("hot2", 0, 1, 63.9, 64.6)],
+      events=[ev("lid", 1, 0, 63.73, 63.75), ev("brain", 1, 0, 63.73, 63.75), ev("case", 0, 1, 63.73, 63.75), ev("wafer", 1, 0, 63.73, 63.75), ev("chips", 1, 0, 63.73, 63.75), ev("charging", 0, 1, 63.73, 63.75), ev("hot2", 0, 1, 63.9, 64.6)],
       labels=[lab("phone", "HOT WHILE CHARGING", 120, -320, 64.3)]),
  dict(t0=65.2, t1=S[21], line=20, cam=["g_drop", "s_case"], screen="U.lock_plain()", events=[ev("caseoff", 0, 1, 65.3, 66.2), ev("hot2", 1, 0, 65.6, 66.6)],
       hud={"label": "HOT WHILE CHARGING?", "value": "CASE OFF", "color": "GREEN", "from": 65.4}),

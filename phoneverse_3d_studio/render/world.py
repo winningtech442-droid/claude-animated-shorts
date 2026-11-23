@@ -513,7 +513,7 @@ if SIL:
     for i in range(20):
         bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.006, 0.010), subdivisions=1); o = bpy.context.active_object; o.name = f"charge{i}"
         o.data.materials.append(COAL_M if i % 3 == 0 else QZ_M[i % 3]); CHARGE.append((o, _rs.uniform(-0.03, 0.03), _rs.uniform(-0.03, 0.03), _rs.random() * 0.5))
-    METAL_M = mat("simetal", (0.42, 0.43, 0.46), 0.9, 0.55); MET = Vector((-0.08, -0.16, 0.0)); METAL = []
+    METAL_M = mat("simetal", (0.20, 0.21, 0.23), 0.9, 0.6); MET = Vector((-0.08, -0.16, 0.0)); METAL = []
     SPECK_M = mat("speck", (0.06, 0.04, 0.03), 0.0, 0.9)
     for i in range(7):
         bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.008, 0.012), subdivisions=1, location=MET + Vector((_rs.uniform(-0.025, 0.025), _rs.uniform(-0.02, 0.02), 0.007)))
@@ -527,7 +527,7 @@ if SIL:
         o = bpy.context.active_object; o.name = f"tubchunk{i}"; o.data.materials.append(METAL_M); o.scale = (1.0, 0.8, 0.7); TCH.append(o)
     # the crystal (ingot): body grows up from the melt surface; the shoulder cone, seed and pull cable ride on top
     MELT_Z = 0.058; IL, IR = 0.20, 0.024
-    ingot_m = emat("ingot", (0.62, 0.64, 0.68), (1.0, 0.42, 0.1), 0.0, metal=1.0, rough=0.16)
+    ingot_m = emat("ingot", (0.30, 0.31, 0.34), (1.0, 0.42, 0.1), 0.0, metal=1.0, rough=0.28)
     ibody_root = empty("ibody_root", (CRU.x, 0.15, MELT_Z)); ibody = cyl("ingot_body", IR, IL, (CRU.x, 0.15, MELT_Z + IL / 2), ingot_m, verts=48); ibody.parent = ibody_root
     ibody.matrix_parent_inverse = ibody_root.matrix_world.inverted()
     for k in range(4):                                                # 4 growth ridges along the crystal: show the spin
@@ -546,7 +546,7 @@ if SIL:
     # snail (slower than the crystal? no: much faster)
     snail_root = empty("snail_root", (0.105, 0.10, 0.0)); snm = mat("snailbody", (0.55, 0.45, 0.33), 0.0, 0.5); shm = mat("snailshell", (0.45, 0.25, 0.10), 0.1, 0.35)
     bpy.ops.mesh.primitive_uv_sphere_add(radius=0.006, location=(0, 0, 0.003)); sb = bpy.context.active_object; sb.scale = (2.0, 0.7, 0.5); sb.data.materials.append(snm); sb.parent = snail_root
-    bpy.ops.mesh.primitive_uv_sphere_add(radius=0.0065, location=(-0.002, 0, 0.0085)); ss = bpy.context.active_object; ss.data.materials.append(shm); ss.parent = snail_root
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.0045, minor_radius=0.0028, location=(-0.002, 0, 0.0085), rotation=(math.pi / 2, 0, 0)); ss = bpy.context.active_object; ss.data.materials.append(shm); ss.parent = snail_root
     for dy in (-0.0018, 0.0018):
         st_ = cyl(f"stalk{dy}", 0.0005, 0.007, (0.011, dy, 0.007), snm, verts=8, rot=(0, math.radians(-25), 0)); st_.parent = snail_root
     # saw bed: the crystal lying down, saw wires above, the slices, a bank card for scale, then the hero wafer
@@ -581,7 +581,7 @@ if SIL:
     # beach sand vs a lump of pure quartz (the honest twist), on the front of the bench
     CMP = Vector((0.30, -0.06, 0.0))
     bpy.ops.mesh.primitive_cone_add(radius1=0.03, radius2=0.002, depth=0.022, vertices=32, location=CMP + Vector((-0.035, 0, 0.011))); spile = bpy.context.active_object; spile.name = "sandpile"
-    bsand = mat("beachsand", (0.62, 0.52, 0.38), 0.0, 0.95); spile.data.materials.append(bsand); bpy.ops.object.shade_smooth()
+    bsand = mat("beachsand", (0.40, 0.32, 0.21), 0.0, 0.95); spile.data.materials.append(bsand); bpy.ops.object.shade_smooth()
     BSG = [mat(f"bsg{k}", c, 0.0, 0.9) for k, c in enumerate(((0.35, 0.30, 0.25), (0.75, 0.65, 0.5), (0.2, 0.17, 0.15), (0.55, 0.35, 0.2)))]
     for i in range(40):                                               # mixed dark/brown grains: beach sand is dirty
         rr_ = 0.028 * math.sqrt(_rs.random()); th = _rs.uniform(0, 6.283); zz = 0.022 * (1 - rr_ / 0.03) * _rs.random()
@@ -698,7 +698,7 @@ CAM.update({   # FIX #17 (silicon): furnace (-0.16, -0.15), metal (-0.08, -0.16)
        "s_card": ((0.20, 0.19, 0.06), (0.10, 0.30, 0.028), 40), "s_card_close": ((0.16, 0.24, 0.04), (0.12, 0.30, 0.026), 50),
        "s_wafer": ((0.0, 0.14, 0.07), (0.0, 0.30, 0.055), 38), "s_wafer_close": ((0.02, 0.20, 0.06), (0.0, 0.30, 0.055), 44),
        "s_wafer_tilt": ((0.11, 0.17, 0.11), (0.0, 0.30, 0.055), 38),
-       "s_cmp": ((0.30, -0.22, 0.10), (0.30, -0.06, 0.015), 36), "s_cmp_close": ((0.30, -0.15, 0.05), (0.30, -0.06, 0.014), 46),
+       "s_cmp": ((0.30, -0.27, 0.12), (0.30, -0.06, 0.015), 30), "s_cmp_close": ((0.30, -0.20, 0.06), (0.30, -0.06, 0.016), 30),
        "s_case": ((0.11, -0.21, 0.11), (0.0, -0.01, 0.0), 34)})
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
@@ -861,11 +861,14 @@ def apply_silicon(t, b, p):
         for c in o.children: c.hide_render = mv < 0.05
     cv = track("chunks", t); sh = track("shine", t)
     for o in TCH: o.hide_render = cv < 0.5
-    bsdf(METAL_M).inputs["Roughness"].default_value = 0.55 - 0.45 * sh; bsdf(METAL_M).inputs["Base Color"].default_value = (0.42 + 0.3 * sh, 0.43 + 0.3 * sh, 0.46 + 0.3 * sh, 1)
+    bsdf(METAL_M).inputs["Roughness"].default_value = 0.55 - 0.45 * sh; bsdf(METAL_M).inputs["Base Color"].default_value = (0.20 + 0.22 * sh, 0.21 + 0.22 * sh, 0.23 + 0.24 * sh, 1)
     # molten silicon: brighter and paler than gold; "glare" flares it during the follow line
     h = track("heat", t); gl = track("glare", t)
-    bsdf(melt_m).inputs["Emission Color"].default_value = (1.0, 0.48 + 0.2 * gl, 0.14 + 0.15 * gl, 1); bsdf(melt_m).inputs["Emission Strength"].default_value = 1.6 * h + 6.0 * gl
-    bsdf(melt_m).inputs["Base Color"].default_value = (0.25, 0.10, 0.03, 1); melt.hide_render = False
+    bsdf(melt_m).inputs["Emission Color"].default_value = (1.0, 0.40 + 0.2 * gl, 0.08 + 0.15 * gl, 1); bsdf(melt_m).inputs["Emission Strength"].default_value = 4.5 * h + 6.0 * gl
+    bsdf(melt_m).inputs["Base Color"].default_value = (0.12, 0.04, 0.01, 1); melt.hide_render = False
+    mk = track("murk", t); liq_glow.inputs["Base Color"].default_value = (0.92 + (0.30 - 0.92) * mk, 0.96 + (0.24 - 0.96) * mk, 1.0 + (0.16 - 1.0) * mk, 1)   # murky brown -> clear (no blue)
+    liq_glow.inputs["Transmission Weight"].default_value = 1.0 - 0.6 * mk
+    hide_all([o for o in col.objects if o.name.startswith("mould_")], track("fill", t) < 0.5)
     spn = track("spin", t); cru.rotation_euler.z = -1.1 * t * spn; crf.rotation_euler.z = cru.rotation_euler.z
     dp = track("dip", t); gr = track("grow", t); ou = track("out", t); sl = track("slab", t) > 0.5; hv = track("hot", t)
     lift = 0.035 * ease(ou); visible = (dp > 0.01) and not sl
@@ -876,7 +879,7 @@ def apply_silicon(t, b, p):
     tail.hide_render = not visible or ou < 0.05; tail.location = (CRU.x, 0.15, MELT_Z + lift - 0.014 * ease(ou)); tail.scale = (1, 1, max(0.05, ease(ou)))
     hring.hide_render = not visible or gr < 0.003; hring.location = (CRU.x, 0.15, MELT_Z + lift + 0.002)
     bsdf(hring_m).inputs["Emission Strength"].default_value = 5.0 * hv
-    bsdf(ingot_m).inputs["Emission Strength"].default_value = 0.5 * hv * (1 - track("cool2", t)); ing_l.location = (CRU.x, 0.15 - 0.05, MELT_Z + 0.03); ing_l.data.energy = 1.5 * hv * (0 if sl else 1)
+    bsdf(ingot_m).inputs["Emission Strength"].default_value = 0.0; ing_l.location = (CRU.x, 0.15 - 0.05, MELT_Z + 0.03); ing_l.data.energy = 1.5 * hv * (0 if sl else 1)
     sn = track("snail", t); snail_root.location = (0.105 + 0.03 * sn, 0.10, 0.0); hide_all(snail_root.children_recursive, sn < 0.005 or sn > 0.999)
     hide_all([ingot_h], not sl or track("saw", t) > 0.97); hide_all([bed], track("slab", t) < 0.5 and track("wafer", t) < 0.5)
     sw = track("saw", t)

@@ -330,9 +330,9 @@
      "t1": 15.6
     },
     {
-     "type": "liq",
+     "type": "murk",
      "from": 0,
-     "to": 2,
+     "to": 1,
      "t0": 15.6,
      "t1": 16.3
     },
@@ -364,8 +364,8 @@
      "t1": 19.2
     },
     {
-     "type": "liq",
-     "from": 2,
+     "type": "murk",
+     "from": 1,
      "to": 0,
      "t0": 16.9,
      "t1": 19.1
@@ -468,8 +468,8 @@
    "t1": 24.111,
    "line": 8,
    "cam": [
-    "g_tub_top",
-    "g_cru"
+    "g_tub_side",
+    "g_tub_macro"
    ],
    "hud": {
     "label": "CHIP SILICON",
@@ -782,9 +782,10 @@
    "t1": 38.2,
    "line": 13,
    "cam": [
-    "g_cru",
-    "g_cru_top"
+    "g_hero",
+    "g_open"
    ],
+   "screen": "U.follow_card(0.2)",
    "hud": {
     "label": "TAP",
     "value": "FOLLOW +",
@@ -792,13 +793,6 @@
     "from": 36.494
    },
    "events": [
-    {
-     "type": "glare",
-     "from": 0,
-     "to": 1,
-     "t0": 36.4,
-     "t1": 36.9
-    },
     {
      "type": "grow",
      "from": 0.55,
@@ -815,25 +809,16 @@
    "t1": 39.957,
    "line": 13,
    "cam": [
-    "g_drop",
+    "g_wide",
     "g_hero"
    ],
-   "screen": "U.lock_plain()",
+   "screen": "U.follow_card(0.3 + 0.7 * p)",
    "hud": {
     "label": "TAP",
     "value": "FOLLOW +",
     "color": "RED",
     "from": 36.494
    },
-   "events": [
-    {
-     "type": "glare",
-     "from": 1,
-     "to": 0,
-     "t0": 39.6,
-     "t1": 39.9
-    }
-   ],
    "inset": false,
    "parts": false
   },
@@ -1202,6 +1187,20 @@
      "type": "case",
      "from": 0,
      "to": 1,
+     "t0": 63.73,
+     "t1": 63.75
+    },
+    {
+     "type": "wafer",
+     "from": 1,
+     "to": 0,
+     "t0": 63.73,
+     "t1": 63.75
+    },
+    {
+     "type": "chips",
+     "from": 1,
+     "to": 0,
      "t0": 63.73,
      "t1": 63.75
     },

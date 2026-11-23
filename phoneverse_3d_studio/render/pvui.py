@@ -626,3 +626,17 @@ def erase_hello(p=1.0):
     else:
         a = ease(clamp((p - 0.55) / 0.3)); c = int(255 * a); text(d, (W // 2, H // 2 - 60), "Hello", 150, (c, c, c), False, "mm")
     return im
+
+def follow_card(p=1.0):
+    """FIX #17 mid-video CTA: a generic profile with a big Follow button that gets tapped (p > 0.55) and turns into 'Following'. No platform branding."""
+    im = canvas((18, 18, 24)); d = ImageDraw.Draw(im); status_bar(d, True)
+    d.ellipse((390, 330, 690, 630), fill=(60, 60, 72), outline=(255, 255, 255), width=8); text(d, (540, 480), "WT", 120, (255, 255, 255), True, "mm")
+    text(d, (540, 720), "Winning.tech", 70, (255, 255, 255), True, "mm"); text(d, (540, 800), "Phone tips · How it's made", 40, (170, 170, 185), False, "mm")
+    tap = clamp((p - 0.45) / 0.1); done = p > 0.55; k = 1 - 0.08 * math.sin(math.pi * tap)
+    bw, bh = int(560 * k), int(150 * k); x0, y0 = 540 - bw // 2, 930 - bh // 2
+    rr(d, (x0, y0, x0 + bw, y0 + bh), 34, fill=(60, 60, 72) if done else (238, 29, 82))
+    text(d, (540, 930), "Following ✓" if done else "Follow", 66, (255, 255, 255), True, "mm")
+    if 0.25 < p < 0.75:
+        r_ = 40 + 30 * tap; fx, fy = 640, 980 - int(80 * (1 - tap))
+        d.ellipse((fx - r_, fy - r_, fx + r_, fy + r_), outline=(255, 255, 255), width=8)
+    return im
