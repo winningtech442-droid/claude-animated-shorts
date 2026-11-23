@@ -127,6 +127,14 @@ Keep the one-world bench in the sunny recycling yard; swap the phone mountain ba
   new #17 cue sheet: sand hiss, furnace roar, rinse ×3, counter ticks, deep melt hum, crystal shimmer, saw whine, wafer clinks, mirror ting, case slide),
   data/timings.json, captions.json, ../phoneverse_3d_studio/data/make_beats_fix17.py, the new world.py props and the char_scene.py clips.
 
+## Build status (23 Nov 2026)
+- Beat sheet: ../phoneverse_3d_studio/data/make_beats_fix17.py -> beats_fix17.json (45 beats, longest 2.33 s, 3 character stand-ins), chars_fix17.json.
+- world.py: new PROPS "silicon" (builds on "gold"): quartz heap, arc furnace + electrodes, metal chunks with dirt specks, murky-to-clear rinse ("murk"),
+  silver crystal grown/spun/lifted from the crucible, snail, saw bed + slices + bank card, mirror wafer with a chip grid, beach sand vs quartz lump,
+  phone case + charger. Line 13 (follow) shows pvui.follow_card() on the phone ("Winning.tech" profile, Follow -> Following); the crystal stays off screen.
+- Sound: tools/make_sound.py (#17 cue sheet) -> audio/mix_with_pad.wav, mix_voice_fx.wav, both -14 LUFS, TP <= -2.5 dB after AAC.
+- Full render: ../phoneverse_3d_studio/build_fix17.sh render 0 599 / 600 1199 / 1200 1694, then `finish` (compose, assemble, QC, phone-size sheet).
+
 ## Next steps
 1. ~~Script approved~~, ~~voice take 1 locked (70.64 s)~~, ~~captions built~~.
 2. Beat sheet make_beats_fix17.py, silicon props in world.py (a new PROPS "silicon"
