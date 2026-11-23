@@ -133,10 +133,15 @@ Keep the one-world bench in the sunny recycling yard; swap the phone mountain ba
   silver crystal grown/spun/lifted from the crucible, snail, saw bed + slices + bank card, mirror wafer with a chip grid, beach sand vs quartz lump,
   phone case + charger. Line 13 (follow) shows pvui.follow_card() on the phone ("Winning.tech" profile, Follow -> Following); the crystal stays off screen.
 - Sound: tools/make_sound.py (#17 cue sheet) -> audio/mix_with_pad.wav, mix_voice_fx.wav, both -14 LUFS, TP <= -2.5 dB after AAC.
-- Full render: ../phoneverse_3d_studio/build_fix17.sh render 0 599 / 600 1199 / 1200 1694, then `finish` (compose, assemble, QC, phone-size sheet).
+- Full render DONE (1,695 frames; run in chunks of about 550 frames, because a background job stops at 2 h): `build_fix17.sh render A B`, then `finish`.
+- Finals (gitignored): ../phoneverse_3d_studio/final/phoneverse_fix17_mix_with_pad.mp4 (recommended) and _mix_voice_fx.mp4. Phone-size sheet: ../phoneverse_3d_studio/docs/phone_size_check_fix17.png.
+- QC: 1080×1920/24, −14.0 LUFS, TP −2.7 / −2.5 dB, LRA 3.9, pace 3.05 w/s, tail 0.30 s, 0 black/frozen. Two FAILs, both accepted:
+  - Length 70.62 s: the locked take, accepted by the user.
+  - "Longest shot 5.04 s": the scene detector misses soft cuts between similar-coloured shots (47–61 s). Frame-difference peaks fall on all 44 planned cuts, and a before/after sheet confirms each one by eye. The real longest shot is 2.33 s.
+- Fix after review: the HUD chip at 45.5 s ("ONE PERFECT CRYSTAL / ALL THE WAY THROUGH") ran off both edges of the frame. It now reads "ONE CRYSTAL / NO FLAWS"; frames 1090–1130 were recomposed and the finals reassembled.
 
 ## Next steps
 1. ~~Script approved~~, ~~voice take 1 locked (70.64 s)~~, ~~captions built~~.
-2. Beat sheet make_beats_fix17.py, silicon props in world.py (a new PROPS "silicon"
-   reusing the gold crucible, torch, tub and lift code), `--test` stills checked at phone size.
-3. Character clips c01-c03, sound, full render, QC (-14 LUFS, 1080×1920), phone-size sheet, post.
+2. ~~Beat sheet, silicon props, test stills~~, ~~full render, QC, phone-size sheet~~.
+3. Post after #16 (Fri 27 Nov), once #16's 3 s hold and comments are in; copy in post.txt.
+4. Later: real character clips c01–c03 (needs a "yard" set in char_scene.py) to replace the desk stand-ins.

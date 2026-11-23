@@ -917,8 +917,8 @@
     "s_ingot"
    ],
    "hud": {
-    "label": "ONE PERFECT CRYSTAL",
-    "value": "ALL THE WAY THROUGH",
+    "label": "ONE CRYSTAL",
+    "value": "NO FLAWS",
     "color": "GREEN",
     "from": 45.6
    },

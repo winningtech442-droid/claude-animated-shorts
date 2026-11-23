@@ -68,7 +68,7 @@ BEATS = [
  dict(t0=42.5, t1=S[15], line=14, cam=["s_ingot_orbit", "s_ingot"], events=[ev("hot", 1, 0, 42.6, 45.0), ev("cool2", 0, 1, 42.6, 45.0)]),
  # L15 heavy as a piano. perfect all through
  dict(t0=S[15], t1=45.5, line=15, cam=["s_ingot_side", "s_ingot_orbit"], hud={"label": "WEIGHT", "value": "≈ A PIANO", "color": "ORANGE", "from": 44.1}),
- dict(t0=45.5, t1=S[16], line=15, cam=["s_ingot_low", "s_ingot"], hud={"label": "ONE PERFECT CRYSTAL", "value": "ALL THE WAY THROUGH", "color": "GREEN", "from": 45.6}),
+ dict(t0=45.5, t1=S[16], line=15, cam=["s_ingot_low", "s_ingot"], hud={"label": "ONE CRYSTAL", "value": "NO FLAWS", "color": "GREEN", "from": 45.6}),
  # L16 a wire slices it like cheese, thin as a bank card
  dict(t0=S[16], t1=48.6, line=16, cam=["s_saw_side", "s_saw"], events=[ev("slab", 0, 1, 46.98, 47.0), ev("saw", 0, 1, 47.1, 48.5)], labels=[lab("slices", "WIRE SAW", 140, -300, 47.3)]),
  dict(t0=48.6, t1=S[17], line=16, cam=["s_card", "s_card_close"], events=[ev("fan", 0, 1, 48.6, 49.4)],
