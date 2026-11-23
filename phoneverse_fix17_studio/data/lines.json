@@ -1,7 +1,7 @@
 {
  "episode": "FIX #17",
  "title": "Your phone is made of sand: the glowing crystal inside your iPhone's brain",
- "format": "Treasure/curiosity series (after #16), HSERIA + CTA, second person, rule book v8 (format A), 3 character beats",
+ "format": "Treasure/curiosity series (after #16), HSERIA + mid-CTA (follow) + CTA, second person, rule book v8 (format A), 3 character beats",
  "voice": "Kokoro af_heart (voice B); #16 presets unchanged, incl. AWE for the crystal peak",
  "presets": {
   "TELL": {
@@ -136,8 +136,8 @@
    "id": 7,
    "block": "E",
    "preset": "TELL",
-   "text": "So they clean it, clean it, and clean it again.",
-   "spoken": "So they clean it, clean it, and clean it again.",
+   "text": "They clean it, clean it, clean it again.",
+   "spoken": "They clean it, clean it, clean it again.",
    "star": "clean",
    "face": "none"
   },
@@ -163,8 +163,8 @@
    "id": 10,
    "block": "E",
    "preset": "TELL",
-   "text": "Dip in a tiny seed. Pull it up, slowly, slowly.",
-   "spoken": "Dip in a tiny seed. Pull it up, slowly, slowly.",
+   "text": "Dip in a tiny seed. Pull, slowly, slowly.",
+   "spoken": "Dip in a tiny seed. Pull, slowly, slowly.",
    "star": "seed",
    "face": "none"
   },
@@ -188,6 +188,15 @@
   },
   {
    "id": 13,
+   "block": "MCTA",
+   "preset": "PUNCH",
+   "text": "Follow. What comes out is huge.",
+   "spoken": "Follow. What comes out is huge.",
+   "star": "Follow",
+   "face": "none"
+  },
+  {
+   "id": 14,
    "block": "R1",
    "preset": "AWE",
    "text": "Out comes one giant glowing crystal, tall as you.",
@@ -196,25 +205,25 @@
    "face": "c02_delight"
   },
   {
-   "id": 14,
+   "id": 15,
    "block": "R1",
    "preset": "EMPH",
-   "text": "Heavy as a piano. Perfect, all the way through.",
-   "spoken": "Heavy as a piano. Perfect, all the way through.",
+   "text": "Heavy as a piano. Perfect all through.",
+   "spoken": "Heavy as a piano. Perfect all through.",
    "star": "piano",
    "face": "none"
   },
   {
-   "id": 15,
+   "id": 16,
    "block": "R1",
    "preset": "TELL",
-   "text": "A wire saw slices it like cheese, thin as a bank card.",
-   "spoken": "A wire saw slices it like cheese, thin as a bank card.",
+   "text": "A wire slices it like cheese, thin as a bank card.",
+   "spoken": "A wire slices it like cheese, thin as a bank card.",
    "star": "slices",
    "face": "none"
   },
   {
-   "id": 16,
+   "id": 17,
    "block": "R1",
    "preset": "SURPRISE",
    "text": "Polish it to a mirror. Hundreds of phone brains fit on one.",
@@ -223,7 +232,7 @@
    "face": "none"
   },
   {
-   "id": 17,
+   "id": 18,
    "block": "I",
    "preset": "SHOCK",
    "text": "Honest part? Not beach sand. Pure quartz rock. Most sand's too dirty.",
@@ -232,7 +241,7 @@
    "face": "c03_shrug"
   },
   {
-   "id": 18,
+   "id": 19,
    "block": "R2",
    "preset": "RELIEF",
    "text": "Rock or sand, mostly the same stuff. Still thinking for you.",
@@ -241,7 +250,7 @@
    "face": "none"
   },
   {
-   "id": 19,
+   "id": 20,
    "block": "A",
    "preset": "TELL",
    "text": "Phone hot while charging? Take the case off.",
@@ -250,7 +259,7 @@
    "face": "none"
   },
   {
-   "id": 20,
+   "id": 21,
    "block": "CTA",
    "preset": "ASK",
    "text": "Did you know your phone started as rock? Yes or no below.",
