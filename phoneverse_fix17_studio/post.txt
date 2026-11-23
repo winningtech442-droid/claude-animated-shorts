@@ -1,4 +1,15 @@
-FIX #17 post copy (TikTok, Winning.tech). Draft, 23 Nov 2026. Post date not set: after #16 (Fri 27 Nov), and only once #16's 3 s hold and comments are in.
+FIX #17 posting details (TikTok, Winning.tech). Updated 23 Nov 2026.
+
+== When ==
+Sun 29 Nov 2026, 19:20 UK time (two days after #16, at the same slot).
+Before posting, check #16's 3 s hold and its top comments. If #16's hook held badly, tell Claude before posting; the #17 hook can be re-cut without a re-render.
+
+== File ==
+phoneverse_3d_studio/final/phoneverse_fix17_mix_with_pad.mp4 (70.6 s, 1080×1920, sound already mixed)
+
+== Cover ==
+Frame at 42.5 s: the glowing crystal standing on the desk, caption "GLOWING CRYSTAL".
+Cover text (optional): "Your phone is made of SAND?"
 
 == Description (recommended) ==
 Your phone's brain started as rock 🪨 then it became a glowing crystal as tall as you ✨
@@ -11,10 +22,20 @@ Did you know? Yes or no 👇
 == Alternative description (shorter) ==
 Sand → glowing crystal → mirror → your iPhone's brain 🤯 (Factories only ⚠️) Did you know? 👇
 
-== Pinned comment (draws replies to the planted slip; no second follow ask, the video already has one at line 13) ==
+== Pinned comment (post right after publishing; it draws replies to the planted slip) ==
 Yes, it's way more than 3 steps again 😅 Which part surprised you most?
 
+== Settings ==
+- Sound: keep the video's original sound. Don't add a TikTok sound, because the mix already has music under the voice.
+- AI-generated content label: ON (the voice and 3D are made with AI tools).
+- Comments: ON. Duet/Stitch: ON.
+- Location and product links: none.
+
+== First hour ==
+- Reply to the first 5 to 10 comments, especially "it's not 3 steps" and "sand vs rock".
+- Don't ask for a follow again in the replies; the video already asks once, at line 13.
+
 == Notes ==
-- The description says "rock", not "sand", so the post matches the honest twist (line 17).
-- No chip maker, model number or "2nm" claim in the post: the phone in the video is unbranded, and the voice doesn't name the chip.
+- The description says "rock", not "sand", so the post matches the honest twist (line 18).
+- No chip maker, model number or "2nm" claim: the phone in the video is unbranded, and the voice doesn't name the chip.
 - 6 hashtags: broad (#iphone #techtok), topic (#howitsmade #silicon #science), niche (#phonetips).
