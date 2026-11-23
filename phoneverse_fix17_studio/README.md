@@ -2,8 +2,8 @@
 
 **Treasure/curiosity series, episode 2** (after #16, "Gold in your iPhone"). HSERIA + mid-CTA (follow) + CTA, second person, rule book v8 (format A), **3 character beats**.
 Status: **script drafted 23 Nov 2026, waiting for user approval. Nothing is voiced or rendered yet.**
-Script: **21 lines, 187 words** (incl. the mid-video follow ask, line 13). At 3.0 words/s that is 62.3 s of speech. #16 measured 185 words /
-20 lines = 69.0 s with the same presets and pauses, so expect **about 70 s** for the take. If take 1 comes in over 70 s, cut words from lines 2
+Script: **21 lines, 192 words** (incl. the mid-video follow ask, line 13). At 3.0 words/s that is 64.0 s of speech. #16 measured 185 words /
+20 lines = 69.0 s with the same presets and pauses, so expect **about 72 s** for the take (a touch over the 70 s target). If take 1 comes in over 70 s, cut words from lines 2
 and 19 first, never from the fact lines, the slips or line 13.
 
 ## Why this topic
@@ -20,12 +20,13 @@ and 19 first, never from the fact lines, the slips or line 13.
 
 ## Script decisions
 - **Voice:** plain, everyday words; repetition on purpose ("Sand. Inside your phone.", "way, way too dirty", "clean it, clean it, clean it
-  again", "slowly, slowly", "What comes out… / Out comes…" across lines 13-14, "Thinking for you" in lines 2 and 19 as a bookend). **No chemical names or process names** in the voice. "Nine nines"
+  again", "slowly, slowly", "Thinking for you" in lines 2 and 19 as a bookend). **No chemical names or process names** in the voice. "Nine nines"
   is the one technical-sounding phrase, and it is the payoff.
 - **Hook burned in on frame 1:** "YOUR PHONE IS MADE OF SAND".
-- **Mid-video CTA (line 13, block MCTA, PUNCH):** "Follow. What comes out is huge." Goes right after "About two days" and before the reveal,
+- **Mid-video CTA (line 13, block MCTA, PUNCH):** "Now, press the Follow button to keep watching our videos!" (the user's wording, 23 Nov:
+  the first draft, "Follow. What comes out is huge.", sounded flat). Goes right after "About two days" and before the reveal,
   so the follow ask rides on the suspense and the payoff comes straight after (no drop in retention). On screen: the melt glows, the crystal is still
-  hidden under the glare, and a follow-button sticker pops up and gets a tap. "Huge" is accurate (a crystal as tall as a person, see Facts).
+  hidden under the glare, and a follow-button sticker pops up and gets a tap. 
   The end CTA stays the comment question; the post copy doesn't ask for a follow again.
 - **Honest twist (line 18):** the hook says sand, the twist admits chip silicon comes from lumps of pure quartz rock, not beach sand. This is a
   real correction, not a slip, so it must stay accurate. Line 19 lifts it straight back up ("Rock or sand, mostly the same stuff": most sand is
@@ -43,7 +44,7 @@ and 19 first, never from the fact lines, the slips or line 13.
 
 ## Must be exactly accurate (never slip these)
 Line 3 (safety), 5 (cooked with coal, grey metal), 8 (four nines vs nine-to-eleven nines), 9 (hotter than lava), 12 (about two days),
-13 ("huge"), 14-15 (tall as you, heavy as a piano, single crystal), 16 (thin as a bank card), 17 (hundreds per wafer), 18 (quartz rock,
+14-15 (tall as you, heavy as a piano, single crystal), 16 (thin as a bank card), 17 (hundreds per wafer), 18 (quartz rock,
 not beach sand), 20 (case off if hot while charging).
 
 ## Characters (Phoneverse Character Sheet)
