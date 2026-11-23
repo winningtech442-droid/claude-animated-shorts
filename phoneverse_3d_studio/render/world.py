@@ -314,7 +314,8 @@ if WALLET:
 #  "fill"  molten gold fills the mould      "cool" it cools to polished gold      "lift" the bar rises out of the mould
 #  "piles" phone pile vs rock pile appear    "drawer" a drawer of old phones slides in (its lit phone's screen = beat key "dscreen")
 #  "gone"  the hero phone is cleared away (after the board went into the tub)
-GOLD = "gold" in PROPS
+GOLD = "gold" in PROPS or "silicon" in PROPS          # FIX #17 "silicon" builds on the gold workbench
+SIL = "silicon" in PROPS
 MOLT = [float(v) for v in os.environ.get("PV_MOLT", "1.0,0.25,0.0").split(",")]   # molten gold: emission strength, green, blue (red = 1)
 GOLD_ANCH = {}
 if GOLD:
@@ -470,6 +471,138 @@ if GOLD:
                  "crucible": (cru_root, (0, 0.033, 0.002)), "bar": (bar_root, (0, -0.02, 0.019)), "drawer": (drawer_root, (0.0, -0.06, 0.05)), "dphone": (dph, (0, 0, 0.005)),
                  "phonepile": (piles_root, (-0.075, 0, 0.035)), "rockpile": (piles_root, (0.075, 0, 0.035)), "heap": (None, (0.0, 0.95, 0.3))}
 
+# ---- silicon (FIX #17, "Your phone is made of sand"): the gold workbench re-dressed. Builds on the gold props (tub, crucible, bar, torch).
+# The phone mountain becomes a heap of white quartz lumps; the drawer, comparison piles and tub board are unused. Events (0..1 unless noted):
+#  "sand"   grains rain onto the phone (hook; restarts at the end for the loop)    "brain"  the main chip glows
+#  "charge" quartz lumps + coal drop into the arc furnace   "furnace" furnace glow   "metal" grey silicon-metal chunks appear beside it
+#  "chunks" the chunks sit in the tub (cleaning)            "shine"  they turn glossy  "dip" the seed lowers to the melt  "grow" crystal grows (0..1)
+#  "spin"   crystal and crucible turn opposite ways          "out"    the crystal lifts clear of the melt   "hot" it glows hot (fades as it cools)
+#  "glare"  the melt flares white (hides the crystal during the follow line)          "snail" a snail crawls past the crucible
+#  "slab"   the crystal now lies on the saw bed              "saw"    wires cut down through it   "fan" the slices spread out
+#  "wafer"  one wafer stands up as a mirror                  "chips"  a grid of chips prints across it
+#  "case"   the hero phone is in a case on a charger         "hot2"   the phone runs warm (red glow)   "caseoff" the case slides off
+SIL_ANCH = {}
+if SIL:
+    import random as _rs; _rs.seed(17)
+    hide_all(MOUNT + [core, hair], True); hide_all(drawer_root.children_recursive + piles_root.children_recursive + board_root.children_recursive, True)
+    QZ_M = [mat(f"quartz{k}", c, 0.0, r_) for k, (c, r_) in enumerate((((0.93, 0.93, 0.91), 0.35), ((0.86, 0.87, 0.88), 0.3), ((0.97, 0.95, 0.92), 0.45)))]
+    QHEAP = []
+    for i in range(340):                                              # the quartz heap behind the bench (same footprint as #16's phone mountain)
+        r = 0.62 * math.sqrt(_rs.random()); th = _rs.uniform(0, math.pi); x = r * math.cos(th) * 1.5; y = 0.95 + r * math.sin(th) * 0.5
+        top = 0.40 * max(0.0, 1 - (r / 0.62) ** 1.4); z = top * (1 - _rs.random() ** 2.2) + 0.01
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.022, 0.05), subdivisions=1, location=(x, y, z)); o = bpy.context.active_object; o.name = f"qheap{i}"
+        o.scale = (1.0, _rs.uniform(0.6, 1.1), _rs.uniform(0.5, 0.9)); o.rotation_euler = (_rs.uniform(0, 3), _rs.uniform(0, 3), _rs.uniform(0, 3)); o.data.materials.append(QZ_M[i % 3]); QHEAP.append(o)
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=1.0, location=(0.0, 1.1, -0.02), segments=32, ring_count=16); qcore = bpy.context.active_object; qcore.name = "qcore"
+    qcore.scale = (0.72, 0.16, 0.27); qcore.data.materials.append(QZ_M[1])
+    # the main chip glows (the "brain"): give the cpu its own material
+    cpu = bpy.data.objects["cpu"]; brain_m = emat("brain", (0.02, 0.02, 0.03), (0.35, 0.75, 1.0), 0.0, metal=0.2, rough=0.3); cpu.data.materials.clear(); cpu.data.materials.append(brain_m)
+    SAND_M = mat("sand", (0.80, 0.66, 0.42), 0.0, 0.8); SANDG = []
+    for i in range(70):
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.0011, 0.0019), subdivisions=1); g_ = bpy.context.active_object; g_.name = f"sandg{i}"; g_.data.materials.append(SAND_M)
+        SANDG.append((g_, _rs.uniform(-0.03, 0.03), _rs.uniform(-0.06, 0.07), _rs.random() * 0.6))
+    # arc furnace: a dark open pot, three graphite electrodes dropping in from above, a glow inside; quartz + coal fall in, grey metal comes out
+    FUR = Vector((-0.16, -0.15, 0.0)); furm = mat("furnace", (0.10, 0.10, 0.11), 0.3, 0.6)
+    fur = cyl("furnace", 0.055, 0.07, FUR + Vector((0, 0, 0.035)), furm, fill="NOTHING", verts=48); sd = fur.modifiers.new("solid", "SOLIDIFY"); sd.thickness = 0.006
+    cyl("fur_floor", 0.055, 0.006, FUR + Vector((0, 0, 0.003)), furm)
+    fglow_m = emat("furglow", (0.05, 0.02, 0.01), (1.0, 0.38, 0.06), 0.0); fglow = cyl("fur_glow", 0.048, 0.004, FUR + Vector((0, 0, 0.04)), fglow_m)
+    graph = mat("graphite_e", (0.06, 0.06, 0.065), 0.5, 0.45)
+    for k in range(3):
+        ang = k * 2 * math.pi / 3; cyl(f"electrode{k}", 0.007, 0.16, FUR + Vector((0.022 * math.cos(ang), 0.022 * math.sin(ang), 0.12)), graph, verts=16)
+    fur_l = bpy.data.objects.new("fur_light", bpy.data.lights.new("fur_light", "POINT")); col.objects.link(fur_l); fur_l.location = FUR + Vector((0, 0, 0.09)); fur_l.data.color = (1.0, 0.45, 0.12); fur_l.data.energy = 0
+    COAL_M = mat("coal", (0.02, 0.02, 0.02), 0.1, 0.5); CHARGE = []
+    for i in range(20):
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.006, 0.010), subdivisions=1); o = bpy.context.active_object; o.name = f"charge{i}"
+        o.data.materials.append(COAL_M if i % 3 == 0 else QZ_M[i % 3]); CHARGE.append((o, _rs.uniform(-0.03, 0.03), _rs.uniform(-0.03, 0.03), _rs.random() * 0.5))
+    METAL_M = mat("simetal", (0.42, 0.43, 0.46), 0.9, 0.55); MET = Vector((-0.08, -0.16, 0.0)); METAL = []
+    SPECK_M = mat("speck", (0.06, 0.04, 0.03), 0.0, 0.9)
+    for i in range(7):
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.008, 0.012), subdivisions=1, location=MET + Vector((_rs.uniform(-0.025, 0.025), _rs.uniform(-0.02, 0.02), 0.007)))
+        o = bpy.context.active_object; o.name = f"metal{i}"; o.data.materials.append(METAL_M); o.scale = (1.0, 0.8, 0.7); METAL.append(o)
+        for j in range(4):                                            # dark dirt specks on each chunk
+            bpy.ops.mesh.primitive_ico_sphere_add(radius=0.0016, subdivisions=1, location=o.location + Vector((_rs.uniform(-0.007, 0.007), -0.007, _rs.uniform(-0.002, 0.006))))
+            sp_ = bpy.context.active_object; sp_.data.materials.append(SPECK_M); sp_.parent = o; sp_.matrix_parent_inverse = o.matrix_world.inverted()
+    TCH = []
+    for i in range(6):                                                # chunks in the tub (cleaning)
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.009, 0.013), subdivisions=1, location=TUB + Vector((_rs.uniform(-0.03, 0.03), _rs.uniform(-0.03, 0.03), 0.012)))
+        o = bpy.context.active_object; o.name = f"tubchunk{i}"; o.data.materials.append(METAL_M); o.scale = (1.0, 0.8, 0.7); TCH.append(o)
+    # the crystal (ingot): body grows up from the melt surface; the shoulder cone, seed and pull cable ride on top
+    MELT_Z = 0.058; IL, IR = 0.20, 0.024
+    ingot_m = emat("ingot", (0.62, 0.64, 0.68), (1.0, 0.42, 0.1), 0.0, metal=1.0, rough=0.16)
+    ibody_root = empty("ibody_root", (CRU.x, 0.15, MELT_Z)); ibody = cyl("ingot_body", IR, IL, (CRU.x, 0.15, MELT_Z + IL / 2), ingot_m, verts=48); ibody.parent = ibody_root
+    ibody.matrix_parent_inverse = ibody_root.matrix_world.inverted()
+    for k in range(4):                                                # 4 growth ridges along the crystal: show the spin
+        ang = k * math.pi / 2; rg = box(f"ridge{k}", (0.0026, 0.0026, IL), (CRU.x + IR * math.cos(ang), 0.15 + IR * math.sin(ang), MELT_Z + IL / 2), ingot_m)
+        rg.rotation_euler.z = ang + math.pi / 4; rg.parent = ibody_root; rg.matrix_parent_inverse = ibody_root.matrix_world.inverted()
+    itop = empty("ingot_top", (CRU.x, 0.15, MELT_Z))
+    bpy.ops.mesh.primitive_cone_add(radius1=IR, radius2=0.003, depth=0.03, vertices=48, location=(0, 0, 0.015)); shoulder = bpy.context.active_object; shoulder.name = "shoulder"
+    shoulder.data.materials.append(ingot_m); bpy.ops.object.shade_smooth(); shoulder.parent = itop
+    seed = cyl("seedrod", 0.0026, 0.04, (0, 0, 0.02), mat("seedm", (0.6, 0.62, 0.66), 1.0, 0.2), verts=12); seed.parent = itop
+    cable = cyl("cable", 0.0009, 0.5, (0, 0, 0.29), mat("cablem", (0.2, 0.2, 0.22), 0.8, 0.4), verts=8); cable.parent = itop
+    bpy.ops.mesh.primitive_cone_add(radius1=IR, radius2=0.004, depth=0.028, vertices=48, location=(0, 0, 0), rotation=(math.pi, 0, 0)); tail = bpy.context.active_object; tail.name = "tail"
+    tail.data.materials.append(ingot_m); bpy.ops.object.shade_smooth()
+    hring_m = emat("hotring", (0.2, 0.05, 0.01), (1.0, 0.4, 0.08), 0.0)
+    bpy.ops.mesh.primitive_torus_add(major_radius=IR + 0.0006, minor_radius=0.0028, location=(CRU.x, 0.15, MELT_Z + 0.002)); hring = bpy.context.active_object; hring.name = "hotring"; hring.data.materials.append(hring_m)
+    ing_l = bpy.data.objects.new("ingot_light", bpy.data.lights.new("ingot_light", "POINT")); col.objects.link(ing_l); ing_l.data.color = (1.0, 0.5, 0.15); ing_l.data.energy = 0
+    # snail (slower than the crystal? no: much faster)
+    snail_root = empty("snail_root", (0.105, 0.10, 0.0)); snm = mat("snailbody", (0.55, 0.45, 0.33), 0.0, 0.5); shm = mat("snailshell", (0.45, 0.25, 0.10), 0.1, 0.35)
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=0.006, location=(0, 0, 0.003)); sb = bpy.context.active_object; sb.scale = (2.0, 0.7, 0.5); sb.data.materials.append(snm); sb.parent = snail_root
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=0.0065, location=(-0.002, 0, 0.0085)); ss = bpy.context.active_object; ss.data.materials.append(shm); ss.parent = snail_root
+    for dy in (-0.0018, 0.0018):
+        st_ = cyl(f"stalk{dy}", 0.0005, 0.007, (0.011, dy, 0.007), snm, verts=8, rot=(0, math.radians(-25), 0)); st_.parent = snail_root
+    # saw bed: the crystal lying down, saw wires above, the slices, a bank card for scale, then the hero wafer
+    SAW = Vector((0.0, 0.30, 0.0)); bed = box("sawbed", (0.24, 0.05, 0.004), SAW + Vector((0, 0, 0.002)), mat("sawbedm", (0.25, 0.26, 0.3), 0.6, 0.4))
+    ingot_h = cyl("ingot_h", IR, IL, SAW + Vector((0, 0, 0.004 + IR)), ingot_m, verts=48, rot=(0, math.pi / 2, 0))
+    wire_m = emat("sawwire", (0.3, 0.3, 0.32), (0.6, 0.85, 1.0), 0.0, metal=0.8, rough=0.3); WIRES2 = []
+    for k in range(9):
+        w_ = cyl(f"sawwire{k}", 0.0007, 0.09, SAW + Vector((-0.08 + k * 0.02, 0, 0.07)), wire_m, verts=8, rot=(math.pi / 2, 0, 0)); WIRES2.append(w_)
+    slice_m = mat("slicem", (0.72, 0.74, 0.78), 1.0, 0.08); SLICES = []
+    for k in range(9):
+        o = cyl(f"slice{k}", IR, 0.002, SAW + Vector((-0.08 + k * 0.02, 0, 0.004 + IR)), slice_m, verts=48, rot=(0, math.pi / 2, 0)); SLICES.append(o)
+    card = box("bankcard", (0.002, 0.034, 0.0215), SAW + Vector((0.13, 0, 0.004 + 0.011)), mat("cardm", (0.05, 0.22, 0.55), 0.2, 0.35), bevel=0.0006)
+    from PIL import Image as _Iw, ImageDraw as _Dw; import colorsys as _cs
+    _wi = _Iw.new("RGB", (512, 512), (190, 195, 205)); _dw = _Dw.Draw(_wi); n_ = 22; c_ = 512 / n_
+    for i_ in range(n_):
+        for j_ in range(n_):
+            x0_, y0_ = i_ * c_, j_ * c_; cx_, cy_ = x0_ + c_ / 2 - 256, y0_ + c_ / 2 - 256
+            if cx_ * cx_ + cy_ * cy_ > (246 - c_ * 0.7) ** 2: continue
+            h_ = ((i_ + j_) / (2 * n_) + 0.15 * math.sin(i_ * 0.5)) % 1.0; r_, g_, b_ = _cs.hsv_to_rgb(h_, 0.55, 0.95)
+            _dw.rectangle((x0_ + 1.5, y0_ + 1.5, x0_ + c_ - 1.5, y0_ + c_ - 1.5), fill=(int(r_ * 255), int(g_ * 255), int(b_ * 255)))
+    _wp = os.path.join(a.out, "wafer_chips.png"); _wi.save(_wp)
+    WR = 0.05; wafer_root = empty("wafer_root", SAW + Vector((0, 0, 0.004 + WR)))
+    wafer = cyl("wafer", WR, 0.0015, (0, 0, 0), None, verts=96, rot=(math.pi / 2, 0, 0)); wafer.parent = wafer_root
+    wafer_m = bpy.data.materials.new("waferm"); wafer_m.use_nodes = True; _n = wafer_m.node_tree; _b = _n.nodes["Principled BSDF"]
+    _b.inputs["Metallic"].default_value = 1.0; _b.inputs["Roughness"].default_value = 0.035
+    _tc = _n.nodes.new("ShaderNodeTexCoord"); _mp = _n.nodes.new("ShaderNodeMapping"); _mp.inputs["Scale"].default_value = (1 / (2 * WR), 1 / (2 * WR), 1); _mp.inputs["Location"].default_value = (0.5, 0.5, 0)
+    _n.links.new(_tc.outputs["Object"], _mp.inputs["Vector"]); _tw = _n.nodes.new("ShaderNodeTexImage"); _tw.image = bpy.data.images.load(os.path.abspath(_wp)); _tw.extension = "CLIP"
+    _n.links.new(_mp.outputs["Vector"], _tw.inputs["Vector"])
+    wmix = _n.nodes.new("ShaderNodeMix"); wmix.data_type = "RGBA"; wmix.inputs[6].default_value = (0.80, 0.82, 0.86, 1); _n.links.new(_tw.outputs[0], wmix.inputs[7])
+    _n.links.new(wmix.outputs[2], _b.inputs["Base Color"]); _n.links.new(_tw.outputs[0], _b.inputs["Emission Color"]); _b.inputs["Emission Strength"].default_value = 0.0
+    wafer.data.materials.append(wafer_m)
+    # beach sand vs a lump of pure quartz (the honest twist), on the front of the bench
+    CMP = Vector((0.10, -0.17, 0.0))
+    bpy.ops.mesh.primitive_cone_add(radius1=0.03, radius2=0.002, depth=0.022, vertices=32, location=CMP + Vector((-0.035, 0, 0.011))); spile = bpy.context.active_object; spile.name = "sandpile"
+    bsand = mat("beachsand", (0.62, 0.52, 0.38), 0.0, 0.95); spile.data.materials.append(bsand); bpy.ops.object.shade_smooth()
+    BSG = [mat(f"bsg{k}", c, 0.0, 0.9) for k, c in enumerate(((0.35, 0.30, 0.25), (0.75, 0.65, 0.5), (0.2, 0.17, 0.15), (0.55, 0.35, 0.2)))]
+    for i in range(40):                                               # mixed dark/brown grains: beach sand is dirty
+        rr_ = 0.028 * math.sqrt(_rs.random()); th = _rs.uniform(0, 6.283); zz = 0.022 * (1 - rr_ / 0.03) * _rs.random()
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=0.0016, subdivisions=1, location=CMP + Vector((-0.035 + rr_ * math.cos(th), rr_ * math.sin(th), zz + 0.001)))
+        bpy.context.active_object.data.materials.append(BSG[i % 4])
+    bpy.ops.mesh.primitive_ico_sphere_add(radius=0.024, subdivisions=2, location=CMP + Vector((0.035, 0, 0.016))); qlump = bpy.context.active_object; qlump.name = "quartzlump"
+    qlump.scale = (1.0, 0.85, 0.7); qlm = mat("qlumpm", (0.95, 0.95, 0.94), 0.0, 0.25); bsdf(qlm).inputs["Subsurface Weight"].default_value = 0.4; qlump.data.materials.append(qlm)
+    # the phone case + charger (line 20)
+    case_root = empty("case_root", (0, 0, 0)); casem = mat("casem", (0.12, 0.45, 0.42), 0.0, 0.5)
+    for nm_, d_, l_ in (("case_floor", (0.081, 0.161, 0.002), (0, 0, -0.0004)), ("case_w1", (0.081, 0.003, 0.011), (0, 0.079, 0.0045)), ("case_w2", (0.081, 0.003, 0.011), (0, -0.079, 0.0045)),
+                        ("case_w3", (0.003, 0.161, 0.011), (0.039, 0, 0.0045)), ("case_w4", (0.003, 0.161, 0.011), (-0.039, 0, 0.0045))):
+        o = box(nm_, d_, l_, casem, bevel=0.001); o.parent = case_root
+    cablec = cyl("chargecable", 0.0018, 0.16, (0, -0.16, 0.0025), mat("cablew", (0.92, 0.92, 0.92), 0.0, 0.5), verts=12, rot=(math.pi / 2, 0, 0))
+    plug = box("plug", (0.008, 0.012, 0.004), (0, -0.083, 0.004), mat("plugm", (0.92, 0.92, 0.92), 0.0, 0.4))
+    hot_l = bpy.data.objects.new("hot_light", bpy.data.lights.new("hot_light", "POINT")); col.objects.link(hot_l); hot_l.location = (0, -0.02, 0.03); hot_l.data.color = (1.0, 0.12, 0.05); hot_l.data.energy = 0
+    SIL_ANCH = {"furnace": (None, tuple(FUR + Vector((0, 0, 0.075)))), "coal": (None, tuple(FUR + Vector((0.02, -0.02, 0.06)))), "metal": (None, tuple(MET + Vector((0, 0, 0.018)))),
+                "dirt": (None, tuple(MET + Vector((0.0, -0.01, 0.012)))), "seed": (itop, (0, 0, 0.03)), "ingot": (ibody_root, (0, -IR, IL * 0.6)), "crystal_top": (itop, (0, 0, 0.02)),
+                "melt": (None, (CRU.x, 0.15 - 0.02, MELT_Z + 0.004)), "snail": (snail_root, (0, 0, 0.012)), "wafer": (wafer_root, (0, -0.002, 0.02)), "slices": (None, tuple(SAW + Vector((0, -IR, 0.05)))),
+                "card": (None, tuple(SAW + Vector((0.13, 0, 0.026)))), "sand": (None, tuple(CMP + Vector((-0.035, 0, 0.024)))), "quartz": (None, tuple(CMP + Vector((0.035, 0, 0.034)))),
+                "phone": (None, (0, -0.04, PH[2] + 0.004)), "chip": (None, (0.004, 0.025, z0 + 0.002))}
+
 # anchors for 2D labels (compose3d.py pins tags to these)
 ANCH = {"screen": (0, 0, PH[2] + 0.004), "modem": (0.02, 0.052, z0), "sim": (-0.019, 0.05, z0), "filter": (-0.016, 0.004, z0 + 0.002), "cpu": (0.004, 0.025, z0),
         "battery": (0, -0.038, z0 + 0.001), "mast": (-0.15, 0.33, 0.33), "laptop": (0.16, 0.407, 0.09), "tray": tuple(TR + Vector((0, 0, 0.02))), "phone": (0, -0.06, PH[2]),
@@ -486,6 +619,10 @@ if GOLD:
     for k in ("battery", "mast", "laptop", "tray", "van", "fakemast", "netfilter", "modem", "sim", "filter"):
         ANCH.pop(k, None); bpy.data.objects.remove(bpy.data.objects["anchor_" + k])
     for k, (par, v) in GOLD_ANCH.items(): empty("anchor_" + k, v, par); ANCH[k] = v
+if SIL:
+    for k, (par, v) in SIL_ANCH.items():
+        if "anchor_" + k in bpy.data.objects: bpy.data.objects.remove(bpy.data.objects["anchor_" + k])
+        empty("anchor_" + k, v, par); ANCH[k] = v
 NODES ={"mast": Vector((-0.15, 0.33, 0.335)), "phone": Vector((0.02, 0.052, z0 + 0.006)), "laptop": Vector((0.16, 0.38, 0.06)), "tray": TR + Vector((0, 0, 0.012)),
          "van": VAN + Vector((0.02, 0, 0.055 + 0.125)), "netfilter": Vector((-0.15, 0.33, 0.19))}
 if WALLET: NODES["scamphone"] = SCAM0 + Vector((0, 0, PH[2] + 0.006)); NODES["card"] = CARD0 + Vector((0, 0, 0.004))
@@ -549,6 +686,20 @@ CAM.update({   # FIX #16 (gold): bench + phone mountain; tub at (-0.17, 0.12), c
        "g_cru": ((0.08, -0.04, 0.16), (0.17, 0.15, 0.07), 34), "g_cru_top": ((0.11, 0.0, 0.24), (0.17, 0.15, 0.06), 40), "g_cru_in": ((0.15, 0.07, 0.17), (0.17, 0.15, 0.055), 46), "g_pour": ((0.33, -0.06, 0.12), (0.17, 0.07, 0.05), 30), "g_bar": ((0.11, -0.13, 0.05), (0.17, 0.03, 0.025), 32),
        "g_bar_top": ((0.17, -0.06, 0.15), (0.17, 0.035, 0.0), 40), "g_bar_push": ((0.17, -0.03, 0.125), (0.17, 0.04, 0.03), 46), "g_pull": ((0.0, -1.05, 0.62), (0.0, 0.55, 0.20), 22), "g_cmp": ((0.0, 0.08, 0.17), (0.0, 0.30, 0.015), 30),
        "g_drawer": ((-0.10, -0.40, 0.20), (-0.16, -0.16, 0.0), 32), "g_drawer_close": ((-0.16, -0.24, 0.13), (-0.16, -0.16, 0.035), 40)})
+CAM.update({   # FIX #17 (silicon): furnace (-0.16, -0.15), metal (-0.08, -0.16), crystal above the crucible (0.17, 0.15), saw bed (0, 0.30), sand vs quartz (0.10, -0.17)
+       "s_furn": ((-0.05, -0.38, 0.18), (-0.16, -0.15, 0.06), 32), "s_furn_top": ((-0.16, -0.27, 0.28), (-0.16, -0.15, 0.04), 36),
+       "s_metal": ((-0.03, -0.30, 0.08), (-0.08, -0.16, 0.012), 38), "s_metal_wide": ((-0.10, -0.42, 0.15), (-0.11, -0.16, 0.025), 32),
+       "s_metal_macro": ((-0.065, -0.215, 0.035), (-0.08, -0.16, 0.010), 50),
+       "s_seed_high": ((0.12, 0.0, 0.22), (0.17, 0.15, 0.12), 40), "s_seed": ((0.135, 0.06, 0.11), (0.17, 0.15, 0.065), 46),
+       "s_ingot": ((0.03, -0.32, 0.17), (0.17, 0.15, 0.15), 28), "s_ingot_low": ((0.11, -0.08, 0.035), (0.17, 0.15, 0.15), 22),
+       "s_ingot_orbit": ((0.36, -0.04, 0.20), (0.17, 0.15, 0.15), 26), "s_ingot_side": ((0.36, 0.32, 0.12), (0.17, 0.15, 0.15), 26),
+       "s_snail": ((0.09, 0.00, 0.035), (0.12, 0.10, 0.006), 42), "s_snail2": ((0.15, 0.01, 0.03), (0.13, 0.10, 0.006), 44),
+       "s_saw": ((0.0, 0.08, 0.16), (0.0, 0.30, 0.025), 30), "s_saw_side": ((0.22, 0.17, 0.08), (0.0, 0.30, 0.025), 30),
+       "s_card": ((0.20, 0.19, 0.06), (0.10, 0.30, 0.028), 40), "s_card_close": ((0.16, 0.24, 0.04), (0.12, 0.30, 0.026), 50),
+       "s_wafer": ((0.0, 0.14, 0.07), (0.0, 0.30, 0.055), 38), "s_wafer_close": ((0.02, 0.20, 0.06), (0.0, 0.30, 0.055), 44),
+       "s_wafer_tilt": ((0.11, 0.17, 0.11), (0.0, 0.30, 0.055), 38),
+       "s_cmp": ((0.10, -0.33, 0.10), (0.10, -0.17, 0.015), 36), "s_cmp_close": ((0.10, -0.26, 0.05), (0.10, -0.17, 0.014), 46),
+       "s_case": ((0.11, -0.21, 0.11), (0.0, -0.01, 0.0), 34)})
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
 
@@ -694,6 +845,54 @@ def apply_gold(t, b, p):
         dtx.image = bpy.data.images.load(f, check_existing=True); DLAST[0] = key
     lap_light.data.energy = 0
 
+def apply_silicon(t, b, p):
+    sv = track("sand", t)
+    for g_, x_, y_, d_ in SANDG:
+        u = clamp((sv - d_) / 0.4); g_.hide_render = sv <= d_ or u >= 1 or sv >= 1; g_.location = Vector((x_, y_, 0.26 - (0.26 - PH[2] - 0.004) * u * u))
+    bsdf(brain_m).inputs["Emission Strength"].default_value = 4.0 * track("brain", t) * (0.8 + 0.2 * math.sin(t * 5))
+    ch = track("charge", t)
+    for o, x_, y_, d_ in CHARGE:
+        u = clamp((ch - d_) / 0.5); o.hide_render = ch <= d_ or u >= 1; o.location = FUR + Vector((x_, y_, 0.25 - 0.21 * u * u))
+    fv = track("furnace", t); fl_ = fv * (0.8 + 0.2 * math.sin(t * 27) + 0.1 * math.sin(t * 61))
+    bsdf(fglow_m).inputs["Emission Strength"].default_value = 3.0 * fl_; fur_l.data.energy = 2.5 * fl_
+    mv = track("metal", t)
+    for o in METAL: o.hide_render = mv < 0.05; o.scale = (max(0.01, ease(mv)),) * 3
+    for o in METAL:
+        for c in o.children: c.hide_render = mv < 0.05
+    cv = track("chunks", t); sh = track("shine", t)
+    for o in TCH: o.hide_render = cv < 0.5
+    bsdf(METAL_M).inputs["Roughness"].default_value = 0.55 - 0.45 * sh; bsdf(METAL_M).inputs["Base Color"].default_value = (0.42 + 0.3 * sh, 0.43 + 0.3 * sh, 0.46 + 0.3 * sh, 1)
+    # molten silicon: brighter and paler than gold; "glare" flares it during the follow line
+    h = track("heat", t); gl = track("glare", t)
+    bsdf(melt_m).inputs["Emission Color"].default_value = (1.0, 0.48 + 0.2 * gl, 0.14 + 0.15 * gl, 1); bsdf(melt_m).inputs["Emission Strength"].default_value = 1.6 * h + 6.0 * gl
+    bsdf(melt_m).inputs["Base Color"].default_value = (0.25, 0.10, 0.03, 1); melt.hide_render = False
+    spn = track("spin", t); cru.rotation_euler.z = -1.1 * t * spn; crf.rotation_euler.z = cru.rotation_euler.z
+    dp = track("dip", t); gr = track("grow", t); ou = track("out", t); sl = track("slab", t) > 0.5; hv = track("hot", t)
+    lift = 0.035 * ease(ou); visible = (dp > 0.01) and not sl
+    ibody_root.location.z = MELT_Z + lift; ibody_root.scale = (1, 1, max(0.002, gr)); ibody_root.rotation_euler.z = 1.6 * t * spn
+    itop.location = (CRU.x, 0.15, MELT_Z + lift + IL * gr + 0.10 * (1 - ease(dp)) * (1 if gr < 0.01 else 0)); itop.rotation_euler.z = ibody_root.rotation_euler.z
+    shoulder.scale = (max(0.05, min(1, gr * 8)),) * 2 + (max(0.05, min(1, gr * 8)),)
+    hide_all([ibody] + [o for o in ibody_root.children], not visible or gr < 0.003); hide_all([shoulder], not visible or gr < 0.003); hide_all([seed, cable], not visible)
+    tail.hide_render = not visible or ou < 0.05; tail.location = (CRU.x, 0.15, MELT_Z + lift - 0.014 * ease(ou)); tail.scale = (1, 1, max(0.05, ease(ou)))
+    hring.hide_render = not visible or gr < 0.003; hring.location = (CRU.x, 0.15, MELT_Z + lift + 0.002)
+    bsdf(hring_m).inputs["Emission Strength"].default_value = 5.0 * hv
+    bsdf(ingot_m).inputs["Emission Strength"].default_value = 0.5 * hv * (1 - track("cool2", t)); ing_l.location = (CRU.x, 0.15 - 0.05, MELT_Z + 0.03); ing_l.data.energy = 1.5 * hv * (0 if sl else 1)
+    sn = track("snail", t); snail_root.location = (0.105 + 0.03 * sn, 0.10, 0.0); hide_all(snail_root.children_recursive, sn < 0.005 or sn > 0.999)
+    hide_all([ingot_h], not sl or track("saw", t) > 0.97); hide_all([bed], track("slab", t) < 0.5 and track("wafer", t) < 0.5)
+    sw = track("saw", t)
+    for w_ in WIRES2: w_.hide_render = not sl or sw < 0.01 or sw > 0.99; w_.location.z = 0.07 - 0.068 * sw
+    bsdf(wire_m).inputs["Emission Strength"].default_value = 2.0 * (0.6 + 0.4 * math.sin(t * 30))
+    fa = track("fan", t); wv = track("wafer", t)
+    for k, o in enumerate(SLICES):
+        o.hide_render = not sl or sw < 0.97 or wv > 0.5; o.location.x = SAW.x + (-0.08 + k * 0.02) * (1 + 0.25 * ease(fa)); o.rotation_euler.x = math.radians(8) * ease(fa) * (1 if k % 2 else -1)
+    card.hide_render = fa < 0.05 or wv > 0.5
+    hide_all([wafer], wv < 0.02); wafer_root.location = SAW + Vector((0, 0, 0.004 + WR * ease(wv))); wafer_root.rotation_euler.x = math.radians(-90) * (1 - ease(wv))
+    cp = track("chips", t); wmix.inputs[0].default_value = 0.85 * cp; bsdf(wafer_m).inputs["Emission Strength"].default_value = 0.25 * cp
+    cs = track("case", t); co = track("caseoff", t)
+    hide_all(case_root.children_recursive, cs < 0.5 or co > 0.98); case_root.location = Vector((-0.13 * ease(co), -0.02 * ease(co), 0)) + phone_root.location
+    cablec.hide_render = plug.hide_render = track("charging", t) < 0.5
+    hot_l.data.energy = 1.6 * track("hot2", t) * (0.85 + 0.15 * math.sin(t * 7))
+
 def apply(t):
     b = beat_at(t); p = clamp((t - b["t0"]) / max(1e-3, b["t1"] - b["t0"]))
     ca, cb = b["cam"] if isinstance(b["cam"], list) else (b["cam"], b["cam"]); A, Bc = CAM[ca], CAM[cb]; k = ease(p)
@@ -707,6 +906,7 @@ def apply(t):
     lv = track("laptop", t, 0.4); lapscr.active_material.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 1.0 + 2.0 * lv; lap_light.data.energy = 0.08 + 0.4 * lv
     blink.hide_render = DUO or GOLD or int(t * 2) % 2 == 1  # the mast is hidden in Duo and gold episodes
     if GOLD: apply_gold(t, b, p)
+    if SIL: apply_silicon(t, b, p)
     if "van" in PROPS:
         vv = track("van", t); fake_root.location.z = 0.055 - 0.12 * (1 - vv); hide_all(fake_objs, vv < 0.02)
         fblink.hide_render = vv < 0.02 or int(t * 3) % 2 == 1
