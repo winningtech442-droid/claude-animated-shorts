@@ -120,7 +120,7 @@ H = {"episode": "phoneverse_fix17",
      "note": "FIX #17 'Your phone is made of sand'. Times = measured voice slots from phoneverse_fix17_studio/data/timings.json (locked); nothing re-timed. "
              "Props: silicon (the #16 yard workbench re-dressed: quartz heap, arc furnace, tub, crucible + crystal, saw bed + wafers, sand vs quartz, case + charger).",
      "fps": 24, "length_s": END, "props": ["silicon"], "chars": "data/chars_fix17.json", "char_frames": "build/chars",
-     "audio": ["../phoneverse_fix17_studio/audio/mix_with_pad.wav", "../phoneverse_fix17_studio/audio/mix_voice_fx.wav"],
+     "audio": ["../phoneverse_fix17_studio/audio/mix_with_pad.wav"],  # one final only (user, 23 Nov)
      "captions": "../phoneverse_fix17_studio/data/captions.json",
      "hook": {"lines": [["YOUR PHONE IS"], ["MADE OF ", "*SAND"]], "from": 0.0, "until": 3.0},
      "cards": [{"t0": S[3] + 0.05, "t1": S[4] - 0.1, "title": "DON'T TRY THIS AT HOME", "sub": "Over 1,400 °C · factories only", "color": "RED"}],

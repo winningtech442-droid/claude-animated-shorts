@@ -1,7 +1,7 @@
 #!/bin/bash
 # FIX #17 pipeline (format A, silicon world). Resumable: finished frames are skipped.
 #   ./build_fix17.sh render A B   -> desk frames A..B at 540x960 / 16 samples (run in chunks: one process builds the scene once, ~80 s)
-#   ./build_fix17.sh finish       -> compose (4 in parallel), assemble one final per mix, QC both, phone-size sheet
+#   ./build_fix17.sh finish       -> compose (4 in parallel), assemble ONE final (mix_with_pad), QC, phone-size sheet
 # Character beats are desk stand-ins until char_scene.py has a "yard" set (see data/make_beats_fix17.py, STANDIN).
 cd "$(dirname "$0")"
 BEATS=data/beats_fix17.json

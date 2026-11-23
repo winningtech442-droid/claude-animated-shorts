@@ -175,8 +175,18 @@ MUS = MUS[: N] * gate[: N]
 def rms(x): return np.sqrt(np.mean(x ** 2) + 1e-12)
 vr = rms(voice[voice != 0])
 def level(x, db): return x * (vr * 10 ** (db / 20) / (rms(x) + 1e-12))
-FXm = FX * 1.0
-BEDm = level(BED, -27); MUSm = level(MUS, -21); 
+# v2 (user feedback 23 Nov: "object sounds too loud, hard to hear the narrator"). The FX bus used to go in unscaled and averaged
+# the same level as the voice, peaking up to +13 dB over it. Now: (1) the whole bus sits FX_DB under the voice, (2) it ducks a further
+# DUCK_DB while the narrator is talking, (3) a smoothed per-window cap stops any one hit (crystal reveal, saw, furnace) poking above
+# CAP_DB under the voice. Pad down 3 dB too.
+FX_DB, DUCK_DB, CAP_DB = -9.0, -10.0, -5.0     # louder in the gaps, lower under words (keeps loudness range >= 3 LU)
+def smooth(x, sec): k = max(1, int(sec * SR)); return np.convolve(x, np.ones(k) / k, mode="same")
+FXm = level(FX, FX_DB)
+talk = np.clip(smooth((np.abs(voice) > 10 ** (-40 / 20)).astype(float), 0.25) * 3, 0, 1)        # 1 while speaking, ~120 ms fades
+FXm = FXm * (1 - talk * (1 - 10 ** (DUCK_DB / 20)))
+env_fx = np.sqrt(smooth(FXm ** 2, 0.05)) + 1e-9; cap = vr * 10 ** (CAP_DB / 20)
+FXm = FXm * smooth(np.minimum(1.0, cap / env_fx), 0.03)
+BEDm = level(BED, -27); MUSm = level(MUS, -24);
 os.makedirs("audio", exist_ok=True)
 def measure(path, aac=False):
     """(integrated LUFS, true peak dBTP), optionally after the same AAC 192k encode the final uses (that is what QC measures)."""
@@ -201,6 +211,6 @@ def master(x, path, target_i=-14.0, target_tp=-2.0):
         gain += target_i - i_
         if tp > target_tp: ceil -= (tp - target_tp) + 0.1
     os.remove(raw)
-master(voice + FXm * 0.9 + BEDm + MUSm, "audio/mix_with_pad.wav")
-master(voice + FXm * 0.9 + BEDm, "audio/mix_voice_fx.wav")
-print("written audio/mix_with_pad.wav and audio/mix_voice_fx.wav")
+master(voice + FXm + BEDm + MUSm, "audio/mix_with_pad.wav")
+# one final only from now on (user, 23 Nov: "always give me one out"); the no-pad mix is no longer built
+print("written audio/mix_with_pad.wav")

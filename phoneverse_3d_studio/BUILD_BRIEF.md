@@ -18,6 +18,13 @@ What changed from v7 (FIX #12) and why. Measured on the three reference shorts t
 | Hook text added by hand | **Hook burned in for the first ~3 s** (beat sheet `hook`). | All three put the question/claim on frame 1. |
 | Data on static cards | **Live readouts** (`hud.count`) and **pinned labels** with leader lines. | "+1.0 G", "56% FUEL", "710 photos/s" readouts and part tags in the references. |
 
+## User standing rules (23 Nov 2026, from the FIX #17 review)
+- **One output per render.** Build and deliver a single final (`mix_with_pad`); no second "voice + fx" variant. Saves render and encode cost.
+- **Narrator first.** Object sounds must never compete with the voice. In make_sound.py, set the FX bus relative to the voice and never add it raw:
+  `FX_DB -9` overall, ducked another `-10 dB` while the narrator speaks, each hit capped at `-5 dB` under the voice's average level; pad at `-24`.
+  Measured on #17: FX are about 18 dB under the voice during speech and about 14 dB under it in the gaps.
+  The LRA comes out at about 2 LU. That is expected for a narrator-forward mix, so read the "LRA >= 3" row as advisory, not a FAIL.
+
 ## QC notes
 - tools/qc.py's "longest shot" uses scene-cut detection; in format A a 4-6 s continuous move is allowed, so read that row as
   "check by eye that something changes every 2.5 s", not as a hard FAIL. Frozen-segment and black-frame checks still apply.

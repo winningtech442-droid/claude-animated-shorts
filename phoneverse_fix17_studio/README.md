@@ -132,10 +132,12 @@ Keep the one-world bench in the sunny recycling yard; swap the phone mountain ba
 - world.py: new PROPS "silicon" (builds on "gold"): quartz heap, arc furnace + electrodes, metal chunks with dirt specks, murky-to-clear rinse ("murk"),
   silver crystal grown/spun/lifted from the crucible, snail, saw bed + slices + bank card, mirror wafer with a chip grid, beach sand vs quartz lump,
   phone case + charger. Line 13 (follow) shows pvui.follow_card() on the phone ("Winning.tech" profile, Follow -> Following); the crystal stays off screen.
-- Sound: tools/make_sound.py (#17 cue sheet) -> audio/mix_with_pad.wav, mix_voice_fx.wav, both -14 LUFS, TP <= -2.5 dB after AAC.
+- Sound: tools/make_sound.py (#17 cue sheet) -> audio/mix_with_pad.wav, -14.1 LUFS, TP -2.6 dB after AAC.
+  Remixed 23 Nov after the user said the object sounds drowned the narrator. FX were unscaled, peaking up to 13 dB over the voice.
+  They now sit about 18 dB under it during speech (ducked) and about 14 dB under it in the gaps; no frames were re-rendered. LRA is now 2.0 (advisory; see BUILD_BRIEF).
 - Full render DONE (1,695 frames; run in chunks of about 550 frames, because a background job stops at 2 h): `build_fix17.sh render A B`, then `finish`.
-- Finals (gitignored): ../phoneverse_3d_studio/final/phoneverse_fix17_mix_with_pad.mp4 (recommended) and _mix_voice_fx.mp4. Phone-size sheet: ../phoneverse_3d_studio/docs/phone_size_check_fix17.png.
-- QC: 1080×1920/24, −14.0 LUFS, TP −2.7 / −2.5 dB, LRA 3.9, pace 3.05 w/s, tail 0.30 s, 0 black/frozen. Two FAILs, both accepted:
+- Final (gitignored, one output only): ../phoneverse_3d_studio/final/phoneverse_fix17_mix_with_pad.mp4. Phone-size sheet: ../phoneverse_3d_studio/docs/phone_size_check_fix17.png.
+- QC (after the remix): 1080×1920/24, −14.1 LUFS, TP −2.6 dB, LRA 2.0 (narrator-forward, accepted), pace 3.05 w/s, tail 0.30 s, 0 black/frozen. Two FAILs, both accepted:
   - Length 70.62 s: the locked take, accepted by the user.
   - "Longest shot 5.04 s": the scene detector misses soft cuts between similar-coloured shots (47–61 s). Frame-difference peaks fall on all 44 planned cuts, and a before/after sheet confirms each one by eye. The real longest shot is 2.33 s.
 - Fix after review: the HUD chip at 45.5 s ("ONE PERFECT CRYSTAL / ALL THE WAY THROUGH") ran off both edges of the frame. It now reads "ONE CRYSTAL / NO FLAWS"; frames 1090–1130 were recomposed and the finals reassembled.

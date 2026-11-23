@@ -9,8 +9,7 @@
  "chars": "data/chars_fix17.json",
  "char_frames": "build/chars",
  "audio": [
-  "../phoneverse_fix17_studio/audio/mix_with_pad.wav",
-  "../phoneverse_fix17_studio/audio/mix_voice_fx.wav"
+  "../phoneverse_fix17_studio/audio/mix_with_pad.wav"
  ],
  "captions": "../phoneverse_fix17_studio/data/captions.json",
  "hook": {
