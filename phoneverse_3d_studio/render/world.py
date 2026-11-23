@@ -864,10 +864,10 @@ def apply_silicon(t, b, p):
     bsdf(METAL_M).inputs["Roughness"].default_value = 0.55 - 0.45 * sh; bsdf(METAL_M).inputs["Base Color"].default_value = (0.20 + 0.22 * sh, 0.21 + 0.22 * sh, 0.23 + 0.24 * sh, 1)
     # molten silicon: brighter and paler than gold; "glare" flares it during the follow line
     h = track("heat", t); gl = track("glare", t)
-    bsdf(melt_m).inputs["Emission Color"].default_value = (1.0, 0.40 + 0.2 * gl, 0.08 + 0.15 * gl, 1); bsdf(melt_m).inputs["Emission Strength"].default_value = 4.5 * h + 6.0 * gl
+    bsdf(melt_m).inputs["Emission Color"].default_value = (1.0, 0.28 + 0.2 * gl, 0.02 + 0.15 * gl, 1); bsdf(melt_m).inputs["Emission Strength"].default_value = 1.8 * h + 6.0 * gl
     bsdf(melt_m).inputs["Base Color"].default_value = (0.12, 0.04, 0.01, 1); melt.hide_render = False
-    mk = track("murk", t); liq_glow.inputs["Base Color"].default_value = (0.92 + (0.30 - 0.92) * mk, 0.96 + (0.24 - 0.96) * mk, 1.0 + (0.16 - 1.0) * mk, 1)   # murky brown -> clear (no blue)
-    liq_glow.inputs["Transmission Weight"].default_value = 1.0 - 0.6 * mk
+    mk = track("murk", t); liq_glow.inputs["Base Color"].default_value = (0.92 + (0.18 - 0.92) * mk, 0.96 + (0.13 - 0.96) * mk, 1.0 + (0.08 - 1.0) * mk, 1)   # murky brown -> clear (no blue)
+    liq_glow.inputs["Transmission Weight"].default_value = 1.0 - 0.8 * mk
     hide_all([o for o in col.objects if o.name.startswith("mould_")], track("fill", t) < 0.5)
     spn = track("spin", t); cru.rotation_euler.z = -1.1 * t * spn; crf.rotation_euler.z = cru.rotation_euler.z
     dp = track("dip", t); gr = track("grow", t); ou = track("out", t); sl = track("slab", t) > 0.5; hv = track("hot", t)
