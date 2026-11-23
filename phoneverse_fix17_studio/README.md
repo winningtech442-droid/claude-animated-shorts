@@ -1,7 +1,9 @@
 # Phoneverse FIX #17: Your phone is made of sand (the glowing crystal inside your iPhone's brain): studio package
 
 **Treasure/curiosity series, episode 2** (after #16, "Gold in your iPhone"). HSERIA + mid-CTA (follow) + CTA, second person, rule book v8 (format A), **3 character beats**.
-Status: **script drafted 23 Nov 2026, waiting for user approval. Nothing is voiced or rendered yet.**
+Status: **script approved 23 Nov 2026. Voice take 1 recorded: 70.64 s, 191 words, speech pace 3.05 words/s, tail 0.32 s.**
+Take 1 is 0.64 s over the 70 s limit (every other make_voice limit passes). **Not locked yet**: waiting for the user to listen.
+Fast lines to check by ear: 1 (3.81 wps), 6 (3.64), 7 (3.79), 11 (3.83). Slowest: 8 (2.49, EMPH, the purity payoff), 14 (2.56, AWE peak).
 Script: **21 lines, 192 words** (incl. the mid-video follow ask, line 13). At 3.0 words/s that is 64.0 s of speech. #16 measured 185 words /
 20 lines = 69.0 s with the same presets and pauses, so expect **about 72 s** for the take (a touch over the 70 s target). If take 1 comes in over 70 s, cut words from lines 2
 and 19 first, never from the fact lines, the slips or line 13.
