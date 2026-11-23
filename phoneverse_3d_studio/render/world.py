@@ -484,7 +484,7 @@ if GOLD:
 SIL_ANCH = {}
 if SIL:
     import random as _rs; _rs.seed(17)
-    hide_all(MOUNT + [core, hair], True); hide_all(drawer_root.children_recursive + piles_root.children_recursive + board_root.children_recursive, True)
+    hide_all(MOUNT + [c for m_ in MOUNT for c in m_.children] + [core, hair], True); hide_all(drawer_root.children_recursive + piles_root.children_recursive + board_root.children_recursive, True)
     QZ_M = [mat(f"quartz{k}", c, 0.0, r_) for k, (c, r_) in enumerate((((0.93, 0.93, 0.91), 0.35), ((0.86, 0.87, 0.88), 0.3), ((0.97, 0.95, 0.92), 0.45)))]
     QHEAP = []
     for i in range(340):                                              # the quartz heap behind the bench (same footprint as #16's phone mountain)
@@ -497,8 +497,8 @@ if SIL:
     # the main chip glows (the "brain"): give the cpu its own material
     cpu = bpy.data.objects["cpu"]; brain_m = emat("brain", (0.02, 0.02, 0.03), (0.35, 0.75, 1.0), 0.0, metal=0.2, rough=0.3); cpu.data.materials.clear(); cpu.data.materials.append(brain_m)
     SAND_M = mat("sand", (0.80, 0.66, 0.42), 0.0, 0.8); SANDG = []
-    for i in range(70):
-        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.0011, 0.0019), subdivisions=1); g_ = bpy.context.active_object; g_.name = f"sandg{i}"; g_.data.materials.append(SAND_M)
+    for i in range(150):
+        bpy.ops.mesh.primitive_ico_sphere_add(radius=_rs.uniform(0.0016, 0.0028), subdivisions=1); g_ = bpy.context.active_object; g_.name = f"sandg{i}"; g_.data.materials.append(SAND_M)
         SANDG.append((g_, _rs.uniform(-0.03, 0.03), _rs.uniform(-0.06, 0.07), _rs.random() * 0.6))
     # arc furnace: a dark open pot, three graphite electrodes dropping in from above, a glow inside; quartz + coal fall in, grey metal comes out
     FUR = Vector((-0.16, -0.15, 0.0)); furm = mat("furnace", (0.10, 0.10, 0.11), 0.3, 0.6)
@@ -579,7 +579,7 @@ if SIL:
     _n.links.new(wmix.outputs[2], _b.inputs["Base Color"]); _n.links.new(_tw.outputs[0], _b.inputs["Emission Color"]); _b.inputs["Emission Strength"].default_value = 0.0
     wafer.data.materials.append(wafer_m)
     # beach sand vs a lump of pure quartz (the honest twist), on the front of the bench
-    CMP = Vector((0.10, -0.17, 0.0))
+    CMP = Vector((0.30, -0.06, 0.0))
     bpy.ops.mesh.primitive_cone_add(radius1=0.03, radius2=0.002, depth=0.022, vertices=32, location=CMP + Vector((-0.035, 0, 0.011))); spile = bpy.context.active_object; spile.name = "sandpile"
     bsand = mat("beachsand", (0.62, 0.52, 0.38), 0.0, 0.95); spile.data.materials.append(bsand); bpy.ops.object.shade_smooth()
     BSG = [mat(f"bsg{k}", c, 0.0, 0.9) for k, c in enumerate(((0.35, 0.30, 0.25), (0.75, 0.65, 0.5), (0.2, 0.17, 0.15), (0.55, 0.35, 0.2)))]
@@ -686,7 +686,7 @@ CAM.update({   # FIX #16 (gold): bench + phone mountain; tub at (-0.17, 0.12), c
        "g_cru": ((0.08, -0.04, 0.16), (0.17, 0.15, 0.07), 34), "g_cru_top": ((0.11, 0.0, 0.24), (0.17, 0.15, 0.06), 40), "g_cru_in": ((0.15, 0.07, 0.17), (0.17, 0.15, 0.055), 46), "g_pour": ((0.33, -0.06, 0.12), (0.17, 0.07, 0.05), 30), "g_bar": ((0.11, -0.13, 0.05), (0.17, 0.03, 0.025), 32),
        "g_bar_top": ((0.17, -0.06, 0.15), (0.17, 0.035, 0.0), 40), "g_bar_push": ((0.17, -0.03, 0.125), (0.17, 0.04, 0.03), 46), "g_pull": ((0.0, -1.05, 0.62), (0.0, 0.55, 0.20), 22), "g_cmp": ((0.0, 0.08, 0.17), (0.0, 0.30, 0.015), 30),
        "g_drawer": ((-0.10, -0.40, 0.20), (-0.16, -0.16, 0.0), 32), "g_drawer_close": ((-0.16, -0.24, 0.13), (-0.16, -0.16, 0.035), 40)})
-CAM.update({   # FIX #17 (silicon): furnace (-0.16, -0.15), metal (-0.08, -0.16), crystal above the crucible (0.17, 0.15), saw bed (0, 0.30), sand vs quartz (0.10, -0.17)
+CAM.update({   # FIX #17 (silicon): furnace (-0.16, -0.15), metal (-0.08, -0.16), crystal above the crucible (0.17, 0.15), saw bed (0, 0.30), sand vs quartz (0.30, -0.06)
        "s_furn": ((-0.05, -0.38, 0.18), (-0.16, -0.15, 0.06), 32), "s_furn_top": ((-0.16, -0.27, 0.28), (-0.16, -0.15, 0.04), 36),
        "s_metal": ((-0.03, -0.30, 0.08), (-0.08, -0.16, 0.012), 38), "s_metal_wide": ((-0.10, -0.42, 0.15), (-0.11, -0.16, 0.025), 32),
        "s_metal_macro": ((-0.065, -0.215, 0.035), (-0.08, -0.16, 0.010), 50),
@@ -698,7 +698,7 @@ CAM.update({   # FIX #17 (silicon): furnace (-0.16, -0.15), metal (-0.08, -0.16)
        "s_card": ((0.20, 0.19, 0.06), (0.10, 0.30, 0.028), 40), "s_card_close": ((0.16, 0.24, 0.04), (0.12, 0.30, 0.026), 50),
        "s_wafer": ((0.0, 0.14, 0.07), (0.0, 0.30, 0.055), 38), "s_wafer_close": ((0.02, 0.20, 0.06), (0.0, 0.30, 0.055), 44),
        "s_wafer_tilt": ((0.11, 0.17, 0.11), (0.0, 0.30, 0.055), 38),
-       "s_cmp": ((0.10, -0.33, 0.10), (0.10, -0.17, 0.015), 36), "s_cmp_close": ((0.10, -0.26, 0.05), (0.10, -0.17, 0.014), 46),
+       "s_cmp": ((0.30, -0.22, 0.10), (0.30, -0.06, 0.015), 36), "s_cmp_close": ((0.30, -0.15, 0.05), (0.30, -0.06, 0.014), 46),
        "s_case": ((0.11, -0.21, 0.11), (0.0, -0.01, 0.0), 34)})
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); col.objects.link(cam); sc.camera = cam
 cam.data.sensor_fit = "VERTICAL"; cam.data.sensor_height = 36; cam.data.dof.use_dof = True; cam.data.dof.aperture_fstop = 5.6; cam.data.clip_start = 0.005
