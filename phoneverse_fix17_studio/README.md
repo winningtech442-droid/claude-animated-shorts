@@ -2,7 +2,8 @@
 
 **Treasure/curiosity series, episode 2** (after #16, "Gold in your iPhone"). HSERIA + mid-CTA (follow) + CTA, second person, rule book v8 (format A), **3 character beats**.
 Status: **script approved 23 Nov 2026. Voice take 1 recorded: 70.64 s, 191 words, speech pace 3.05 words/s, tail 0.32 s.**
-Take 1 is 0.64 s over the 70 s limit (every other make_voice limit passes). **Not locked yet**: waiting for the user to listen.
+Take 1 is 0.64 s over the 70 s limit (every other make_voice limit passes). **User accepted it as is, 23 Nov: LOCKED.**
+Never re-time data/timings.json after this. Captions: 109 cards, one yellow word per line (data/captions.json). Follow line: 36.4-39.5 s.
 Fast lines to check by ear: 1 (3.81 wps), 6 (3.64), 7 (3.79), 11 (3.83). Slowest: 8 (2.49, EMPH, the purity payoff), 14 (2.56, AWE peak).
 Script: **21 lines, 192 words** (incl. the mid-video follow ask, line 13). At 3.0 words/s that is 64.0 s of speech. #16 measured 185 words /
 20 lines = 69.0 s with the same presets and pauses, so expect **about 72 s** for the take (a touch over the 70 s target). If take 1 comes in over 70 s, cut words from lines 2
@@ -127,8 +128,7 @@ Keep the one-world bench in the sunny recycling yard; swap the phone mountain ba
   data/timings.json, captions.json, ../phoneverse_3d_studio/data/make_beats_fix17.py, the new world.py props and the char_scene.py clips.
 
 ## Next steps
-1. **User approves the script** (or asks for changes).
-2. Voice take 1 with #16's make_voice.py (Kokoro af_heart, the same presets). Target 60-70 s; lock timings.json, then never re-time.
-3. Captions (one yellow word per line, first match only), beat sheet make_beats_fix17.py, silicon props in world.py (a new PROPS "silicon"
+1. ~~Script approved~~, ~~voice take 1 locked (70.64 s)~~, ~~captions built~~.
+2. Beat sheet make_beats_fix17.py, silicon props in world.py (a new PROPS "silicon"
    reusing the gold crucible, torch, tub and lift code), `--test` stills checked at phone size.
-4. Character clips c01-c03, sound, full render, QC (-14 LUFS, 1080×1920), phone-size sheet, post.
+3. Character clips c01-c03, sound, full render, QC (-14 LUFS, 1080×1920), phone-size sheet, post.

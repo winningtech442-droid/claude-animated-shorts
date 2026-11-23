@@ -1,0 +1,1365 @@
+[
+ {
+  "line": 1,
+  "start": 0.0,
+  "end": 0.651,
+  "words": [
+   "Your",
+   "phone's"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 0.651,
+  "end": 1.065,
+  "words": [
+   "brain",
+   "is"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 1.065,
+  "end": 1.421,
+  "words": [
+   "made",
+   "of"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 1,
+  "start": 1.421,
+  "end": 1.835,
+  "words": [
+   "sand"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 2,
+  "start": 2.155,
+  "end": 2.596,
+  "words": [
+   "Sand"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 2.596,
+  "end": 3.226,
+  "words": [
+   "Inside",
+   "your"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 3.226,
+  "end": 3.729,
+  "words": [
+   "phone"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 2,
+  "start": 3.729,
+  "end": 4.233,
+  "words": [
+   "Thinking"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 2,
+  "start": 4.233,
+  "end": 4.8,
+  "words": [
+   "for",
+   "you"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 5.12,
+  "end": 5.475,
+  "words": [
+   "Giant"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 5.475,
+  "end": 6.113,
+  "words": [
+   "factories"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 3,
+  "start": 6.113,
+  "end": 6.751,
+  "words": [
+   "do",
+   "this"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 6.751,
+  "end": 7.248,
+  "words": [
+   "Never",
+   "at"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 3,
+  "start": 7.248,
+  "end": 7.744,
+  "words": [
+   "home"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 8.064,
+  "end": 8.685,
+  "words": [
+   "Only",
+   "three"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 4,
+  "start": 8.685,
+  "end": 9.238,
+  "words": [
+   "steps"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 9.238,
+  "end": 9.652,
+  "words": [
+   "I",
+   "said"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 9.652,
+  "end": 10.205,
+  "words": [
+   "that",
+   "last"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 4,
+  "start": 10.205,
+  "end": 10.688,
+  "words": [
+   "time"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 11.008,
+  "end": 11.765,
+  "words": [
+   "First",
+   "cook"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 11.765,
+  "end": 12.143,
+  "words": [
+   "it",
+   "with"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 12.143,
+  "end": 12.584,
+  "words": [
+   "coal"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 12.584,
+  "end": 13.088,
+  "words": [
+   "Out",
+   "comes"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 5,
+  "start": 13.088,
+  "end": 13.845,
+  "words": [
+   "grey",
+   "metal"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 6,
+  "start": 14.165,
+  "end": 14.876,
+  "words": [
+   "Still",
+   "way"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 14.876,
+  "end": 15.263,
+  "words": [
+   "way",
+   "too"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 15.263,
+  "end": 15.78,
+  "words": [
+   "dirty",
+   "for"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 6,
+  "start": 15.78,
+  "end": 16.362,
+  "words": [
+   "a",
+   "chip"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 16.763,
+  "end": 17.25,
+  "words": [
+   "They",
+   "clean"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 7,
+  "start": 17.25,
+  "end": 17.792,
+  "words": [
+   "it",
+   "clean"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 17.792,
+  "end": 18.333,
+  "words": [
+   "it",
+   "clean"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 7,
+  "start": 18.333,
+  "end": 18.875,
+  "words": [
+   "it",
+   "again"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 19.295,
+  "end": 19.737,
+  "words": [
+   "A",
+   "gold"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 19.737,
+  "end": 20.178,
+  "words": [
+   "bar"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 20.178,
+  "end": 20.841,
+  "words": [
+   "Four",
+   "nines"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 8,
+  "start": 20.841,
+  "end": 21.356,
+  "words": [
+   "pure"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 21.356,
+  "end": 21.871,
+  "words": [
+   "This"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 21.871,
+  "end": 22.754,
+  "words": [
+   "Nine",
+   "nines"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 8,
+  "start": 22.754,
+  "end": 23.711,
+  "words": [
+   "even",
+   "eleven"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 24.111,
+  "end": 24.6,
+  "words": [
+   "Now",
+   "melt"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 24.6,
+  "end": 24.95,
+  "words": [
+   "it"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 24.95,
+  "end": 25.649,
+  "words": [
+   "Hotter",
+   "than"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 9,
+  "start": 25.649,
+  "end": 26.138,
+  "words": [
+   "lava"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 10,
+  "start": 26.457,
+  "end": 26.807,
+  "words": [
+   "Dip",
+   "in"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 26.807,
+  "end": 27.226,
+  "words": [
+   "a",
+   "tiny"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 27.226,
+  "end": 27.716,
+  "words": [
+   "seed"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 10,
+  "start": 27.716,
+  "end": 28.835,
+  "words": [
+   "Pull",
+   "slowly"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 10,
+  "start": 28.835,
+  "end": 29.465,
+  "words": [
+   "slowly"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 29.785,
+  "end": 30.13,
+  "words": [
+   "Spin",
+   "it"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 30.13,
+  "end": 30.647,
+  "words": [
+   "one",
+   "way"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 30.647,
+  "end": 30.992,
+  "words": [
+   "the",
+   "pot"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 30.992,
+  "end": 31.625,
+  "words": [
+   "the",
+   "other"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 31.625,
+  "end": 31.912,
+  "words": [
+   "Or",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 31.912,
+  "end": 32.545,
+  "words": [
+   "other",
+   "way"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 11,
+  "start": 32.545,
+  "end": 33.177,
+  "words": [
+   "Whatever"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 33.647,
+  "end": 34.318,
+  "words": [
+   "Slower",
+   "than"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 34.318,
+  "end": 34.988,
+  "words": [
+   "a",
+   "snail"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 12,
+  "start": 34.988,
+  "end": 35.525,
+  "words": [
+   "About",
+   "two"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 12,
+  "start": 35.525,
+  "end": 35.994,
+  "words": [
+   "days"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 36.394,
+  "end": 37.048,
+  "words": [
+   "Now",
+   "press"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 37.048,
+  "end": 37.584,
+  "words": [
+   "the",
+   "Follow"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 13,
+  "start": 37.584,
+  "end": 38.059,
+  "words": [
+   "button",
+   "to"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 38.059,
+  "end": 38.773,
+  "words": [
+   "keep",
+   "watching"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 13,
+  "start": 38.773,
+  "end": 39.487,
+  "words": [
+   "our",
+   "videos"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 39.957,
+  "end": 40.583,
+  "words": [
+   "Out",
+   "comes"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 40.583,
+  "end": 41.209,
+  "words": [
+   "one",
+   "giant"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 41.209,
+  "end": 42.538,
+  "words": [
+   "glowing",
+   "crystal"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 14,
+  "start": 42.538,
+  "end": 43.008,
+  "words": [
+   "tall",
+   "as"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 14,
+  "start": 43.008,
+  "end": 43.477,
+  "words": [
+   "you"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 43.977,
+  "end": 44.469,
+  "words": [
+   "Heavy",
+   "as"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 44.469,
+  "end": 45.173,
+  "words": [
+   "a",
+   "piano"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 15,
+  "start": 45.173,
+  "end": 45.876,
+  "words": [
+   "Perfect",
+   "all"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 15,
+  "start": 45.876,
+  "end": 46.58,
+  "words": [
+   "through"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 46.98,
+  "end": 47.406,
+  "words": [
+   "A",
+   "wire"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 47.406,
+  "end": 47.973,
+  "words": [
+   "slices",
+   "it"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 47.973,
+  "end": 48.896,
+  "words": [
+   "like",
+   "cheese"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 48.896,
+  "end": 49.322,
+  "words": [
+   "thin",
+   "as"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 49.322,
+  "end": 49.747,
+  "words": [
+   "a",
+   "bank"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 16,
+  "start": 49.747,
+  "end": 50.244,
+  "words": [
+   "card"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 50.714,
+  "end": 51.236,
+  "words": [
+   "Polish",
+   "it"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 51.236,
+  "end": 51.496,
+  "words": [
+   "to",
+   "a"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 51.496,
+  "end": 52.083,
+  "words": [
+   "mirror"
+  ],
+  "star": [
+   true
+  ]
+ },
+ {
+  "line": 17,
+  "start": 52.083,
+  "end": 52.605,
+  "words": [
+   "Hundreds"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 52.605,
+  "end": 53.061,
+  "words": [
+   "of",
+   "phone"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 53.061,
+  "end": 53.648,
+  "words": [
+   "brains",
+   "fit"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 17,
+  "start": 53.648,
+  "end": 54.17,
+  "words": [
+   "on",
+   "one"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 54.57,
+  "end": 55.448,
+  "words": [
+   "Honest",
+   "part"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 55.448,
+  "end": 55.989,
+  "words": [
+   "Not",
+   "beach"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 18,
+  "start": 55.989,
+  "end": 56.462,
+  "words": [
+   "sand"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 56.462,
+  "end": 57.137,
+  "words": [
+   "Pure",
+   "quartz"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 57.137,
+  "end": 57.61,
+  "words": [
+   "rock"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 57.61,
+  "end": 58.286,
+  "words": [
+   "Most",
+   "sand's"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 18,
+  "start": 58.286,
+  "end": 59.029,
+  "words": [
+   "too",
+   "dirty"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 59.429,
+  "end": 59.847,
+  "words": [
+   "Rock",
+   "or"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 59.847,
+  "end": 60.754,
+  "words": [
+   "sand",
+   "mostly"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 60.754,
+  "end": 61.242,
+  "words": [
+   "the",
+   "same"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 61.242,
+  "end": 61.799,
+  "words": [
+   "stuff"
+  ],
+  "star": [
+   false
+  ]
+ },
+ {
+  "line": 19,
+  "start": 61.799,
+  "end": 62.706,
+  "words": [
+   "Still",
+   "thinking"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 19,
+  "start": 62.706,
+  "end": 63.333,
+  "words": [
+   "for",
+   "you"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 63.733,
+  "end": 64.253,
+  "words": [
+   "Phone",
+   "hot"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 64.253,
+  "end": 65.294,
+  "words": [
+   "while",
+   "charging"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 65.294,
+  "end": 65.75,
+  "words": [
+   "Take",
+   "the"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 20,
+  "start": 65.75,
+  "end": 66.4,
+  "words": [
+   "case",
+   "off"
+  ],
+  "star": [
+   true,
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 66.719,
+  "end": 67.152,
+  "words": [
+   "Did",
+   "you"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 67.152,
+  "end": 67.728,
+  "words": [
+   "know",
+   "your"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 67.728,
+  "end": 68.594,
+  "words": [
+   "phone",
+   "started"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 68.594,
+  "end": 69.242,
+  "words": [
+   "as",
+   "rock"
+  ],
+  "star": [
+   false,
+   true
+  ]
+ },
+ {
+  "line": 21,
+  "start": 69.242,
+  "end": 69.603,
+  "words": [
+   "Yes",
+   "or"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ },
+ {
+  "line": 21,
+  "start": 69.603,
+  "end": 70.324,
+  "words": [
+   "no",
+   "below"
+  ],
+  "star": [
+   false,
+   false
+  ]
+ }
+]
