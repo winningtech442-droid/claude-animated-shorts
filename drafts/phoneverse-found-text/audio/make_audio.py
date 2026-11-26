@@ -70,9 +70,9 @@ L = []
 
 
 def line(id_, who, scene, text, tts, speed=1.0, pitch=0.0, level="normal", fx=None, gap=0.12, lips="ON", emotion="",
-         bleep=None, alts=()):
+         bleep=None, alts=(), engine="kokoro"):
     L.append(dict(id=id_, who=who, scene=scene, text=text, tts=tts, speed=speed, pitch=pitch, level=level, fx=fx,
-                  gap=gap, lips=lips, emotion=emotion, bleep=bleep, alts=list(alts)))
+                  gap=gap, lips=lips, emotion=emotion, bleep=bleep, alts=list(alts), engine=engine))
 
 
 # Scene 1: hook
@@ -92,13 +92,13 @@ line("L05", "YOU", "snatch", "Nah, you're alright...", "[nah](/nˈɑː/), you're
      emotion="polite, distracted, already looking at the bloke")
 line("L06", "YOU", "snatch", "Oi! Oi! Get off! Get OFF it!", "oi! oi! get off! get [off](+2) it!", speed=1.22,
      pitch=1.0, level="shout", fx="shout", gap=-0.05, emotion="shock into fury, gripping with both hands, effort",
-     alts=["oi! oi! oi! get off it!", "oi!! get off! get off it!!"])
+     alts=["oi! oi! oi! get off it!", "oi!! get off! get off it!!"], engine="chatterbox")
 line("L07", "THIEF_A", "snatch", "Let go! Just let go, man!", "let go! just let go, man!", speed=1.08,
      level="shout", fx="shout", gap=-0.2, emotion="strained, through gritted teeth, pulling")
 line("L08", "YOU", "snatch", "No, no, no, no!", "no, no, no, no!", speed=1.35, pitch=1.5, level="shout",
-     fx="shout", gap=-0.05, lips="OFF", emotion="panic as it rips free (phone spinning in the air)")
+     fx="shout", gap=-0.05, lips="OFF", emotion="panic as it rips free (phone spinning in the air)", engine="chatterbox")
 line("L09", "YOU", "snatch", "Wait... who's got it? Who's got it?!", "wait, who's got it? who's got it?!",
-     speed=1.25, pitch=1.0, level="shout", gap=0.05, emotion="panicking, spinning between them")
+     speed=1.25, pitch=1.0, level="shout", gap=0.05, emotion="panicking, spinning between them", engine="chatterbox")
 line("L10", "OLD_MAN", "snatch", "He went that way!", "he went [that](+2) way!", speed=1.05, level="shout",
      fx="away", gap=0.05, lips="OFF", emotion="helpful, pointing left")
 line("L11", "SHOPPER", "snatch", "No, love, THAT way!", "no, love, [that](+2) way!", speed=1.1, level="shout",
@@ -131,7 +131,7 @@ line("L20", "YOU", "sofa", "Hold on. \"Your lost phone has been found. Tap to se
      emotion="surprised, then reading it out flat")
 line("L21", "JESS", "sofa", "Shut up! They found it?! Tap it! Tap it, tap it, tap it!",
      "shut [up](+2)! they found it?! tap it! tap it, tap it, tap it!", speed=1.28, pitch=1.0, level="shout",
-     gap=-0.1, emotion="squealing, bouncing on the sofa")
+     gap=-0.1, emotion="squealing, bouncing on the sofa", engine="chatterbox")
 line("L22", "YOU", "sofa", "Hang on... how've they even got my number?", "hang on... how've they even got my number?",
      speed=0.92, emotion="suspicious, slow, pulling the phone away")
 line("L23", "YOU", "sofa", "Oh, come on... I put it on my lock screen when I marked it lost. They just read it off.",
@@ -155,7 +155,15 @@ line("L29", "JESS", "sofa", "Your password's Biscuit123! Everyone knows that!",
 line("L30", "HOODED", "warehouse", "Cheers, Biscuit.", "cheers, biscuit.", speed=0.85, level="aside", fx="close",
      gap=0.3, lips="OFF", emotion="calm, low, amused")
 line("L31", "YOU", "warehouse", "JESS!", "jess!", speed=0.85, pitch=0.5, level="shout", fx="echo", gap=0.15,
-     lips="OFF", emotion="full scream, from far away")
+     lips="OFF", emotion="full scream, from far away", engine="chatterbox")
+
+# voice samples for Chatterbox to clone (about 10 s each, lively but clean: no effects, no pitch)
+REFS = {
+    "YOU": "right, so listen. I was walking down the high street the other day, minding my own business, and honestly, "
+           "you will not believe what happened next. it was mad. proper mad.",
+    "JESS": "oh my days, are you serious? no way! that is the best thing I have heard all week. tell me everything, "
+            "right now, I mean it!",
+}
 
 # music cues: (music file, anchored to line, offset s from that line's start, kind)
 MUSIC = [
@@ -264,7 +272,15 @@ def synth(pipe, text, voice, speed):
 
 def make_line(pipe, ln, tts=None):
     c = CAST[ln["who"]]
-    x, toks = synth(pipe, tts or ln["tts"], c["voice"], ln["speed"] * SPEED)
+    cb = os.path.join(OUT, "chatterbox", f"{ln['id']}.wav")
+    use_cb = ln["engine"] == "chatterbox" and tts is None and os.path.exists(cb)
+    if use_cb:  # emotional take from chatterbox_lines.py (same voice, cloned from a Kokoro sample)
+        import soundfile as sf
+        x, sr = sf.read(cb, dtype="float64")
+        x = resample_poly(x, KSR // 1000, sr // 1000) if sr != KSR else x
+        toks = json.load(open(cb.replace(".wav", "_words.json")))["words"]
+    else:
+        x, toks = synth(pipe, tts or ln["tts"], c["voice"], ln["speed"] * SPEED)
     # trim Kokoro's leading/trailing silence (keep 40 ms), shift word times to match
     thr = 0.01 * np.max(np.abs(x))
     nz = np.flatnonzero(np.abs(x) > thr)
@@ -279,7 +295,8 @@ def make_line(pipe, ln, tts=None):
             hit[0]["text"] = "[bleep]"
         else:
             print(f"  WARNING {ln['id']}: word to bleep not found in timestamps, bleep it by hand")
-    chain = ",".join(p for p in [pitch_chain(c["pitch"] + ln["pitch"], KSR), FX[ln["fx"]]] if p)
+    extra = 0.0 if use_cb else ln["pitch"]  # the Kokoro pitch lift faked panic; Chatterbox has the real thing
+    chain = ",".join(p for p in [pitch_chain(c["pitch"] + extra, KSR), FX[ln["fx"]]] if p)
     x = ffmpeg_fx(x, KSR, chain)
     x48 = resample_poly(x, SR // 1000, KSR // 1000)
     x48 *= dbg(LEVEL[ln["level"]] - loudness(x48))
@@ -292,6 +309,7 @@ def main():
     ap.add_argument("--mock", action="store_true", help="no Kokoro: beeps instead of voices (tests the flow)")
     ap.add_argument("--only", nargs="*", help="regenerate only these line ids (others are read back from out/lines)")
     ap.add_argument("--alts", action="store_true", help="also render the alternative takes to out/alts")
+    ap.add_argument("--refs", action="store_true", help="only write the Kokoro voice samples Chatterbox clones")
     args = ap.parse_args()
 
     if args.mock:
@@ -300,8 +318,15 @@ def main():
         from kokoro import KPipeline
         pipe = KPipeline(lang_code="b")  # British English
 
-    for d in ("lines", "stems", "alts"):
+    for d in ("lines", "stems", "alts", "chatterbox"):
         os.makedirs(os.path.join(OUT, d), exist_ok=True)
+    if args.refs:
+        import soundfile as sf
+        for who, txt in REFS.items():
+            x, _ = synth(pipe, txt, CAST[who]["voice"], 1.0)
+            sf.write(os.path.join(OUT, "chatterbox", f"ref_{who}.wav"), x / (np.max(np.abs(x)) + 1e-9) * 0.9, KSR)
+            print(f"ref_{who}.wav {len(x) / KSR:.1f} s")
+        return
 
     clips, words = {}, {}
     cache = os.path.join(OUT, "lines", "_words.json")
