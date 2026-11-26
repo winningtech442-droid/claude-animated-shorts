@@ -11,13 +11,19 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 EP = os.path.join(ROOT, "..", "drafts", "phoneverse-found-text", "audio", "out")
 ap = argparse.ArgumentParser(); ap.add_argument("--frames", nargs=2, type=int); ap.add_argument("--encode", nargs=2, type=int)
-ap.add_argument("--src", default="build/street"); ap.add_argument("--dst", default="build/street_out")
+ap.add_argument("--src", default="build/ep"); ap.add_argument("--dst", default="build/ep_out"); ap.add_argument("--name", default=None)
 a = ap.parse_args()
 FPS, W, H = 24, 1080, 1920
 FONT = ImageFont.truetype("/usr/share/fonts/opentype/inter/Inter-Black.otf", 88)
 KEY = {"L01": "nicking", "L02": "judge", "L03": "Oxford", "L04": "sorry", "L05": "alright", "L06": "OFF", "L07": "go",
-       "L08": "no", "L09": "got", "L10": "that", "L11": "THAT", "L12": "NOT", "L13": "fridge", "L14": "ME", "L15": "Fine",
-       "L16": "Hong", "L17": "spare", "L18": "thick"}
+       "L08": "Noooooo", "L09": "got", "L10": "that", "L11": "THAT", "L12": "NOT", "L13": "fridge", "L14": "ME", "L15": "Fine",
+       "L16": "Hong", "L17": "spare", "L18": "thick", "L19": "later", "L20": "found", "L21": "Taaap", "L22": "number",
+       "L23": "lock", "L24": "Ever", "L25": "fake", "L26": "Easy", "L27": "late", "L28": "do", "L29": "Biscuit", "L30": "Biscuit",
+       "L31": "JESS"}
+TL_ = {r["id"]: r for r in json.load(open(os.path.join(EP, "timeline.json")))}
+TAG = (TL_["L19"]["start"], TL_["L19"]["start"] + 2.6, "3 MONTHS LATER")      # small corner tag at the time jump (no full-screen card)
+TEASE_T = TL_["L31"]["end"] + 0.15                                             # "PART 2" in the caption slot after the last word
+SMALL = ImageFont.truetype("/usr/share/fonts/opentype/inter/Inter-Black.otf", 52)
 
 def chunks():
     words = json.load(open(os.path.join(EP, "words.json"))); tl = {r["id"]: r for r in json.load(open(os.path.join(EP, "timeline.json")))}
@@ -41,9 +47,21 @@ def chunks():
     return out
 CH = chunks()
 
+def overlays(img, t):
+    if TAG[0] <= t < TAG[1]:   # top-left tag below the app UI band (top 9% stays clear)
+        k = min(1.0, (t - TAG[0]) / 0.2, (TAG[1] - t) / 0.2); img = img.convert("RGBA"); ov = Image.new("RGBA", img.size, (0, 0, 0, 0)); d = ImageDraw.Draw(ov)
+        w = d.textlength(TAG[2], font=SMALL); x, y = 60, int(H * 0.115)
+        d.rounded_rectangle((x - 26, y - 20, x + w + 26, y + 74), 22, fill=(0, 0, 0, int(170 * k))); d.text((x, y), TAG[2], font=SMALL, fill=(255, 255, 255, int(255 * k)))
+        img = Image.alpha_composite(img, ov).convert("RGB")
+    if t >= TEASE_T:
+        k = min(1.0, (t - TEASE_T) / 0.25); d = ImageDraw.Draw(img); s_ = "PART 2"; f = ImageFont.truetype(FONT.path, int(88 + 10 * (1 - k)))
+        d.text((W / 2, int(H * 0.70)), s_, font=f, fill=(255, 214, 0), anchor="mm", stroke_width=7, stroke_fill=(0, 0, 0))
+    return img
+
 def caption(img, t):
+    img = overlays(img, t)
     c = next((c for c in CH if c["t0"] - 0.03 <= t < c["t1"]), None)
-    if not c: return img
+    if not c or t >= TEASE_T: return img
     key = KEY.get(c["line"], "").lower()
     d = ImageDraw.Draw(img); sizes = []
     for k, w in enumerate(c["words"]):
@@ -70,7 +88,7 @@ if a.frames:
         img = Image.open(src).convert("RGB").resize((W, H), Image.LANCZOS)
         caption(img, f / FPS).save(dst)
 if a.encode:
-    f0, f1 = a.encode; os.makedirs("final", exist_ok=True); out = f"final/cheers_biscuit_{f0 / FPS:.0f}-{f1 / FPS:.0f}s.mp4"
+    f0, f1 = a.encode; os.makedirs("final", exist_ok=True); out = a.name or f"final/cheers_biscuit_{f0 / FPS:.0f}-{f1 / FPS:.0f}s.mp4"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(FPS), "-start_number", str(f0), "-i", os.path.join(a.dst, "%04d.png"),
                     "-ss", f"{f0 / FPS:.3f}", "-t", f"{(f1 - f0) / FPS:.3f}", "-i", os.path.join(EP, "final_mix.wav"),
                     "-frames:v", str(f1 - f0), "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",

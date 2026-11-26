@@ -23,13 +23,14 @@ import biscuit_ui as UI
 ap = argparse.ArgumentParser()
 ap.add_argument("--test", action="store_true"); ap.add_argument("--one", type=int); ap.add_argument("--frames", nargs=2, type=int)
 ap.add_argument("--samples", type=int, default=16); ap.add_argument("--res", nargs=2, type=int, default=[540, 960])
-ap.add_argument("--out", default="build/ep"); ap.add_argument("--shots", nargs="*"); ap.add_argument("--threads", type=int, default=0)
+ap.add_argument("--step", type=int, default=1); ap.add_argument("--out", default="build/ep"); ap.add_argument("--shots", nargs="*"); ap.add_argument("--threads", type=int, default=0)
 a = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else None)
 TL = {r["id"]: r for r in json.load(open(os.path.join(EP, "timeline.json")))}
 S = {k: v["start"] for k, v in TL.items()}; E = {k: v["end"] for k, v in TL.items()}
 WORDS = json.load(open(os.path.join(EP, "words.json")))
 def W(line, word, end=False):
-    w = next(x for x in WORDS if x["line"] == line and x["word"].lower().strip(".,!?'\"…") == word)
+    k = lambda x: x["word"].lower().strip(".,!?'\"…")
+    w = next(x for x in WORDS if x["line"] == line and (k(x) == word or k(x).startswith(word + " ")))   # "Hong Kong" is one token
     return w["end"] if end else w["start"]
 T_END = E["L31"] + 1.6
 UIC = os.path.join(ROOT, "build", "ui_cache"); os.makedirs(UIC, exist_ok=True)
@@ -352,7 +353,8 @@ def sh_babe(t):
     return sh_you_mcu(t, S["L24"], S["L25"], dx=0.05, push=0.3)
 def sh_login(t):   # L25: her point of view onto the fake sign-in page (pushing in)
     u = ramp(t, S["L25"], S["L26"]); p = NEW.location; h = head_of("YOU")
-    eye = h + (p - h) * 0.2 + Vector((-0.07, 0.03, 0.07)); return cam_of(eye.lerp(p + (eye - p) * 0.5, u), p, 32, p)
+    n = NEW.matrix_world.to_3x3() @ Vector((0, 0, 1)); up = NEW.matrix_world.to_3x3() @ Vector((0, 1, 0))   # straight onto the screen
+    return cam_of(p + n * lerp(0.3, 0.2, u) + up * 0.02, p, 32, p)
 def sh_rewatch(t):  # L26: past her shoulder (soft), Jess in focus behind, quietly typing on her phone
     hY, hJ = head_of("YOU"), head_of("JESS")
     return cam_of(hY + Vector((-0.55, -0.7, 0.05)), hJ + Vector((0, 0, -0.25)), 45, hJ)
@@ -398,9 +400,12 @@ def place_phone_in_hands(c, ph, dist=0.3, drop=-0.12, side_off=0.0, look=True, t
     F, Rt = body_frame(c); chest = bone_world(c["arm"], "Bip01 Spine2"); h = bone_world(c["arm"], "Bip01 Head")
     p = chest + F * dist + Rt * side_off + Vector((0, 0, drop)); ph.location = p
     aim_screen(ph, tilt_to if tilt_to is not None else h + Vector((0, 0, 0.05)))
-    R3 = ph.rotation_euler.to_matrix(); ax = R3 @ Vector((1, 0, 0))
-    hand_to(c, "R", p + ax * 0.045 - (R3 @ Vector((0, 0, 1))) * 0.012, (0, 0, -0.6)); hand_to(c, "L", p - ax * 0.045 - (R3 @ Vector((0, 0, 1))) * 0.012, (0, 0, -0.6))
-    curl(c["arm"], 50)
+    R3 = ph.rotation_euler.to_matrix(); n = R3 @ Vector((0, 0, 1)); up = R3 @ Vector((0, 1, 0))
+    axR = R3 @ Vector((1, 0, 0))             # from the phone centre toward the holder RIGHT hand (measured)
+    # grip: each wrist just outside its edge and a little behind; fingers wrap behind the phone, index finger on top
+    hand_to(c, "R", p + axR * 0.06 - n * 0.02 - up * 0.03, (0, 0, -0.6), fingers=-axR * 0.7 - n * 0.7 + up * 0.2, across=-up)
+    hand_to(c, "L", p - axR * 0.06 - n * 0.02 - up * 0.03, (0, 0, -0.6), fingers=axR * 0.7 - n * 0.7 + up * 0.2, across=-up)
+    curl(c["arm"], 40)
     return p
 THIGH, CALF = float(os.environ.get("THIGH", "28")), float(os.environ.get("CALF", "-12"))
 def sit_legs(c):
@@ -470,12 +475,12 @@ def set_frame(t):
     for b, ang in (("Bip01 Spine", -9 * lean), ("Bip01 Spine1", -9 * lean), ("Bip01 Spine2", 6 * (1 - lean))): rot_bone(HOOD["arm"], b, (0, 0, ang))
     bpy.context.view_layer.update()
     kb = OD + Vector((0.05, -0.55, 0.81)); F_, R_ = body_frame(HOOD)
+    look_at(HOOD, (OD + Vector((0.45, -0.62, 0.79))) if S["L23"] <= t < S["L24"] or t >= S["L30"] else kb + Vector((0, -0.2, 0.15)), 0.7)
     for side, sx in (("L", 0.08), ("R", -0.08)):
         typing = Vector((0, 0.01 * math.sin(t * (23 if side == "L" else 19)), 0.012 * max(0, math.sin(t * (17 if side == "L" else 21)))))
         tgt = kb + Vector((sx, 0, 0)) + typing * (1 - lean)
         if side == "R" and lean > 0: tgt = tgt.lerp(OLD.location + Vector((0.02, 0.04, 0.03)), 0.0)
         hand_to(HOOD, side, tgt.lerp(bone_world(HOOD["arm"], "Bip01 Spine2") + F_ * 0.25 + Vector((0, 0, -0.15)) + R_ * (-sx * 2.5), lean), (0, 0, -0.5))
-    look_at(HOOD, OLD.location if S["L23"] <= t < S["L24"] or t >= S["L30"] else kb + Vector((0, -0.2, 0.15)), 0.7)
     hd = bone_world(HOOD["arm"], "Bip01 Head"); hm = HOOD["arm"].matrix_world @ HOOD["arm"].pose.bones["Bip01 Head"].matrix
     hood.matrix_world = Matrix.Translation(hd + hm.to_3x3() @ Vector((0.04, 0, 0)) + Vector((0, 0.03, 0.06))) @ Matrix.Diagonal((1.0, 1.1, 1.15, 1.0))
     if t >= S["L23"] - 0.5 and (S["L23"] - 0.5 <= t < S["L24"] or t >= S["L30"] - 0.5):   # her old phone on the bench
@@ -493,12 +498,22 @@ def set_frame(t):
     yh = 12 - 22 * ramp(t, S["L28"] - 0.1, S["L28"] + 0.9)                     # she turns to Jess on "Jess. What did you do?"
     drive(Y, "YOU", YOU_SEAT, yh, SIT, t * 0.6); sit_legs(Y)
     drive(J, "JESS", JESS_SEAT + Vector((0, 0, bounce)), -18 if t < S["L21"] else -30, SIT, t * 0.6 + 1.3); sit_legs(J)
+    # who looks where: one look per character per frame, applied BEFORE the hands (the Biped's clavicles hang off the
+    # neck, so a head turn after the IK would drag both arms off the phone)
+    T_DOWN, T_PICK = S["L26"] - 0.15, S["L26"] + 0.35
+    lookY = NEW.location.copy() if t < T_DOWN else None; lookJ = NEW.location.copy() if t >= T_PICK and t < S["L27"] - 0.1 else None; wY = wJ = 0.9
+    if t < S["L20"]: lookJ, wJ = head_of("YOU") + Vector((0, 0, -0.25)), 0.4
+    elif t < T_PICK: lookJ = NEW.location.copy() if t < S["L22"] else head_of("YOU")
+    elif t >= S["L27"] - 0.1: lookJ = head_of("YOU")
+    if S["L21"] <= t < S["L22"]: lookY, wY = head_of("JESS"), 0.5
+    elif S["L24"] - 0.1 <= t < S["L25"] or S["L25"] + 2.2 <= t: lookY, wY = head_of("JESS"), (0.8 if t < S["L28"] else lerp(0.3, 1.0, ramp(t, S["L28"], S["L28"] + 0.9)))
+    if lookY is not None: look_at(Y, lookY, wY)
+    if lookJ is not None: look_at(J, lookJ, wJ)
     # You: the new phone in both hands (pulled back on "Hang on"); she puts it down on the cushion as L26 starts (to talk
     # with her hands) and Jess quietly picks it up behind her: the rewatch detail. Jess has it until the end of the scene.
-    pull = ramp(t, S["L22"], S["L22"] + 0.4); lookY = lookJ = None; wY = wJ = 0.9
-    T_DOWN, T_PICK = S["L26"] - 0.15, S["L26"] + 0.35
+    pull = ramp(t, S["L22"], S["L22"] + 0.4)
     if t < T_DOWN:
-        lookY = place_phone_in_hands(Y, NEW, dist=0.3 + 0.05 * pull, drop=-0.08 + 0.04 * pull, side_off=-0.04 * pull)
+        place_phone_in_hands(Y, NEW, dist=0.3 + 0.05 * pull, drop=-0.08 + 0.04 * pull, side_off=-0.04 * pull)
         show(NEW_TX, *screen_new(t))
     else:
         F_, R_ = body_frame(Y); chest = bone_world(Y["arm"], "Bip01 Spine2")
@@ -512,20 +527,12 @@ def set_frame(t):
     jess_has = T_PICK <= t
     if jess_has:
         up = t >= S["L27"] - 0.1   # holds it up to show 'Signed in'
-        lookJ = place_phone_in_hands(J, NEW, dist=0.36 if up else 0.3, drop=-0.02 if up else -0.13, tilt_to=(head_of("YOU") if up else None))
+        place_phone_in_hands(J, NEW, dist=0.36 if up else 0.3, drop=-0.02 if up else -0.13, tilt_to=(head_of("YOU") if up else None))
         show(NEW_TX, *screen_new(t))
     elif S["L21"] <= t < S["L22"] + 0.3:   # grabbing at your phone, bouncing
         k = ramp(t, S["L21"] + 0.15, S["L21"] + 0.5) * (1 - ramp(t, S["L22"], S["L22"] + 0.3))
         hand_to(J, "L", bone_world(J["arm"], "Bip01 L Hand").lerp(NEW.location + Vector((0.06, -0.02, 0.02)), k), (0, 0, -0.5))
         F_, R_ = body_frame(J); hand_to(J, "R", bone_world(J["arm"], "Bip01 Spine2") + F_ * 0.34 + R_ * 0.18 + Vector((0, 0, -0.05 + 0.05 * math.sin(t * 9))), (0, 0, -0.6))
-    # who looks where (one look per character per frame)
-    if t < S["L20"]: lookJ, wJ = head_of("YOU") + Vector((0, 0, -0.25)), 0.4
-    elif t < T_PICK: lookJ = NEW.location if t < S["L22"] else head_of("YOU")
-    elif t >= S["L27"] - 0.1: lookJ = head_of("YOU")
-    if S["L21"] <= t < S["L22"]: lookY, wY = head_of("JESS"), 0.5
-    elif S["L24"] - 0.1 <= t < S["L25"] or S["L25"] + 2.2 <= t: lookY, wY = head_of("JESS"), (0.8 if t < S["L28"] else lerp(0.3, 1.0, ramp(t, S["L28"], S["L28"] + 0.9)))
-    if lookY is not None: look_at(Y, lookY, wY)
-    if lookJ is not None: look_at(J, lookJ, wJ)
     set_face(Y, t, "YOU", [[0, "happy", 0.9], [S["L20"], "surprised", 1], [F_YOUR, "focused", 0.7], [S["L21"], "surprised", 0.5], [S["L22"], "suspicious", 1],
                            [S["L24"], "focused", 0.6], [S["L25"], "focused", 0.8], [S["L26"], "proud", 0.9], [F_EASY - 0.1, "smug", 1],
                            [S["L27"], "surprised", 0.8], [S["L28"], "dread", 1], [S["L29"], "shock", 1]], lips=lips_on(t))
@@ -568,6 +575,12 @@ def render_frame(f, path):
             kz = bone_world(arm, "Bip01 L Calf").z; print("DBG", k_, "pelvis", round(pz, 3), "knee", round(kz, 3), "toe", round(tz, 3), "arm z", round(arm.location.z, 3), "z0", round(c["z0"], 3))
         print("DBG OLD", tuple(round(v, 3) for v in OLD.matrix_world.translation), "hide", OLD.hide_render, "NEW", tuple(round(v, 3) for v in NEW.matrix_world.translation),
               "hood", tuple(round(v, 3) for v in hood.matrix_world.translation), "headH", tuple(round(v, 3) for v in bone_world(HOOD["arm"], "Bip01 Head")))
+        Ya = C["YOU"]["arm"]; print("DBG hands R", tuple(round(v, 3) for v in bone_world(Ya, "Bip01 R Hand")), "L", tuple(round(v, 3) for v in bone_world(Ya, "Bip01 L Hand")),
+              "chest", tuple(round(v, 3) for v in bone_world(Ya, "Bip01 Spine2")), "rotz", round(math.degrees(Ya.rotation_euler.z), 1), "F", tuple(round(v, 2) for v in body_frame(C["YOU"])[0]))
+        Fy, Ry = body_frame(C["YOU"]); ch = bone_world(Ya, "Bip01 Spine2")
+        print("DBG side: R wrist", round((bone_world(Ya, "Bip01 R Hand") - ch).dot(Ry), 3), "L wrist", round((bone_world(Ya, "Bip01 L Hand") - ch).dot(Ry), 3),
+              "R shoulder", round((bone_world(Ya, "Bip01 R UpperArm") - ch).dot(Ry), 3), "phone", round((NEW.location - ch).dot(Ry), 3),
+              "axR", round((-(NEW.rotation_euler.to_matrix() @ Vector((1, 0, 0)))).dot(Ry), 3))
         if os.environ.get("DBG") == "2": return
     t0 = time.time(); bpy.ops.render.render(write_still=True); print(f"rendered {path} shot={shot} t={t:.2f} {time.time() - t0:.1f}s", flush=True)
 
@@ -583,7 +596,7 @@ elif a.one is not None:
 else:
     os.makedirs(a.out, exist_ok=True); f0, f1 = a.frames
     print(f"episode part 2: frames {F_START}..{F_END} (this job {f0}..{f1})", flush=True)
-    for f in range(max(f0, F_START), min(f1, F_END)):
+    for f in range(max(f0, F_START), min(f1, F_END), a.step):
         p = os.path.join(a.out, f"{f:04d}.png")
         if os.path.exists(p): set_frame(f / FPS); continue
         render_frame(f, p)
