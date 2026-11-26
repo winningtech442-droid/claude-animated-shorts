@@ -62,7 +62,7 @@ def main():
             wav = tts.generate(text, audio_prompt_path=ref, exaggeration=exa, cfg_weight=cfg, temperature=temp)
             x = wav.squeeze().cpu().numpy().astype(np.float64)
             path = os.path.join(CB, "takes", f"{lid}_take{k + 1}.wav")
-            sf.write(path, x, tts.sr)
+            sf.write(path, x, tts.sr, subtype="FLOAT")  # float: Chatterbox peaks can pass 1.0, 16-bit would clip them
             y = resample_poly(x, 16000, tts.sr).astype(np.float32)
             segs, _ = asr.transcribe(y, beam_size=5, language="en", word_timestamps=True)
             segs = list(segs)
@@ -73,10 +73,13 @@ def main():
             sc = score(heard, want) - 0.04 * max(0.0, dur - (0.42 * len(norm(want)) + 0.8))
             peak = float(np.max(np.abs(x)))
             print(f"{lid} take{k + 1}: {dur:4.2f}s peak {peak:.2f} score {sc:.2f} | {heard}")
-            if best is None or sc > best[0]:
-                best = (sc, k + 1, x, words, heard, dur)
-        sc, k, x, words, heard, dur = best
-        sf.write(os.path.join(CB, f"{lid}.wav"), x, tts.sr)
+            # ties: prefer the take Whisper heard as shouted ("!" or CAPS), then the tighter one
+            shout = heard.count("!") + sum(w.isupper() and len(w) > 1 for w in re.findall(r"[A-Za-z]+", heard))
+            key = (round(sc, 2), shout, -dur)
+            if best is None or key > best[6]:
+                best = (sc, k + 1, x, words, heard, dur, key)
+        sc, k, x, words, heard, dur, _ = best
+        sf.write(os.path.join(CB, f"{lid}.wav"), x, tts.sr, subtype="FLOAT")
         json.dump(dict(sr=tts.sr, words=words), open(os.path.join(CB, f"{lid}_words.json"), "w"), indent=1)
         report[lid] = dict(take=k, score=round(sc, 3), heard=heard, seconds=round(dur, 2))
         print(f"  -> {lid}: picked take {k} ({heard})")
