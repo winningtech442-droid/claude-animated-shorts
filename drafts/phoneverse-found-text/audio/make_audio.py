@@ -38,6 +38,7 @@ from dsp import SR, ns, dbg, integrated, peq, write_wav, read_wav  # noqa: E402
 
 KSR = 24000  # Kokoro output rate
 OUT = os.path.join(HERE, "out")
+SPEED = 1.06  # global pace multiplier on top of each line's own speed
 
 # ------------------------------------------------------------------ cast: Kokoro voice + default pitch (semitones)
 CAST = {
@@ -58,7 +59,7 @@ FX = {
     None: "",
     "shout": "highpass=f=110,acompressor=threshold=0.08:ratio=5:attack=4:release=90:makeup=2",
     "away": "lowpass=f=4200,aecho=0.8:0.55:70:0.22",  # shouting at a camera that is leaving her
-    "echo": "lowpass=f=3400,aecho=0.8:0.7:140|300|520:0.45|0.3|0.18",  # her "JESS!" carrying across to the warehouse
+    "echo": "apad=pad_dur=1.2,aecho=1.0:0.55:380|760|1140:0.35|0.2|0.1",  # "JESS!" then its echo (late, so the J stays crisp)
     "close": "highpass=f=70,lowpass=f=7000,acompressor=threshold=0.1:ratio=3:attack=10:release=150:makeup=1.5",
 }
 
@@ -87,12 +88,12 @@ line("L03", "YOU", "hook", "So I'm walking down Oxford Street, scrolling, mindin
 # Scene 2: the snatch
 line("L04", "THIEF_B", "snatch", "Ooh, sorry, love!", "ooh, sorry, love!", speed=1.05, gap=-0.15,
      emotion="huge man, sweet over-friendly voice (the joke is the size vs the voice)")
-line("L05", "YOU", "snatch", "Nah, you're alright...", "nah, you're alright,", speed=1.1, gap=0.0, lips="OFF",
+line("L05", "YOU", "snatch", "Nah, you're alright...", "[nah](/nˈɑː/), you're alright,", speed=1.1, gap=0.0, lips="OFF",
      emotion="polite, distracted, already looking at the bloke")
 line("L06", "YOU", "snatch", "Oi! Oi! Get off! Get OFF it!", "oi! oi! get off! get [off](+2) it!", speed=1.22,
      pitch=1.0, level="shout", fx="shout", gap=-0.05, emotion="shock into fury, gripping with both hands, effort",
      alts=["oi! oi! oi! get off it!", "oi!! get off! get off it!!"])
-line("L07", "THIEF_A", "snatch", "Let go! Just let go, man!", "let go! just let go, man!", speed=1.18,
+line("L07", "THIEF_A", "snatch", "Let go! Just let go, man!", "let go! just let go, man!", speed=1.08,
      level="shout", fx="shout", gap=-0.2, emotion="strained, through gritted teeth, pulling")
 line("L08", "YOU", "snatch", "No, no, no, no!", "no, no, no, no!", speed=1.35, pitch=1.5, level="shout",
      fx="shout", gap=-0.05, lips="OFF", emotion="panic as it rips free (phone spinning in the air)")
@@ -107,8 +108,8 @@ line("L12", "YOU", "snatch", "Nah... nah. I am NOT chasing two grown men down Ox
      emotion="out of breath, hands on knees, deadpan")
 line("L13", "YOU", "snatch", "One of them's the size of a fridge!", "one of them's the size of a [fridge](+2)!",
      speed=1.1, emotion="incredulous")
-line("L14", "YOU", "snatch", "Oi! Where you going? You're meant to follow ME!",
-     "oi! where you going? you're meant to follow [me](+2)!", speed=1.15, level="shout", fx="away", lips="OFF",
+line("L14", "YOU", "snatch", "Oi, camera! Where are you going? You're meant to follow ME!",
+     "oi, camera! where are you going? you're meant to follow [me](+2)!", speed=1.08, level="shout", fx="away", lips="OFF",
      emotion="indignant, shouting after the camera that's leaving her")
 # Scene 3: the phone's journey (voice-over)
 line("L15", "YOU", "journey", "Fine. Follow my phone then. See if I care.", "fine. follow my phone then. see if I care.",
@@ -133,8 +134,8 @@ line("L21", "JESS", "sofa", "Shut up! They found it?! Tap it! Tap it, tap it, ta
      gap=-0.1, emotion="squealing, bouncing on the sofa")
 line("L22", "YOU", "sofa", "Hang on... how've they even got my number?", "hang on... how've they even got my number?",
      speed=0.92, emotion="suspicious, slow, pulling the phone away")
-line("L23", "YOU", "sofa", "Oh, for... I put it on my lock screen when I marked it lost. They just read it off.",
-     "oh, for... I put it on my lock screen when I marked it lost. they just read it off.", speed=1.05,
+line("L23", "YOU", "sofa", "Oh, come on... I put it on my lock screen when I marked it lost. They just read it off.",
+     "oh, come on... I put it on my lock screen when I marked it lost. they just read it off.", speed=1.05,
      fx="close", lips="OFF", emotion="groan, then the penny drops (warehouse cutaway)")
 line("L24", "YOU", "sofa", "Babe. Apple doesn't text you when they find a phone. Ever.",
      "babe. apple doesn't text you when they find a phone. [ever](+2).", speed=0.95, emotion="firm, patient")
@@ -153,7 +154,7 @@ line("L29", "JESS", "sofa", "Your password's Biscuit123! Everyone knows that!",
      emotion="proud, bubbly, thinks she helped")
 line("L30", "HOODED", "warehouse", "Cheers, Biscuit.", "cheers, biscuit.", speed=0.85, level="aside", fx="close",
      gap=0.3, lips="OFF", emotion="calm, low, amused")
-line("L31", "YOU", "warehouse", "JESS!", "jess!", speed=1.0, pitch=2.0, level="shout", fx="echo", gap=0.15,
+line("L31", "YOU", "warehouse", "JESS!", "jess!", speed=0.85, pitch=0.5, level="shout", fx="echo", gap=0.15,
      lips="OFF", emotion="full scream, from far away")
 
 # music cues: (music file, anchored to line, offset s from that line's start, kind)
@@ -263,7 +264,7 @@ def synth(pipe, text, voice, speed):
 
 def make_line(pipe, ln, tts=None):
     c = CAST[ln["who"]]
-    x, toks = synth(pipe, tts or ln["tts"], c["voice"], ln["speed"])
+    x, toks = synth(pipe, tts or ln["tts"], c["voice"], ln["speed"] * SPEED)
     # trim Kokoro's leading/trailing silence (keep 40 ms), shift word times to match
     thr = 0.01 * np.max(np.abs(x))
     nz = np.flatnonzero(np.abs(x) > thr)
@@ -326,11 +327,13 @@ def main():
     for ln in L:
         x = clips[ln["id"]]
         start = max(prev_start + 0.15, t + ln["gap"]) if tl else 0.0
-        end = start + len(x) / SR
+        # the line "ends" at its last spoken word: breath and effect tails overlap the next line (no dead air)
+        spoken = [w for w in words[ln["id"]] if w["text"][:1].isalnum() or w["text"] == "[bleep]"]
+        end = start + (min(len(x) / SR, spoken[-1]["end"] + 0.06) if spoken else len(x) / SR)
         tl.append(dict(id=ln["id"], who=ln["who"], scene=ln["scene"], start=round(start, 3), end=round(end, 3),
                        text=ln["text"], lips=ln["lips"], emotion=ln["emotion"]))
         prev_start, t = start, max(t, end)
-    total = t + 1.2
+    total = max(t, max(r["start"] for r in tl) + len(clips[L[-1]["id"]]) / SR) + 1.2
     N = ns(total)
     voice = np.zeros(N)
     stems = {w: np.zeros(N) for w in CAST}
@@ -403,9 +406,9 @@ def main():
     music *= dbg(duck_db)[None, :]
     mix = np.stack([voice, voice]) + music
     mix *= dbg(-14.0 - integrated(mix))
-    ceil = dbg(-1.5)
+    ceil = dbg(-2.5)
     mix = np.where(np.abs(mix) > ceil, np.sign(mix) * (ceil + (1 - ceil) * np.tanh((np.abs(mix) - ceil) / (1 - ceil))), mix)
-    mix = np.clip(mix, -dbg(-1.0), dbg(-1.0))
+    mix = np.clip(mix, -dbg(-1.8), dbg(-1.8))  # leaves room for inter-sample peaks: true peak stays under -1 dBTP
     write_wav(os.path.join(OUT, "music_ducked.wav"), music, bits=24)
     write_wav(os.path.join(OUT, "rough_mix.wav"), mix, bits=24)
     print(f"\nTotal {total:.1f} s | voice {integrated(np.stack([voice, voice])):.1f} LUFS | "
