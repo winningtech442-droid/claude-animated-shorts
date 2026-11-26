@@ -70,9 +70,11 @@ L = []
 
 
 def line(id_, who, scene, text, tts, speed=1.0, pitch=0.0, level="normal", fx=None, gap=0.12, lips="ON", emotion="",
-         bleep=None, alts=(), engine="kokoro"):
+         bleep=None, alts=(), engine="kokoro", pauses=None):
+    # pauses: {word: seconds} = a deliberate silence inserted right after that word (house rule: 1 s after the hook's
+    # questions). engine="chatterbox": the take comes from chatterbox_lines.py or drag_lines.py (out/chatterbox/<id>.wav)
     L.append(dict(id=id_, who=who, scene=scene, text=text, tts=tts, speed=speed, pitch=pitch, level=level, fx=fx,
-                  gap=gap, lips=lips, emotion=emotion, bleep=bleep, alts=list(alts), engine=engine))
+                  gap=gap, lips=lips, emotion=emotion, bleep=bleep, alts=list(alts), engine=engine, pauses=pauses or {}))
 
 
 # Scene 1: hook
@@ -81,7 +83,7 @@ line("L01", "YOU", "hook", "If UK thieves don't really want your phone... why th
      speed=1.05, gap=0.0, emotion="baffled, half-laughing, leaning into camera like telling a mate", bleep="fuck",
      alts=["if UK thieves don't [really](+2) want your phone... why the fuck do they keep [nicking](+2) it?"])
 line("L02", "YOU", "hook", "Sounds mad, right? Now you judge this.", "sounds mad, right? now [you](+2) judge this.",
-     lips="OFF", emotion="cheeky, a wink (focus shifts to the two thieves behind her)")
+     gap=1.0, pauses={"right": 1.0}, lips="OFF", emotion="cheeky, a wink (focus shifts to the two thieves behind her)")
 line("L03", "YOU", "hook", "So I'm walking down Oxford Street, scrolling, minding my own business, yeah...",
      "so I'm walking down oxford street, scrolling, minding my own business, yeah,", speed=1.12,
      emotion="breezy, carefree")
@@ -90,22 +92,22 @@ line("L04", "THIEF_B", "snatch", "Ooh, sorry, love!", "ooh, sorry, love!", speed
      emotion="huge man, sweet over-friendly voice (the joke is the size vs the voice)")
 line("L05", "YOU", "snatch", "Nah, you're alright...", "[nah](/nˈɑː/), you're alright,", speed=1.1, gap=0.0, lips="OFF",
      emotion="polite, distracted, already looking at the bloke")
-line("L06", "YOU", "snatch", "Oi! Oi! Get off! Get OFF it!", "oi! oi! get off! get [off](+2) it!", speed=1.22,
+line("L06", "YOU", "snatch", "Oi! Oiiiii! Get off! Get OFF it!", "oi! oi! get off! get [off](+2) it!", speed=1.22,
      pitch=1.0, level="shout", fx="shout", gap=-0.05, emotion="shock into fury, gripping with both hands, effort",
      alts=["oi! oi! oi! get off it!", "oi!! get off! get off it!!"], engine="chatterbox")
-line("L07", "THIEF_A", "snatch", "Let go! Just let go, man!", "let go! just let go, man!", speed=1.08,
+line("L07", "THIEF_A", "snatch", "Let go! Just let go, mate!", "let go! just let go, mate!", speed=1.08,
      level="shout", fx="shout", gap=-0.2, emotion="strained, through gritted teeth, pulling")
-line("L08", "YOU", "snatch", "No, no, no, no!", "no, no, no, no!", speed=1.35, pitch=1.5, level="shout",
+line("L08", "YOU", "snatch", "No, Noooooo!", "no, no!", speed=1.35, pitch=1.5, level="shout",
      fx="shout", gap=-0.05, lips="OFF", emotion="panic as it rips free (phone spinning in the air)", engine="chatterbox")
-line("L09", "YOU", "snatch", "Wait, wait! Who's got it? Who's got it?!", "wait, who's got it? who's got it?!",
+line("L09", "YOU", "snatch", "Wait, Waaait! Who's got it? Who's got it?!", "wait, wait! who's got it? who's got it?!",
      speed=1.25, pitch=1.0, level="shout", gap=0.05, emotion="panicking, spinning between them", engine="chatterbox")
 line("L10", "OLD_MAN", "snatch", "He went that way!", "he went [that](+2) way!", speed=1.05, level="shout",
      fx="away", gap=0.05, lips="OFF", emotion="helpful, pointing left")
 line("L11", "SHOPPER", "snatch", "No, love, THAT way!", "no, love, [that](+2) way!", speed=1.1, level="shout",
      fx="away", gap=-0.25, lips="OFF", emotion="talking over him, pointing right")
-line("L12", "YOU", "snatch", "Nah... nah. I am NOT chasing two grown men down Oxford Street.",
+line("L12", "YOU", "snatch", "Nah... naaaah. I am NOT chasing two grown men down Oxford Street.",
      "nah... nah. I am [not](+2) chasing two grown men down oxford street.", speed=0.98, gap=0.15,
-     emotion="out of breath, hands on knees, deadpan")
+     emotion="out of breath, hands on knees, deadpan", engine="chatterbox")
 line("L13", "YOU", "snatch", "One of them's the size of a fridge!", "one of them's the size of a [fridge](+2)!",
      speed=1.1, emotion="incredulous")
 line("L14", "YOU", "snatch", "Oi, camera! Where are you going? You're meant to follow ME!",
@@ -129,7 +131,7 @@ line("L19", "YOU", "sofa", "Three months later. New phone, new me...", "three mo
 line("L20", "YOU", "sofa", "Hold on. \"Your lost phone has been found. Tap to see where.\"",
      "hold on. your lost phone has been found. tap to see where.", speed=1.0, gap=0.2,
      emotion="surprised, then reading it out flat")
-line("L21", "JESS", "sofa", "Shut up! They found it?! Tap it! Tap it, tap it, tap it!",
+line("L21", "JESS", "sofa", "Shut up! They found it?! Tap it! Taaap it!",
      "shut [up](+2)! they found it?! tap it! tap it, tap it, tap it!", speed=1.28, pitch=1.0, level="shout",
      gap=-0.1, emotion="squealing, bouncing on the sofa", engine="chatterbox")
 line("L22", "YOU", "sofa", "Hang on... how've they even got my number?", "hang on... how've they even got my number?",
@@ -288,6 +290,17 @@ def make_line(pipe, ln, tts=None):
     b = min(len(x), nz[-1] + int(0.06 * KSR)) if len(nz) else len(x)
     x = x[a:b]
     toks = [dict(t, start=max(0.0, t["start"] - a / KSR), end=max(0.0, t["end"] - a / KSR)) for t in toks]
+    for word, secs in ln["pauses"].items():  # a deliberate silence right after `word`, later words shift with it
+        k = next((i for i, t in enumerate(toks) if t["text"].lower().strip(".,!?") == word), None)
+        if k is None:
+            print(f"  WARNING {ln['id']}: pause word '{word}' not found")
+            continue
+        nxt = next((t["start"] for t in toks[k + 1:] if t["text"][:1].isalnum()), toks[k]["end"] + 0.1)
+        cut = int(min(toks[k]["end"] + 0.12, (toks[k]["end"] + nxt) / 2 + 0.03) * KSR)
+        f = int(0.01 * KSR)
+        x = x.copy(); x[cut - f:cut] *= np.linspace(1, 0, f)
+        x = np.concatenate([x[:cut], np.zeros(int(secs * KSR)), x[cut:]])
+        toks = [dict(t, start=t["start"] + secs, end=t["end"] + secs) if i > k else t for i, t in enumerate(toks)]
     if ln["bleep"]:
         hit = [t for t in toks if t["text"].lower().strip(".,!?") == ln["bleep"]]
         if hit:

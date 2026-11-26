@@ -3,6 +3,7 @@
 # Also writes a loudness envelope per character (mouth opens wider on louder syllables, closes in silence).
 #   python visemes.py      (Kokoro env; reads out/words.json, out/timeline.json, out/stems/voice_<WHO>.wav) -> out/visemes.json
 import json
+import re
 import os
 import sys
 
@@ -57,7 +58,11 @@ def main():
             elif not txt[:1].isalnum():
                 continue
             else:
-                seq = phonemes(g2p, txt.replace("123", " one two three")) or [10]
+                base = re.sub(r"([A-Za-z])\1{2,}", r"\1", txt)  # dragged words ("Noooooo!") -> the word; its vowel then fills the drag
+                seq = phonemes(g2p, base.replace("123", " one two three")) or [10]
+                if base != txt:  # hold the vowel: repeat the vowel visemes so they take most of the dragged time
+                    vow = [v for v in seq if v >= 10] or [10]
+                    seq = seq[:1] + vow * 4 + seq[-1:] if len(seq) > 1 else vow * 4
             t0, t1 = w["start"], max(w["end"], w["start"] + 0.08)
             dt = (t1 - t0) / len(seq)
             for k, v in enumerate(seq):

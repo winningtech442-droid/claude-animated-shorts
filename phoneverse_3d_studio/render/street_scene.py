@@ -24,11 +24,19 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--test", action="store_true"); ap.add_argument("--one", type=int); ap.add_argument("--frames", nargs=2, type=int)
 ap.add_argument("--samples", type=int, default=16); ap.add_argument("--res", nargs=2, type=int, default=[540, 960])
 ap.add_argument("--out", default="build/street"); ap.add_argument("--shots", nargs="*"); ap.add_argument("--dbg", type=float); ap.add_argument("--threads", type=int, default=0)
+ap.add_argument("--list", nargs="*", type=int, help="render just these frames (checks)")
 a = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else None)
 FPS = 24
 TL = {r["id"]: r for r in json.load(open(os.path.join(EP, "timeline.json")))}
 S = {k: v["start"] for k, v in TL.items()}; E = {k: v["end"] for k, v in TL.items()}
 VIS = json.load(open(os.path.join(EP, "visemes.json")))
+WORDS = json.load(open(os.path.join(EP, "words.json")))
+def W(line, word, end=False):
+    """start (or end) time of a word inside a line, from the measured word timings"""
+    w = next(x for x in WORDS if x["line"] == line and x["word"].lower().strip(".,!?'\"") == word)
+    return w["end"] if end else w["start"]
+L02N = W("L02", "now") - 0.75      # "Now you judge this" (after the 1 s pause): the foreshadow beats keep their old offsets from here
+T_LEAVE = W("L13", "size") - 0.05  # the camera leaves her on "...the size of a fridge"
 A = os.path.join(ROOT, "assets", "rbx")
 ease = lambda p: p * p * (3 - 2 * p)
 clamp = lambda p, lo=0.0, hi=1.0: max(lo, min(hi, p))
@@ -252,7 +260,7 @@ tube("bars", (0.38, -0.28, 1.08), (0.38, 0.28, 1.08), 0.022, black, parent=ebike
 box("delivery_box", (0.42, 0.42, 0.4), (-0.52, 0, 1.12), mat("dbox", (0.12, 0.12, 0.13), 0.6), bevel=0.02, parent=ebike)
 
 # the phone (generic: graphite slab + lit screen)
-phone = box("phone", (0.074, 0.152, 0.009), (0, 0, -50), mat("graphite", (0.05, 0.055, 0.065), 0.3, 0.85), bevel=0.003)
+phone = box("phone", (0.074, 0.152, 0.009), (0, 0, -50), mat("pinkcase", (0.85, 0.28, 0.45), 0.45), bevel=0.003)
 scr = box("phone_scr", (0.068, 0.144, 0.001), (0, 0, 0.0048), emit_mat("pscr", (0.75, 0.85, 1.0), 2.5), parent=phone)
 
 # =====================================================================================================================
@@ -440,7 +448,7 @@ X0, VY, VSPD = 4.0, 2.9, 0.8                     # YOU: walks -x along y=2.9, st
 T_BUMP = S["L04"] - 0.08
 def you_x(t): return X0 - VSPD * min(t, T_BUMP) + 0.28 * ramp(t, T_BUMP, T_BUMP + 0.35)   # stops at the bump, staggers back
 BUMP_X = X0 - VSPD * T_BUMP
-B_START, B_Y, B_SPD = S["L02"] + 0.95, 3.45, None  # THIEF_B leaves the bus stop right after "judge this"
+B_START, B_Y, B_SPD = L02N + 0.95, 3.45, None  # THIEF_B leaves the bus stop right after "judge this"
 B_STOP = (8.3, 2.95)
 B_PASS_X = BUMP_X - 0.15
 B_SPD = (B_STOP[0] - B_PASS_X) / (T_BUMP - B_START)
@@ -469,9 +477,11 @@ def b_state(t):
     if t < S["L09"] + 0.05:  # turned back toward her, waits, then catches
         p = Vector((lerp(B_PASS_X - 0.55 * 1.0, B_END[0], ramp(t, T_BUMP + 0.55, T_BUMP + 1.0)), lerp(B_Y, B_END[1], ramp(t, T_BUMP + 0.55, T_BUMP + 1.0)), 0))
         h = lerp(-90, 70, ramp(t, T_BUMP + 0.25, T_BUMP + 0.6)); return p, h, "m_idle_neutral_01", t
-    tr = t - (S["L09"] + 0.05)                      # runs off -x: sprint 2 s, then a jog
-    dx = 3.6 * min(tr, 2.0) + 2.6 * max(0.0, tr - 2.0)
-    return Vector((B_END[0] - dx, B_END[1] + 0.3 * min(tr, 1), 0)), -90, ("m_run_fast_01" if tr < 2.0 else "m_run_neutral"), tr
+    tr = t - (S["L09"] + 0.05)                      # runs off -x: sprint 2 s, a jog, then (once the camera has caught up) a smug walk
+    tw = T_LEAVE + 1.9 - (S["L09"] + 0.05)          # when he slows to a walk
+    dx = 3.6 * min(tr, 2.0) + 2.6 * max(0.0, min(tr, tw) - 2.0) + 1.6 * max(0.0, tr - tw)
+    clip = "m_run_fast_01" if tr < 2.0 else ("m_run_neutral" if tr < tw else "m_walk_fast_01")
+    return Vector((B_END[0] - dx, B_END[1] + 0.3 * min(tr, 1), 0)), -90, clip, tr
 def a_state(t):
     if t < T_BUMP: return Vector((*A_KERB, 0)), -90, 0.0
     if t < A_ARRIVE:
@@ -645,10 +655,10 @@ def set_frame(t):
     # ---------- THIEF_B (+ beanie)
     B = C["THIEF_B"]; loc, h, clip, ct = b_state(t); drive(B, "B", loc, h, clip, ct)
     F, Rt = body_frame(B); chest = bone_world(B["arm"], "Bip01 Spine2")
-    if t < S["L02"] + 0.75:            # looking at his own phone at the bus stop
+    if t < L02N + 0.75:            # looking at his own phone at the bus stop
         hand_to(B, "R", chest + F * 0.3 + Vector((0, 0, -0.05)), (0, 0, -0.7)); look_axes(B, down=15)
     elif t < B_START:                   # pockets it, nods to A
-        nod = math.sin((t - S["L02"] - 0.8) * 9) * 8 if t < S["L02"] + 1.4 else 0; look_axes(B, yaw_left=35, down=nod)
+        nod = math.sin((t - L02N - 0.8) * 9) * 8 if t < L02N + 1.4 else 0; look_axes(B, yaw_left=35, down=nod)
     if st == "AIR" or (st == "B_R" and t < S["L09"] + 0.05):
         p = phone.location if st == "AIR" else b_state(T_CATCH)[0] + Vector((0.1, -0.25, 2.25))
         hand_to(B, "R", p, (0, 0, -0.4)); curl(B["arm"], 50 if st == "B_R" else 15, ("R",))
@@ -659,7 +669,7 @@ def set_frame(t):
     hd = B["arm"].matrix_world @ B["arm"].pose.bones["Bip01 Head"].matrix
     beanie.matrix_world = hd @ Matrix.Translation((0.0, 0.0, 0.0)); beanie.matrix_world = Matrix.Translation(hd.to_translation() + Vector((0, 0, 0.165 * 1.18))) @ Matrix.Scale(1.18, 4) @ Matrix.Diagonal((1.0, 1.05, 0.72, 1.0))
     if T_BUMP - 0.2 <= t < S["L09"]: look_at(B, head(C["YOU"]) if st != "AIR" else phone.location)
-    set_face(B, t, "THIEF_B", [[0, "neutral", 0], [S["L02"] + 0.8, "smug", 0.8], [T_BUMP, "sweet", 1], [S["L06"], "smug", 1], [T_RIP, "focused", 1]])
+    set_face(B, t, "THIEF_B", [[0, "neutral", 0], [L02N + 0.8, "smug", 0.8], [T_BUMP, "sweet", 1], [S["L06"], "smug", 1], [T_RIP, "focused", 1]])
     # ---------- THIEF_A on the e-bike
     Aa = C["THIEF_A"]; loc, h, tr = a_state(t)
     ebike.location = loc; ebike.rotation_euler = (0, 0, math.radians(h + 270))   # bike's own forward is +x; rider heading -90 = riding -x
@@ -678,8 +688,8 @@ def set_frame(t):
             hand_to(Aa, side, g2, (0, 0, -0.5))
         curl(Aa["arm"], 50)
     if A_ARRIVE - 0.3 <= t < T_RIP: look_at(Aa, head(C["YOU"]))
-    elif t < S["L02"] + 0.6: look_at(Aa, head(C["YOU"]), 0.7)
-    elif t < S["L02"] + 1.5: look_axes(Aa, yaw_left=20, down=math.sin((t - S["L02"] - 0.9) * 9) * 7)
+    elif t < L02N + 0.6: look_at(Aa, head(C["YOU"]), 0.7)
+    elif t < L02N + 1.5: look_axes(Aa, yaw_left=20, down=math.sin((t - L02N - 0.9) * 9) * 7)
     set_face(Aa, t, "THIEF_A", [[0, "focused", 0.5], [S["L06"], "strain", 1], [T_RIP, "smug", 0.8]])
     # ---------- bystanders
     O = C["OLD_MAN"]; drive(O, "O", Vector((*OLD_POS, 0)), -20, "m_idle_look_around_01", t)
@@ -713,7 +723,7 @@ def shake(t, amp):
 def sh_vlog(t):   # walking backwards in front of her; background: A on the bike, the bus stop with B
     hY = head(C["YOU"]); p = Vector((you_x(t) - 2.4, VY - 0.35, 1.5)); return p, hY + Vector((0.2, 0, -0.16)), 34, hY
 def sh_rack(t):
-    p, tg, lens, foc = sh_vlog(t); k = ramp(t, S["L02"] + 0.55, S["L02"] + 0.85) * (1 - ramp(t, S["L02"] + 1.45, S["L02"] + 1.75))
+    p, tg, lens, foc = sh_vlog(t); k = ramp(t, L02N + 0.55, L02N + 0.85) * (1 - ramp(t, L02N + 1.45, L02N + 1.75))
     return p, tg, lens, foc.lerp(head(C["THIEF_B"]), k)
 def sh_side(t):   # arcs from the front to her street side: reveals B closing in from behind
     hY = head(C["YOU"]); u = ramp(t, S["L03"], S["L03"] + 1.8)
@@ -739,16 +749,20 @@ def sh_bystanders(t):
     hY = head(C["YOU"]); u = ramp(t, S["L10"], S["L12"])
     return Vector((BUMP_X - 0.05, -0.3 - 0.25 * u, 1.5)), hY + Vector((0, 0.6, -0.35)), 24, hY
 def sh_breath(t): # medium on her; B's back far down the street behind her
-    hY = head(C["YOU"]); u = ramp(t, S["L12"], S["L14"])
+    hY = head(C["YOU"]); u = ramp(t, S["L12"], T_LEAVE)
     return Vector((BUMP_X + 2.1, VY - 1.4 + 0.2 * u, 1.25)), hY + Vector((-0.6, 0.1, -0.25)), lerp(30, 34, u), hY
-def sh_leave(t):  # the camera whips off her and chases B down the street (pushing in on a long lens)
-    hY = head(C["YOU"]); hB = head(C["THIEF_B"]); w = ramp(t, S["L14"] + 0.15, S["L14"] + 0.45)
-    p = Vector((BUMP_X + 1.6, VY - 1.6, 1.4)).lerp(Vector((BUMP_X - 0.5, 2.4, 1.7)), w) + Vector((-5.0 * max(0, t - S["L14"] - 0.45), 0, 0))
-    return p, hY.lerp(hB, w), lerp(30, 90, ramp(t, S["L14"] + 0.35, S["L14"] + 1.6)), hY.lerp(hB, w)
+def sh_leave(t):  # on "size of a fridge" the camera whips off her onto B (long lens), then flies after him and follows his
+    # huge back down the street; she shrinks behind it, shouting (L14), and sulks in voice-over (L15)
+    hY = head(C["YOU"]); hB = head(C["THIEF_B"]); w = ramp(t, T_LEAVE, T_LEAVE + 0.3)
+    p0 = Vector((BUMP_X + 1.6, VY - 1.6, 1.4)).lerp(Vector((BUMP_X - 0.5, 2.4, 1.7)), w)
+    bl = b_state(t)[0]; follow = Vector((bl.x + 3.2, bl.y - 0.9, 2.1))
+    p = p0.lerp(follow, ramp(t, T_LEAVE + 0.55, T_LEAVE + 2.2))
+    lens = lerp(lerp(30, 75, ramp(t, T_LEAVE + 0.1, T_LEAVE + 0.5)), 32, ramp(t, T_LEAVE + 0.9, T_LEAVE + 2.2))
+    return p + shake(t, 0.03 * ramp(t, T_LEAVE + 0.55, T_LEAVE + 1.0)), hY.lerp(hB, w) + Vector((0, 0, -0.25 * ramp(t, T_LEAVE + 1.5, T_LEAVE + 2.2))), lens, hY.lerp(hB, w)
 SHOTS = [("vlog", 0.0, S["L02"], sh_vlog), ("rack", S["L02"], S["L03"], sh_rack), ("side", S["L03"], T_BUMP - 0.05, sh_side),
          ("bump", T_BUMP - 0.05, S["L05"], sh_bump), ("turn", S["L05"], S["L06"] - 0.05, sh_turn), ("struggle", S["L06"] - 0.05, T_RIP - 0.05, sh_struggle),
          ("rip", T_RIP - 0.05, E["L08"] + 0.15, sh_rip), ("split", E["L08"] + 0.15, S["L10"], sh_split), ("bystanders", S["L10"], S["L12"], sh_bystanders),
-         ("breath", S["L12"], S["L14"], sh_breath), ("leave", S["L14"], S["L15"] + 0.0, sh_leave)]
+         ("breath", S["L12"], T_LEAVE, sh_breath), ("leave", T_LEAVE, S["L16"], sh_leave)]
 def set_cam(t):
     for name, t0, t1, fn in SHOTS:
         if t0 <= t < t1 or (name == SHOTS[-1][0] and t >= t0):
@@ -796,6 +810,9 @@ if a.test:
     json.dump(outs, open(os.path.join(od, "index.json"), "w"))
 elif a.one is not None:
     os.makedirs(a.out, exist_ok=True); render_frame(a.one, os.path.join(a.out, f"{a.one:04d}.png"))
+elif a.list:
+    os.makedirs(a.out, exist_ok=True)
+    for f in a.list: PREV.clear(); render_frame(f, os.path.join(a.out, f"{f:04d}.png"))
 else:
     os.makedirs(a.out, exist_ok=True)
     for f in range(a.frames[0], a.frames[1]):
