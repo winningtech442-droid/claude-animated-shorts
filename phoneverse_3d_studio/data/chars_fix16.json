@@ -1,0 +1,63 @@
+{
+ "recipes": "../phoneverse_fix15_studio/data/face_recipes.json",
+ "clips": [
+  {
+   "clip": "c01_toss",
+   "set": "yard",
+   "pose": "hold",
+   "prop": "brandless iPhone 18 Pro Max lookalike, Burgundy: 163.4 x 78 x 8.75 mm, full-width camera bar, 3 lenses in a triangle on the left; no logo",
+   "notes": "holds the NEW phone in her left hand; right hand follows through from tossing the old one (off-frame left)",
+   "expr": [
+    [
+     0,
+     "smug",
+     0.7
+    ]
+   ],
+   "face": "smug"
+  },
+  {
+   "clip": "c02_recoil",
+   "set": "yard",
+   "pose": "recoil",
+   "notes": "flinches back from the battery flash (orange light on her face)",
+   "expr": [
+    [
+     0,
+     "shock",
+     1.0
+    ]
+   ],
+   "face": "shock"
+  },
+  {
+   "clip": "c03_delight",
+   "set": "yard",
+   "pose": "cheer",
+   "notes": "the gold bar rises: delight",
+   "expr": [
+    [
+     0,
+     "delight",
+     1.0
+    ]
+   ],
+   "face": "delight"
+  },
+  {
+   "clip": "c04_shrug",
+   "set": "yard",
+   "pose": "shrug",
+   "notes": "'Honest part?' three pounds: a shrug, half a smile",
+   "expr": [
+    [
+     0,
+     "smug",
+     0.6
+    ]
+   ],
+   "face": "smug"
+  }
+ ],
+ "status": "intent only: needs a 'yard' set in char_scene.py"
+}

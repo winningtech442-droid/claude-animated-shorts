@@ -1,0 +1,12 @@
+build/
+final/
+.venv
+__pycache__/
+build_fix13.log
+.venv_voice
+models/
+assets/
+*.log
+build_dbg/
+build_test_fix14.log
+build_dbg*/

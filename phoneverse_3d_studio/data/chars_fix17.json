@@ -1,0 +1,50 @@
+{
+ "recipes": "../phoneverse_fix15_studio/data/face_recipes.json",
+ "clips": [
+  {
+   "clip": "c01_hold",
+   "set": "yard",
+   "pose": "hold",
+   "prop": "brandless iPhone 18 Pro Max lookalike, Burgundy (same hand prop as #16 c01); no logo",
+   "notes": "holds the phone up to camera; sand trickles out of the other fist",
+   "expr": [
+    [
+     0,
+     "smug",
+     0.7
+    ]
+   ],
+   "face": "smug"
+  },
+  {
+   "clip": "c02_delight",
+   "set": "yard",
+   "pose": "cheer",
+   "notes": "looks up as the glowing crystal rises past head height (orange light on the face)",
+   "expr": [
+    [
+     0,
+     "delight",
+     1.0
+    ]
+   ],
+   "face": "delight"
+  },
+  {
+   "clip": "c03_shrug",
+   "set": "yard",
+   "pose": "shrug",
+   "prop": "a white quartz lump",
+   "notes": "'Honest part?' holds up a lump of quartz instead of sand",
+   "expr": [
+    [
+     0,
+     "smug",
+     0.6
+    ]
+   ],
+   "face": "smug"
+  }
+ ],
+ "status": "intent only: needs a 'yard' set in char_scene.py"
+}

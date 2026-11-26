@@ -1,0 +1,1126 @@
+{
+ "episode": "phoneverse_fix16",
+ "note": "FIX #16 'Gold in your iPhone' (format test). Times = measured voice slots from phoneverse_fix16_studio/data/timings.json; nothing re-timed. Props: gold (workbench in a sunny recycling yard, old generic phone, tub, crucible, mould and bar, drawer, phone mountain, comparison piles).",
+ "fps": 24,
+ "length_s": 69.02,
+ "props": [
+  "gold"
+ ],
+ "chars": "data/chars_fix16.json",
+ "char_frames": "build/chars",
+ "audio": [
+  "../phoneverse_fix16_studio/audio/mix_with_pad.wav",
+  "../phoneverse_fix16_studio/audio/mix_voice_fx.wav"
+ ],
+ "captions": "../phoneverse_fix16_studio/data/captions.json",
+ "hook": {
+  "lines": [
+   [
+    "YOU'RE BINNING"
+   ],
+   [
+    "REAL ",
+    "*GOLD"
+   ]
+  ],
+  "from": 1.5,
+  "until": 3.95
+ },
+ "cards": [
+  {
+   "t0": 6.75,
+   "t1": 9.8,
+   "title": "DON'T TRY THIS AT HOME",
+   "sub": "Toxic fumes & acid · recycling plants only",
+   "color": "RED"
+  }
+ ],
+ "shake": [
+  0.6,
+  16.1,
+  49.7
+ ],
+ "beats": [
+  {
+   "t0": 0.0,
+   "t1": 1.6,
+   "line": 1,
+   "cam": [
+    "g_drop",
+    "g_hero"
+   ],
+   "screen": "U.lock_plain()",
+   "events": [
+    {
+     "type": "toss",
+     "from": 0,
+     "to": 1,
+     "t0": 0.0,
+     "t1": 1.5
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 1.6,
+   "t1": 2.9,
+   "line": 1,
+   "standin_for": "c01_toss",
+   "cam": [
+    "g_wide",
+    "g_drop"
+   ],
+   "screen": "U.lock_plain()",
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 2.9,
+   "t1": 4.032,
+   "line": 1,
+   "cam": [
+    "g_hero",
+    "g_wide"
+   ],
+   "screen": "U.lock_plain()",
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 4.032,
+   "t1": 5.5,
+   "line": 2,
+   "cam": [
+    "g_drop",
+    "g_open"
+   ],
+   "parts": false,
+   "events": [
+    {
+     "type": "lid",
+     "from": 0,
+     "to": 1,
+     "t0": 4.1,
+     "t1": 5.1
+    },
+    {
+     "type": "goldglow",
+     "from": 0,
+     "to": 1,
+     "t0": 4.6,
+     "t1": 5.4
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 5.5,
+   "t1": 6.699,
+   "line": 2,
+   "cam": [
+    "g_pins",
+    "g_hero"
+   ],
+   "parts": false,
+   "labels": [
+    {
+     "anchor": "pins",
+     "text": "REAL GOLD",
+     "dx": 140,
+     "dy": -300,
+     "from": 5.7
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 6.699,
+   "t1": 8.3,
+   "line": 3,
+   "cam": [
+    "g_wide",
+    "g_tub"
+   ],
+   "parts": false,
+   "inset": false
+  },
+  {
+   "t0": 8.3,
+   "t1": 9.877,
+   "line": 3,
+   "cam": [
+    "g_pour",
+    "g_cru"
+   ],
+   "parts": false,
+   "inset": false
+  },
+  {
+   "t0": 9.877,
+   "t1": 11.1,
+   "line": 4,
+   "cam": [
+    "g_hero",
+    "g_open"
+   ],
+   "parts": false,
+   "hud": {
+    "label": "ONLY",
+    "value": "3 SIMPLE STEPS",
+    "color": "YELLOW",
+    "from": 10.0
+   },
+   "inset": false
+  },
+  {
+   "t0": 11.1,
+   "t1": 12.203,
+   "line": 4,
+   "cam": [
+    "g_drop",
+    "g_hero"
+   ],
+   "parts": false,
+   "hud": {
+    "label": "ONLY",
+    "value": "3 SIMPLE STEPS",
+    "color": "YELLOW",
+    "from": 10.0
+   },
+   "inset": false
+  },
+  {
+   "t0": 12.203,
+   "t1": 14.2,
+   "line": 5,
+   "cam": [
+    "g_open",
+    "g_batt"
+   ],
+   "parts": false,
+   "events": [
+    {
+     "type": "battout",
+     "from": 0,
+     "to": 1,
+     "t0": 12.4,
+     "t1": 13.9
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "battery",
+     "text": "BATTERY",
+     "dx": 120,
+     "dy": -300,
+     "from": 12.6
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 14.2,
+   "t1": 15.723,
+   "line": 5,
+   "cam": [
+    "g_batt_close",
+    "g_batt"
+   ],
+   "parts": false,
+   "hud": {
+    "label": "STEP 1",
+    "value": "BATTERY OUT",
+    "color": "ORANGE",
+    "from": 14.3
+   },
+   "inset": false
+  },
+  {
+   "t0": 15.723,
+   "t1": 17.2,
+   "line": 6,
+   "cam": [
+    "g_hero",
+    "g_batt_close"
+   ],
+   "parts": false,
+   "events": [
+    {
+     "type": "battfire",
+     "from": 0,
+     "to": 1,
+     "t0": 15.9,
+     "t1": 16.8
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "battery",
+     "text": "FIRE RISK",
+     "dx": -360,
+     "dy": -320,
+     "from": 16.3
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 17.2,
+   "t1": 19.024,
+   "line": 6,
+   "events": [
+    {
+     "type": "battfire",
+     "from": 1,
+     "to": 0,
+     "t0": 19.0,
+     "t1": 19.02
+    }
+   ],
+   "standin_for": "c02_recoil",
+   "cam": [
+    "g_batt",
+    "g_hero"
+   ],
+   "screen": "U.lock_plain()",
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 19.024,
+   "t1": 21.093,
+   "line": 7,
+   "cam": [
+    "g_open",
+    "g_pins"
+   ],
+   "parts": false,
+   "hud": {
+    "label": "GOLD FOUND",
+    "steps": [
+     "0.000 g",
+     "0.008 g",
+     "0.017 g",
+     "0.026 g",
+     "0.034 g"
+    ],
+    "color": "YELLOW",
+    "from": 19.4,
+    "until": 23.6
+   },
+   "labels": [
+    {
+     "anchor": "pins",
+     "text": "GOLD-PLATED PINS",
+     "dx": -330,
+     "dy": -330,
+     "from": 19.7
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 21.093,
+   "t1": 22.6,
+   "line": 8,
+   "cam": [
+    "g_chip",
+    "g_chip_close"
+   ],
+   "parts": false,
+   "hud": {
+    "label": "GOLD FOUND",
+    "steps": [
+     "0.000 g",
+     "0.008 g",
+     "0.017 g",
+     "0.026 g",
+     "0.034 g"
+    ],
+    "color": "YELLOW",
+    "from": 19.4,
+    "until": 23.6
+   },
+   "events": [
+    {
+     "type": "hair",
+     "from": 0,
+     "to": 1,
+     "t0": 21.2,
+     "t1": 21.25
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "chip",
+     "text": "GOLD WIRES",
+     "dx": -340,
+     "dy": -330,
+     "from": 21.5
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 22.6,
+   "t1": 23.995,
+   "line": 8,
+   "cam": [
+    "g_hero",
+    "g_chip"
+   ],
+   "parts": false,
+   "hud": {
+    "label": "GOLD FOUND",
+    "steps": [
+     "0.000 g",
+     "0.008 g",
+     "0.017 g",
+     "0.026 g",
+     "0.034 g"
+    ],
+    "color": "YELLOW",
+    "from": 19.4,
+    "until": 23.6
+   },
+   "labels": [
+    {
+     "anchor": "hair",
+     "text": "A HAIR",
+     "dx": 150,
+     "dy": 260,
+     "from": 22.9
+    }
+   ],
+   "inset": false
+  },
+  {
+   "t0": 23.995,
+   "t1": 25.6,
+   "line": 9,
+   "cam": [
+    "g_tub_top",
+    "g_tub"
+   ],
+   "events": [
+    {
+     "type": "gone",
+     "from": 0,
+     "to": 1,
+     "t0": 24.0,
+     "t1": 24.05
+    },
+    {
+     "type": "dunk",
+     "from": 0,
+     "to": 1,
+     "t0": 24.1,
+     "t1": 25.3
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 25.6,
+   "t1": 28.091,
+   "line": 9,
+   "cam": [
+    "g_tub_low",
+    "g_tub_macro"
+   ],
+   "events": [
+    {
+     "type": "liq",
+     "from": 0,
+     "to": 1,
+     "t0": 25.7,
+     "t1": 27.9
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 28.091,
+   "t1": 30.373,
+   "line": 10,
+   "cam": [
+    "g_tub",
+    "g_tub_side"
+   ],
+   "events": [
+    {
+     "type": "bubble",
+     "from": 0,
+     "to": 1,
+     "t0": 28.1,
+     "t1": 28.5
+    },
+    {
+     "type": "dissolve",
+     "from": 0,
+     "to": 1,
+     "t0": 28.2,
+     "t1": 30.0
+    },
+    {
+     "type": "liq",
+     "from": 1,
+     "to": 2,
+     "t0": 28.2,
+     "t1": 29.8
+    },
+    {
+     "type": "mud",
+     "from": 0,
+     "to": 1,
+     "t0": 28.4,
+     "t1": 30.1
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 30.373,
+   "t1": 32.0,
+   "line": 11,
+   "cam": [
+    "g_tub",
+    "g_tub_low"
+   ],
+   "events": [
+    {
+     "type": "bubble",
+     "from": 1,
+     "to": 0,
+     "t0": 30.5,
+     "t1": 31.3
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 32.0,
+   "t1": 33.846,
+   "line": 11,
+   "cam": [
+    "g_tub_top",
+    "g_tub_macro"
+   ],
+   "events": [
+    {
+     "type": "sparkle",
+     "from": 0,
+     "to": 1,
+     "t0": 32.0,
+     "t1": 32.8
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "mud",
+     "text": "THAT'S GOLD",
+     "dx": 120,
+     "dy": -330,
+     "from": 32.7
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 33.846,
+   "t1": 36.0,
+   "line": 12,
+   "cam": [
+    "g_tub_side",
+    "g_tub"
+   ],
+   "events": [
+    {
+     "type": "rinse",
+     "from": 0,
+     "to": 1,
+     "t0": 33.9,
+     "t1": 35.9
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 36.0,
+   "t1": 38.39,
+   "line": 12,
+   "cam": [
+    "g_tub_low",
+    "g_tub_macro"
+   ],
+   "events": [
+    {
+     "type": "bubble",
+     "from": 0,
+     "to": 1,
+     "t0": 36.1,
+     "t1": 36.5
+    },
+    {
+     "type": "liq",
+     "from": 2,
+     "to": 3,
+     "t0": 36.1,
+     "t1": 37.9
+    },
+    {
+     "type": "mud",
+     "from": 1,
+     "to": 0,
+     "t0": 36.1,
+     "t1": 37.6
+    },
+    {
+     "type": "sparkle",
+     "from": 1,
+     "to": 0,
+     "t0": 36.1,
+     "t1": 37.2
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 38.39,
+   "t1": 40.1,
+   "line": 13,
+   "cam": [
+    "g_tub_top",
+    "g_tub"
+   ],
+   "events": [
+    {
+     "type": "bubble",
+     "from": 1,
+     "to": 0,
+     "t0": 38.4,
+     "t1": 39.0
+    },
+    {
+     "type": "powder",
+     "from": 0,
+     "to": 1,
+     "t0": 38.6,
+     "t1": 39.9
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 40.1,
+   "t1": 41.974,
+   "line": 13,
+   "cam": [
+    "g_tub_macro",
+    "g_tub_low"
+   ],
+   "events": [
+    {
+     "type": "dust",
+     "from": 0,
+     "to": 1,
+     "t0": 40.1,
+     "t1": 41.9
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 41.974,
+   "t1": 44.0,
+   "line": 14,
+   "cam": [
+    "g_tub",
+    "g_tub_macro"
+   ],
+   "labels": [
+    {
+     "anchor": "mud",
+     "text": "PURE GOLD",
+     "dx": 120,
+     "dy": -330,
+     "from": 42.6
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 44.0,
+   "t1": 45.4,
+   "line": 14,
+   "cam": [
+    "g_tub_side",
+    "g_tub_top"
+   ],
+   "labels": [
+    {
+     "anchor": "mud",
+     "text": "GOLD SAND? GOLD DUST?",
+     "dx": -330,
+     "dy": -360,
+     "from": 44.4
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 45.4,
+   "t1": 46.698,
+   "line": 14,
+   "cam": [
+    "g_wide",
+    "g_cru"
+   ],
+   "labels": [
+    {
+     "anchor": "crucible",
+     "text": "INTO THE POT",
+     "dx": -330,
+     "dy": -330,
+     "from": 45.7
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 46.698,
+   "t1": 48.1,
+   "line": 15,
+   "cam": [
+    "g_cru_top",
+    "g_cru_in"
+   ],
+   "events": [
+    {
+     "type": "torch",
+     "from": 0,
+     "to": 1,
+     "t0": 46.75,
+     "t1": 47.05
+    },
+    {
+     "type": "heat",
+     "from": 0,
+     "to": 1,
+     "t0": 46.8,
+     "t1": 47.9
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 48.1,
+   "t1": 49.4,
+   "line": 15,
+   "cam": [
+    "g_pour",
+    "g_bar"
+   ],
+   "events": [
+    {
+     "type": "pour",
+     "from": 0,
+     "to": 1,
+     "t0": 48.15,
+     "t1": 49.1
+    },
+    {
+     "type": "fill",
+     "from": 0,
+     "to": 1,
+     "t0": 48.4,
+     "t1": 49.3
+    },
+    {
+     "type": "torch",
+     "from": 1,
+     "to": 0,
+     "t0": 48.2,
+     "t1": 48.5
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 49.4,
+   "t1": 50.4,
+   "line": 15,
+   "cam": [
+    "g_bar_top",
+    "g_bar"
+   ],
+   "events": [
+    {
+     "type": "pour",
+     "from": 1,
+     "to": 0,
+     "t0": 49.45,
+     "t1": 49.9
+    },
+    {
+     "type": "cool",
+     "from": 0,
+     "to": 1,
+     "t0": 49.45,
+     "t1": 49.9
+    },
+    {
+     "type": "lift",
+     "from": 0,
+     "to": 1,
+     "t0": 49.55,
+     "t1": 50.35
+    }
+   ],
+   "hud": {
+    "label": "REAL GOLD BAR",
+    "value": "1 kg",
+    "color": "YELLOW",
+    "from": 49.8
+   },
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 50.4,
+   "t1": 51.3,
+   "line": 15,
+   "standin_for": "c03_delight",
+   "cam": [
+    "g_pour",
+    "g_bar_top"
+   ],
+   "screen": "U.lock_plain()",
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 51.3,
+   "t1": 52.6,
+   "line": 16,
+   "standin_for": "c04_shrug",
+   "cam": [
+    "g_bar",
+    "g_pour"
+   ],
+   "screen": "U.lock_plain()",
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 52.6,
+   "t1": 54.496,
+   "line": 16,
+   "cam": [
+    "g_bar_top",
+    "g_pour"
+   ],
+   "hud": {
+    "label": "GOLD IN 1 PHONE",
+    "value": "≈ £3",
+    "color": "YELLOW",
+    "from": 52.6
+   },
+   "labels": [
+    {
+     "anchor": "bar",
+     "text": "1 kg",
+     "dx": 140,
+     "dy": -300,
+     "from": 52.9
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 54.496,
+   "t1": 56.0,
+   "line": 17,
+   "cam": [
+    "g_bar_top",
+    "g_bar_push"
+   ],
+   "hud": {
+    "label": "PHONES NEEDED",
+    "count": [
+     0,
+     30000,
+     ""
+    ],
+    "color": "ORANGE",
+    "from": 54.9,
+    "until": 57.2
+   },
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 56.0,
+   "t1": 57.483,
+   "line": 17,
+   "cam": [
+    "g_wide",
+    "g_pull"
+   ],
+   "hud": {
+    "label": "PHONES NEEDED",
+    "count": [
+     0,
+     30000,
+     ""
+    ],
+    "color": "ORANGE",
+    "from": 54.9,
+    "until": 57.2
+   },
+   "labels": [
+    {
+     "anchor": "heap",
+     "text": "≈ 30,000 PHONES",
+     "dx": 100,
+     "dy": -300,
+     "from": 56.5
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 57.483,
+   "t1": 59.2,
+   "line": 18,
+   "cam": [
+    "g_hero",
+    "g_cmp"
+   ],
+   "events": [
+    {
+     "type": "piles",
+     "from": 0,
+     "to": 1,
+     "t0": 57.5,
+     "t1": 58.3
+    }
+   ],
+   "labels": [
+    {
+     "anchor": "phonepile",
+     "text": "OLD PHONES",
+     "dx": -330,
+     "dy": -330,
+     "from": 58.2
+    },
+    {
+     "anchor": "rockpile",
+     "text": "MINE ROCK",
+     "dx": 80,
+     "dy": -330,
+     "from": 58.5
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 59.2,
+   "t1": 60.869,
+   "line": 18,
+   "cam": [
+    "g_wide",
+    "g_cmp"
+   ],
+   "hud": {
+    "label": "TONNE FOR TONNE",
+    "value": "PHONES WIN",
+    "color": "GREEN",
+    "from": 59.3
+   },
+   "labels": [
+    {
+     "anchor": "phonepile",
+     "text": "OLD PHONES",
+     "dx": -330,
+     "dy": -330
+    },
+    {
+     "anchor": "rockpile",
+     "text": "MINE ROCK",
+     "dx": 80,
+     "dy": -330
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 60.869,
+   "t1": 62.6,
+   "line": 19,
+   "cam": [
+    "g_drawer",
+    "g_drawer_close"
+   ],
+   "dscreen": "U.photo_gallery(p * 1.2)",
+   "events": [
+    {
+     "type": "piles",
+     "from": 1,
+     "to": 0,
+     "t0": 60.9,
+     "t1": 61.1
+    },
+    {
+     "type": "drawer",
+     "from": 0,
+     "to": 1,
+     "t0": 60.9,
+     "t1": 61.7
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 62.6,
+   "t1": 64.1,
+   "line": 19,
+   "cam": [
+    "g_drawer",
+    "g_drawer_close"
+   ],
+   "dscreen": "U.photo_gallery(1)",
+   "labels": [
+    {
+     "anchor": "dphone",
+     "text": "PHOTOS · BANK APPS",
+     "dx": -360,
+     "dy": -340,
+     "from": 62.9
+    }
+   ],
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 64.1,
+   "t1": 65.627,
+   "line": 19,
+   "cam": [
+    "g_wide",
+    "g_drawer_close"
+   ],
+   "dscreen": "U.erase_hello(p)",
+   "hud": {
+    "label": "BEFORE YOU RECYCLE",
+    "value": "ERASE IT",
+    "color": "GREEN",
+    "from": 64.2
+   },
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 65.627,
+   "t1": 67.4,
+   "line": 20,
+   "cam": [
+    "g_drawer",
+    "g_wide"
+   ],
+   "dscreen": "U.erase_hello(1)",
+   "hud": {
+    "label": "YOUR DRAWER",
+    "value": "HOW MANY?",
+    "color": "ORANGE",
+    "from": 65.8
+   },
+   "inset": false,
+   "parts": false
+  },
+  {
+   "t0": 67.4,
+   "t1": 69.019,
+   "line": 20,
+   "cam": [
+    "g_hero",
+    "g_drop"
+   ],
+   "screen": "U.lock_plain()",
+   "dscreen": "U.erase_hello(1)",
+   "events": [
+    {
+     "type": "drawer",
+     "from": 1,
+     "to": 0,
+     "t0": 67.45,
+     "t1": 68.2
+    },
+    {
+     "type": "gone",
+     "from": 1,
+     "to": 0,
+     "t0": 67.4,
+     "t1": 67.42
+    },
+    {
+     "type": "lid",
+     "from": 1,
+     "to": 0,
+     "t0": 67.4,
+     "t1": 67.42
+    },
+    {
+     "type": "goldglow",
+     "from": 1,
+     "to": 0,
+     "t0": 67.4,
+     "t1": 67.42
+    },
+    {
+     "type": "battout",
+     "from": 1,
+     "to": 0,
+     "t0": 67.4,
+     "t1": 67.42
+    },
+    {
+     "type": "hair",
+     "from": 1,
+     "to": 0,
+     "t0": 67.4,
+     "t1": 67.42
+    },
+    {
+     "type": "toss",
+     "from": 1,
+     "to": 0.0,
+     "t0": 67.6,
+     "t1": 69.0
+    }
+   ],
+   "inset": false,
+   "parts": false
+  }
+ ]
+}
