@@ -300,11 +300,12 @@ def build_cues(tl, words):
     ev(S["L08"] - 0.12, "phone ripped free (fast swish)", lambda: whip(r, 0.35), "normal")
     ev(S["L08"] + 0.25, "slow-motion spin (low whoosh)", lambda: whip(r, 0.7, bright=False), "subtle")
     ev(S["L08"] + 0.75, "catch (hand slap)", lambda: slap(r), "normal", p=-0.2)
-    ev(E["L08"] - 1.0, "red bus passes in front of camera", lambda: bus_pass(2.4, r), "big")
-    ev(S["L09"] + 0.2, "thief A bikes off right", lambda: ebike(2.6, r, 980, 760, recede=True), "subtle", p=0.8)
-    for k in range(7):
-        ev(S["L09"] + 0.25 + k * 0.3, "thief B running off left", lambda: pavement_step(r, 1.0 - 0.12 * k), "subtle",
-           p=-0.75)
+    ev(S["L09"] - 0.08, "red bus passes close (overtakes the bike thief)", lambda: bus_pass(2.4, r), "normal")   # loudest as its middle passes the split-shot camera, S(L09)+1.0
+    ev(S["L09"] + 0.2, "thief A bikes off down the street", lambda: ebike(2.6, r, 980, 760, recede=True), "subtle", p=0.35)
+    for k, g in enumerate((0.8, 1.0, 1.1, 0.8, 0.6, 0.45, 0.35)):  # B charges at the lens, brushes past it on the left, runs off behind
+        ev(S["L09"] + 0.12 + k * 0.27, "thief B running past the camera", lambda g=g: pavement_step(r, g), "subtle",
+           p=-0.3 - 0.08 * k)
+    ev(S["L09"] + 0.5, "B brushes past the lens (whoosh)", lambda: whip(r, 0.4, bright=False), "subtle", p=-0.6)
     ev(S["L12"] - 0.45, "her catching her breath", lambda: breath(r, 0.4, True), "subtle")
     ev(S["L14"] - 0.1, "camera whips away from her", lambda: whip(r, 0.45), "normal")
     # ---- Scene 3: the journey montage (one whoosh per stop)

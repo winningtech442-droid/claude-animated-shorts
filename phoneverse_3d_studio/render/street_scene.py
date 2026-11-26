@@ -232,8 +232,8 @@ box("bus_stripe", (11.05, 2.55, 0.12), (0, 0, 1.25), mat("bus_stripe", (0.9, 0.8
 tyre = mat("tyre", (0.02, 0.02, 0.02), 0.9)
 for wx in (-3.6, 3.4):
     for side in (-1, 1): cyl(f"bus_wh{wx}{side}", 0.5, 0.3, (wx, side * 1.15, 0.5), tyre, rot=(math.radians(90), 0, 0), verts=20, parent=bus)
-def bus_x(t):  # wipes the frame: front reaches her at E(L08)-0.65, tail clears ~E(L08)+0.15; drives +x at 14 m/s
-    t0 = E["L08"] - 0.65; x = (BUMP_X - 5.5) + 14.0 * (t - t0)
+def bus_x(t):  # passes the split-shot camera (1.2 m to its right) just after B has charged past, then overtakes A; +x at 14 m/s
+    t0 = S["L09"] + 0.62; x = (SPLIT_CAM_X - 5.5) + 14.0 * (t - t0)
     return -200 if x < -60 or x > 60 else x
 
 # the yellow e-bike (Thief A)
@@ -448,6 +448,7 @@ T_RIP = S["L08"] - 0.02; T_CATCH = T_RIP + 0.75
 B_END = (BUMP_X - 1.35, 3.25)                     # where he turns back ("Ooh, sorry, love!") and later catches the phone
 A_KERB = (7.4, 1.75); A_ARRIVE = S["L06"] - 0.05; A_Y = 1.78
 OLD_POS, SHOP_POS = (BUMP_X - 1.25, 3.85), (BUMP_X + 1.2, 3.8)
+SPLIT_CAM_X, SPLIT_CAM_Y = BUMP_X - 3.3, 2.75               # split shot: B brushes past ~0.6 m to its left, the bus ~1.6 m to its right
 
 def you_state(t):
     x = you_x(t); y = VY + 0.06 * ramp(t, T_BUMP, T_BUMP + 0.35)
@@ -729,8 +730,11 @@ def sh_struggle(t):
 def sh_rip(t):    # low angle up at the phone in the air; the bus wipes through at the end
     pp = phone.location.copy(); base = Vector((BUMP_X - 0.5, -0.9, 0.75))
     return base, Vector((BUMP_X - 0.6, 3.0, 1.75)).lerp(pp, 0.5), 22, Vector((BUMP_X - 0.6, 3.0, 1.6))
-def sh_split(t):  # wide from the road: A bikes off right, B runs off left, she spins in the middle
-    hY = head(C["YOU"]); return Vector((BUMP_X + 0.2, -2.6, 1.6)) + shake(t, 0.015), hY + Vector((0, 0, -0.5)), 20, hY
+def sh_split(t):  # eye level on the pavement, looking along the street: B charges straight past the lens (one way), A bikes off
+    # into the distance (the other way) with the bus overtaking him, and she spins between them. Nothing crosses the lens.
+    hY = head(C["YOU"]); u = ramp(t, E["L08"] + 0.15, S["L10"])
+    p = Vector((SPLIT_CAM_X - 0.25 * u, SPLIT_CAM_Y, 1.55)) + shake(t, 0.012)
+    return p, hY + Vector((0, -0.3, -0.25)), lerp(34, 29, u), hY
 def sh_bystanders(t):
     hY = head(C["YOU"]); u = ramp(t, S["L10"], S["L12"])
     return Vector((BUMP_X - 0.05, -0.3 - 0.25 * u, 1.5)), hY + Vector((0, 0.6, -0.35)), 24, hY
