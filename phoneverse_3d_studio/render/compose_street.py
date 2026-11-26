@@ -74,5 +74,6 @@ if a.encode:
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(FPS), "-start_number", str(f0), "-i", os.path.join(a.dst, "%04d.png"),
                     "-ss", f"{f0 / FPS:.3f}", "-t", f"{(f1 - f0) / FPS:.3f}", "-i", os.path.join(EP, "final_mix.wav"),
                     "-frames:v", str(f1 - f0), "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
-                    "-af", "volume=-0.6dB", "-c:a", "aac", "-b:a", "192k",  # AAC overshoots ~0.5 dB: keeps the true peak under -1 dBTP "-movflags", "+faststart", out], check=True)
+                    "-af", "volume=-0.6dB",  # AAC overshoots ~0.5 dB: keeps the true peak under -1 dBTP
+                    "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out], check=True)
     print("->", out)
