@@ -59,7 +59,7 @@ FX = {
     None: "",
     "shout": "highpass=f=110,acompressor=threshold=0.08:ratio=5:attack=4:release=90:makeup=2",
     "away": "lowpass=f=4200,aecho=0.8:0.55:70:0.22",  # shouting at a camera that is leaving her
-    "echo": "apad=pad_dur=1.2,aecho=1.0:0.55:380|760|1140:0.35|0.2|0.1",  # "JESS!" then its echo (late, so the J stays crisp)
+    "echo": "apad=pad_dur=1.4,aecho=1.0:0.45:520|1040:0.28|0.14",  # "JESS!" then its echo (late + soft, so the J stays crisp)
     "close": "highpass=f=70,lowpass=f=7000,acompressor=threshold=0.1:ratio=3:attack=10:release=150:makeup=1.5",
 }
 
@@ -97,7 +97,7 @@ line("L07", "THIEF_A", "snatch", "Let go! Just let go, man!", "let go! just let 
      level="shout", fx="shout", gap=-0.2, emotion="strained, through gritted teeth, pulling")
 line("L08", "YOU", "snatch", "No, no, no, no!", "no, no, no, no!", speed=1.35, pitch=1.5, level="shout",
      fx="shout", gap=-0.05, lips="OFF", emotion="panic as it rips free (phone spinning in the air)", engine="chatterbox")
-line("L09", "YOU", "snatch", "Wait... who's got it? Who's got it?!", "wait, who's got it? who's got it?!",
+line("L09", "YOU", "snatch", "Wait, wait! Who's got it? Who's got it?!", "wait, who's got it? who's got it?!",
      speed=1.25, pitch=1.0, level="shout", gap=0.05, emotion="panicking, spinning between them", engine="chatterbox")
 line("L10", "OLD_MAN", "snatch", "He went that way!", "he went [that](+2) way!", speed=1.05, level="shout",
      fx="away", gap=0.05, lips="OFF", emotion="helpful, pointing left")
