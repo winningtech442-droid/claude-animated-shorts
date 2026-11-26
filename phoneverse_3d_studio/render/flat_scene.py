@@ -237,7 +237,7 @@ HOOD = load_char("Male_Adult_06", False, "tex")
 hood_m = mat("hood_fabric", (0.035, 0.035, 0.04), 0.95)
 for m_ in HOOD["meshes"]:
     for sl in m_.material_slots: sl.material = hood_m
-hood = sphere("hood", 0.135, (0, 0, -60), hood_m, seg=32)
+hood = sphere("hood", 0.14, (0, 0, -60), hood_m, seg=32)
 for f_ in hood.data.polygons: f_.use_smooth = True
 lamp("dn_tube", "AREA", OD + Vector((0, 0.6, 3.0)), 70, (0.75, 0.9, 1.0), 1.4, OD + Vector((0, -0.6, 0.8)))
 box("dn_tube_glow", (1.2, 0.08, 0.04), OD + Vector((0, 0.6, 3.12)), emit_mat("dn_tubem", (0.8, 0.95, 1.0), 6))
@@ -324,9 +324,14 @@ def sh_lock(t):    # inside the dark box: her phone lights up with the padlock
     u = ramp(t, J_LOCK, J_WITHOUT); p = OLD.location
     return cam_of(p + Vector((0.02, -0.16 + 0.05 * u, 0.2 - 0.05 * u)), p, 40, p)
 def sh_parts(t):
-    u = ramp(t, J_WITHOUT, S["L19"] - 0.25); p = parts_root.location
-    k = ramp(t, E["L18"] - 0.45, S["L19"])                                       # final push into the screen glow
-    return cam_of(p + Vector((0.12 * (1 - u), -0.26 + 0.1 * u, 0.22 - 0.05 * u)).lerp(p + Vector((0, 0, 0.05)), k), p, lerp(38, 50, u), p)
+    # side-on to the stack of parts (so they visibly separate), then a push straight into the red padlock for the whip out
+    u = ramp(t, J_WITHOUT, S["L19"] - 0.25); p = parts_root.matrix_world.translation.copy(); M = parts_root.matrix_world.to_3x3()
+    n = (M @ Vector((0, 0, 1))).normalized(); side = n.cross(Vector((0, 0, 1))).normalized()
+    side_eye = p + side * lerp(0.36, 0.3, u) + n * 0.04 + Vector((0, 0, 0.1)); side_tgt = p + n * 0.02
+    pad = pt_scr.matrix_world @ Vector((0, 0.026, 0)); ns = (pt_scr.matrix_world.to_3x3() @ Vector((0, 0, 1))).normalized()
+    k = ramp(t, E["L18"] - 0.6, S["L19"])
+    eye = side_eye.lerp(pad + ns * lerp(0.22, 0.03, k), k); tgt = side_tgt.lerp(pad, k)
+    return cam_of(eye, tgt, lerp(36, 45, k), tgt)
 def head_of(who): return bone_world(C[who]["arm"], "Bip01 Head")
 def sh_two(t):     # wide two-shot, whip settle (L19)
     k = ramp(t, S["L19"], S["L19"] + 0.45); m = (head_of("YOU") + head_of("JESS")) / 2
@@ -354,10 +359,11 @@ def sh_babe(t):
 def sh_login(t):   # L25: her point of view onto the fake sign-in page (pushing in)
     u = ramp(t, S["L25"], S["L26"]); p = NEW.location; h = head_of("YOU")
     n = NEW.matrix_world.to_3x3() @ Vector((0, 0, 1)); up = NEW.matrix_world.to_3x3() @ Vector((0, 1, 0))   # straight onto the screen
-    return cam_of(p + n * lerp(0.3, 0.2, u) + up * 0.02, p, 32, p)
+    return cam_of(p + n * lerp(0.2, 0.14, u) + up * 0.01, p, 26, p)   # stays between the screen and her face (0.3 m was inside her hair)
 def sh_rewatch(t):  # L26: past her shoulder (soft), Jess in focus behind, quietly typing on her phone
     hY, hJ = head_of("YOU"), head_of("JESS")
-    return cam_of(hY + Vector((-0.55, -0.7, 0.05)), hJ + Vector((0, 0, -0.25)), 45, hJ)
+    hand = bone_world(C["YOU"]["arm"], "Bip01 L Hand")   # focus on HER gesturing hands; Jess typing behind stays slightly soft
+    return cam_of(hY + Vector((-0.55, -0.7, 0.05)), hJ + Vector((0, 0, -0.25)), 45, hand.lerp(hJ, 0.25))
 def sh_easy(t):
     h = head_of("YOU"); return cam_of(h + Vector((0.25, -0.8, 0.0)), h + Vector((0, 0, -0.06)), 45, h)
 def sh_late(t):    # L27: snap to Jess, guilty, phone up
@@ -369,9 +375,11 @@ def sh_biscuit(t):  # L29: two-shot, Jess beaming in front, You frozen
     hJ, hY = head_of("JESS"), head_of("YOU"); m = hJ * 0.6 + hY * 0.4
     return cam_of(Vector((0.95, -1.4, 1.1)), m + Vector((0, 0, -0.15)), 30, hJ)
 def sh_den_end(t):  # L30-L31: behind the hood; her old phone flips to 'Hello'; he leans back
-    u = ramp(t, S["L30"], E["L31"] + 1.0); p = OLD.location
-    hh = bone_world(HOOD["arm"], "Bip01 Head")   # right behind him: the hood fills the frame, her phone glows past his shoulder
-    return cam_of(hh + Vector((0.2 - 0.05 * u, 0.72 - 0.15 * u, 0.16)), hh.lerp(p, 0.55) + Vector((0, 0, -0.04)), 26, p)
+    u = ease(clamp((t - S["L30"] + 0.3) / (E["L31"] - S["L30"] + 0.3))); p = OLD.location.copy()
+    hh = bone_world(HOOD["arm"], "Bip01 Head")   # from right behind the hood, pushing past his shoulder onto the 'Hello' screen
+    start = hh + Vector((0.2, 0.72, 0.16)); end = p + Vector((0.03, 0.2, 0.24))
+    tgt = (hh.lerp(p, 0.55) + Vector((0, 0, -0.04))).lerp(p, u)
+    return cam_of(start.lerp(end, u), tgt, lerp(26, 34, u), tgt.lerp(p, 0.5))
 SHOTS = [("bike", S["L16"] - 0.2, J_VAN, sh_bike), ("van", J_VAN, J_SOME, sh_van), ("yard", J_SOME, J_THEN, sh_yard), ("box", J_THEN, J_OFF, sh_box),
          ("stamp", J_OFF, J_LOCK, sh_stamp), ("lock", J_LOCK, J_WITHOUT, sh_lock), ("parts", J_WITHOUT, S["L19"], sh_parts),
          ("two", S["L19"], S["L20"], sh_two), ("hold", S["L20"], F_YOUR, sh_hold), ("text", F_YOUR, S["L21"], sh_text), ("jess", S["L21"], S["L22"], sh_jess),
@@ -482,9 +490,9 @@ def set_frame(t):
         if side == "R" and lean > 0: tgt = tgt.lerp(OLD.location + Vector((0.02, 0.04, 0.03)), 0.0)
         hand_to(HOOD, side, tgt.lerp(bone_world(HOOD["arm"], "Bip01 Spine2") + F_ * 0.25 + Vector((0, 0, -0.15)) + R_ * (-sx * 2.5), lean), (0, 0, -0.5))
     hd = bone_world(HOOD["arm"], "Bip01 Head"); hm = HOOD["arm"].matrix_world @ HOOD["arm"].pose.bones["Bip01 Head"].matrix
-    hood.matrix_world = Matrix.Translation(hd + hm.to_3x3() @ Vector((0.04, 0, 0)) + Vector((0, 0.03, 0.06))) @ Matrix.Diagonal((1.0, 1.1, 1.15, 1.0))
+    hood.matrix_world = Matrix.Translation(hd + hm.to_3x3() @ Vector((0.04, 0, 0)) + Vector((0, 0.03, 0.06))) @ Matrix.Diagonal((0.95, 1.22, 1.12, 1.0))   # a hood drapes back, not a ball
     if t >= S["L23"] - 0.5 and (S["L23"] - 0.5 <= t < S["L24"] or t >= S["L30"] - 0.5):   # her old phone on the bench
-        OLD.location = OD + Vector((0.45, -0.62, 0.785)); OLD.rotation_euler = (0, 0, math.radians(-12))
+        OLD.location = OD + Vector((0.45, -0.62, 0.785)); OLD.rotation_euler = (0, 0, math.radians(168))   # top of the screen away from him: reads upright from behind
         if t < S["L24"]:
             fl = round(clamp((t - W("L23", "lock") + 0.1) / 0.25) * (1 - clamp((t - W("L23", "lost", True) - 0.2) / 0.3)), 2)
             show(OLD_TX, f"old_lost_{fl}", lambda: UI.lost_lock(fl))
@@ -494,10 +502,13 @@ def set_frame(t):
             else: show(OLD_TX, f"hello_{hp}", lambda: UI.hello(hp))
     # ---------------- the flat: You and Jess on the sofa
     Y, J = C["YOU"], C["JESS"]
-    bounce = abs(math.sin((t - S["L21"]) * 8.5)) * 0.04 * ramp(t, S["L21"], S["L21"] + 0.2) * (1 - ramp(t, E["L21"] - 0.2, E["L21"] + 0.1))
+    bounce = abs(math.sin((t - S["L21"]) * 8.5)) * 0.07 * ramp(t, S["L21"], S["L21"] + 0.2) * (1 - ramp(t, E["L21"] - 0.2, E["L21"] + 0.1))
     yh = 12 - 22 * ramp(t, S["L28"] - 0.1, S["L28"] + 0.9)                     # she turns to Jess on "Jess. What did you do?"
     drive(Y, "YOU", YOU_SEAT, yh, SIT, t * 0.6); sit_legs(Y)
     drive(J, "JESS", JESS_SEAT + Vector((0, 0, bounce)), -18 if t < S["L21"] else -30, SIT, t * 0.6 + 1.3); sit_legs(J)
+    if S["L21"] <= t < E["L21"] + 0.2:   # squealing: rocks forward and back with the bounce
+        rock = math.sin((t - S["L21"]) * 8.5) * 6 * ramp(t, S["L21"], S["L21"] + 0.2) * (1 - ramp(t, E["L21"] - 0.2, E["L21"] + 0.2))
+        rot_bone(J["arm"], "Bip01 Spine1", (0, 0, rock)); bpy.context.view_layer.update()
     # who looks where: one look per character per frame, applied BEFORE the hands (the Biped's clavicles hang off the
     # neck, so a head turn after the IK would drag both arms off the phone)
     T_DOWN, T_PICK = S["L26"] - 0.15, S["L26"] + 0.35
@@ -556,7 +567,7 @@ def set_cam(t):
     if roll: cam.rotation_euler.rotate_axis("Z", math.radians(roll))
     cam.data.lens = lens; cam.data.dof.focus_distance = max(0.05, (foc - p).length)
     close = name in ("bike", "box", "stamp", "lock", "parts", "text", "login")
-    cam.data.dof.aperture_fstop = 5.6 if close else (1.8 if name == "rewatch" else 2.4)
+    cam.data.dof.aperture_fstop = 5.6 if close else (2.8 if name == "rewatch" else 2.4)
     fill_d.energy = (14 if name == "bike" else 4) if close else (3 if name in ("den_lost", "den_end") else 10 if name in ("yard", "van") else 25)
     return name
 
