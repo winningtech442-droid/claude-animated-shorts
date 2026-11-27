@@ -24,7 +24,7 @@ LINES = {
     "L01": ("JESS", "I'm so sorry, I didn't mean to!", 0.75, 0.3, 0.8, "i'm so sorry i didn't mean to"),
     "L10": ("YOU", "He's wiping my NEW phone. From a shed near Heathrow!", 0.9, 0.3, 0.8,
             "he's wiping my new phone from a shed near heathrow"),
-    "L11": ("JESS", "Turn it off! Turn it OFF!", 0.95, 0.3, 0.85, "turn it off turn it off"),
+    "L11": ("JESS", "Turn it off! Turn it off!!", 0.95, 0.3, 0.85, "turn it off turn it off"),
     "L19": ("YOU", "Not yet. He's still on the website. Camera!", 0.8, 0.3, 0.8,
             "not yet he's still on the website camera"),
     "L22": ("JESS", "PRESS IT!!", 1.1, 0.3, 0.8, "press it"),
