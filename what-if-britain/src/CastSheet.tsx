@@ -10,7 +10,7 @@ export const CastSheet: React.FC = () => {
   const f = useCurrentFrame();
   const close = f < NAMES.length;
   const face = FACES[close ? NAMES[f] : 'happy'];
-  const cam = close ? { position: [0.03, 1.66, 1.05] as [number, number, number], fov: 26 } : f === 12 ? { position: [0, 1.0, 3.6] as [number, number, number], fov: 40 } : { position: [0, 1.0, 5.2] as [number, number, number], fov: 40 };
+  const cam = close ? { position: [0.03, 1.66, 1.05] as [number, number, number], fov: 26 } : f === 12 ? { position: [0, 1.0, 3.6] as [number, number, number], fov: 40 } : { position: [0, 1.0, f === 14 ? 7.6 : f === 15 ? 4.2 : 5.2] as [number, number, number], fov: 40 };
   return (
     <AbsoluteFill style={{ background: 'linear-gradient(#D9E6F2, #B8C8D8)' }}>
       <ThreeCanvas width={1080} height={1920} camera={{ ...cam, near: 0.01, far: 100 }} onCreated={({ camera }) => camera.lookAt(0, close ? 1.63 : 0.95, 0)}>
@@ -22,7 +22,20 @@ export const CastSheet: React.FC = () => {
           <circleGeometry args={[6, 48]} />
           <meshStandardMaterial color="#C9C3B8" roughness={1} />
         </mesh>
-        {f < 13 ? (
+        {f === 15 ? (
+          <>
+            <Person look={CAST.mate} face={FACES.neutral} position={[-0.55, 0, 0]} rotationY={Math.PI / 2} />
+            <Person look={CAST.nan} face={FACES.neutral} position={[0.55, 0, 0]} rotationY={Math.PI / 2} />
+          </>
+        ) : f === 14 ? (
+          <>
+            <Person look={CAST.producer} face={FACES.worried} position={[-1.5, 0, -0.4]} rotationY={0.35} />
+            <Person look={CAST.mate} face={FACES.disbelief} position={[-0.75, 0, -0.1]} rotationY={0.3} body={{ shL: [10, 12], elL: 80, handL: 'fist' }} />
+            <Person look={CAST.lead} face={FACES.shock} body={{ shL: [40, 30], elL: 30, shR: [40, 30], elR: 30 }} />
+            <Person look={CAST.nan} face={FACES.smug} position={[0.72, 0, -0.1]} rotationY={-0.3} />
+            <Person look={CAST.narrator} face={FACES.neutral} position={[1.5, 0, -0.4]} rotationY={-0.35} />
+          </>
+        ) : f < 13 ? (
           <Person look={CAST.lead} face={face} body={f === 12 ? { shR: [20, 35], elR: 70, shL: [0, 10], elL: 15, headTilt: 6 } : {}} />
         ) : (
           <>
@@ -33,7 +46,7 @@ export const CastSheet: React.FC = () => {
         )}
       </ThreeCanvas>
       <div style={{ position: 'absolute', top: 90, width: '100%', textAlign: 'center', font: '800 64px Inter', color: '#1B2433' }}>
-        {close ? NAMES[f].toUpperCase() : f === 12 ? 'LEAD' : 'MATE · LEAD · NAN'}
+        {close ? NAMES[f].toUpperCase() : f === 12 ? 'LEAD' : f === 14 ? 'PRODUCER · MATE · ALFIE · NAN · NARRATOR' : f === 15 ? 'SIDE: MATE · NAN' : 'MATE · LEAD · NAN'}
       </div>
     </AbsoluteFill>
   );

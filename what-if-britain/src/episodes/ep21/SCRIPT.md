@@ -1,6 +1,6 @@
 # EP21: Mattress Money (v3 pilot)
 
-Status: script DRAFT 27 Nov 2026 · test render PENDING
+Status: script APPROVED 27 Nov 2026 · test render PENDING
 
 ## The card (read this first)
 - **Premise:** Alfie hides £1,000 under his mattress. In the what-if Britain, money visibly shrinks as prices rise.
