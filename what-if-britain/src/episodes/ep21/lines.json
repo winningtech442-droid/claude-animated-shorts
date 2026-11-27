@@ -85,5 +85,185 @@
   "cfg": 0.5,
   "fx": {},
   "file": "voice/07_mate.wav"
+ },
+ {
+  "i": 8,
+  "speaker": "narrator",
+  "text": "What if Britain's money *shrank* as fast as its prices rise?",
+  "start": 22.309,
+  "end": 25.979,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/08_narrator.wav"
+ },
+ {
+  "i": 9,
+  "speaker": "shopkeeper",
+  "text": "That's *2016* money, son.",
+  "start": 27.879,
+  "end": 30.029,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/09_shopkeeper.wav"
+ },
+ {
+  "i": 10,
+  "speaker": "alfie",
+  "text": "It's still *ten* quid!",
+  "start": 30.229,
+  "end": 31.669,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/10_alfie.wav"
+ },
+ {
+  "i": 11,
+  "speaker": "shopkeeper",
+  "text": "Not in *here* it isn't.",
+  "start": 31.869,
+  "end": 33.079,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/11_shopkeeper.wav"
+ },
+ {
+  "i": 12,
+  "speaker": "mate",
+  "text": "Seventy percent *off*!",
+  "start": 34.529,
+  "end": 36.759,
+  "exaggeration": 0.9,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/12_mate.wav"
+ },
+ {
+  "i": 13,
+  "speaker": "assistant",
+  "text": "Same price as *July*.",
+  "start": 36.959,
+  "end": 38.419,
+  "exaggeration": 0.4,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/13_assistant.wav"
+ },
+ {
+  "i": 14,
+  "speaker": "mate",
+  "text": "Then off *what*?",
+  "start": 39.219,
+  "end": 39.949,
+  "exaggeration": 0.7,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/14_mate.wav"
+ },
+ {
+  "i": 15,
+  "speaker": "alfie",
+  "text": "Nan, why's yours still *big*?",
+  "start": 41.349,
+  "end": 43.199,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/15_alfie.wav"
+ },
+ {
+  "i": 16,
+  "speaker": "nan",
+  "text": "It's been earning *faster* than the prices, love.",
+  "start": 43.399,
+  "end": 46.349,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/16_nan.wav"
+ },
+ {
+  "i": 17,
+  "speaker": "nan",
+  "text": "...that it shrinks in the *real* Britain too.",
+  "start": 47.849,
+  "end": 50.099,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/17_nan.wav"
+ },
+ {
+  "i": 18,
+  "speaker": "alfie",
+  "text": "By how *much*?",
+  "start": 50.349,
+  "end": 51.299,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/18_alfie.wav"
+ },
+ {
+  "i": 19,
+  "speaker": "nan",
+  "text": "More than a *quarter*, in ten years.",
+  "start": 51.499,
+  "end": 53.739,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/19_nan.wav"
+ },
+ {
+  "i": 20,
+  "speaker": "alfie",
+  "text": "Then why can't I *see* it?",
+  "start": 53.989,
+  "end": 55.489,
+  "exaggeration": 0.9,
+  "cfg": 0.3,
+  "fx": {},
+  "file": "voice/20_alfie.wav"
+ },
+ {
+  "i": 21,
+  "speaker": "nan",
+  "text": "Nobody prints it *smaller*, love.",
+  "start": 55.689,
+  "end": 57.769,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/21_nan.wav"
+ },
+ {
+  "i": 22,
+  "speaker": "producer",
+  "text": "Get him *back*! Now!",
+  "start": 58.469,
+  "end": 59.959,
+  "exaggeration": 1.1,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true
+  },
+  "file": "voice/22_producer.wav"
+ },
+ {
+  "i": 23,
+  "speaker": "nan",
+  "text": "That pin... your *grandad* had one just like i\u2013",
+  "start": 60.109,
+  "end": 63.093,
+  "exaggeration": 1.2,
+  "cfg": 0.3,
+  "fx": {
+   "cut": "it@0.4"
+  },
+  "file": "voice/23_nan.wav"
  }
 ]

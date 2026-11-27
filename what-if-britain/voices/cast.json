@@ -7,35 +7,149 @@
   "cast": {
     "narrator": {
       "role": "the house voice (voice E): the explainer who gets interrupted",
-      "kokoro": {"blend": {"bm_george": 0.6, "bm_lewis": 0.4}, "speed": 1.0, "pitch_semitones": 0},
+      "kokoro": {
+        "blend": {
+          "bm_george": 0.6,
+          "bm_lewis": 0.4
+        },
+        "speed": 1.0,
+        "pitch_semitones": 0
+      },
       "reference_text": "Every week on this channel we take one ordinary bit of British money and ask what would happen if it went a different way. Prices, pay packets, the pound in your pocket. It's usually simpler than you'd think, and it's always stranger.",
       "tested": [
-        {"exaggeration": 0.5, "cfg": 0.5, "line": "If you paid a whole month's rent in one p coins, you might think your landlord had to take it, but you might be surprised to know that"},
-        {"exaggeration": 0.8, "cfg": 0.3, "line": "Wait. Is he okay? That was not in the script."},
-        {"exaggeration": 1.2, "cfg": 0.3, "line": "Someone get him out of there! Now!"}
+        {
+          "exaggeration": 0.5,
+          "cfg": 0.5,
+          "line": "If you paid a whole month's rent in one p coins, you might think your landlord had to take it, but you might be surprised to know that"
+        },
+        {
+          "exaggeration": 0.8,
+          "cfg": 0.3,
+          "line": "Wait. Is he okay? That was not in the script."
+        },
+        {
+          "exaggeration": 1.2,
+          "cfg": 0.3,
+          "line": "Someone get him out of there! Now!"
+        }
       ]
     },
     "alfie": {
       "role": "the lead, the viewer's stand-in: younger, slightly quick",
-      "kokoro": {"blend": {"bm_fable": 1.0}, "speed": 1.05, "pitch_semitones": 0},
-      "tested": [{"exaggeration": 0.7, "cfg": 0.4, "line": "Hang on. Where's all the cash gone?"}]
+      "kokoro": {
+        "blend": {
+          "bm_fable": 1.0
+        },
+        "speed": 1.05,
+        "pitch_semitones": 0
+      },
+      "tested": [
+        {
+          "exaggeration": 0.7,
+          "cfg": 0.4,
+          "line": "Hang on. Where's all the cash gone?"
+        }
+      ]
     },
     "mate": {
       "role": "the heavy-set sceptic: deeper, slower",
-      "kokoro": {"blend": {"bm_daniel": 0.7, "bm_lewis": 0.3}, "speed": 0.92, "pitch_semitones": -1.5},
-      "tested": [{"exaggeration": 0.6, "cfg": 0.5, "line": "Yeah, but how? How does that even work, mate?"}]
+      "kokoro": {
+        "blend": {
+          "bm_daniel": 0.7,
+          "bm_lewis": 0.3
+        },
+        "speed": 0.92,
+        "pitch_semitones": -1.5
+      },
+      "tested": [
+        {
+          "exaggeration": 0.6,
+          "cfg": 0.5,
+          "line": "Yeah, but how? How does that even work, mate?"
+        }
+      ]
     },
     "nan": {
       "role": "tiny, stooped, remembers the old prices: older, slower",
-      "kokoro": {"blend": {"bf_alice": 1.0}, "speed": 0.86, "pitch_semitones": -1.0},
-      "tested": [{"exaggeration": 0.5, "cfg": 0.5, "line": "Ooh, that's not what things cost in my day, love."}]
+      "kokoro": {
+        "blend": {
+          "bf_alice": 1.0
+        },
+        "speed": 0.86,
+        "pitch_semitones": -1.0
+      },
+      "tested": [
+        {
+          "exaggeration": 0.5,
+          "cfg": 0.5,
+          "line": "Ooh, that's not what things cost in my day, love."
+        }
+      ]
     },
     "producer": {
       "role": "the Booth's producer, mostly off-mic: quick, easily panicked (talkback filter on screen)",
-      "kokoro": {"blend": {"bf_emma": 1.0}, "speed": 1.1, "pitch_semitones": 0},
-      "tested": [{"exaggeration": 0.9, "cfg": 0.3, "line": "Cut the music! Someone get him out of there!"}]
+      "kokoro": {
+        "blend": {
+          "bf_emma": 1.0
+        },
+        "speed": 1.1,
+        "pitch_semitones": 0
+      },
+      "tested": [
+        {
+          "exaggeration": 0.9,
+          "cfg": 0.3,
+          "line": "Cut the music! Someone get him out of there!"
+        }
+      ]
     }
   },
   "cast_reference_text": "Right, so here's the thing. Every week something in this country costs a bit more than it did, and nobody ever really tells you why. Prices go up, wages sort of follow, and somehow we all just carry on.",
-  "_note": "alfie, mate, nan and producer were made from cast_reference_text; the narrator from its own reference_text."
+  "_note": "alfie, mate, nan, producer and the guests were made from cast_reference_text (tools/make_voice.py); the narrator from its own reference_text.",
+  "guests": {
+    "shopkeeper": {
+      "episode": "EP21 Mattress Money",
+      "role": "the corner-shop keeper: tall, lanky, deadpan",
+      "kokoro": {
+        "blend": {
+          "bm_george": 0.5,
+          "bm_fable": 0.5
+        },
+        "speed": 0.86,
+        "pitch_semitones": -3
+      },
+      "tested": [
+        {
+          "exaggeration": 0.5,
+          "cfg": 0.5,
+          "line": "That's twenty sixteen money, son."
+        },
+        {
+          "exaggeration": 0.5,
+          "cfg": 0.5,
+          "line": "Not in here it isn't."
+        }
+      ],
+      "approved": "2026-11-27"
+    },
+    "assistant": {
+      "episode": "EP21 Mattress Money",
+      "role": "the electronics-shop sales assistant: tiny, bored",
+      "kokoro": {
+        "blend": {
+          "bf_lily": 1.0
+        },
+        "speed": 0.95,
+        "pitch_semitones": 1
+      },
+      "tested": [
+        {
+          "exaggeration": 0.35,
+          "cfg": 0.5,
+          "line": "Same price as July."
+        }
+      ],
+      "approved": "2026-11-27"
+    }
+  }
 }

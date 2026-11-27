@@ -1,7 +1,7 @@
 """The final check before posting (STUDIO-RULES.md, section 6).
 
 usage: python3 -I tools/qa.py out/<id>.mp4 [--demo]
-Measures: length (61-80 s; --demo skips this), black frames, frozen stretches, one-frame pops, loudness and
+Measures: length (61-68 s, v3; --demo skips this), black frames (the final cut to black is allowed), frozen stretches, one-frame pops, loudness and
 true peak, then prints the Creator Rewards checklist to tick by hand. Exit code 1 if a measured check fails.
 """
 import json, re, subprocess, sys
@@ -18,12 +18,15 @@ v = next(s for s in info['streams'] if s['codec_type'] == 'video')
 has_audio = any(s['codec_type'] == 'audio' for s in info['streams'])
 notes.append(f"{v['width']}x{v['height']}, {dur:.2f} s, audio {'yes' if has_audio else 'NO'}")
 if (v['width'], v['height']) not in [(1080, 1920), (1440, 2560)]: fails.append(f"size {v['width']}x{v['height']}: must be vertical 1080x1920 or 1440x2560")
-if not demo and not 61 <= dur <= 80: fails.append(f'length {dur:.1f} s: must be 61-80 s (under 60 s earns nothing)')
+if not demo and not 61 <= dur <= 68: fails.append(f'length {dur:.1f} s: must be 61-68 s (v3; under 60 s earns nothing)')
 if not has_audio: fails.append('no audio track')
 
 # black frames and frozen stretches
 log = run(['ffmpeg', '-hide_banner', '-i', path, '-vf', 'blackdetect=d=0.1:pix_th=0.06,freezedetect=n=0.002:d=1.2', '-an', '-f', 'null', '-']).stderr
-for m in re.finditer(r'black_start:([\d.]+) black_end:([\d.]+)', log): fails.append(f'black frames {float(m[1]):.2f}-{float(m[2]):.2f} s')
+for m in re.finditer(r'black_start:([\d.]+) black_end:([\d.]+)', log):
+    a_, b_ = float(m[1]), float(m[2])
+    if b_ >= dur - 0.05 and dur - a_ <= 1.0: notes.append(f'final cut to black {a_:.2f}-{b_:.2f} s (allowed: v3 cliffhanger ending)')
+    else: fails.append(f'black frames {a_:.2f}-{b_:.2f} s')
 for m in re.finditer(r'freeze_start: ([\d.]+)', log): fails.append(f'frozen picture from {float(m[1]):.2f} s (over 1.2 s): the camera must keep moving')
 
 # one-frame pops: a frame unlike both neighbours while the neighbours match each other
