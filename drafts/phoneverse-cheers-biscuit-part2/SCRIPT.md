@@ -17,7 +17,7 @@
 | Ending | She wins and steals his line, "Cheers, Biscuit." A mild threat text arrives, she screenshots it for the police, and Jess reveals "Biscuit124" |
 | Series | Cold open on Part 1's "JESS!" echo. "Oi, camera!" is now an order. You and Jess become the recurring duo |
 
-**Length:** 182 spoken words. Part 1 was voiced at 3.24 words a second while talking, so that's about 56 s of speech. With about 11 s of action beats (dives, the clicking race, the slow turn), it comes to **about 67 s**. That's over a minute, so it qualifies for Creator Rewards.
+**Length:** 184 spoken words. Part 1 was voiced at 3.24 words a second while talking, so that's about 57 s of speech. With about 11 s of action beats (dives, the clicking race, the slow turn), it comes to **about 68 s**. That's over a minute, so it qualifies for Creator Rewards.
 
 ## Cast
 | Character | Model | Voice | Engine |
@@ -68,7 +68,7 @@ Repeated words follow the house rule from Part 1: said twice, the first short an
 |---|---|---|---|---|
 | L20 | HOODED | "Are you sure?" Oh, I'm *sure*. Last click, Biscuit. | Reading the confirm box, savouring it | OFF |
 | L21 | YOU | Settings… "*Sign out of all browsers*"… | Reading fast under her breath | OFF: screen insert |
-| L22 | JESS | PRESS IT! | Full scream | **ON** |
+| L22 | JESS | *PRESS* IT! | Full scream | **ON** |
 | L23 | HOODED | …*What*? | His screen bounced him out | OFF |
 | L24 | YOU | Cheers, *Biscuit*. | Smug, straight down the lens. **Her line steals his** | **ON** |
 
@@ -154,14 +154,14 @@ Repeated words follow the house rule from Part 1: said twice, the first short an
 | Facts | **Keep with a flag** | Every advice line is from Apple's own pages. The instant kick-out is dramatised; the post caption gives the real order |
 | Threat text | **Keep with a flag** | It's mild, topical (NYT, May 2026), and comes with the right response (screenshot, police) |
 | Ending | **Worth keeping** | It's a payoff, not a recap: "Cheers, Biscuit" flips Part 1, and "Biscuit124" starts the comment fight |
-| Length | **Keep with a flag** | The estimate is about 67 s. Measure after voicing; if it runs over 75 s, cut L13-L14 (about 2.5 s) |
+| Length | **Keep with a flag** | The estimate is about 68 s. Measure after voicing; if it runs over 75 s, cut L13-L14 (about 2.5 s) |
 
 **Overall: Worth keeping.**
 
 **Fix list before we voice it:**
-1. Check the 67-second estimate once the voices are rendered.
+1. Check the 68-second estimate once the voices are rendered.
 2. Kokoro text: send "Biscuit124" as "biscuit one two four", and give "iCloud" a respelling if it's misread.
 3. Chatterbox for the five big lines: L01 (with the "Sorryyy" drag), L10, L11, L19 and L22.
 4. Build the 11 new screens before blocking the shots.
 
-*Log: 27 Nov 2026 · Phoneverse "Cheers, Biscuit" Part 2 (finale) · password alone erases your new phone, no code · target 67 s · Worth keeping.*
+*Log: 27 Nov 2026 · Phoneverse "Cheers, Biscuit" Part 2 (finale) · password alone erases your new phone, no code · target 68 s · Worth keeping.*
