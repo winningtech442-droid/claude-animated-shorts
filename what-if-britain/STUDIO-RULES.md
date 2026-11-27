@@ -141,8 +141,9 @@ story, and character voices. The facts stay; they move inside the story.
 - A new guest gets a new reference clip, approved by the user before its lines are voiced.
 
 ## 8. Sound
-- Original score (`audio/score.py`) and studio effects (`audio/sfx.py`); no stock or shared music beds. The user may
-  add very quiet TikTok-library music when posting.
+- The studio makes the sound (`audio/`): effects placed on what happens on screen (`ep_sfx.py` for hand-built episodes)
+  and an original score where it helps; no stock or shared music beds. The user may add very quiet TikTok-library
+  music when posting.
 - **A bed under everything:** no dead silence until the final cut.
 - An effect on every beat change and every on-screen action; a hit on the redirection and on the title card;
   a dropout before the twist; the loudest peak on the cliffhanger.
@@ -170,8 +171,9 @@ story, and character voices. The facts stay; they move inside the story.
 4. **10-20 s test render** of the cold open, **the user approves it**.
 5. Full build, QA, post file; deliver the video and the post file.
 
-**Tool status (27 Nov 2026):** the studio code still implements v2, and the full code has not landed in this folder
-yet (it comes from the user's zip). To update: `gate.py` (v3 checks), `house_voice.py` (Chatterbox, several speakers),
+**Tool status (27 Nov 2026):** the studio code is in this folder (imported from the user's zip, cleaned; it
+type-checks and renders), but it still implements v2. Since Ep 09 episodes are hand-built in `src/ep/` with
+`audio/ep_sfx.py`; the data-driven engine (`src/engine/`, `build.sh`) made Eps 01-08. To update: `gate.py` (v3 checks), `house_voice.py` (Chatterbox, several speakers),
 `align.py` (per speaker), captions (speaker colours, starred bleeps), `src/cast` (body system, new poses), the engine
 (mid-video title card, final cut to black), `qa.py` (allow the final black), `build.sh` (refuse without `approvals.txt`).
 

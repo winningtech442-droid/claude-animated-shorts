@@ -1,0 +1,4 @@
+# Lines spoken by Mate or Nan, copied exactly from script.txt (asterisks optional). Everything else is the narrator.
+mate: It's a cupboard. How dear can it be?
+nan: In my day, love, we just put another jumper on.
+mate: So who's paying for the cupboard?
