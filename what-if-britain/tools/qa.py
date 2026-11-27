@@ -54,6 +54,6 @@ Tick by hand before posting:
   [ ] history, not advice; no real people depicted; no party-political take
   [ ] UK spelling and pounds; posting 6-9 pm UK time
   [ ] every sign, tag and headline fully readable in the stills (none cut off at the frame edge)
-  [ ] voice made on a MiniMax plan that allows commercial use
-  [ ] the ask matches CTA-BANK.md's rotation log, and the log row is filled in""")
+  [ ] voices from the approved cast clips (voices/, Chatterbox); script and 10-20 s test render approved (approvals.txt)
+  [ ] no spoken ask (v3): the last line is cut mid-word; the ask lives in the description and pinned comment""")
 sys.exit(1 if fails else 0)
