@@ -17,7 +17,7 @@
 | Ending | She wins and steals his line, "Cheers, Biscuit." A mild threat text arrives, she screenshots it for the police, and Jess reveals "Biscuit124" |
 | Series | Cold open on Part 1's "JESS!" echo. "Oi, camera!" is now an order. You and Jess become the recurring duo |
 
-**Length:** 184 spoken words. Part 1 was voiced at 3.24 words a second while talking, so that's about 57 s of speech. With about 11 s of action beats (dives, the clicking race, the slow turn), it comes to **about 68 s**. That's over a minute, so it qualifies for Creator Rewards.
+**Length:** 190 spoken words. Part 1 was voiced at 3.24 words a second while talking, so that's about 57 s of speech. With about 11 s of action beats (dives, the clicking race, the slow turn), it comes to **about 68 s**. That's over a minute, so it qualifies for Creator Rewards.
 
 ## Cast
 | Character | Model | Voice | Engine |
@@ -35,7 +35,7 @@ Repeated words follow the house rule from Part 1: said twice, the first short an
 | # | Who | Line | Emotion | Lips |
 |---|---|---|---|---|
 | — | — | *(the tail of Part 1's "JESS!" echo)* | — | — |
-| L01 | JESS | Sorry! … *Sorryyy!* | Wincing, hands up. Overlaps the echo | **ON** |
+| L01 | JESS | I'm so *sorry*, I didn't mean to! | Wincing, guilty, hands up. Overlaps the echo | **ON** |
 | L02 | YOU | Okay. He's got my password… but he still needs my *code*. Right? | Breathless, forcing herself calm. **The hook: an open question** | **ON** |
 | L03 | JESS | Course he does! Codes are the whole *point* of codes! | Totally confident, totally wrong | **ON** |
 | L04 | YOU | …Unless he goes through *Find Devices*. That one doesn't ask for a code. | The penny drops. Quiet horror | **ON** |
@@ -55,7 +55,7 @@ Repeated words follow the house rule from Part 1: said twice, the first short an
 | L10 | YOU | He's wiping my *new* phone. From a shed near Heathrow! | Panic into fury | **ON** |
 | L11 | JESS | Turn it *off*! Turn it OFF! | Flapping, squealing | **ON** |
 | L12 | YOU | Doesn't help. It wipes the second it comes back *on*. | Snapping, thumbs already moving | OFF: over the shoulder |
-| L13 | JESS | Ring *Apple*! | Grabbing her own phone | **ON** |
+| L13 | JESS | Just ring *Apple*! | Grabbing her own phone | **ON** |
 | L14 | YOU | He's two *clicks* away, Jess! | Sharp | **ON** |
 | L15 | YOU | Password first, so he can't get back *in*. | Focused, under her breath | OFF: screen insert |
 | L16 | YOU | New one. Long one. Not a *biscuit*. | Typing through gritted teeth | OFF |
@@ -82,7 +82,7 @@ Repeated words follow the house rule from Part 1: said twice, the first short an
 ## Beat table (what the viewer sees)
 | Beat | Time | What happens on screen | Camera | Counter | Sound | Faces and poses |
 |---|---|---|---|---|---|---|
-| 1. Cold open (L01-L03) | 0:00-0:07 | Her NEW phone glows in her shaking hand. Jess has both hands up, sorry | **New opening shot:** starts low and tight on the phone and tilts up to her face as the echo fades | — | Part 1's "JESS!" echo tail; a sofa creak; a soft pad comes in | You: worried, then forced calm. Jess: wince |
+| 1. Cold open (L01-L03) | 0:00-0:07 | Her NEW phone glows in her shaking hand. Jess has both hands up, apologising | **New opening shot:** starts low and tight on the phone and tilts up to her face as the echo fades | — | Part 1's "JESS!" echo tail; a sofa creak; a soft pad comes in | You: worried, then forced calm. Jess: wince |
 | 2. The penny drops (L04-L06) | 0:07-0:17 | She goes still, then stands up fast. Jess bounces up, outraged | Slow push-in on her eyes, then a whip up as she stands | — | Heartbeat thud under L04; a whoosh as she stands | You: shock. Jess: angry, pointing at the phone |
 | 3. Dive 1 (L07) | 0:17-0:20 | She holds the phone up to the lens. We fly into the map: London, then Heathrow, then the pin, then out of a laptop screen | **One continuous dive** (1.2 s) | — | Big whoosh, map swish, data glitch | You: determined, holding the phone up |
 | 4. The den (L08-L09) | 0:20-0:24 | Gloved hand clicks "Find Devices". No code screen appears. Her new phone is in the list, and he clicks "Erase This Device" | Over the hood's shoulder, pushing towards the screen | **CLICKS TO ERASE 3** appears, then ticks to **2** on the click | Trackpad click, a heavy counter tick, laptop hum | Hood: head tilts, face never shown |
@@ -161,7 +161,7 @@ Repeated words follow the house rule from Part 1: said twice, the first short an
 **Fix list before we voice it:**
 1. Check the 68-second estimate once the voices are rendered.
 2. Kokoro text: send "Biscuit124" as "biscuit one two four", and give "iCloud" a respelling if it's misread.
-3. Chatterbox for the five big lines: L01 (with the "Sorryyy" drag), L10, L11, L19 and L22.
+3. Chatterbox for the five big lines: L01, L10, L11, L19 and L22.
 4. Build the 11 new screens before blocking the shots.
 
 *Log: 27 Nov 2026 · Phoneverse "Cheers, Biscuit" Part 2 (finale) · password alone erases your new phone, no code · target 68 s · Worth keeping.*
