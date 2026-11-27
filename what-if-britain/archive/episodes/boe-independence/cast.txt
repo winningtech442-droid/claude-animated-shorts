@@ -1,0 +1,5 @@
+# Lines spoken by Mate or Nan, copied exactly from script.txt (asterisks optional). Everything else is the narrator.
+# Each line is its own MiniMax clip in that character's voice; tools/assemble_vo.py splices them into the narrator take.
+mate: Cheap mortgage? Sign me up.
+nan: We had this in the eighties, love. For sale signs all down the street.
+mate: Hang on. The Bank's not perfect either.

@@ -1,0 +1,44 @@
+# Ep 20 voice (voice F). speed|pause|text|gain dB. The # notes are the acting direction for each line.
+# SHOCK: punchy, almost gleeful. No pauses in the first three lines.
+1.24|0.0|America *lost* money on Britain's war loan!|+3.4
+# disbelief, quick, rising
+1.22|0.0|And we paid back nearly *double*!|+0.0
+# leaning in, conspiratorial
+1.13|0.24|So what if we'd paid the lot back on *day one*?|-1.7
+# storytelling, rueful
+1.19|0.08|After the war, Britain was *skint*.|+0.0
+# pleading
+1.07|0.12|We begged America for a *gift*.|-1.7
+# America's cold answer
+1.19|0.16|America said no. Have a *loan* instead.|+0.0
+# businesslike
+1.13|0.12|Four point three billion dollars, at just two per *cent*.|+0.0
+1.22|0.36|Pay it back slowly, one instalment a *year*.|+0.0
+# dreamy what-if, softer
+1.07|0.12|Now picture the other way.|-3.4
+1.19|0.08|We borrow it, then hand it straight *back*.|+0.0
+1.19|0.36|America gets every dollar while it still buys a *lot*!|+1.7
+# record scratch, deadpan
+1.02|0.24|But that's not what *happened*.|-1.7
+1.19|0.08|We paid a bit every year, for *decades*.|+0.0
+# building: each "rose" bigger
+1.19|0.08|And while we paid, American prices *rose*.|+0.0
+1.13|0.24|And rose... And *rose*!|+3.4
+1.13|0.12|By the end, a dollar bought a *tenth* of what it used to.|+0.0
+# quiet sting
+1.07|0.4|So every dollar we sent back was worth *less*.|-1.7
+# the big number, proud
+1.13|0.16|In total, we sent back seven and a half billion *dollars*.|+1.7
+# smug aside
+1.19|0.32|Sounds like a win for *them*.|-3.4
+# the turn
+1.13|0.12|But count it in the dollars they *lent*.|+0.0
+# HERO REVEAL: slow, loud
+0.96|0.4|It's worth about two and a half *billion*.|+3.4
+# honest aside
+1.13|0.24|Our rough sum. Little more than *half*.|-1.7
+1.19|0.32|Britain got a cheap loan. America got paid in shrinking *dollars*!|+1.7
+# grin
+1.13|0.24|Honestly? Britain won that *one*.|+0.0
+# the dare
+1.19|0.0|Britain or America? Send this to an American, and ask *them*.|+1.7

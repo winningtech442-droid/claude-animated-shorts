@@ -1,0 +1,11 @@
+# Episode order: one folder per line, in posting order. The gate uses this for the share rotation and the new-set check.
+north-sea
+black-wednesday
+rates-zero
+boe-independence
+rough-gas
+ep16
+ep17
+ep18
+ep19
+ep20

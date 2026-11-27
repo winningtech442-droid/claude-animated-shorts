@@ -1,0 +1,18 @@
+{
+  "name": "House voice E (LOCKED 16 Nov 2026)",
+  "engine": "Kokoro v1.0 (kokoro-onnx), free and offline",
+  "voice": "0.6 bm_george + 0.4 bm_lewis, en-gb, no pitch shift",
+  "how": "Write src/episodes/<id>/voice.txt (speed|pause|text per line), then python3 -I tools/house_voice.py src/episodes/<id>/voice.txt out/<id>/vo.mp3",
+  "speeds": "build-ups 1.05-1.1, normal 1.0, reveals and the hero number 0.8-0.9",
+  "pauses": "0.1-0.25 s between lines, 0.4-0.7 s around reveals, none in the first three lines",
+  "filter": "highpass=f=60,equalizer=f=3000:t=q:w=1:g=1.5,loudnorm=I=-14:TP=-1.5:LRA=11",
+  "history": "ElevenLabs Adrian (Eps 01-02), MiniMax (Eps 03-06), Kokoro C2 with a -2.5 semitone shift (Eps 07-18; sounded metallic), E from the pilot on. Narrator only; no cast clips.",
+  "proposed": {
+    "name": "Voice F (20 Nov 2026, pending approval; first used on Ep 20)",
+    "voice": "0.4 bm_george + 0.25 bm_lewis + 0.35 bm_fable, en-gb, no pitch shift",
+    "how": "python3 -I tools/house_voice.py src/episodes/<id>/voice.txt out/<id>/vo.mp3 --voice F",
+    "gain": "4th voice.txt column, dB: +2..+4 shocks and hero number, -2..-3 asides; loudness range 2.8+ LU",
+    "loudness": "EQ, one linear gain to -14 LUFS, peak limiter (no dynamic loudnorm: it flattened every line)",
+    "speeds": "about 1.1-1.25 on Kokoro to reach 2.9-3.2 words a second"
+  }
+}
