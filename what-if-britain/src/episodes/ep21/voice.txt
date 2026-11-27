@@ -1,0 +1,35 @@
+# EP21 Mattress Money: voices (tools/cast_voice.py). speaker|exaggeration|cfg|pause|text|fx
+# Lines 1-7 are the cold open for the 10-20 s test render. Guests (shopkeeper, assistant) need approved voices first.
+# BAIT: the polished explainer, quick and bright; it keeps going up so the cut lands mid-thought.
+narrator|0.5|0.5|1.0|If you hid a *thousand* pounds under your mattress for ten years, you might think you'd still have a grand, but you might be surprised to know that it really|cut=that@0.55,tempo=1.08
+# REDIRECTION: face down in the mattress.
+mate|0.6|0.5|0.5|...Sorry.|muffle
+# REVEAL: the Booth. The producer is off-mic, on talkback.
+producer|0.8|0.3|0.25|Is he *okay*?|talkback
+narrator|0.7|0.3|0.3|That wasn't in the *script*.
+producer|0.9|0.3|0.9|Oh shit. His *pin*.|talkback,bleep=shit
+# DROP: the switched bedroom.
+alfie|0.7|0.4|0.6|Why's my money *tiny*?
+mate|0.6|0.5|0.8|Is that... a *twenty*?
+# WHAT IF BRITAIN
+narrator|0.6|0.5|0.6|What if Britain's money *shrank* as fast as its prices rise?
+# LADDER beat 1: corner shop
+shopkeeper|0.5|0.5|0.2|That's {2016|twenty sixteen} money, son.
+alfie|0.8|0.4|0.2|It's still *ten* quid!
+shopkeeper|0.5|0.5|0.8|Not in *here* it isn't.
+# LADDER beat 2: the Black Friday sale
+mate|0.9|0.4|0.2|Seventy percent *off*!
+assistant|0.4|0.5|0.2|Same price as *July*.
+mate|0.7|0.5|0.8|Then off *what*?
+# LADDER beat 3: Nan's kitchen
+alfie|0.7|0.4|0.2|Nan, why's yours still *big*?
+nan|0.5|0.5|0.9|It's been earning *faster* than the prices, love.
+# TWIST
+nan|0.6|0.5|0.3|...that it shrinks in the *real* Britain too.
+alfie|0.8|0.4|0.2|By how *much*?
+nan|0.6|0.5|0.3|More than a *quarter*, in ten years.
+alfie|0.9|0.3|0.2|Then why can't I *see* it?
+nan|0.5|0.5|0.6|Nobody prints it *smaller*, love.
+# CLIFFHANGER
+producer|1.1|0.3|0.15|Get him *back*! Now!|talkback
+nan|1.2|0.3|0.0|That pin... your *grandad* had one just like it was|cut=it@0.4

@@ -1,0 +1,89 @@
+[
+ {
+  "i": 1,
+  "speaker": "narrator",
+  "text": "If you hid a *thousand* pounds under your mattress for ten years, you might think you'd still have a grand, but you might be surprised to know that\u2013",
+  "start": 0.0,
+  "end": 7.199,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {
+   "cut": "that@0.55",
+   "tempo": "1.08"
+  },
+  "file": "voice/01_narrator.wav"
+ },
+ {
+  "i": 2,
+  "speaker": "mate",
+  "text": "...Sorry.",
+  "start": 8.199,
+  "end": 9.279,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {
+   "muffle": true
+  },
+  "file": "voice/02_mate.wav"
+ },
+ {
+  "i": 3,
+  "speaker": "producer",
+  "text": "Is he *okay*?",
+  "start": 9.779,
+  "end": 10.499,
+  "exaggeration": 0.8,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true
+  },
+  "file": "voice/03_producer.wav"
+ },
+ {
+  "i": 4,
+  "speaker": "narrator",
+  "text": "That wasn't in the *script*.",
+  "start": 10.749,
+  "end": 12.079,
+  "exaggeration": 0.7,
+  "cfg": 0.3,
+  "fx": {},
+  "file": "voice/04_narrator.wav"
+ },
+ {
+  "i": 5,
+  "speaker": "producer",
+  "text": "Oh s***. His *pin*.",
+  "start": 12.379,
+  "end": 14.539,
+  "exaggeration": 0.9,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true,
+   "bleep": "shit"
+  },
+  "file": "voice/05_producer.wav"
+ },
+ {
+  "i": 6,
+  "speaker": "alfie",
+  "text": "Why's my money *tiny*?",
+  "start": 15.439,
+  "end": 17.219,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/06_alfie.wav"
+ },
+ {
+  "i": 7,
+  "speaker": "mate",
+  "text": "Is that... a *twenty*?",
+  "start": 17.819,
+  "end": 19.559,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/07_mate.wav"
+ }
+]

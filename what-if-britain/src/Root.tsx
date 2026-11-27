@@ -5,6 +5,7 @@ import { makeEpisode } from './engine/Episode';
 import { demo } from './episodes/demo/episode';
 import { setPreview } from './episodes/set-preview/episode';
 import { ep20 } from './ep/ep20';
+import { ep21 } from './ep/ep21/ep21';
 import { waitFonts } from './kit/fonts';
 import { ActingTest } from './tests/ActingTest';
 import { PoseLab } from './tests/PoseLab';
@@ -19,9 +20,10 @@ export const Root: React.FC = () => {
   waitFonts();
   return (
     <>
-      <Composition id="CastSheet" component={CastSheet} durationInFrames={14} fps={30} width={1080} height={1920} />
+      <Composition id="CastSheet" component={CastSheet} durationInFrames={16} fps={30} width={1080} height={1920} />
       <Composition id="PoseLab" component={PoseLab} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="ActingTest" component={ActingTest} durationInFrames={Math.round(ACT_LEN * 30)} fps={30} width={1080} height={1920} />
+      <Composition id="ep21" component={ep21.Comp} durationInFrames={ep21.frames} fps={30} width={1080} height={1920} />
       <Composition id="ep20" component={ep20.Comp} durationInFrames={ep20.frames} fps={30} width={1080} height={1920} />
       {ENGINE_EXAMPLES.map(({ ep, Comp, frames }) => (
         <Composition key={ep.id} id={ep.id} component={Comp} durationInFrames={frames} fps={30} width={1080} height={1920} />

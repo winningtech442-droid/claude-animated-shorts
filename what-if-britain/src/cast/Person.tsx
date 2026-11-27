@@ -9,6 +9,15 @@ export type Look = {
   eyes: string; jacket: string; jacketTrim: string; top: string; legs: string; shoes: string; sole: string;
   height: number; build: number; // 1 = average width
   pin?: boolean; glasses?: boolean; collar?: 'harrington' | 'cardigan' | 'suit' | 'hoodie';
+  // v3 body system (27 Nov 2026). All optional: unset gives the v2 body, so older episodes look the same.
+  belly?: number; // 0 flat .. 1 big round belly (the top shows between the open jacket)
+  stoop?: number; // 0 upright .. 1 bent back, rounded shoulders, head pushed forward, knees soft
+  head?: number; // head size, 1 = v2
+  limbs?: number; // arm and leg thickness, 1 = v2
+  legLen?: number; armLen?: number; // limb length multipliers (lanky > 1, stumpy < 1)
+  chin?: number; // 0 .. 1 double chin and jowls
+  glassesSize?: number; // 1 = v2 frames; Nan's are huge
+  headset?: 'boom' | 'phones'; // the producer's talkback headset, the narrator's studio headphones
 };
 
 export type Face = {
@@ -240,6 +249,7 @@ const Mouth: React.FC<{ f: Face; skin: string; shade: string }> = ({ f }) => {
 
 const Head: React.FC<{ look: Look; f: Face }> = ({ look, f }) => {
   const R = 0.118;
+  const chin = look.chin ?? 0;
   const browY = (b: number) => Math.max(0.066, 0.064 + 0.016 * b + 0.01 * f.wide);
   const hairC = look.hairStyle === 'grey' ? '#B9B5AE' : look.hair;
   return (
@@ -297,6 +307,11 @@ const Head: React.FC<{ look: Look; f: Face }> = ({ look, f }) => {
             <sphereGeometry args={[R * 1.05, 32, 24, Math.PI * 0.6, Math.PI * 0.8, 0.2, Math.PI * 0.5]} />
             <Mat c={hairC} r={0.95} />
           </mesh>
+          {/* the back of the head (v3: characters are now seen from behind, e.g. the Narrator at the mic) */}
+          <mesh position={[0, 0.0, -0.012]} scale={[0.97, 1.0, 0.98]}>
+            <sphereGeometry args={[R * 1.045, 32, 24, Math.PI, Math.PI, 0.12, Math.PI * 0.52]} />
+            <Mat c={hairC} r={0.95} />
+          </mesh>
           {/* a soft hairline: tufts along the front edge instead of a hard brim */}
           {look.hairStyle !== 'grey' && look.hairStyle !== 'bun'
             ? [-0.085, -0.057, -0.028, 0, 0.028, 0.057, 0.085].map((x, i) => (
@@ -320,8 +335,48 @@ const Head: React.FC<{ look: Look; f: Face }> = ({ look, f }) => {
           ) : null}
         </group>
       ) : null}
+      {chin > 0 ? (
+        <group>
+          <mesh position={[0, -0.112, 0.03]} scale={[0.72 + 0.12 * chin, 0.36 + 0.14 * chin, 0.78]}>
+            <sphereGeometry args={[R, 28, 20]} />
+            <Mat c={look.skin} r={0.65} />
+          </mesh>
+          {[-1, 1].map((s) => (
+            <mesh key={`j${s}`} position={[s * 0.074, -0.072, 0.045]} scale={0.7 + 0.5 * chin}>
+              <sphereGeometry args={[0.034, 16, 12]} />
+              <Mat c={look.skin} r={0.65} />
+            </mesh>
+          ))}
+        </group>
+      ) : null}
+      {look.headset ? (
+        <group>
+          <mesh position={[0, 0.02, -0.005]} rotation={[0, 0, 0]}>
+            <torusGeometry args={[0.132, look.headset === 'phones' ? 0.012 : 0.007, 8, 32, Math.PI]} />
+            <Mat c="#26272B" r={0.45} />
+          </mesh>
+          {[-1, 1].map((s) => (
+            <mesh key={`h${s}`} position={[s * 0.128, 0.0, -0.005]} rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={look.headset === 'phones' ? [0.05, 0.05, 0.04, 20] : [0.034, 0.034, 0.025, 16]} />
+              <Mat c="#1C1D21" r={0.4} />
+            </mesh>
+          ))}
+          {look.headset === 'boom' ? (
+            <group position={[-0.13, -0.01, 0.0]} rotation={[0, -0.95, 0.35]}>
+              <mesh position={[0, 0, 0.07]} rotation={[Math.PI / 2, 0, 0]}>
+                <cylinderGeometry args={[0.004, 0.004, 0.14, 8]} />
+                <Mat c="#26272B" />
+              </mesh>
+              <mesh position={[0, 0, 0.14]}>
+                <sphereGeometry args={[0.012, 12, 10]} />
+                <Mat c="#111215" />
+              </mesh>
+            </group>
+          ) : null}
+        </group>
+      ) : null}
       {look.glasses ? (
-        <group position={[0, 0.03, 0.135]}>
+        <group position={[0, 0.03, 0.135]} scale={look.glassesSize ?? 1}>
           {[-1, 1].map((s) => (
             <mesh key={s} position={[s * 0.042, 0, 0]}>
               <torusGeometry args={[0.03, 0.003, 8, 24]} />
@@ -339,41 +394,53 @@ const Head: React.FC<{ look: Look; f: Face }> = ({ look, f }) => {
 };
 
 // ---------- the whole person ----------
-export const Person: React.FC<{ look: Look; face: Face; body?: Partial<Body>; position?: [number, number, number]; rotationY?: number; scale?: number; pinGlow?: number }> = ({
-  look, face, body = {}, position = [0, 0, 0], rotationY = 0, scale = 1, pinGlow = 0,
-}) => {
+export const Person: React.FC<{
+  look: Look; face: Face; body?: Partial<Body>; position?: [number, number, number]; rotationY?: number; scale?: number; pinGlow?: number;
+  heldL?: React.ReactNode; heldR?: React.ReactNode; // props in the hands (clipboard, walking stick, envelope...)
+}> = ({ look, face, body = {}, position = [0, 0, 0], rotationY = 0, scale = 1, pinGlow = 0, heldL, heldR }) => {
   const b: Body = { ...BODY, ...body };
+  // stoop: bent back, rounded shoulders, the head lifted so the face still looks ahead, knees a little soft
+  const st = look.stoop ?? 0;
+  if (st) {
+    b.spine = (b.spine ?? 0) + 30 * st; b.headNod = b.headNod - 24 * st; b.shrug = (b.shrug ?? 0) - 0.45 * st;
+    b.crouch = Math.max(b.crouch ?? 0, 0.1 * st);
+  }
   const H = look.height;
   const k = H / 1.75;
   const W = look.build;
-  const legL = 0.82 * k, thigh = legL * 0.5, shin = legL * 0.5;
+  const LT = look.limbs ?? 1;
+  const bel = look.belly ?? 0;
+  const hs = look.head ?? 1;
+  const legL = 0.82 * k * (look.legLen ?? 1), thigh = legL * 0.5, shin = legL * 0.5;
   const crA = b.sit ? 0 : 42 * (b.crouch ?? 0); // thigh forward / shin back, degrees
   const hipY = b.sit ? 0.46 : legL * Math.cos(d2r(crA)) + 0.04;
   const shr = b.shrug ?? 0;
   const torsoH = 0.5 * k;
   const shoulderY = torsoH * 0.92;
-  const armUp = 0.29 * k, armLo = 0.27 * k;
+  const armUp = 0.29 * k * (look.armLen ?? 1), armLo = 0.27 * k * (look.armLen ?? 1);
   const bounce = b.bounce ?? 0;
-  const arm = (side: 1 | -1, sh: [number, number], el: number, hand: Body['handL'], tw = 0) => (
+  const LW = W * LT; // limb thickness
+  const arm = (side: 1 | -1, sh: [number, number], el: number, hand: Body['handL'], tw = 0, held?: React.ReactNode) => (
     <group position={[side * (0.2 - 0.02 * Math.max(0, -shr)) * W, shoulderY + 0.035 * shr, 0.03 * Math.max(0, -shr)]} rotation={[d2r(-sh[0]), 0, d2r(side * sh[1])]}>
     <group rotation={[0, d2r(-side * tw), 0]}>
       <mesh>
-        <sphereGeometry args={[0.058 * W, 16, 12]} />
+        <sphereGeometry args={[0.058 * LW, 16, 12]} />
         <Mat c={look.jacket} />
       </mesh>
-      <Seg L={armUp} r={0.05 * W} c={look.jacket} />
+      <Seg L={armUp} r={0.05 * LW} c={look.jacket} />
       <mesh position={[0, -armUp, 0]}>
-        <sphereGeometry args={[0.046 * W, 14, 10]} />
+        <sphereGeometry args={[0.046 * LW, 14, 10]} />
         <Mat c={look.jacket} />
       </mesh>
       <group position={[0, -armUp, 0]} rotation={[d2r(-el), 0, 0]}>
-        <Seg L={armLo} r={0.044 * W} c={look.jacket} />
+        <Seg L={armLo} r={0.044 * LW} c={look.jacket} />
         <mesh position={[0, -armLo + 0.01, 0]}>
-          <cylinderGeometry args={[0.047 * W, 0.047 * W, 0.03, 16]} />
+          <cylinderGeometry args={[0.047 * LW, 0.047 * LW, 0.03, 16]} />
           <Mat c={look.jacketTrim} />
         </mesh>
         <group position={[0, -armLo - 0.01, 0]}>
           <Hand c={look.skin} kind={hand ?? 'open'} side={side} />
+          {held ?? null}
         </group>
       </group>
     </group>
@@ -381,13 +448,13 @@ export const Person: React.FC<{ look: Look; face: Face; body?: Partial<Body>; po
   );
   const leg = (side: 1 | -1, hip: [number, number], kn: number) => (
     <group position={[side * 0.095 * W, 0, 0]} rotation={[d2r(-(hip[0] + crA)), 0, d2r(side * hip[1])]}>
-      <Seg L={thigh} r={0.07 * W} c={look.legs} />
+      <Seg L={thigh} r={0.07 * LW} c={look.legs} />
       <mesh position={[0, -thigh, 0]}>
-        <sphereGeometry args={[0.062 * W, 14, 10]} />
+        <sphereGeometry args={[0.062 * LW, 14, 10]} />
         <Mat c={look.legs} />
       </mesh>
       <group position={[0, -thigh, 0]} rotation={[d2r(kn + 2 * crA), 0, 0]}>
-        <Seg L={shin} r={0.058 * W} c={look.legs} />
+        <Seg L={shin} r={0.058 * LW} c={look.legs} />
         <group position={[0, -shin, 0.04]} rotation={[d2r(-crA), 0, 0]}>
           <mesh scale={[1, 0.6, 1.9]} position={[0, -0.01, 0]}>
             <sphereGeometry args={[0.055, 16, 12]} />
@@ -405,7 +472,7 @@ export const Person: React.FC<{ look: Look; face: Face; body?: Partial<Body>; po
     <group position={position} rotation={[0, rotationY, 0]} scale={scale}>
       <group position={[b.sway ?? 0, hipY + bounce, 0]} rotation={[d2r(b.lean), d2r(b.turn), 0]}>
         {/* pelvis and legs */}
-        <mesh scale={[1.25 * W, 0.7, 0.85]}>
+        <mesh scale={[1.25 * W, 0.7, 0.85 + 0.25 * bel]}>
           <sphereGeometry args={[0.13, 24, 16]} />
           <Mat c={look.legs} />
         </mesh>
@@ -413,10 +480,32 @@ export const Person: React.FC<{ look: Look; face: Face; body?: Partial<Body>; po
         {leg(1, b.hipR, b.knR)}
         <group rotation={[d2r(b.spine ?? 0), 0, d2r(-(b.side ?? 0))]}>
         {/* torso: the jacket over a top */}
-        <mesh position={[0, torsoH * 0.5, 0]} scale={[1.08 * W, 1, 0.68]}>
+        <mesh position={[0, torsoH * 0.5, 0]} scale={[1.08 * W, 1, 0.68 + 0.22 * bel]}>
           <capsuleGeometry args={[0.17, torsoH * 0.6, 8, 24]} />
           <Mat c={look.jacket} />
         </mesh>
+        {/* belly: a round front in the top's colour, bulging between the open jacket */}
+        {bel > 0 ? (
+          <group>
+            {/* the mass: jacket-coloured, so the silhouette swells low and round */}
+            <mesh position={[0, torsoH * 0.34, 0.03 + 0.045 * bel]} scale={[1.08 * W, 0.95, 0.95]}>
+              <sphereGeometry args={[0.17 * (0.85 + 0.35 * bel), 32, 24]} />
+              <Mat c={look.jacket} />
+            </mesh>
+            {/* the shirt showing down the open front, stretched over it */}
+            <mesh position={[0, torsoH * 0.37, 0.075 + 0.075 * bel]} scale={[0.58 * W, 1.05, 0.82]}>
+              <sphereGeometry args={[0.135 * (0.85 + 0.4 * bel), 28, 20]} />
+              <Mat c={look.top} />
+            </mesh>
+          </group>
+        ) : null}
+        {/* stoop: a rounded upper back */}
+        {st > 0 ? (
+          <mesh position={[0, shoulderY - 0.04, -0.06]} scale={[1.0 * W, 0.8, 0.75]}>
+            <sphereGeometry args={[0.12 + 0.03 * st, 20, 14]} />
+            <Mat c={look.jacket} />
+          </mesh>
+        ) : null}
         {/* open front showing the top */}
         <mesh position={[0, shoulderY - 0.035, 0.085]} rotation={[0.35, 0, 0]} scale={[1, 0.55, 0.35]}>
           <sphereGeometry args={[0.055, 20, 14]} />
@@ -428,7 +517,7 @@ export const Person: React.FC<{ look: Look; face: Face; body?: Partial<Body>; po
           <Mat c={look.collar === 'harrington' ? look.jacketTrim : look.jacket} />
         </mesh>
         {/* hem band */}
-        <mesh position={[0, 0.06, 0]} scale={[1.08 * W, 1, 0.7]}>
+        <mesh position={[0, 0.06, 0]} scale={[1.08 * W, 1, 0.7 + 0.22 * bel]}>
           <cylinderGeometry args={[0.172, 0.172, 0.05, 24]} />
           <Mat c={look.jacketTrim} />
         </mesh>
@@ -437,14 +526,14 @@ export const Person: React.FC<{ look: Look; face: Face; body?: Partial<Body>; po
             <Pin glow={pinGlow} />
           </group>
         ) : null}
-        {arm(-1, b.shL, b.elL, b.handL, b.twL ?? 0)}
-        {arm(1, b.shR, b.elR, b.handR, b.twR ?? 0)}
+        {arm(-1, b.shL, b.elL, b.handL, b.twL ?? 0, heldL)}
+        {arm(1, b.shR, b.elR, b.handR, b.twR ?? 0, heldR)}
         {/* neck and head */}
         <mesh position={[0, shoulderY + 0.06, 0]}>
-          <cylinderGeometry args={[0.045, 0.05, 0.1, 16]} />
+          <cylinderGeometry args={[0.045 * Math.max(1, W * 0.9), 0.05 * Math.max(1, W * 0.9), 0.1, 16]} />
           <Mat c={look.skinShade} />
         </mesh>
-        <group position={[0, shoulderY + 0.25, 0.01]} rotation={[d2r(b.headNod), d2r(b.headTurn), d2r(b.headTilt)]} scale={1.38}>
+        <group position={[0, shoulderY + 0.074 + 0.176 * hs, 0.01 + 0.03 * st]} rotation={[d2r(b.headNod), d2r(b.headTurn), d2r(b.headTilt)]} scale={1.38 * hs}>
           <Head look={look} f={face} />
         </group>
         </group>
