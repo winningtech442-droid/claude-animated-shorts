@@ -8,6 +8,7 @@ in this repo, kept apart from the Phoneverse work on other branches.
 | `STUDIO-RULES.md` | The one rule book: episode format, cast, scenes, voices, sound, QA, pipeline (v3, 27 Nov 2026) |
 | `SCRIPT-TEMPLATE.md` | The script layout the user approves before anything is voiced |
 | `LORE.md` | Continuity: the pin, the Booth, open threads, episode log |
+| `voices/` | The approved cast voices: one reference clip per character, settings in `cast.json` |
 
 ## Voice engine (Chatterbox) setup notes
 Tested 27 Nov 2026 in the "What If Britain studio" cloud environment (4 CPUs, no GPU):

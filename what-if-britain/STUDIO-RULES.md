@@ -129,6 +129,16 @@ story, and character voices. The facts stay; they move inside the story.
 - Any line that drifts out of a British accent, slurs or clips is regenerated.
 - The narrator's opener may stay on plain Kokoro (the polished explainer that gets interrupted); decide at the first test render.
 - Kokoro alone is the fallback only, and the user is told when it is used.
+- **Approved cast voices (27 Nov 2026)**, reference clips in `voices/`, settings in `voices/cast.json`:
+
+| Character | Built from (Kokoro) | Feel |
+|---|---|---|
+| Narrator | 0.6 bm_george + 0.4 bm_lewis (house voice E) | the polished explainer |
+| Alfie | bm_fable, speed 1.05 | younger, slightly quick |
+| Mate | 0.7 bm_daniel + 0.3 bm_lewis, speed 0.92, pitch -1.5 | deeper, slower |
+| Nan | bf_alice, speed 0.86, pitch -1 | older, slower |
+| Producer | bf_emma, speed 1.1 | quick, easily panicked |
+- A new guest gets a new reference clip, approved by the user before its lines are voiced.
 
 ## 8. Sound
 - Original score (`audio/score.py`) and studio effects (`audio/sfx.py`); no stock or shared music beds. The user may
