@@ -1,3 +1,4 @@
 # EP21 Mattress Money: approvals (STUDIO-RULES section 0)
 2026-11-27 script: APPROVED by the user as written (SCRIPT.md of 27 Nov), keeping the Black Friday sale scene and the Grandad's-pin cliffhanger (becomes lore when posted).
-2026-11-27 test render: SENT for approval (out/ep21/EP21_test_cold_open.mp4, 0:00-0:20; QA measured checks PASS)
+2026-11-27 test render: APPROVED by the user (out/ep21/EP21_test_cold_open.mp4, 0:00-0:20). Guest voices (shopkeeper, assistant) approved the same day.
+2026-11-27 full build: rendered (out/ep21/EP21_Mattress_Money.mp4, 63.5 s), QA measured checks PASS. One fact corrected after approval: the Black Friday card now reads "4 in 5 ... (Which?, Nov 2026)"; the approved script's "94 %" was one retailer's figure in the 2025 study. Sent to the user for review before posting.

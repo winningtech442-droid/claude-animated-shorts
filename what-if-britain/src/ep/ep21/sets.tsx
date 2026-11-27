@@ -8,16 +8,16 @@ import { lerp } from '../kit3';
 import { Bg } from '../../worlds/kit';
 
 type V3 = [number, number, number];
-const M: React.FC<{ c: string; r?: number; m?: number; e?: string; ei?: number; o?: number; map?: THREE.Texture | null; side?: THREE.Side }> = ({ c, r = 0.85, m = 0, e, ei = 0, o = 1, map, side }) => (
+export const M: React.FC<{ c: string; r?: number; m?: number; e?: string; ei?: number; o?: number; map?: THREE.Texture | null; side?: THREE.Side }> = ({ c, r = 0.85, m = 0, e, ei = 0, o = 1, map, side }) => (
   <meshStandardMaterial color={c} roughness={r} metalness={m} emissive={e ?? '#000000'} emissiveIntensity={ei} transparent={o < 1} opacity={o} map={map ?? undefined} side={side} />
 );
-const Bx: React.FC<{ p: V3; s: V3; c: string; r?: number; rot?: V3; e?: string; ei?: number; map?: THREE.Texture | null }> = ({ p, s, c, r, rot, e, ei, map }) => (
+export const Bx: React.FC<{ p: V3; s: V3; c: string; r?: number; rot?: V3; e?: string; ei?: number; map?: THREE.Texture | null }> = ({ p, s, c, r, rot, e, ei, map }) => (
   <mesh position={p} rotation={rot}><boxGeometry args={s} /><M c={c} r={r} e={e} ei={ei} map={map} /></mesh>
 );
 
 // ---------- canvas textures (drawn once) ----------
 const texCache = new Map<string, THREE.CanvasTexture>();
-const canvasTex = (key: string, w: number, h: number, draw: (g: CanvasRenderingContext2D) => void, repeat?: [number, number]) => {
+export const canvasTex = (key: string, w: number, h: number, draw: (g: CanvasRenderingContext2D) => void, repeat?: [number, number]) => {
   const hit = texCache.get(key);
   if (hit || typeof document === 'undefined') return hit ?? null;
   const c = document.createElement('canvas'); c.width = w; c.height = h;
@@ -53,7 +53,7 @@ const netCurtain = () => canvasTex('net', 128, 128, (g) => {
 }, [2, 2]);
 
 // ---------- light rigs ----------
-const mixC = (a: string, b: string, k: number) => '#' + new THREE.Color(a).lerp(new THREE.Color(b), k).getHexString();
+export const mixC = (a: string, b: string, k: number) => '#' + new THREE.Color(a).lerp(new THREE.Color(b), k).getHexString();
 export const RoomLights: React.FC<{ sw: number }> = ({ sw }) => (
   <>
     <ambientLight intensity={0.55} color={mixC('#FFF1DE', '#B8B0FF', sw)} />

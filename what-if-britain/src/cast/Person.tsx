@@ -47,6 +47,10 @@ export const FACES: Record<string, Face> = {
   disbelief: { browL: 1, browR: -0.3, browTilt: 0.2, lid: 0.25, wide: 0.4, look: [0, 0], open: 0.3, smile: -0.2, width: 0.85, teeth: 0, cheek: 0, blush: 0 },
   thinking: { browL: 0.5, browR: -0.2, browTilt: 0.3, lid: 0.3, wide: 0, look: [0.6, 0.6], open: 0, smile: -0.15, width: 0.85, teeth: 0, cheek: 0, blush: 0 },
   holding: { browL: 0.5, browR: 0.5, browTilt: 0.6, lid: 0.1, wide: 0.6, look: [0, 0], open: 0, smile: 0, width: 0.6, teeth: 0, cheek: 1, blush: 0.7 },
+  // v3 (EP21): deadpan and heavy-lidded, for the shopkeeper and the sales assistant
+  bored: { browL: -0.15, browR: 0.1, browTilt: 0, lid: 0.55, wide: 0, look: [0.15, -0.1], open: 0, smile: -0.25, width: 0.95, teeth: 0, cheek: 0, blush: 0 },
+  // v3 (EP21): soft and kind, for Nan
+  warm: { browL: 0.3, browR: 0.3, browTilt: 0.45, lid: 0.3, wide: 0, look: [0, 0], open: 0.1, smile: 0.55, width: 1.05, teeth: 0.2, cheek: 0, blush: 0.3 },
 };
 
 export const mixFace = (a: Face, b: Face, k: number): Face => {

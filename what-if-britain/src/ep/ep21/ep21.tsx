@@ -1,10 +1,11 @@
-// EP21 Mattress Money (v3 pilot). This file holds the cold open (0:00-0:20) for the user's test render; the rest
-// of the episode is added after that approval. Timings follow src/episodes/ep21/lines.json (tools/cast_voice.py).
+// EP21 Mattress Money (v3 pilot). This file holds the cold open (0:00-0:20, the approved test render); act2.tsx holds
+// the rest. Timings follow src/episodes/ep21/lines.json (tools/cast_voice.py).
 import React from 'react';
 import words from '../../episodes/ep21/words.json';
 import { makeEpisode3, cam, Shot, Actor, prog, lerp } from '../kit3';
 import { Bedroom, Booth, Envelope, Toast, Clipboard, FallingNote, BED, WARD } from './sets';
 import { Note } from '../../props';
+import { ACT2, TITLE, BLACK_AT, TOTAL } from './act2';
 
 const PI = Math.PI;
 const tiny = (s = 0.22) => <group position={[0.01, -0.09, 0.05]} rotation={[PI / 2, 0, 0.2]}><Note s={s} /></group>;
@@ -174,7 +175,7 @@ const Finger: React.FC<{ p: [number, number, number]; r: [number, number, number
   <mesh position={p} rotation={r}><capsuleGeometry args={[0.0105, L, 8, 16]} /><meshStandardMaterial color={SKIN} roughness={0.6} /></mesh>
 );
 const macro: Shot = {
-  id: 'macro', t0: 16.2, t1: 17.0,
+  id: 'macro', t0: 16.2, t1: 17.0, onScreen: ['alfie'],
   cam: [[0, cam([-1.22, 0.43, -1.27], [-1.3, 0.355, -1.5], 30)], [0.8, cam([-1.235, 0.415, -1.33], [-1.3, 0.355, -1.5], 30), 'lin']],
   sw: 1,
   set: (c) => {
@@ -217,9 +218,11 @@ const squint: Shot = {
 
 export const ep21 = makeEpisode3({
   id: 'ep21',
-  shots: [stuff, flop, booth1, booth2, booth3, wardGlow, crawlShot, macro, squint],
+  shots: [stuff, flop, booth1, booth2, booth3, wardGlow, crawlShot, macro, squint, ...ACT2],
   words: words as any,
-  total: 20.0,
+  total: TOTAL,
+  title: TITLE,
+  blackAt: BLACK_AT,
   hook: { node: <><span style={{ color: '#FFD43B' }}>£1,000</span> under the mattress?</>, until: 3.0 },
 });
 export const BED_INFO = BED; // keep the import used for tools that read the layout

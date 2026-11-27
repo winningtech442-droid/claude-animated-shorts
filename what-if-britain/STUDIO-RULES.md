@@ -171,11 +171,12 @@ story, and character voices. The facts stay; they move inside the story.
 4. **10-20 s test render** of the cold open, **the user approves it**.
 5. Full build, QA, post file; deliver the video and the post file.
 
-**Tool status (27 Nov 2026):** the studio code is in this folder (imported from the user's zip, cleaned; it
-type-checks and renders), but it still implements v2. Since Ep 09 episodes are hand-built in `src/ep/` with
-`audio/ep_sfx.py`; the data-driven engine (`src/engine/`, `build.sh`) made Eps 01-08. To update: `gate.py` (v3 checks), `house_voice.py` (Chatterbox, several speakers),
-`align.py` (per speaker), captions (speaker colours, starred bleeps), `src/cast` (body system, new poses), the engine
-(mid-video title card, final cut to black), `qa.py` (allow the final black), `build.sh` (refuse without `approvals.txt`).
+**Tool status (27 Nov 2026):** v3 episodes are hand-built in `src/ep/<id>/` on the v3 kit (`src/ep/kit3.tsx`:
+actors with whole-body stunts, shots, the timeline switch, speaker-coloured captions with starred bleeps, lip flap,
+the mid-video title card, fact cards, the final cut to black) with `audio/<id>_sound.py`. Voices: `tools/cast_voice.py`
+(Chatterbox, several speakers, per-line timings) and `tools/make_voice.py` (guest auditions). `qa.py` checks v3
+(61-68 s, the final black allowed). EP21 is the worked example. Still v2: `gate.py` (needs v3 checks), `build.sh`
+(should refuse without `approvals.txt`) and the data-driven engine (`src/engine/`, Eps 01-08).
 
 ## 11. What v3 removed from v20 Nov
 - The Today / Then / What if / Your wallet / Ask format, and "the what-if heard by 4.5 s" (gate FIRSTWORDS).

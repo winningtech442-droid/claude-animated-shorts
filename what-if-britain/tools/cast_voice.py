@@ -37,7 +37,7 @@ def parse(path, upto):
         raw = raw.rstrip("\n")
         if not raw.strip() or raw.lstrip().startswith("#"):
             continue
-        f = raw.split("|")
+        f = re.split(r"\|(?![^{]*\})", raw)  # a | inside {display|spoken} is not a column
         if len(f) < 5:
             sys.exit(f"bad row (needs speaker|exaggeration|cfg|pause|text[|fx]): {raw}")
         fx = {}

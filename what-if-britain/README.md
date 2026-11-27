@@ -44,6 +44,9 @@ Tested 27 Nov 2026 in the "What If Britain studio" cloud environment (4 CPUs, no
 
 ## Status (27 Nov 2026)
 Done: v3 rules, script template, lore bible, approved cast voices, studio imported and cleaned (it type-checks and renders).
-Next (STUDIO-RULES section 10): the Chatterbox voice tool for several speakers, v3 gate checks, speaker-coloured
-captions with starred bleeps, the body system (heavy-set Mate, tiny stooped Nan, guests), the mid-video title card and
-final cut to black, approvals in the build, then a pilot episode through both approvals.
+Done with the EP21 pilot: the Chatterbox voice tool for several speakers (`tools/cast_voice.py`, guests auditioned with
+`tools/make_voice.py`), the v3 episode kit (`src/ep/kit3.tsx`: speaker-coloured captions with starred bleeps, lip flap,
+the mid-video title card, fact cards, the final cut to black), the body system (heavy-set Mate, tiny stooped Nan,
+guests), `qa.py` for v3 (61-68 s, the final black allowed). EP21 went through both approvals (script, 20 s test).
+Next: v3 checks in `gate.py`; approvals in `build.sh`; fold the hand-built EP21 pattern (`src/ep/ep21/`) into the
+engine so the next episode needs less hand-placing.

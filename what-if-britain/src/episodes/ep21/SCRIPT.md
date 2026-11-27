@@ -1,6 +1,6 @@
 # EP21: Mattress Money (v3 pilot)
 
-Status: script APPROVED 27 Nov 2026 · test render PENDING
+Status: script APPROVED 27 Nov 2026 · test render APPROVED 27 Nov 2026 · full render 27 Nov 2026
 
 ## The card (read this first)
 - **Premise:** Alfie hides £1,000 under his mattress. In the what-if Britain, money visibly shrinks as prices rise.
@@ -26,7 +26,7 @@ Status: script APPROVED 27 Nov 2026 · test render PENDING
 |---|---|---|
 | £1,000 kept as cash since 2016 buys more than a quarter less today | Nan, in the twist (0:53) | ONS-based calculators: £1,000 in 2016 = £1,366-£1,414 today; Bank of England calculator to confirm before voicing |
 | £10 of 2016 shopping costs about £14 now | Till receipt in the corner shop (0:28) | same |
-| 94 % of Black Friday "deals" were the same price or cheaper at other times of the year | Price tag flips in the sale shop (0:38) | Which?, Nov 2025 (prices tracked May 2024 to May 2025); check for a Nov 2026 update |
+| 4 in 5 Black Friday "deals" were the same price or cheaper at another time of the year | Fact card as the price tag flips (0:38) | Which?, 25 Nov 2026 (750+ products, 250,000 prices). Corrected from "94 %", which was one retailer's figure in the 2025 study |
 | Prices are rising 3.6 % a year | Nan's jar label (0:45), optional | ONS, CPI 12 months to October 2026 |
 
 ## Script
@@ -70,7 +70,8 @@ SHOPKEEPER (0.5): Not in *here* it isn't.
 
 **Beat 2 · Scene 3: high-street electronics shop, Black Friday banners.** SEE: Mate charges in and wedges himself in
 the doorway with a giant TV box marked -70 %. The price tag flips: same price in July. Card: "94 % of deals: same
-price or cheaper other times (Which?)".
+price or cheaper other times (Which?)". Built as: "4 in 5 Black Friday deals: same price or cheaper other times
+(Which?, Nov 2026)" (fact corrected 27 Nov).
 MATE (thrilled, 0.9): Seventy percent *off*!
 SALES ASSISTANT (bored, 0.4): Same price as *July*.
 MATE (deflating, 0.7): Then off *what*?

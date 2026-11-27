@@ -25,6 +25,7 @@ export type Actor = {
   pin?: (ts: number) => number; // pin glow
   heldL?: (ts: number) => React.ReactNode; heldR?: (ts: number) => React.ReactNode;
   seed?: number; noBreath?: boolean;
+  mute?: boolean; // no lip flap (e.g. the speaker's mouth is hidden or the line is a voice in their head)
 };
 
 const ROOT = ['y', 'z', 'rx', 'ry', 'rz', 'scale'] as const;
@@ -45,13 +46,15 @@ export const actorAt = (a: Actor, ts: number) => {
   return { body: a.noBreath ? body : breathe(body, ts, 3.4, 0.8), root, vis };
 };
 
-export const ActorView: React.FC<{ a: Actor; ts: number; t: number }> = ({ a, ts, t }) => {
+export const ActorView: React.FC<{ a: Actor; ts: number; t: number; talk?: number }> = ({ a, ts, t, talk = 0 }) => {
   const { body, root, vis } = actorAt(a, ts);
   if (!vis) return null;
   const look = a.look ?? CAST[a.who];
+  const f0 = blink(body.faceMix, ts + (a.seed ?? 0), a.seed ?? 0.5);
+  const face = talk > 0 ? { ...f0, open: Math.max(f0.open, talk), teeth: Math.max(f0.teeth, 0.5 * talk), width: f0.width * (1 - 0.15 * talk) } : f0;
   return (
     <group position={[body.x ?? 0, root.y, root.z]} rotation={[root.rx, root.ry, root.rz]} scale={root.scale}>
-      <Person look={look} face={blink(body.faceMix, ts + (a.seed ?? 0), a.seed ?? 0.5)} body={body} rotationY={body.turnY ?? 0}
+      <Person look={look} face={face} body={body} rotationY={body.turnY ?? 0}
         pinGlow={a.pin ? a.pin(ts) : 0} heldL={a.heldL?.(ts)} heldR={a.heldR?.(ts)} />
     </group>
   );
@@ -68,6 +71,7 @@ export type Shot = {
   crack?: number; // shot time of the white crack
   shake?: [number, number][]; // [shot time, strength]: impact kicks that flip every frame and die in ~7 frames
   overlay?: (c: Ctx) => React.ReactNode;
+  onScreen?: string[]; // extra speakers counted as on screen (e.g. only their hands are in shot)
 };
 
 export const cam = (p: V3, t: V3, fov = 40): Cam => ({ p, t, fov });
@@ -84,6 +88,7 @@ export const SPEAKER_COLOUR: Record<string, string> = {
   narrator: '#FFFFFF', alfie: '#9FD0FF', mate: '#BDE58F', nan: '#F7B2DC', producer: '#FFC94D',
 };
 const GUEST_COLOUR = '#8FE8E4';
+const SPEAKER_OF: Record<string, string> = { lead: 'alfie' }; // cast key -> caption speaker
 type Wd = { text: string; start: number; end: number; speaker: string; line: number };
 type Page = { words: number[]; start: number; end: number; speaker: string };
 const pagesOf = (W: Wd[]): Page[] => {
@@ -102,16 +107,40 @@ const pagesOf = (W: Wd[]): Page[] => {
 
 const OUTLINE = '-4px 0 0 #000, 4px 0 0 #000, 0 -4px 0 #000, 0 4px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000, 0 8px 14px rgba(0,0,0,.55)';
 
+// ---------- a fact card: a shelf-edge style card that slaps in near the top, for one number and its source ----------
+export const FactCard: React.FC<{ t: number; at: number; until: number; children: React.ReactNode; source?: string }> = ({ t, at, until, children, source }) => {
+  if (t < at || t >= until) return null;
+  const k = prog(t, at, at + 0.18, 'back'), out = 1 - prog(t, until - 0.15, until);
+  return (
+    <div style={{ position: 'absolute', top: 300, left: 70, right: 70, opacity: clamp(k * 2) * out, transform: `translateX(${(1 - k) * -120}px) rotate(${-2 + 2 * k}deg)`,
+      background: '#FFD400', border: '6px solid #111', borderRadius: 18, padding: '22px 30px', boxShadow: '0 12px 0 rgba(0,0,0,.35)', fontFamily: 'Inter', color: '#111' }}>
+      <div style={{ fontSize: 58, fontWeight: 900, lineHeight: 1.08 }}>{children}</div>
+      {source ? <div style={{ marginTop: 10, fontSize: 30, fontWeight: 700, opacity: 0.75 }}>{source}</div> : null}
+    </div>
+  );
+};
+
 // ---------- the episode ----------
 export const makeEpisode3 = (cfg: {
   id: string; shots: Shot[]; words: Wd[]; total: number;
   hook?: { node: React.ReactNode; until: number };
   title?: { at: number; until: number };
+  blackAt?: number; // the hard cut to black after the cliffhanger: pure black, no captions, to the end
 }) => {
   const pages = pagesOf(cfg.words);
+  // lip flap: while a word is being said, the speaker's mouth opens and closes about once a syllable
+  const talkOf = (speaker: string, t: number) => {
+    for (const w of cfg.words) {
+      if (w.speaker !== speaker || t < w.start || t > w.end) continue;
+      const env = clamp((t - w.start) / 0.05) * clamp((w.end - t) / 0.05);
+      return env * (0.22 + 0.48 * Math.abs(Math.sin(Math.PI * (t - w.start) / 0.17)));
+    }
+    return 0;
+  };
   const Comp: React.FC = () => {
     const f = useCurrentFrame(); const { fps, width: W, height: H } = useVideoConfig();
     const t = f / fps;
+    if (cfg.blackAt !== undefined && t >= cfg.blackAt) return <AbsoluteFill style={{ background: '#000' }} />;
     const shot = cfg.shots.find((s) => t >= s.t0 && t < s.t1) ?? cfg.shots[cfg.shots.length - 1];
     const ts = t - shot.t0;
     let cm = camAt(shot.cam, ts);
@@ -125,7 +154,7 @@ export const makeEpisode3 = (cfg: {
     const sw = typeof shot.sw === 'function' ? shot.sw(ts) : shot.sw ?? 0;
     const proj = (w: V3) => project(cm, w, W, H) as [number, number];
     const ctx: Ctx = { t, ts, sw, cam: cm, proj };
-    const inShot = new Set(shot.cast.map((a) => a.who));
+    const inShot = new Set([...shot.cast.map((a) => SPEAKER_OF[a.who] ?? a.who), ...(shot.onScreen ?? [])]);
     const page = pages.find((pg, k) => t >= pg.start - 0.04 && t < (pages[k + 1]?.start ?? Infinity) - 0.04 && t < pg.end + 0.35);
 
     return (
@@ -133,7 +162,7 @@ export const makeEpisode3 = (cfg: {
         <ThreeCanvas width={W} height={H} camera={{ position: cm.p, fov: cm.fov, near: 0.03, far: 80 }} onCreated={({ camera }) => camera.lookAt(...cm.t)}>
           <CamSync cam={cm} />
           {shot.set(ctx)}
-          {shot.cast.map((a, i) => <ActorView key={a.who + i} a={a} ts={ts} t={t} />)}
+          {shot.cast.map((a, i) => <ActorView key={a.who + i} a={a} ts={ts} t={t} talk={a.mute ? 0 : talkOf(SPEAKER_OF[a.who] ?? a.who, t)} />)}
         </ThreeCanvas>
 
         {/* the timeline switch: cooler violet-teal grade with a vignette */}
