@@ -4,3 +4,4 @@
 2026-11-28 voices: all 24 lines voiced (out/ep22/vo.wav, 61.5 s, -16.4 LUFS). Retakes: line 4 (narrator said it twice), line 11 (builder mumbled; calmer take 6), line 19 ("loan" heard as "line"; take 3). Every line checked by transcription. Voice track sent to the user.
 2026-11-28 test render: made (out/ep22/EP22_test_cold_open.mp4, 0:00-0:22.2, cold open to the hold on the NAN jar), QA measured checks PASS (-14.0 LUFS, -1.9 dBTP). Sent to the user.
 2026-11-28 test render: APPROVED by the user. Full build started.
+2026-11-28 full build: rendered (out/EP22_Typed_Money.mp4, 62.6 s; master out/EP22_Typed_Money-master.mp4), QA measured checks PASS (-14.2 LUFS, LRA 6.5 LU, true peak -1.6 dBTP, only the final cut to black). Sent to the user for review before posting. Post file: src/episodes/ep22/post.md (post after EP21).

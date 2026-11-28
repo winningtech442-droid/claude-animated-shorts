@@ -1,6 +1,6 @@
 # EP22: Typed Money
 
-Status: script APPROVED 28 Nov 2026 (rev 2) · test render APPROVED 28 Nov 2026
+Status: script APPROVED 28 Nov 2026 (rev 2) · test render APPROVED 28 Nov 2026 · full render 28 Nov 2026
 
 Chosen 28 Nov 2026 from the daily brief: the evergreen "basic but a bit complex" pick (where money comes from).
 vidIQ had no credits that day, so demand was read from news and search, not from measured outliers.
