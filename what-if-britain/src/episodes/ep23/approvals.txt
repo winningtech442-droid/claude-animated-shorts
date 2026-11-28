@@ -1,0 +1,4 @@
+# EP23 Pay Later (global edition): approvals (STUDIO-RULES section 0)
+2026-11-28 topic: CHOSEN by the user from the daily brief (pick 1, pay-later; global edition = keep the show, prices in dollars, places that read anywhere, facts true worldwide).
+2026-11-28 script: DRAFT rev 1 sent to the user.
+2026-11-28 script: APPROVED by the user ("Approved", SCRIPT.md rev 1 as written: hook line "Is pay later free?", mid-video line "And what if Britain's tills only took pay later?", prices in dollars for the global edition, and the cliffhanger lore: Grandad got the pin on the never-never, three payments owed).
