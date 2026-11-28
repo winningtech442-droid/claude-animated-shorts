@@ -1,6 +1,6 @@
 # EP22: Typed Money
 
-Status: script DRAFT 28 Nov 2026, rev 2 (hook line, what-if line and jar changed by the user; awaiting approval) · test render PENDING
+Status: script APPROVED 28 Nov 2026 (rev 2) · test render PENDING
 
 Chosen 28 Nov 2026 from the daily brief: the evergreen "basic but a bit complex" pick (where money comes from).
 vidIQ had no credits that day, so demand was read from news and search, not from measured outliers.
