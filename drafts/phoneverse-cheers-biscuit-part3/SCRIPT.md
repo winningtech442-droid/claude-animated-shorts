@@ -19,7 +19,7 @@
 
 **How it differs from Parts 1-2:** no link, no password, no Apple. The target is Jess, not You. It's a phone call, a code and losing your number. The shape is different too: not a race against a click, but watching a mistake happen in slow motion, then fixing it. The camera dive goes through her earpiece instead of a screen.
 
-**Length:** 184 spoken words. At Part 2's pace that's about 58 s of speech. With about 14 s of action (the dive, the code, No Service, the ring), it comes to **about 72 s**, over a minute, so it qualifies for Creator Rewards.
+**Length:** 187 spoken words. At Part 2's pace that's about 58 s of speech. With about 14 s of action (the dive, the code, No Service, the ring), it comes to **about 72 s**, over a minute, so it qualifies for Creator Rewards.
 
 ## Cast
 | Character | Model | Voice | Engine |
