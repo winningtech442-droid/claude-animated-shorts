@@ -3,8 +3,8 @@
 # Placed on the voice timeline (out/timeline.json + out/words.json), mixed with the voice and the ducked music into
 # out/final_mix.wav.
 #
-# Level rules (effects never get in the way of the voices): events are set relative to the voice ("big" -8 dB,
-# "normal" -12 dB, "subtle" -17 dB), ambience beds sit 22 dB under it, and the whole stem drops 4 dB while anyone talks.
+# Level rules (effects never get in the way of the voices): events are set relative to the voice ("big" -13 dB,
+# "normal" -17 dB, "subtle" -22 dB), ambience beds sit 27 dB under it, and the whole stem drops 4 dB while anyone talks.
 #   python sfx_part2.py        (after make_audio.py)
 import json
 import os
@@ -21,8 +21,8 @@ import sfx_gen as G  # noqa: E402
 from sfx_phoneverse import whip, text_ping, sofa_creak, typing, screen_taps, low_boom, room_tone  # noqa: E402
 
 OUT = os.path.join(HERE, "out")
-LEVEL = {"big": -8.0, "normal": -12.0, "subtle": -17.0}
-BED_DB = -22.0
+LEVEL = {"big": -13.0, "normal": -17.0, "subtle": -22.0}   # 5 dB under Part 1's levels (your note: effects too loud)
+BED_DB = -27.0
 DUCK_DB = -4.0
 
 

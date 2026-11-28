@@ -80,7 +80,7 @@ def line(id_, who, scene, text, tts, speed=1.0, pitch=0.0, level="normal", fx=No
 
 # Part 1's music beds and stings are reused (re-arranged); its last line's echo is the cold open
 P1 = os.path.join(HERE, "..", "..", "phoneverse-found-text", "audio", "out")
-PRE = 0.55  # Part 1's "JESS!" echo tail plays alone for this long before the first line
+PRE = 1.15  # Part 1's full "JESS!" scream + first echo play alone for this long before the first line
 
 # Beat 1: cold open, the flat
 line("L01", "JESS", "flat", "I'm so sorry, I didn't mean to!", "I'm so [sorry](+2), I didn't mean to!", speed=1.12,
@@ -155,7 +155,6 @@ REFS = {}  # Part 2 clones Part 1's Kokoro samples (out/chatterbox/ref_*.wav are
 
 # music: (file, start (line, offset s), end (line, offset s) or None for a one-shot sting)
 MUSIC = [
-    ("sting_jess", ("L01", -1.2 - PRE), None),      # its boom already landed under Part 1's scream: only the tail plays
     ("C_journey", ("L02", -0.2), ("L07", -0.1)),    # sneaky, nervous: "he still needs my code, right?"
     ("B_race", ("L08", -1.25), ("L21", 0.4)),       # the full 2-step at 140 BPM drops in on dive 1 ... dropout before the press
     ("D_sofa", ("L24", -0.05), ("L27@biscuit", 0.0)),  # the lift on "Cheers, Biscuit"; stops dead on "Biscuit124"
@@ -368,8 +367,8 @@ def main():
     echo = read_wav(os.path.join(P1, "lines", "L31_YOU.wav"))[0]
     echo = echo if echo.ndim == 1 else echo.mean(0)
     w31 = json.load(open(os.path.join(P1, "lines", "_words.json")))["L31"]
-    e0 = ns(w31[-1]["end"] - 0.05)  # the very end of the scream into its echoes
-    tail_ = echo[e0:].copy(); f = ns(0.06); tail_[:f] *= np.linspace(0, 1, f)
+    e0 = 0  # the whole scream and its echoes (the cold open)
+    tail_ = echo[e0:].copy(); f = ns(0.004); tail_[:f] *= np.linspace(0, 1, f)
     voice[: len(tail_)] += tail_[:N]
     write_wav(os.path.join(OUT, "voice_track.wav"), voice, bits=24)
     for w, s in stems.items():

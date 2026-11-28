@@ -7,7 +7,7 @@ import bpy
 from mathutils import Vector, Matrix, Euler, Quaternion
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
-EP = os.path.join(ROOT, "..", "drafts", "phoneverse-found-text", "audio", "out")
+EP = os.environ.get("PV_EP") or os.path.join(ROOT, "..", "drafts", "phoneverse-found-text", "audio", "out")   # Part 2 sets PV_EP
 FPS = 24
 VIS = json.load(open(os.path.join(EP, "visemes.json")))
 A = os.path.join(ROOT, "assets", "rbx")
