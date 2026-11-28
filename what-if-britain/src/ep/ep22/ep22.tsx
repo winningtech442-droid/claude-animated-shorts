@@ -211,7 +211,7 @@ const J_T0 = I_T1, J_T1 = E(5) + 0.25;
 const booth3: Shot = {
   id: 'booth-prod2', t0: J_T0, t1: J_T1,
   cam: [[0, cam([0.4, 1.55, 1.22], [0.84, 1.45, -0.15], 36)], [J_T1 - J_T0, cam([0.52, 1.55, 0.86], [0.84, 1.46, -0.15], 36), 'lin']],
-  shake: [[0.25, 0.5]],
+  shake: [[0.25, 0.22]],
   set: () => <Booth />,
   cast: [producer([
     [0, { ...prodBase, face: 'shock', spine: 4 }],

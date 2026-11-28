@@ -195,7 +195,7 @@ export const makeEpisode3 = (cfg: {
               return (
                 <span key={wi} style={{ display: 'inline-block', marginRight: k < page.words.length - 1 ? 22 : 0, fontFamily: 'Inter', fontWeight: 800, fontSize: 82,
                   fontStyle: inShot.has(w.speaker) ? 'normal' : 'italic', color: colour, opacity: said ? 1 : 0.0, textShadow: OUTLINE,
-                  transform: said && t < w.start + 0.1 ? 'scale(1.12)' : undefined }}>{pop ? raw.replace(/^\*/, '').replace(/\*([^*]*)$/, '$1') : raw}</span>
+                  transform: said && t < w.start + 0.1 ? 'scale(1.12)' : undefined, transformOrigin: k === 0 ? 'center' : 'left center' }}>{pop ? raw.replace(/^\*/, '').replace(/\*([^*]*)$/, '$1') : raw}</span>
               );
             })}
           </div>
