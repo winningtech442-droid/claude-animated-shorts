@@ -150,6 +150,52 @@
         }
       ],
       "approved": "2026-11-27"
+    },
+    "manager": {
+      "episode": "EP22 Typed Money",
+      "role": "the bank manager: bloated belly on thin legs, comb-over, pompous, cracks under pressure",
+      "kokoro": {
+        "blend": {
+          "bm_lewis": 0.6,
+          "bm_george": 0.4
+        },
+        "speed": 0.95,
+        "pitch_semitones": 1.5
+      },
+      "tested": [
+        {
+          "exaggeration": 0.5,
+          "cfg": 0.5,
+          "line": "Only three quid in a hundred is cash."
+        },
+        {
+          "exaggeration": 1.2,
+          "cfg": 0.3,
+          "line": "That pin... there's a box in our vault with your grandad's name"
+        }
+      ],
+      "approved": "2026-11-28",
+      "note": "chosen over a deeper candidate that measured 0.91 voice similarity to Mate"
+    },
+    "builder": {
+      "episode": "EP22 Typed Money",
+      "role": "the builder taking the van loan: slim, wiry, bald, hi-vis, chirpy",
+      "kokoro": {
+        "blend": {
+          "bm_lewis": 0.6,
+          "bm_fable": 0.4
+        },
+        "speed": 1.12,
+        "pitch_semitones": 2.0
+      },
+      "tested": [
+        {
+          "exaggeration": 0.7,
+          "cfg": 0.4,
+          "line": "Cheers, son!"
+        }
+      ],
+      "approved": "2026-11-28"
     }
   }
 }
