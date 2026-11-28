@@ -293,7 +293,9 @@ def sh_back(t):     # dive back into his screen (the map pin)
 def sh_den2(t):     # out of his laptop again, then down onto the gloved finger + cursor for "Last click, Biscuit"
     if t < T_GLIDE - 0.2: return sh_den_out(t, T_DEN2, T_DEN2 + 0.7)
     u = ramp(t, T_GLIDE - 0.2, S["L21"]); hand = bone_world(HOOD["arm"], "Bip01 R Hand")
-    eye = hood_ots().lerp(TRACKPAD + Vector((-0.22, 0.2, 0.14)), u)
+    eye = hood_ots().lerp(TRACKPAD + Vector((-0.22, 0.2, 0.14)), u) + Vector((0, 0, 0.5 * math.sin(math.pi * u)))   # crane up over his head, not through it
+    hh = head_of("HOOD"); d_ = eye - hh
+    if d_.length < 0.33: eye = hh + d_.normalized() * 0.33                                                     # and never closer than 33 cm
     return cam_of(eye, SCR_C.lerp(TRACKPAD.lerp(SCR_C, 0.55), u), lerp(30, 34, u), TRACKPAD.lerp(SCR_C, 0.3 * u))
 def sh_finger(t):   # race: his finger on the trackpad, the cursor creeping to Erase on the screen behind
     k = (t - R0) * 0.03
@@ -446,7 +448,8 @@ def set_frame(t, cam_loc=None):
     elif pointing:
         phone_in_left(Y, NEW, tilt_to=(CAM_OUT_END if t >= T_DIVE2 - 0.05 else None))
         F_, R_ = body_frame(Y); sh_ = bone_world(Y["arm"], "Bip01 R UpperArm"); tgt = CAM_OUT_END if camp is None else camp
-        hand_to(Y, "R", sh_ + (tgt - sh_).normalized() * 0.5, (0, 0, -0.6))
+        chY = bone_world(Y["arm"], "Bip01 Spine2"); drop = ease(ramp(t, T_DIVE2 - 0.02, T_DIVE2 + 0.22))   # the pointing hand drops to her knee as the camera dives
+        hand_to(Y, "R", (sh_ + (tgt - sh_).normalized() * 0.5).lerp(chY + F_ * 0.3 + R_ * 0.17 + Vector((0, 0, -0.36)), drop), (0, 0, -0.6))
     else:
         place_phone_in_hands(Y, NEW, dist=0.32, drop=-0.03)
     show(NEW_TX, *screen_her(t))
@@ -527,7 +530,8 @@ def render_frame(f, path):
         pp_, pn_, _ = phone_nup(NEW)
         print("DBG", f, shot, tuple(round(v, 3) for v in cam.location), "dYOU", round((cam.location - head_of("YOU")).length, 3),
               "dJESS", round((cam.location - head_of("JESS")).length, 3), "phone-headY", round((pp_ - head_of("YOU")).length, 3),
-              "n.toHead", round(pn_.dot((head_of("YOU") - pp_).normalized()), 2), flush=True); return
+              "n.toHead", round(pn_.dot((head_of("YOU") - pp_).normalized()), 2), "dHOOD", round((cam.location - head_of("HOOD")).length, 3),
+              "dHandR", round((cam.location - bone_world(C["YOU"]["arm"], "Bip01 R Hand")).length, 3), flush=True); return
     t0 = time.time(); bpy.ops.render.render(write_still=True); print(f"rendered {path} shot={shot} t={t:.2f} {time.time() - t0:.1f}s", flush=True)
 
 F_END = int(math.ceil(T_END * FPS))
