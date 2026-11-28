@@ -1,6 +1,6 @@
 # EP22: Typed Money
 
-Status: script DRAFT 28 Nov 2026 (awaiting the user's approval) · test render PENDING
+Status: script DRAFT 28 Nov 2026, rev 2 (hook line, what-if line and jar changed by the user; awaiting approval) · test render PENDING
 
 Chosen 28 Nov 2026 from the daily brief: the evergreen "basic but a bit complex" pick (where money comes from).
 vidIQ had no credits that day, so demand was read from news and search, not from measured outliers.
@@ -11,7 +11,7 @@ vidIQ had no credits that day, so demand was read from news and search, not from
   don't lend out your money at all. They type brand-new money in.
 - **Opener myth, then the real fact:** "you might think it lends your money to someone else" / banks don't simply
   lend out savers' deposits; every new loan creates new money (Bank of England), paid off by the Manager in the twist.
-- **Mid-video line:** "What if Britain's banks could only lend the cash in their vault?" at 0:23 (about 36 %).
+- **Mid-video line:** "And what if Britain's banks could only lend the cash in their vault?" at 0:23 (about 36 %).
 - **Twist:** the Manager completes the narrator's sentence ("...that we don't lend out *your* money"), then shows it:
   he types a £20,000 loan into existence, and paying it back makes it vanish.
 - **Cliffhanger:** the Manager sees Alfie's pin: "That pin... there's a box in our vault with your *grandad's* na-"
@@ -23,7 +23,7 @@ vidIQ had no credits that day, so demand was read from news and search, not from
   cheery, quick). Both new silhouettes (EP21 used tall-lanky and tiny).
 - **Lore:** advances EP21's thread (Nan recognised the pin): the bank has a box in its vault with Grandad's name.
   **Post EP21 first**, because this cliffhanger builds on it.
-- **Checks:** 149 words (opener 26) · about 64-66 s · after the redirection 23 lines averaging 5.3 words (max 12) ·
+- **Checks:** 150 words (opener 26) · about 64-66 s · after the redirection 23 lines averaging 5.4 words (max 13) ·
   10 of 23 are questions (43 %) · no line copied from EP20 or EP21.
 - **Not advice:** it shows how money is made. It names no bank or product and tells nobody what to do with their
   savings. The description says savings are protected (FSCS) so the bank-run scene doesn't scare anyone.
@@ -40,9 +40,15 @@ vidIQ had no credits that day, so demand was read from news and search, not from
 Format: `SPEAKER (tone, exaggeration): line`. `SEE:` is what the viewer watches happen. `*word*` turns red in the captions.
 
 ### 0:00 BAIT · Scene 1: high-street bank front, bright morning
-SEE: Alfie, big in frame, staggers along the high street with a huge coin jar on his shoulder, coins sloshing. Mate
+SEE: Alfie, big in frame, staggers along the high street with a huge frosted coin jar on his shoulder (coins heaped at the neck, clinking). Mate
 (heavy-set) jogs ahead to the bank's revolving door, eager to help.
-HOOK LINE ON SCREEN (0-3 s): Your savings, lent out?
+HOOK LINE ON SCREEN (0-3 s): Wait, are your savings lent out?
+(The user's change, 28 Nov 2026. It is 6 words, over the 4-word rule, approved on purpose. Grammar: "are" because
+"savings" is plural.)
+PROP, THE JAR (all jars in the episode): a big sweet-shop jar in tinted, frosted glass, not clear. The coins read as a
+heavy mass through the glass, with a heap of shiny coins visible at the open neck and a few stuck to the frosted
+side, so the viewer knows at a glance that it's full of money. It needs a soft rim light so the coins catch the light,
+and a clink on every move.
 NARRATOR (bright, fast, 0.5): If you paid your *savings* into the bank, you might think it lends your money to
 someone else, but you might be surprised to know that-
 
@@ -66,7 +72,7 @@ ALFIE (confused, 0.7): Why's everyone holding *jars*?
 MATE (squinting, 0.6): Is that... your *nan's* name?
 
 ### 0:23 WHAT IF BRITAIN
-NARRATOR (recovering, 0.6): What if Britain's banks could only lend the *cash* in their vault?
+NARRATOR (recovering, 0.6): And what if Britain's banks could only lend the *cash* in their vault?
 SEE: The WHAT IF BRITAIN title card slams in.
 
 ### 0:27 ACTIVE LADDER
