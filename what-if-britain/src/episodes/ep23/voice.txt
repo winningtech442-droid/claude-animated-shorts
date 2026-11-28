@@ -1,0 +1,40 @@
+# EP23 Pay Later (global edition): voice sheet, from SCRIPT.md rev 1 (approved 28 Nov 2026).
+# speaker|exaggeration|cfg|pause|text[|fx]   (see tools/cast_voice.py). Guests: rep (voices/rep.wav, American), owner (voices/owner.wav).
+# Lines 1-7 are the cold open (the 10-20 s test render: --upto 7). Pauses hold the physical beats: the torn tag lands
+# (after 2), the pin fires (after 5), the shoppers with sofas (after 7), the title card (after 8), the trolley on Alfie's
+# foot (after 10), the LATE FEE sticker (after 14), Mate points at the store (after 18), the receipt (after 19).
+# BAIT: the polished explainer, quick and bright; it keeps going up so the cut lands mid-thought (the rip).
+narrator|0.5|0.5|1.2|If you split a hundred-dollar jacket into four payments, you might think nobody's making money, because there's no interest, but you might be surprised to know that the shop|cut=that@0.55,tempo=1.08
+# REDIRECTION: sheepish, holding a quarter of a jacket.
+mate|0.6|0.5|0.5|...You said *split* it.
+# REVEAL: the Booth. The producer is off-mic, on talkback.
+producer|0.8|0.3|0.25|Did he just *rip* the jacket?|talkback
+narrator|0.8|0.3|0.3|Split the *payments*! Not the jacket!
+producer|0.9|0.3|1.2|Bloody hell. He's *switching*!|talkback,bleep=Bloody
+# DROP: the switched sale floor.
+alfie|0.7|0.4|0.5|Where's the *cash* drawer?
+mate|0.6|0.5|2.6|Why's everyone carrying a *sofa*?
+# WHAT IF BRITAIN
+narrator|0.6|0.5|1.9|And what if Britain's tills only took *pay later*?
+# LADDER beat 1: the till
+mate|0.8|0.4|0.2|It's all *free*!
+alfie|0.7|0.4|1.4|It's not free. It's *later*!
+# LADDER beat 2: Mate's front hall, buried in envelopes
+alfie|0.7|0.4|0.3|How many payments *is* that?
+mate|0.6|0.5|0.4|Twelve things, times four... *forty-eight*?
+rep|0.7|0.4|0.3|And you missed *one*.
+mate|0.8|0.4|1.2|A *late* fee?
+# LADDER beat 3: the car boot sale in the rain
+nan|0.6|0.5|0.2|In my day, we called this the *never-never*.
+alfie|0.7|0.4|0.2|The never-*what*?
+nan|0.6|0.5|0.3|You *never* finish paying.
+alfie|0.8|0.4|1.4|Then who's getting *rich*?
+# TWIST: the back office; the bed drops out under line 19
+owner|0.6|0.5|0.8|...that the *shop* pays them.
+alfie|0.8|0.4|0.2|You pay *eight* dollars?
+owner|0.6|0.5|0.3|Up to eight, *every* hundred.
+mate|0.7|0.4|0.3|So why *offer* it?
+owner|0.6|0.5|1.0|Because you buy *more*.
+# CLIFFHANGER: the loudest moment; cut mid-word, hard cut to black
+producer|1.1|0.3|0.15|Don't let him *scan* it!|talkback
+rep|1.2|0.3|0.0|This pin's still on the never-never... your *grandad* owes three payments on it|cut=payments@0.45

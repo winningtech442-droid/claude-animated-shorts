@@ -212,6 +212,22 @@
       "tested": [],
       "approved": "2026-11-28",
       "note": "the first guest built from American Kokoro voices (lang en-us), chosen for the global edition; closest approved voices alfie 0.72, manager 0.72 (resemblyzer). Chatterbox takes not yet made: huggingface.co was blocked in the session that made it."
+    },
+    "owner": {
+      "episode": "EP23 Pay Later (global edition)",
+      "role": "the department-store owner: pear-shaped, walrus moustache, weary, deadpan",
+      "kokoro": {
+        "blend": {
+          "bm_lewis": 1.0
+        },
+        "speed": 0.86,
+        "pitch_semitones": -3,
+        "lang": "en-gb"
+      },
+      "eq": "highpass=f=170,lowshelf=f=300:g=-6,equalizer=f=2500:t=q:w=1:g=3",
+      "tested": [],
+      "approved": "2026-11-28",
+      "note": "Owner 1c. The user found the first version too thick, so the reference is thinned with the eq above (applied with ffmpeg after the pitch shift). Closest approved voices mate 0.76, shopkeeper 0.74 (resemblyzer). If Chatterbox's takes come back thick, apply the same eq to his lines."
     }
   }
 }

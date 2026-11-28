@@ -40,3 +40,4 @@ Once one per guest is approved: rebuild its reference into `voices/rep.wav` / `v
 | (dropped) | bm_lewis, speed 0.86, pitch -2.5, no EQ | shopkeeper 0.86 |
 | (dropped) | bm_lewis, speed 0.88, pitch -1.5, no EQ | mate 0.83, shopkeeper 0.83 |
 | (dropped) | bm_lewis 0.7 + bm_fable 0.3, speed 0.88, pitch -2, no EQ | shopkeeper 0.91 |
+- **Owner: APPROVED, Owner 1c** (thinner, a touch lighter and quicker). Reference saved as `voices/owner.wav` (EQ applied), settings in `voices/cast.json`.
