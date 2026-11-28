@@ -2,4 +2,5 @@
 2026-11-28 script: APPROVED by the user (SCRIPT.md rev 2: hook line "Wait, are your savings lent out?" (6 words, an approved exception to the 4-word rule), mid-video line "And what if Britain's banks could only lend the cash in their vault?", frosted coin jars).
 2026-11-28 guest voices: APPROVED by the user: Manager = candidate A (bm_lewis 0.6 + bm_george 0.4, speed 0.95, +1.5 st), Builder = candidate A (bm_lewis 0.6 + bm_fable 0.4, speed 1.12, +2 st). Reference clips in voices/manager.wav, voices/builder.wav.
 2026-11-28 voices: all 24 lines voiced (out/ep22/vo.wav, 61.5 s, -16.4 LUFS). Retakes: line 4 (narrator said it twice), line 11 (builder mumbled; calmer take 6), line 19 ("loan" heard as "line"; take 3). Every line checked by transcription. Voice track sent to the user.
-2026-11-28 test render: made (out/ep22/EP22_test_cold_open.mp4, 0:00-0:22.2, cold open to the hold on the NAN jar), QA measured checks PASS (-14.0 LUFS, -1.9 dBTP). Sent to the user; AWAITING APPROVAL.
+2026-11-28 test render: made (out/ep22/EP22_test_cold_open.mp4, 0:00-0:22.2, cold open to the hold on the NAN jar), QA measured checks PASS (-14.0 LUFS, -1.9 dBTP). Sent to the user.
+2026-11-28 test render: APPROVED by the user. Full build started.

@@ -2,16 +2,14 @@
 // Timings follow src/episodes/ep22/lines.json (tools/cast_voice.py): S(n) / E(n) are line n's start and end.
 import React from 'react';
 import words from '../../episodes/ep22/words.json';
-import lines from '../../episodes/ep22/lines.json';
 import { makeEpisode3, cam, Shot, Actor, ActorView, Key3, Pose3, prog, lerp, clamp } from '../kit3';
 import { Coin } from '../../props';
 import { Booth, Clipboard } from '../ep21/sets';
 import { BankFront, BankHall, CoinJar, Smash, RollingCoin, DOOR, HALL, SAVERS } from './sets';
 
 const PI = Math.PI;
-const L = lines as { start: number; end: number }[];
-export const S = (n: number) => L[n - 1].start;
-export const E = (n: number) => L[n - 1].end;
+import { S, E } from './shared';
+import { ACT2, TITLE, BLACK_AT, TOTAL } from './act2';
 
 // ---------- helpers ----------
 /** Walking keys from x0 to x1 over [t0, t1] (shot time): legs and the free arm alternate every half stride. */
@@ -311,8 +309,10 @@ export const TEST_END = O_T1;
 
 export const ep22 = makeEpisode3({
   id: 'ep22',
-  shots: COLD_OPEN,
-  words: (words as any[]).filter((w) => w.start < TEST_END),
-  total: TEST_END,
+  shots: [...COLD_OPEN, ...ACT2],
+  words: words as any,
+  total: TOTAL,
+  title: TITLE,
+  blackAt: BLACK_AT,
   hook: { node: <>Wait, are your <span style={{ color: '#FFD43B' }}>savings</span> lent out?</>, until: 3.0 },
 });

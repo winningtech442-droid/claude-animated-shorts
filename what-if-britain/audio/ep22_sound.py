@@ -134,14 +134,92 @@ for k in range(2): cue(step(1.2), M_T1 + 0.1 + 0.3 * k, 0.25, 0.3)              
 cue(whoosh(0.3), N_T1 - 0.12, 0.2)
 cue(blip(2637, 0.3, 0.1) * 0.7, N_T1 + 0.35, 0.3); cue(blip(3520, 0.25, 0.08) * 0.5, N_T1 + 0.47, 0.25)  # the NAN label 'ting'
 
-# ---------- room tone under everything (street, booth, marble hall) ----------
+
+# ======================= act 2 (src/ep/ep22/act2.tsx): same anchors as the shots =======================
+W = json.load(open(LINES.replace('lines.json', 'words.json')))
+word_at = lambda txt, after=0: next(w['start'] for w in W if w['text'].replace('*', '').startswith(txt) and w['start'] >= after)
+TITLE = word_at("Britain's", 22)
+P2_T1 = S(9) - 1.7; Q1_T0 = P2_T1; SLAP = Q1_T0 + 0.95
+Q2_T1 = S(10) - 0.05; Q3_T1 = S(11) - 0.1; Q4_T1 = S(12) - 0.2
+R1_T0 = Q4_T1; R1_T1 = 34.3; R2_T1 = S(13) - 0.05; R4_T1 = S(14) - 0.1; R5_T1 = S(15) - 1.0
+S1_T1 = S(15) - 0.05; S2_T1 = S(16) - 0.1; S4_T1 = 47.0
+T1_T1 = 48.6; TYPE0, TYPE1 = 48.95, 49.4; REAL = (TYPE1 - 0.05, TYPE1 + 0.3)
+T5_T1 = S(22) - 0.1; DEL0 = word_at('vanishes', 54) - 0.25; DEL1 = word_at('vanishes', 54) + 0.1; T6_T1 = DEL0 - 0.35
+T7_T1 = S(23) - 0.05; CUT = E(24)
+def key_click():
+    n = n_of(0.05); return bpf(noise(n), 1800, 6500) * env(n, 0.001, 0.008)
+def clang():
+    n = n_of(1.6); t = tvec(n)
+    body = np.zeros(n); th = thump(55, 0.8, 1.2); body[:len(th)] = th
+    return sum(np.sin(2 * np.pi * f * t) * np.exp(-t / (0.5 / (i + 1))) * (0.6 ** i) for i, f in enumerate((180, 297, 431, 612, 845))) + 0.6 * body
+def rattle(d=0.45):
+    n = n_of(d); t = tvec(n); return bpf(noise(n), 300, 3000) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 38 * t))) * np.minimum(1, t / 0.02)
+def thunder(d=2.5):
+    n = n_of(d); t = tvec(n); return lpf(noise(n), 160) * np.exp(-t / 0.9) * (1 + 0.6 * np.sin(2 * np.pi * 2.3 * t)) * np.minimum(1, t / 0.08)
+def knock():
+    n = n_of(0.25); t = tvec(n); return np.sin(2 * np.pi * 820 * t) * np.exp(-t / 0.04) + bpf(noise(n), 900, 5000) * np.exp(-t / 0.015)
+def poof():
+    n = n_of(0.6); t = tvec(n); return sweep(1400, 220, 0.6) * np.exp(-t / 0.25) * 0.5 + bpf(noise(n), 600, 4000) * np.exp(-t / 0.12) * 0.4
+def ding():
+    n = n_of(0.8); t = tvec(n); return (np.sin(2 * np.pi * 1760 * t) + 0.4 * np.sin(2 * np.pi * 2640 * t)) * np.exp(-t / 0.3)
+def zap(d=0.35):
+    n = n_of(d); t = tvec(n); return (bpf(noise(n), 2000, 9000) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 60 * t))) + 0.3 * np.sign(np.sin(2 * np.pi * 120 * t))) * np.minimum(1, np.minimum(t, d - t) / 0.01)
+
+if not TEST:
+    # the title slam
+    cue(thump(50, 0.9, 1.4), TITLE, 0.9); cue(whoomph(0.8), TITLE, 0.6)
+    cue(whoosh(0.3), 23.95 - 0.12, 0.2); cue(whoosh(0.3), P2_T1 - 0.12, 0.2)
+    # beat 1: the jar lands on the counter, the label slapped on, slid along, the Builder off with it
+    cue(thump(110, 0.35, 0.9), Q1_T0 + 0.35, 0.6); cue(jingle(7, 0.05, 200), Q1_T0 + 0.36, 0.5)
+    cue(hpf(noise(n_of(0.12)), 1500) * env(n_of(0.12), 0.001, 0.02), SLAP, 0.7); cue(rustle(0.25), SLAP + 0.02, 0.4)
+    cue(whoosh(0.3), S(9) - 0.12, 0.2)
+    cue(bpf(noise(n_of(0.8)), 400, 3000) * np.sin(np.pi * tvec(n_of(0.8)) / 0.8), S(9) + 0.1, 0.45, 0.4)   # the jar sliding along the counter
+    cue(jingle(5, 0.05, 210), S(9) + 0.9, 0.4, 0.5)
+    for t in (Q2_T1 - 0.12, Q3_T1 - 0.12): cue(whoosh(0.3), t, 0.2)
+    cue(jingle(8, 0.06, 220), Q3_T1 + 0.15, 0.5, 0.3)                                     # the hug
+    for k in range(5): cue(step(0.8), Q3_T1 + 1.15 + 0.3 * k, 0.32, 0.4 + 0.1 * k); cue(jingle(3, 0.03, 230 + k), Q3_T1 + 1.17 + 0.3 * k, 0.25, 0.5)
+    # beat 2: the vault wheel, the door swinging, Mate flattened; the echo inside
+    cue(whoosh(0.3), R1_T0 - 0.12, 0.2)
+    cue(creak(0.6, 200, 140), R1_T0 + 0.05, 0.6); cue(creak(0.5, 150, 110), R1_T0 + 0.35, 0.5)
+    cue(clang(), R1_T0 + 0.7, 0.8, 0.4); cue(thump(70, 0.5, 1.0), R1_T0 + 0.72, 0.6, 0.4)
+    cue(whoosh(0.3), R1_T1 - 0.12, 0.2)
+    cue(whoosh(0.3), R2_T1 - 0.12, 0.15); cue(ding() * 0.6, R2_T1 + 0.1, 0.3)             # the board
+    cue(squelch(), R4_T1 + 0.45, 0.5, 0.4); cue(rustle(0.4), R4_T1 + 0.5, 0.4, 0.4)       # Mate peels off the wall
+    # beat 3: rain, thunder, Nan's stick on the glass, the shutter slammed
+    cue(whoosh(0.3), R5_T1 - 0.12, 0.25); cue(thunder(2.6), R5_T1 + 0.05, 0.7)
+    for k, t in enumerate((0.25, 0.75, 1.3)): cue(knock(), S1_T1 + t, 0.6, -0.1)
+    cue(rattle(0.42), S2_T1 + 0.15, 0.7); cue(thump(65, 0.6, 1.3), S2_T1 + 0.55, 1.0); cue(clang() * 0.4, S2_T1 + 0.56, 0.5)
+    # the twist: keys, the £20,000 appearing, the split second of the real Britain, the deletion
+    cue(whoosh(0.3), S4_T1 - 0.12, 0.2)
+    for t in np.arange(S4_T1 + 1.1, S4_T1 + 1.6, 0.12): cue(key_click(), t, 0.5, 0.2)
+    for t in np.arange(T1_T1 + 0.1, TYPE1 + 0.05, 0.12): cue(key_click(), t, 0.55, 0.2)
+    cue(ding(), TYPE1, 0.45)
+    for t in np.arange(T5_T1 + 0.5, T6_T1, 0.12): cue(key_click(), t, 0.45, 0.2)
+    for t in np.arange(DEL0, DEL1, 0.06): cue(key_click(), t, 0.55, 0.2)
+    cue(poof(), DEL1, 0.6)
+    for t in (T1_T1, 50.3, S(20) - 0.05, S(21) - 0.1, T5_T1, T6_T1): cue(whoosh(0.25), t - 0.1, 0.15)
+    # the cliffhanger: the pin crackles; heartbeat into the cut
+    cue(whoosh(0.3), T7_T1 - 0.12, 0.25)
+    for t in (T7_T1 + 0.2, T7_T1 + 0.7, T7_T1 + 1.2): cue(zap(0.3), t, 0.5)
+    cue(riser(CUT - T7_T1, 300, 1200) * 0.7, T7_T1, 0.5)
+
+# ---------- room tone under everything (street, booth, hall, vault, rain) ----------
 tt_ = tvec(N)
+if TEST: R1_T0, R5_T1, S4_T1 = 1e9, 1e9, 1e9
 street = (tt_ < G_T1) | ((tt_ >= J_T1) & (tt_ < K_T1))
 booth = (tt_ >= G_T1) & (tt_ < J_T1)
-hall = tt_ >= K_T1
+vault = (tt_ >= R1_T0) & (tt_ < R5_T1)
+rain_ = (tt_ >= R5_T1) & (tt_ < S4_T1)
+hall = (tt_ >= K_T1) & ~vault & ~rain_
 room = (street * (lpf(noise(N), 900) * 0.06 + lpf(noise(N), 160) * 0.05)
         + booth * (0.03 * np.sin(2 * np.pi * 50 * tt_) + lpf(noise(N), 300) * 0.03)
-        + hall * (bpf(noise(N), 200, 1400) * 0.045 * (0.8 + 0.2 * np.sin(2 * np.pi * 0.3 * tt_))))
+        + hall * (bpf(noise(N), 200, 1400) * 0.045 * (0.8 + 0.2 * np.sin(2 * np.pi * 0.3 * tt_)))
+        + vault * (lpf(noise(N), 220) * 0.06 + 0.02 * np.sin(2 * np.pi * 60 * tt_))
+        + rain_ * (bpf(noise(N), 1500, 9000) * 0.09 + lpf(noise(N), 400) * 0.04))
+if not TEST:
+    real = (tt_ >= REAL[0]) & (tt_ < REAL[1])                     # the real Britain: a bright street for a split second
+    room = room * ~real + real * (lpf(noise(N), 900) * 0.06)
+    room[n_of(CUT):] = 0
 place(sfx, room, 0, 1.0)
 for t in np.arange(0.8, LAND, 2.3): cue(bpf(noise(n_of(1.2)), 300, 2000) * np.sin(np.pi * tvec(n_of(1.2)) / 1.2) ** 2, t, 0.12, 0.7)  # passing traffic
 
@@ -184,7 +262,7 @@ dt = tvec(n_of(B1 - B0))
 drone = (np.sin(2 * np.pi * 58.3 * dt) + 0.6 * np.sin(2 * np.pi * 87.3 * dt)) * np.minimum(1, dt / 0.6) * np.minimum(1, (B1 - B0 - dt) / 0.3) * (0.75 + 0.25 * np.sin(2 * np.pi * 1.1 * dt))
 mcue(drone * 0.35, B0)
 # after the switch: an eerie pad (B minor add 9) and a music box line, through Nan's jar
-P0, P1 = CRACK + 0.05, LEN + 0.4
+P0, P1 = CRACK + 0.05, (LEN + 0.4 if TEST else TITLE + 0.1)
 pt = tvec(n_of(P1 - P0))
 pad = sum(np.sin(2 * np.pi * f * pt) + np.sin(2 * np.pi * f * 1.004 * pt) for f in (246.9, 293.7, 370.0, 554.4)) * np.minimum(1, pt / 0.8) * np.minimum(1, (P1 - P0 - pt) / 0.3) * 0.12
 mcue(lpf(pad, 2200), P0, 1.0)
@@ -196,6 +274,54 @@ for k, m in enumerate((83, 78, 81, 74, 76, 78, 81, 83, 86)):
 # into the title (full episode) / end of the test: a riser from the NAN jar
 R0 = N_T1 + 0.2
 mcue(riser(max(0.5, O_T1 - R0), 400, 900) * 0.5, R0, 0.6)
+
+if not TEST:
+    # the title: a big B minor add 9 stab
+    st = tvec(n_of(2.4))
+    stab = sum(np.sin(2 * np.pi * f * st) * a_ for f, a_ in ((123.5, 1.0), (246.9, 0.8), (293.7, 0.6), (370.0, 0.6), (554.4, 0.4), (740.0, 0.3))) * np.exp(-st / 0.8) * np.minimum(1, st / 0.004)
+    mcue(lpf(stab, 3000) * 0.5, TITLE)
+    # the ladder: a B minor groove at 108 bpm from the counter through the vault; the vault adds a kick and a clap
+    G0, G1 = TITLE + 1.4, R5_T1 + 0.05
+    gb = 60 / 108
+    prog4 = [[59, 62, 66], [55, 59, 62], [57, 61, 64], [54, 57, 61]]                # Bm G A F#m
+    groove = np.zeros((2, N)); tt = G0; i = 0
+    while tt < G1:
+        ch = prog4[int((tt - G0) / (4 * gb)) % 4]; vault_part = tt >= R1_T0
+        if i % 2 == 0: place(groove, bass(hz(ch[0] - 12), 0.4) * 0.9, tt, 1.0)
+        if i % 2 == 1: place(groove, mallet(hz(ch[(i // 2) % 3] + 24), 0.4, 0.35), tt, 1.0, 0.3 * (-1) ** i)
+        if i % 4 == 3: place(groove, pluck(hz(ch[1] + 12)), tt, 0.35, -0.3)
+        if vault_part:
+            if i % 4 == 0: place(groove, thump(60, 0.3, 1.0), tt, 0.7)
+            if i % 4 == 2: place(groove, bpf(noise(n_of(0.12)), 900, 6000) * env(n_of(0.12), 0.001, 0.035), tt, 0.5)
+        tt += gb / 2; i += 1
+    fade = np.ones(N); a_, b_ = n_of(G1 - 0.3), n_of(G1); fade[a_:b_] = np.linspace(1, 0, b_ - a_); fade[b_:] = 0; fade[:n_of(G0)] = 0
+    mus += groove * fade
+    # the run on the bank: a driving low pulse with a timpani hit on every bar, under the rain
+    D0, D1 = R5_T1, S4_T1 + 0.2
+    db = 60 / 132; tt = D0; i = 0
+    while tt < D1:
+        place(mus, thump(48, 0.35, 1.0), tt, 0.45 + (0.25 if i % 4 == 0 else 0))
+        if i % 2 == 1: place(mus, pluck(hz(47 + (i // 8) % 2 * 2) * 2, 0.25), tt, 0.3, 0.2)
+        tt += db / 2; i += 1
+    dt = tvec(n_of(D1 - D0)); mcue(lpf(sum(np.sin(2 * np.pi * f * dt) for f in (61.7, 92.5)) * np.minimum(1, dt / 0.3) * np.minimum(1, (D1 - D0 - dt) / 0.2) * 0.3, 500), D0)
+    # the dropout: no music from the shutter's echo until "...that we don't lend out your money"
+    # the twist: a tender pad (G, then E minor) with a music box; it cuts out for the split second of the real Britain
+    W0, W1 = S(18) - 0.05, T7_T1
+    wt = tvec(n_of(W1 - W0)); half = (W1 - W0) / 2
+    chord = lambda fs: sum(np.sin(2 * np.pi * f * wt) + np.sin(2 * np.pi * f * 1.003 * wt) for f in fs)
+    tender = np.where(wt < half, chord((196.0, 246.9, 293.7, 370.0)), chord((164.8, 196.0, 246.9, 293.7)))
+    tender = lpf(tender, 1800) * np.minimum(1, wt / 0.5) * np.minimum(1, (W1 - W0 - wt) / 0.2) * 0.11
+    tender[n_of(REAL[0] - W0):n_of(REAL[1] - W0)] = 0
+    mcue(tender, W0)
+    for t2, m_ in ((W0 + 0.6, 79), (W0 + 3.3, 74), (W0 + 4.6, 76), (W0 + 6.4, 71), (W0 + 8.1, 74)):
+        if not (REAL[0] - 0.5 < t2 < REAL[1]): mcue(mbox(m_), t2, 0.22, -0.2)
+    # the cliffhanger: a low pulse that speeds up and a string-like swell, peaking at the cut
+    tt3, gap = T7_T1, 0.5
+    while tt3 < CUT - 0.05:
+        place(mus, thump(46, 0.4, 1.0), tt3, 0.55 + 0.45 * (tt3 - T7_T1) / (CUT - T7_T1)); gap = max(0.17, gap * 0.9); tt3 += gap
+    ct = tvec(n_of(CUT - T7_T1))
+    swell = sum(lpf(2 * ((np.cumsum(np.full(len(ct), f) * (1 + 0.06 * ct / ct[-1])) / SR) % 1) - 1, 2600) for f in (123.5, 185.0, 246.9, 293.7))
+    mcue(swell * ((ct / ct[-1]) ** 1.6) * 0.16, T7_T1)
 
 # ---------- mix ----------
 vo, vsr = sf.read(VO, always_2d=True)
@@ -215,8 +341,16 @@ duck = uniform_filter1d(duck, n_of(0.08))
 mus = to_lufs(mus, -29.0) * duck
 sfx = to_lufs(sfx, -24.0)
 mix = vo + mus + sfx
+if not TEST:   # dynamics that follow the story: the keyboard twist is hushed, the cliffhanger is the loudest moment
+    ride = np.zeros(N)
+    def seg(t0, t1, db, ramp=0.4):
+        k = np.clip(np.minimum((tvec(N) - t0) / ramp, (t1 - tvec(N)) / ramp), 0, 1); return k * db
+    ride += seg(S(18) - 0.3, T7_T1, -2.5) + seg(T7_T1 - 0.1, CUT + 0.3, 3.0, 0.8) + seg(LAND + 0.2, S(2) - 0.1, -2.0, 0.2)
+    mix = mix * 10 ** (ride / 20)
 if TEST:
     a = n_of(LEN - 0.35); mix[:, a:n_of(LEN)] *= np.linspace(1, 0, n_of(LEN) - a); mix[:, n_of(LEN):] = 0
+else:
+    mix[:, n_of(CUT):] = 0          # the hard cut to black: silence
 mix = to_lufs(mix[:, :n_of(LEN)], -14.0)
 tmp = tempfile.mktemp(suffix='.wav')
 sf.write(tmp, mix.T.astype(np.float32), SR, subtype='FLOAT')

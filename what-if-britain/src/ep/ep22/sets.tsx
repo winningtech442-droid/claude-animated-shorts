@@ -49,6 +49,10 @@ const paving = () => canvasTex('ep22paving', 128, 128, (g) => {
   for (let i = 0; i <= 128; i += 64) { g.beginPath(); g.moveTo(i, 0); g.lineTo(i, 128); g.moveTo(0, i); g.lineTo(128, i); g.stroke(); }
   for (let i = 0; i < 300; i++) { g.fillStyle = 'rgba(80,80,80,.07)'; g.fillRect((i * 41) % 128, (i * 73) % 128, 2, 2); }
 }, [7, 5]);
+const shutterTex = () => canvasTex('ep22shutter', 128, 128, (g) => {
+  g.fillStyle = '#9EA4AE'; g.fillRect(0, 0, 128, 128);
+  for (let y = 0; y < 128; y += 16) { g.fillStyle = '#7E848E'; g.fillRect(0, y + 12, 128, 4); g.fillStyle = '#B7BCC4'; g.fillRect(0, y, 128, 3); }
+}, [1, 8]);
 const brick = () => canvasTex('ep22brick', 256, 256, (g) => {
   g.fillStyle = '#B9C2C6'; g.fillRect(0, 0, 256, 256);
   for (let y = 0; y < 256; y += 32) for (let x = (y / 32) % 2 ? -32 : 0; x < 256; x += 64) {
@@ -70,19 +74,19 @@ const coinMass = () => canvasTex('ep22coinmass', 256, 256, (g) => {
 }, [2, 1]);
 
 // ---------- light rig: bright morning on the high street ----------
-export const StreetLights: React.FC<{ sw: number }> = ({ sw }) => (
+export const StreetLights: React.FC<{ sw: number; dim?: number }> = ({ sw, dim = 0 }) => (
   <>
-    <ambientLight intensity={0.5} color={mixC('#FFF3E0', '#B8B0FF', sw)} />
+    <ambientLight intensity={0.5 + 0.15 * dim} color={mixC('#FFF3E0', '#B8B0FF', sw)} />
     <hemisphereLight args={[mixC('#DDEBFF', '#9FB7FF', sw), mixC('#8F8574', '#4A3F7A', sw), 0.75]} />
-    <directionalLight position={[3.5, 5.0, 4.0]} intensity={1.6} color={mixC('#FFE7C2', '#C6CCFF', sw)} />
+    <directionalLight position={[3.5, 5.0, 4.0]} intensity={1.6 * (1 - 0.55 * dim)} color={mixC('#FFE7C2', '#C6CCFF', sw)} />
     <directionalLight position={[-2.5, 3.2, -3.5]} intensity={1.0} color={mixC('#FFFFFF', '#8FF0E0', sw)} />
   </>
 );
-export const HallLights: React.FC<{ sw: number }> = ({ sw }) => (
+export const HallLights: React.FC<{ sw: number; dim?: number }> = ({ sw, dim = 0 }) => (
   <>
-    <ambientLight intensity={0.75} color={mixC('#FFF1DE', '#C8C0FF', sw)} />
+    <ambientLight intensity={0.75 * (1 - 0.6 * dim)} color={mixC('#FFF1DE', '#C8C0FF', sw)} />
     <hemisphereLight args={[mixC('#FFF4E2', '#AFC5FF', sw), mixC('#7A6A58', '#5A4F8A', sw), 0.8]} />
-    <directionalLight position={[2.0, 4.0, 4.0]} intensity={1.3} color={mixC('#FFE6C4', '#C6CCFF', sw)} />
+    <directionalLight position={[2.0, 4.0, 4.0]} intensity={1.3 * (1 - 0.7 * dim)} color={mixC('#FFE6C4', '#C6CCFF', sw)} />
     <directionalLight position={[-2.2, 3.4, -3.8]} intensity={0.95} color={mixC('#FFFFFF', '#8FF0E0', sw)} />
   </>
 );
@@ -212,12 +216,23 @@ export const RevolvingDoor: React.FC<{ spin: number; sw?: number }> = ({ spin, s
   </group>
 );
 
-export const BankFront: React.FC<{ spin?: number; sw?: number; shake?: number; children?: React.ReactNode }> = ({ spin = 0, sw = 0, shake = 0, children }) => {
+export const BankFront: React.FC<{ spin?: number; sw?: number; shake?: number; rain?: number; shutter?: number; children?: React.ReactNode }> = ({ spin = 0, sw = 0, shake = 0, rain = 0, shutter = 0, children }) => {
   const st = stone(), pv = paving(), bk = brick(), bs = bankSign(), hs = hoursSign();
   return (
     <group>
-      <StreetLights sw={sw} />
-      <Bg color={mixC('#BFDDF5', '#6D63B8', sw)} />
+      <StreetLights sw={sw} dim={rain} />
+      <Bg color={mixC(mixC('#BFDDF5', '#6D63B8', sw), '#4E5670', rain * 0.8)} />
+      {rain > 0 ? <mesh rotation={[-PI / 2, 0, 0]} position={[0, 0.003, 2.6]}><planeGeometry args={[14, 5.2]} /><meshStandardMaterial color="#20283A" transparent opacity={0.35 * rain} roughness={0.08} metalness={0.4} depthWrite={false} /></mesh> : null}
+      {shutter > 0 ? (
+        <group position={[0, 0, DOOR.z + DOOR.r + 0.08]}>
+          <Bx p={[0, DOOR.h + 0.15, 0]} s={[2.3, 0.3, 0.2]} c="#5B6170" r={0.5} />
+          <group position={[0, DOOR.h + 0.02 - (DOOR.h * shutter) / 2, 0]}>
+            <mesh><planeGeometry args={[2.1, DOOR.h * shutter]} /><M c="#ffffff" map={shutterTex()} r={0.6} m={0.3} /></mesh>
+            <Bx p={[0, -(DOOR.h * shutter) / 2, 0.02]} s={[2.15, 0.06, 0.06]} c="#3A3F4A" r={0.4} />
+          </group>
+          {[-1, 1].map((k) => <Bx key={k} p={[k * 1.08, DOOR.h / 2, 0]} s={[0.07, DOOR.h + 0.2, 0.12]} c="#3A3F4A" r={0.4} />)}
+        </group>
+      ) : null}
       {/* pavement, kerb and road */}
       <mesh rotation={[-PI / 2, 0, 0]} position={[0, 0, 2.6]}><planeGeometry args={[14, 5.2]} /><M c="#ffffff" map={pv} r={0.9} /></mesh>
       <Bx p={[0, 0.06, 5.25]} s={[14, 0.12, 0.2]} c="#8E8B84" />
@@ -272,12 +287,14 @@ export const HALL = { counterZ: -2.2, shelfZ: -3.1 };
 const counterGlass = () => sign('ep22cashier', 512, 96, '#1F2F4F', [{ text: 'CASHIER', y: 50, size: 56, color: '#F3E3B4' }]);
 const savingsBoard = () => sign('ep22savingsin', 768, 160, '#F3E9CF', [{ text: 'SAVINGS IN', y: 82, size: 92, color: '#1F2F4F' }], '#B3262E');
 export const SHELF_LABELS = ['MRS PATEL', 'D. OKAFOR', 'NAN', 'J. REID', 'MR LEE', 'S. KHAN'];
-export const BankHall: React.FC<{ sw?: number; children?: React.ReactNode }> = ({ sw = 1, children }) => {
+export const BankHall: React.FC<{ sw?: number; dim?: number; screen?: string; children?: React.ReactNode }> = ({ sw = 1, dim = 0, screen, children }) => {
   const mb = marble(), st = stone(), cg = counterGlass(), sb = savingsBoard();
   return (
     <group>
-      <HallLights sw={sw} />
-      <Bg color={mixC('#E8E0D0', '#5E558F', sw)} />
+      <HallLights sw={sw} dim={dim} />
+      <Bg color={mixC(mixC('#E8E0D0', '#5E558F', sw), '#15131F', dim * 0.7)} />
+      {screen !== undefined ? <group position={[COMPUTER.x, 1.045, COMPUTER.z]}><OldComputer screen={screen} /></group> : null}
+      {dim > 0 ? <pointLight position={[COMPUTER.x - 0.5, 1.7, COMPUTER.z + 0.7]} intensity={2.2 * dim} distance={4} color="#FFD08A" /> : null}
       <mesh rotation={[-PI / 2, 0, 0]} position={[0, 0, 0]}><planeGeometry args={[8, 9]} /><M c="#ffffff" map={mb} r={0.35} /></mesh>
       <mesh position={[0, 2.0, -3.6]}><planeGeometry args={[8, 4]} /><M c="#ffffff" map={st} r={0.9} /></mesh>
       {[-1, 1].map((k) => <mesh key={k} position={[k * 3.2, 2.0, 0.5]} rotation={[0, -k * PI / 2, 0]}><planeGeometry args={[9, 4]} /><M c="#ffffff" map={st} r={0.9} /></mesh>)}
@@ -313,3 +330,98 @@ export const BankHall: React.FC<{ sw?: number; children?: React.ReactNode }> = (
 
 /** Ease helper for a world prop following an actor: linear walk from a to b over [t0, t1]. */
 export const along = (ts: number, t0: number, t1: number, a: number, b: number) => lerp(a, b, Math.min(1, Math.max(0, (ts - t0) / (t1 - t0))));
+
+// ---------- act 2 props ----------
+export const COMPUTER = { x: 1.7, z: -2.12 };
+/** A beige old-school computer on the counter, screen facing the customers (+z). screen = the text on the balance screen. */
+export const OldComputer: React.FC<{ screen: string }> = ({ screen }) => {
+  const [who, amt] = screen.split('|');
+  const tex = textTexture(`ep22screen${screen}`, { w: 512, h: 384, bg: '#0E2A1C', lines: [
+    { text: 'ACCOUNT', x: 256, y: 60, size: 44, color: '#7DFFB0', weight: 700, font: 'JetBrains Mono' },
+    { text: who ?? '', x: 256, y: 130, size: 56, color: '#7DFFB0', weight: 700, font: 'JetBrains Mono' },
+    { text: 'BALANCE', x: 256, y: 225, size: 40, color: '#7DFFB0', weight: 700, font: 'JetBrains Mono' },
+    { text: amt ?? '', x: 256, y: 305, size: 92, color: '#E9FFF2', weight: 700, font: 'JetBrains Mono' },
+  ], draw: (g) => { g.fillStyle = 'rgba(125,255,176,0.06)'; for (let y = 0; y < 384; y += 6) g.fillRect(0, y, 512, 2); } });
+  return (
+    <group>
+      <Bx p={[0, 0.03, 0.02]} s={[0.46, 0.06, 0.4]} c="#D8CFB8" />
+      <Bx p={[0, 0.3, -0.05]} s={[0.5, 0.42, 0.42]} c="#E2D9C2" />
+      <mesh position={[0, 0.31, 0.162]}><planeGeometry args={[0.4, 0.3]} /><meshBasicMaterial map={tex ?? undefined} toneMapped={false} /></mesh>
+      <Bx p={[0, 0.07, 0.36]} s={[0.46, 0.035, 0.17]} c="#D8CFB8" />
+      {Array.from({ length: 12 }).map((_, i) => <Bx key={i} p={[-0.19 + (i % 6) * 0.075, 0.092, 0.33 + Math.floor(i / 6) * 0.06]} s={[0.055, 0.012, 0.045]} c="#F2EEE4" />)}
+      <pointLight position={[0, 0.31, 0.45]} intensity={0.5} distance={1.2} color="#7DFFB0" />
+    </group>
+  );
+};
+/** An umbrella held over a head: canopy radius 0.55. */
+export const Umbrella: React.FC<{ c?: string; tilt?: number }> = ({ c = '#1F2F4F', tilt = 0 }) => (
+  <group rotation={[tilt, 0, 0]}>
+    <mesh position={[0, 0.45, 0]}><cylinderGeometry args={[0.012, 0.012, 0.9, 8]} /><M c="#2A2A2E" /></mesh>
+    <mesh position={[0, 0.92, 0]}><coneGeometry args={[0.55, 0.22, 8, 1, true]} /><M c={c} r={0.4} side={THREE.DoubleSide} /></mesh>
+  </group>
+);
+const cashBoard = () => sign('ep22cashboard', 768, 480, '#1F2F4F', [
+  { text: 'CASH:', y: 120, size: 110, color: '#F3E3B4' }, { text: '£3 IN', y: 250, size: 130, color: '#FFFFFF' }, { text: 'EVERY £100', y: 385, size: 104, color: '#FFD43B' },
+], '#C9A43A');
+const steel = () => canvasTex('ep22steel', 128, 128, (g) => {
+  g.fillStyle = '#8C939C'; g.fillRect(0, 0, 128, 128);
+  for (let i = 0; i < 128; i += 2) { g.fillStyle = `rgba(255,255,255,${0.03 + 0.03 * ((i * 7) % 3)})`; g.fillRect(0, i, 128, 1); }
+  g.fillStyle = '#6E757E'; for (let x = 8; x < 128; x += 40) for (let y = 8; y < 128; y += 40) { g.beginPath(); g.arc(x, y, 3, 0, Math.PI * 2); g.fill(); }
+}, [4, 2]);
+/** The vault: a steel wall at z = 0 with a round door (hinge on +x, swings out towards +z by `open` 0..1),
+ *  and behind it an enormous, nearly empty room with a few jars on one shelf and the CASH board. */
+export const VAULT = { r: 1.0, cy: 1.15, depth: 6.5 };
+export const Vault: React.FC<{ open?: number; sw?: number; children?: React.ReactNode }> = ({ open = 0, sw = 1, children }) => {
+  const stl = steel(), cb = cashBoard();
+  const wall = new THREE.Shape(); wall.moveTo(-4, 0); wall.lineTo(4, 0); wall.lineTo(4, 3.6); wall.lineTo(-4, 3.6); wall.lineTo(-4, 0);
+  const hole = new THREE.Path(); hole.absarc(0, VAULT.cy, VAULT.r, 0, Math.PI * 2, false); wall.holes.push(hole);
+  return (
+    <group>
+      <HallLights sw={sw} />
+      <Bg color={mixC('#2A2E36', '#2B2550', sw)} />
+      <pointLight position={[0, 3.2, -3]} intensity={6} distance={11} color={mixC('#E8F0FF', '#B8B0FF', sw)} />
+      {/* the hall side (floor in front of the wall) */}
+      <mesh rotation={[-PI / 2, 0, 0]} position={[0, 0, 2]}><planeGeometry args={[8, 4]} /><M c="#ffffff" map={marble()} r={0.35} /></mesh>
+      <mesh><shapeGeometry args={[wall]} /><M c="#ffffff" map={stl} r={0.45} m={0.5} side={THREE.DoubleSide} /></mesh>
+      <mesh position={[0, VAULT.cy, 0.02]}><torusGeometry args={[VAULT.r + 0.04, 0.07, 12, 48]} /><M c="#C9A43A" r={0.3} m={0.7} /></mesh>
+      {/* the door: hinge at x = +r */}
+      <group position={[VAULT.r + 0.05, VAULT.cy, 0.12]} rotation={[0, open * PI * 0.62, 0]}>
+        <group position={[-(VAULT.r + 0.05), 0, 0]}>
+          <mesh rotation={[PI / 2, 0, 0]}><cylinderGeometry args={[VAULT.r, VAULT.r, 0.22, 48]} /><M c="#A8AEB6" r={0.35} m={0.75} /></mesh>
+          <mesh position={[0, 0, 0.115]}><circleGeometry args={[VAULT.r * 0.82, 48]} /><M c="#8C939C" r={0.3} m={0.8} /></mesh>
+          {/* the wheel */}
+          <group position={[0, 0, 0.16]} rotation={[0, 0, open * 3]}>
+            <mesh><torusGeometry args={[0.3, 0.03, 10, 32]} /><M c="#C9A43A" r={0.3} m={0.7} /></mesh>
+            {[0, 1, 2].map((i) => <mesh key={i} rotation={[0, 0, (i * PI) / 3]}><boxGeometry args={[0.62, 0.035, 0.035]} /><M c="#C9A43A" r={0.3} m={0.7} /></mesh>)}
+          </group>
+          {Array.from({ length: 10 }).map((_, i) => <mesh key={i} position={[Math.cos((i * PI) / 5) * VAULT.r * 0.9, Math.sin((i * PI) / 5) * VAULT.r * 0.9, 0.12]}><sphereGeometry args={[0.035, 10, 8]} /><M c="#C9A43A" m={0.7} r={0.3} /></mesh>)}
+        </group>
+      </group>
+      {/* inside: steel walls, an echoing floor, one shelf with a few jars, the board */}
+      <mesh rotation={[-PI / 2, 0, 0]} position={[0, 0.001, -VAULT.depth / 2]}><planeGeometry args={[6, VAULT.depth]} /><M c="#4F555E" r={0.6} m={0.3} /></mesh>
+      <mesh position={[0, 1.8, -VAULT.depth]}><planeGeometry args={[6, 3.6]} /><M c="#ffffff" map={stl} r={0.45} m={0.5} /></mesh>
+      {[-1, 1].map((k) => <mesh key={k} position={[k * 3, 1.8, -VAULT.depth / 2]} rotation={[0, -k * PI / 2, 0]}><planeGeometry args={[VAULT.depth, 3.6]} /><M c="#ffffff" map={stl} r={0.45} m={0.5} /></mesh>)}
+      <mesh position={[0, 3.6, -VAULT.depth / 2]} rotation={[PI / 2, 0, 0]}><planeGeometry args={[6, VAULT.depth]} /><M c="#3A3F47" /></mesh>
+      <group position={[-0.6, 1.0, -VAULT.depth + 0.3]}>
+        <Bx p={[0, -0.02, 0]} s={[3.6, 0.05, 0.4]} c="#6E757E" r={0.4} />
+        {[-1.2, -0.75].map((x, i) => <group key={i} position={[x, 0, 0]}><CoinJar s={0.62} fill={0.5 + 0.3 * i} heap={false} /></group>)}
+        <group position={[1.3, 0, 0]}><CoinJar s={0.62} fill={0.25} heap={false} /></group>
+      </group>
+      {Array.from({ length: 4 }).map((_, i) => <Bx key={i} p={[-2.0 + i * 1.3, 1.6, -VAULT.depth + 0.3]} s={[0.04, 1.2, 0.4]} c="#6E757E" />)}
+      <group position={[2.97, 1.85, -2.6]} rotation={[0, -PI / 2, 0]}>
+        <Bx p={[0, 0, -0.03]} s={[1.7, 1.08, 0.05]} c="#C9A43A" />
+        <Sign p={[0, 0, 0.0]} w={1.6} h={1.0} tex={cb} />
+      </group>
+      {children}
+    </group>
+  );
+};
+/** Rain over the frame (HTML overlay): slanting streaks that fall with time. */
+export const Rain: React.FC<{ t: number; o?: number }> = ({ t, o = 1 }) => (
+  <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0, opacity: o, pointerEvents: 'none' }}>
+    {Array.from({ length: 140 }).map((_, i) => {
+      const x0 = (i * 397) % 1180 - 50, sp = 2600 + ((i * 53) % 700), y = (((i * 811) % 1920) + t * sp) % 2100 - 100, L = 60 + ((i * 17) % 50);
+      return <line key={i} x1={x0 + y * 0.12} y1={y} x2={x0 + (y + L) * 0.12} y2={y + L} stroke="rgba(220,230,255,0.55)" strokeWidth={i % 3 ? 2 : 3} />;
+    })}
+  </svg>
+);
