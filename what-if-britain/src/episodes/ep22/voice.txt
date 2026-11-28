@@ -3,16 +3,16 @@
 # the pin fires (after 4), the title card (after 7), the jar sliding along the counter (after 9), the vault door (after 10),
 # the board (after 12), the shutter (after 16), the keyboard (after 18 and 22).
 # BAIT: the polished explainer, quick and bright; it keeps going up so the cut lands mid-thought.
-narrator|0.5|0.5|1.0|If you paid your *savings* into the bank, you might think it lends your money to someone else, but you might be surprised to know that they really|cut=that@0.55,tempo=1.08
+narrator|0.5|0.5|1.2|If you paid your *savings* into the bank, you might think it lends your money to someone else, but you might be surprised to know that they really|cut=that@0.55,tempo=1.08
 # REDIRECTION: sheepish, on the pavement among the coins.
 mate|0.6|0.5|0.5|...Bit *fast*?
 # REVEAL: the Booth. The producer is off-mic, on talkback.
 producer|0.8|0.3|0.25|Did the door just *eat* him?|talkback
 narrator|0.7|0.3|0.3|I hadn't *finished*.|take=2
-producer|0.9|0.3|0.9|Oh bollocks. The pin's *live*!|talkback,bleep=bollocks
+producer|0.9|0.3|1.2|Oh bollocks. The pin's *live*!|talkback,bleep=bollocks
 # DROP: the switched bank hall.
 alfie|0.7|0.4|0.6|Why's everyone holding *jars*?
-mate|0.6|0.5|2.6|Is that... your *nan's* name?
+mate|0.6|0.5|2.8|Is that... your *nan's* name?
 # WHAT IF BRITAIN
 narrator|0.6|0.5|1.9|And what if Britain's banks could only lend the *cash* in their vault?
 # LADDER beat 1: the counter
