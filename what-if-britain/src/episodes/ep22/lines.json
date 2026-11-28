@@ -1,0 +1,284 @@
+[
+ {
+  "i": 1,
+  "speaker": "narrator",
+  "text": "If you paid your *savings* into the bank, you might think it lends your money to someone else, but you might be surprised to know that\u2013",
+  "start": 0.0,
+  "end": 6.606,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {
+   "cut": "that@0.55",
+   "tempo": "1.08"
+  },
+  "file": "voice/01_narrator.wav"
+ },
+ {
+  "i": 2,
+  "speaker": "mate",
+  "text": "...Bit *fast*?",
+  "start": 7.606,
+  "end": 8.236,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/02_mate.wav"
+ },
+ {
+  "i": 3,
+  "speaker": "producer",
+  "text": "Did the door just *eat* him?",
+  "start": 8.736,
+  "end": 10.156,
+  "exaggeration": 0.8,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true
+  },
+  "file": "voice/03_producer.wav"
+ },
+ {
+  "i": 4,
+  "speaker": "narrator",
+  "text": "I hadn't *finished*.",
+  "start": 10.406,
+  "end": 11.496,
+  "exaggeration": 0.7,
+  "cfg": 0.3,
+  "fx": {
+   "take": "2"
+  },
+  "file": "voice/04_narrator.wav"
+ },
+ {
+  "i": 5,
+  "speaker": "producer",
+  "text": "Oh b*******. The pin's *live*!",
+  "start": 11.796,
+  "end": 13.916,
+  "exaggeration": 0.9,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true,
+   "bleep": "bollocks"
+  },
+  "file": "voice/05_producer.wav"
+ },
+ {
+  "i": 6,
+  "speaker": "alfie",
+  "text": "Why's everyone holding *jars*?",
+  "start": 14.816,
+  "end": 16.656,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/06_alfie.wav"
+ },
+ {
+  "i": 7,
+  "speaker": "mate",
+  "text": "Is that... your *nan's* name?",
+  "start": 17.256,
+  "end": 18.936,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/07_mate.wav"
+ },
+ {
+  "i": 8,
+  "speaker": "narrator",
+  "text": "And what if Britain's banks could only lend the *cash* in their vault?",
+  "start": 21.536,
+  "end": 24.816,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/08_narrator.wav"
+ },
+ {
+  "i": 9,
+  "speaker": "alfie",
+  "text": "Oi! That's *my* jar!",
+  "start": 26.716,
+  "end": 28.426,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/09_alfie.wav"
+ },
+ {
+  "i": 10,
+  "speaker": "manager",
+  "text": "And now it's his *van*.",
+  "start": 28.626,
+  "end": 30.146,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/10_manager.wav"
+ },
+ {
+  "i": 11,
+  "speaker": "builder",
+  "text": "Cheers, *son*!",
+  "start": 30.446,
+  "end": 31.326,
+  "exaggeration": 0.4,
+  "cfg": 0.6,
+  "fx": {
+   "take": "6"
+  },
+  "file": "voice/11_builder.wav"
+ },
+ {
+  "i": 12,
+  "speaker": "alfie",
+  "text": "Where's everyone *else's*?",
+  "start": 32.926,
+  "end": 34.236,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/12_alfie.wav"
+ },
+ {
+  "i": 13,
+  "speaker": "manager",
+  "text": "Only *three* quid in a hundred is cash.",
+  "start": 34.536,
+  "end": 37.116,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/13_manager.wav"
+ },
+ {
+  "i": 14,
+  "speaker": "mate",
+  "text": "Then where's the other *ninety-seven*?",
+  "start": 37.716,
+  "end": 39.366,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/14_mate.wav"
+ },
+ {
+  "i": 15,
+  "speaker": "nan",
+  "text": "I want my *savings*, now!",
+  "start": 40.666,
+  "end": 42.496,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/15_nan.wav"
+ },
+ {
+  "i": 16,
+  "speaker": "manager",
+  "text": "Everyone wants them *now*!",
+  "start": 42.696,
+  "end": 44.326,
+  "exaggeration": 0.9,
+  "cfg": 0.3,
+  "fx": {},
+  "file": "voice/16_manager.wav"
+ },
+ {
+  "i": 17,
+  "speaker": "alfie",
+  "text": "So nobody's got their *money*?",
+  "start": 44.526,
+  "end": 45.796,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/17_alfie.wav"
+ },
+ {
+  "i": 18,
+  "speaker": "manager",
+  "text": "...that we don't lend out *your* money.",
+  "start": 47.196,
+  "end": 48.826,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/18_manager.wav"
+ },
+ {
+  "i": 19,
+  "speaker": "alfie",
+  "text": "Then where's his loan *from*?",
+  "start": 49.126,
+  "end": 50.556,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {
+   "take": "3"
+  },
+  "file": "voice/19_alfie.wav"
+ },
+ {
+  "i": 20,
+  "speaker": "manager",
+  "text": "I *typed* it.",
+  "start": 50.756,
+  "end": 51.566,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/20_manager.wav"
+ },
+ {
+  "i": 21,
+  "speaker": "mate",
+  "text": "You can just *do* that?",
+  "start": 51.966,
+  "end": 53.236,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "file": "voice/21_mate.wav"
+ },
+ {
+  "i": 22,
+  "speaker": "manager",
+  "text": "And when he pays it back, it *vanishes*.",
+  "start": 53.536,
+  "end": 55.866,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "file": "voice/22_manager.wav"
+ },
+ {
+  "i": 23,
+  "speaker": "producer",
+  "text": "Pull him *out*! Now!",
+  "start": 56.766,
+  "end": 58.036,
+  "exaggeration": 1.1,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true
+  },
+  "file": "voice/23_producer.wav"
+ },
+ {
+  "i": 24,
+  "speaker": "manager",
+  "text": "That pin... there's a box in our vault with your *grandad's* na\u2013",
+  "start": 58.186,
+  "end": 61.49,
+  "exaggeration": 1.2,
+  "cfg": 0.3,
+  "fx": {
+   "cut": "name@0.4"
+  },
+  "file": "voice/24_manager.wav"
+ }
+]

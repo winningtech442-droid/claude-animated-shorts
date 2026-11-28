@@ -1,0 +1,1045 @@
+[
+{
+"text": "If",
+"start": 0.0,
+"end": 0.14,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "you",
+"start": 0.14,
+"end": 0.25,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "paid",
+"start": 0.25,
+"end": 0.55,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "your",
+"start": 0.55,
+"end": 0.71,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "*savings*",
+"start": 0.71,
+"end": 1.26,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "into",
+"start": 1.26,
+"end": 1.47,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "the",
+"start": 1.47,
+"end": 1.58,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "bank,",
+"start": 1.58,
+"end": 1.98,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "you",
+"start": 2.23,
+"end": 2.32,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "might",
+"start": 2.32,
+"end": 2.52,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "think",
+"start": 2.52,
+"end": 2.79,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "it",
+"start": 2.79,
+"end": 2.9,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "lends",
+"start": 2.9,
+"end": 3.18,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "your",
+"start": 3.18,
+"end": 3.31,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "money",
+"start": 3.31,
+"end": 3.61,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "to",
+"start": 3.61,
+"end": 3.72,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "someone",
+"start": 3.72,
+"end": 4.13,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "else,",
+"start": 4.13,
+"end": 4.44,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "but",
+"start": 4.84,
+"end": 5.05,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "you",
+"start": 5.05,
+"end": 5.12,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "might",
+"start": 5.12,
+"end": 5.33,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "be",
+"start": 5.33,
+"end": 5.43,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "surprised",
+"start": 5.43,
+"end": 5.9,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "to",
+"start": 5.9,
+"end": 5.99,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "know",
+"start": 5.99,
+"end": 6.34,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "that\u2013",
+"start": 6.54,
+"end": 6.606,
+"speaker": "narrator",
+"line": 1
+},
+{
+"text": "...Bit",
+"start": 7.606,
+"end": 7.756,
+"speaker": "mate",
+"line": 2
+},
+{
+"text": "*fast*?",
+"start": 7.756,
+"end": 8.226,
+"speaker": "mate",
+"line": 2
+},
+{
+"text": "Did",
+"start": 8.736,
+"end": 8.906,
+"speaker": "producer",
+"line": 3
+},
+{
+"text": "the",
+"start": 8.906,
+"end": 9.006,
+"speaker": "producer",
+"line": 3
+},
+{
+"text": "door",
+"start": 9.006,
+"end": 9.286,
+"speaker": "producer",
+"line": 3
+},
+{
+"text": "just",
+"start": 9.286,
+"end": 9.546,
+"speaker": "producer",
+"line": 3
+},
+{
+"text": "*eat*",
+"start": 9.546,
+"end": 9.776,
+"speaker": "producer",
+"line": 3
+},
+{
+"text": "him?",
+"start": 9.776,
+"end": 10.146,
+"speaker": "producer",
+"line": 3
+},
+{
+"text": "I",
+"start": 10.406,
+"end": 10.526,
+"speaker": "narrator",
+"line": 4
+},
+{
+"text": "hadn't",
+"start": 10.526,
+"end": 10.916,
+"speaker": "narrator",
+"line": 4
+},
+{
+"text": "*finished*.",
+"start": 10.916,
+"end": 11.486,
+"speaker": "narrator",
+"line": 4
+},
+{
+"text": "Oh",
+"start": 11.796,
+"end": 11.986,
+"speaker": "producer",
+"line": 5
+},
+{
+"text": "b*******.",
+"start": 11.986,
+"end": 12.716,
+"speaker": "producer",
+"line": 5
+},
+{
+"text": "The",
+"start": 12.716,
+"end": 12.926,
+"speaker": "producer",
+"line": 5
+},
+{
+"text": "pin's",
+"start": 12.926,
+"end": 13.276,
+"speaker": "producer",
+"line": 5
+},
+{
+"text": "*live*!",
+"start": 13.276,
+"end": 13.766,
+"speaker": "producer",
+"line": 5
+},
+{
+"text": "Why's",
+"start": 14.816,
+"end": 15.166,
+"speaker": "alfie",
+"line": 6
+},
+{
+"text": "everyone",
+"start": 15.166,
+"end": 15.466,
+"speaker": "alfie",
+"line": 6
+},
+{
+"text": "holding",
+"start": 15.466,
+"end": 15.806,
+"speaker": "alfie",
+"line": 6
+},
+{
+"text": "*jars*?",
+"start": 15.806,
+"end": 16.386,
+"speaker": "alfie",
+"line": 6
+},
+{
+"text": "Is",
+"start": 17.256,
+"end": 17.426,
+"speaker": "mate",
+"line": 7
+},
+{
+"text": "that...",
+"start": 17.426,
+"end": 17.666,
+"speaker": "mate",
+"line": 7
+},
+{
+"text": "your",
+"start": 18.026,
+"end": 18.146,
+"speaker": "mate",
+"line": 7
+},
+{
+"text": "*nan's*",
+"start": 18.146,
+"end": 18.536,
+"speaker": "mate",
+"line": 7
+},
+{
+"text": "name?",
+"start": 18.536,
+"end": 18.926,
+"speaker": "mate",
+"line": 7
+},
+{
+"text": "And",
+"start": 21.536,
+"end": 21.666,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "what",
+"start": 21.666,
+"end": 21.836,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "if",
+"start": 21.836,
+"end": 21.926,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "Britain's",
+"start": 21.926,
+"end": 22.386,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "banks",
+"start": 22.386,
+"end": 22.836,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "could",
+"start": 22.836,
+"end": 22.996,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "only",
+"start": 22.996,
+"end": 23.216,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "lend",
+"start": 23.216,
+"end": 23.436,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "the",
+"start": 23.436,
+"end": 23.496,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "*cash*",
+"start": 23.496,
+"end": 23.976,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "in",
+"start": 23.976,
+"end": 24.096,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "their",
+"start": 24.096,
+"end": 24.276,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "vault?",
+"start": 24.276,
+"end": 24.806,
+"speaker": "narrator",
+"line": 8
+},
+{
+"text": "Oi!",
+"start": 26.716,
+"end": 27.266,
+"speaker": "alfie",
+"line": 9
+},
+{
+"text": "That's",
+"start": 27.406,
+"end": 27.686,
+"speaker": "alfie",
+"line": 9
+},
+{
+"text": "*my*",
+"start": 27.686,
+"end": 27.856,
+"speaker": "alfie",
+"line": 9
+},
+{
+"text": "jar!",
+"start": 27.856,
+"end": 28.416,
+"speaker": "alfie",
+"line": 9
+},
+{
+"text": "And",
+"start": 28.626,
+"end": 28.816,
+"speaker": "manager",
+"line": 10
+},
+{
+"text": "now",
+"start": 28.816,
+"end": 29.156,
+"speaker": "manager",
+"line": 10
+},
+{
+"text": "it's",
+"start": 29.156,
+"end": 29.406,
+"speaker": "manager",
+"line": 10
+},
+{
+"text": "his",
+"start": 29.406,
+"end": 29.666,
+"speaker": "manager",
+"line": 10
+},
+{
+"text": "*van*.",
+"start": 29.666,
+"end": 30.136,
+"speaker": "manager",
+"line": 10
+},
+{
+"text": "Cheers,",
+"start": 30.446,
+"end": 30.876,
+"speaker": "builder",
+"line": 11
+},
+{
+"text": "*son*!",
+"start": 30.876,
+"end": 31.236,
+"speaker": "builder",
+"line": 11
+},
+{
+"text": "Where's",
+"start": 32.926,
+"end": 33.296,
+"speaker": "alfie",
+"line": 12
+},
+{
+"text": "everyone",
+"start": 33.296,
+"end": 33.576,
+"speaker": "alfie",
+"line": 12
+},
+{
+"text": "*else's*?",
+"start": 33.576,
+"end": 34.106,
+"speaker": "alfie",
+"line": 12
+},
+{
+"text": "Only",
+"start": 34.536,
+"end": 34.846,
+"speaker": "manager",
+"line": 13
+},
+{
+"text": "*three*",
+"start": 34.846,
+"end": 35.236,
+"speaker": "manager",
+"line": 13
+},
+{
+"text": "quid",
+"start": 35.236,
+"end": 35.576,
+"speaker": "manager",
+"line": 13
+},
+{
+"text": "in",
+"start": 35.576,
+"end": 35.686,
+"speaker": "manager",
+"line": 13
+},
+{
+"text": "a",
+"start": 35.686,
+"end": 35.736,
+"speaker": "manager",
+"line": 13
+},
+{
+"text": "hundred",
+"start": 35.736,
+"end": 36.286,
+"speaker": "manager",
+"line": 13
+},
+{
+"text": "is",
+"start": 36.386,
+"end": 36.546,
+"speaker": "manager",
+"line": 13
+},
+{
+"text": "cash.",
+"start": 36.546,
+"end": 37.036,
+"speaker": "manager",
+"line": 13
+},
+{
+"text": "Then",
+"start": 37.716,
+"end": 37.906,
+"speaker": "mate",
+"line": 14
+},
+{
+"text": "where's",
+"start": 37.906,
+"end": 38.226,
+"speaker": "mate",
+"line": 14
+},
+{
+"text": "the",
+"start": 38.226,
+"end": 38.356,
+"speaker": "mate",
+"line": 14
+},
+{
+"text": "other",
+"start": 38.356,
+"end": 38.536,
+"speaker": "mate",
+"line": 14
+},
+{
+"text": "*ninety-seven*?",
+"start": 38.536,
+"end": 39.266,
+"speaker": "mate",
+"line": 14
+},
+{
+"text": "I",
+"start": 40.666,
+"end": 40.826,
+"speaker": "nan",
+"line": 15
+},
+{
+"text": "want",
+"start": 40.826,
+"end": 41.036,
+"speaker": "nan",
+"line": 15
+},
+{
+"text": "my",
+"start": 41.036,
+"end": 41.176,
+"speaker": "nan",
+"line": 15
+},
+{
+"text": "*savings*,",
+"start": 41.176,
+"end": 41.836,
+"speaker": "nan",
+"line": 15
+},
+{
+"text": "now!",
+"start": 41.836,
+"end": 42.326,
+"speaker": "nan",
+"line": 15
+},
+{
+"text": "Everyone",
+"start": 42.696,
+"end": 43.266,
+"speaker": "manager",
+"line": 16
+},
+{
+"text": "wants",
+"start": 43.266,
+"end": 43.606,
+"speaker": "manager",
+"line": 16
+},
+{
+"text": "them",
+"start": 43.606,
+"end": 43.766,
+"speaker": "manager",
+"line": 16
+},
+{
+"text": "*now*!",
+"start": 43.766,
+"end": 44.316,
+"speaker": "manager",
+"line": 16
+},
+{
+"text": "So",
+"start": 44.526,
+"end": 44.676,
+"speaker": "alfie",
+"line": 17
+},
+{
+"text": "nobody's",
+"start": 44.676,
+"end": 45.106,
+"speaker": "alfie",
+"line": 17
+},
+{
+"text": "got",
+"start": 45.106,
+"end": 45.266,
+"speaker": "alfie",
+"line": 17
+},
+{
+"text": "their",
+"start": 45.266,
+"end": 45.366,
+"speaker": "alfie",
+"line": 17
+},
+{
+"text": "*money*?",
+"start": 45.366,
+"end": 45.786,
+"speaker": "alfie",
+"line": 17
+},
+{
+"text": "...that",
+"start": 47.196,
+"end": 47.306,
+"speaker": "manager",
+"line": 18
+},
+{
+"text": "we",
+"start": 47.306,
+"end": 47.476,
+"speaker": "manager",
+"line": 18
+},
+{
+"text": "don't",
+"start": 47.476,
+"end": 47.826,
+"speaker": "manager",
+"line": 18
+},
+{
+"text": "lend",
+"start": 47.826,
+"end": 48.086,
+"speaker": "manager",
+"line": 18
+},
+{
+"text": "out",
+"start": 48.086,
+"end": 48.246,
+"speaker": "manager",
+"line": 18
+},
+{
+"text": "*your*",
+"start": 48.246,
+"end": 48.436,
+"speaker": "manager",
+"line": 18
+},
+{
+"text": "money.",
+"start": 48.436,
+"end": 48.816,
+"speaker": "manager",
+"line": 18
+},
+{
+"text": "Then",
+"start": 49.346,
+"end": 49.496,
+"speaker": "alfie",
+"line": 19
+},
+{
+"text": "where's",
+"start": 49.496,
+"end": 49.696,
+"speaker": "alfie",
+"line": 19
+},
+{
+"text": "his",
+"start": 49.696,
+"end": 49.836,
+"speaker": "alfie",
+"line": 19
+},
+{
+"text": "loan",
+"start": 49.836,
+"end": 50.066,
+"speaker": "alfie",
+"line": 19
+},
+{
+"text": "*from*?",
+"start": 50.066,
+"end": 50.416,
+"speaker": "alfie",
+"line": 19
+},
+{
+"text": "I",
+"start": 50.756,
+"end": 50.906,
+"speaker": "manager",
+"line": 20
+},
+{
+"text": "*typed*",
+"start": 50.906,
+"end": 51.376,
+"speaker": "manager",
+"line": 20
+},
+{
+"text": "it.",
+"start": 51.376,
+"end": 51.556,
+"speaker": "manager",
+"line": 20
+},
+{
+"text": "You",
+"start": 51.966,
+"end": 52.096,
+"speaker": "mate",
+"line": 21
+},
+{
+"text": "can",
+"start": 52.096,
+"end": 52.206,
+"speaker": "mate",
+"line": 21
+},
+{
+"text": "just",
+"start": 52.206,
+"end": 52.406,
+"speaker": "mate",
+"line": 21
+},
+{
+"text": "*do*",
+"start": 52.406,
+"end": 52.626,
+"speaker": "mate",
+"line": 21
+},
+{
+"text": "that?",
+"start": 52.626,
+"end": 53.226,
+"speaker": "mate",
+"line": 21
+},
+{
+"text": "And",
+"start": 53.536,
+"end": 53.726,
+"speaker": "manager",
+"line": 22
+},
+{
+"text": "when",
+"start": 53.726,
+"end": 53.896,
+"speaker": "manager",
+"line": 22
+},
+{
+"text": "he",
+"start": 53.896,
+"end": 53.986,
+"speaker": "manager",
+"line": 22
+},
+{
+"text": "pays",
+"start": 53.986,
+"end": 54.276,
+"speaker": "manager",
+"line": 22
+},
+{
+"text": "it",
+"start": 54.276,
+"end": 54.376,
+"speaker": "manager",
+"line": 22
+},
+{
+"text": "back,",
+"start": 54.376,
+"end": 54.766,
+"speaker": "manager",
+"line": 22
+},
+{
+"text": "it",
+"start": 55.006,
+"end": 55.166,
+"speaker": "manager",
+"line": 22
+},
+{
+"text": "*vanishes*.",
+"start": 55.166,
+"end": 55.856,
+"speaker": "manager",
+"line": 22
+},
+{
+"text": "Pull",
+"start": 56.766,
+"end": 56.936,
+"speaker": "producer",
+"line": 23
+},
+{
+"text": "him",
+"start": 56.936,
+"end": 57.046,
+"speaker": "producer",
+"line": 23
+},
+{
+"text": "*out*!",
+"start": 57.046,
+"end": 57.316,
+"speaker": "producer",
+"line": 23
+},
+{
+"text": "Now!",
+"start": 57.456,
+"end": 58.026,
+"speaker": "producer",
+"line": 23
+},
+{
+"text": "That",
+"start": 58.186,
+"end": 58.466,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "pin...",
+"start": 58.466,
+"end": 58.916,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "there's",
+"start": 59.226,
+"end": 59.406,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "a",
+"start": 59.406,
+"end": 59.456,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "box",
+"start": 59.456,
+"end": 59.846,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "in",
+"start": 59.846,
+"end": 59.936,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "our",
+"start": 59.936,
+"end": 60.066,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "vault",
+"start": 60.066,
+"end": 60.426,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "with",
+"start": 60.506,
+"end": 60.696,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "your",
+"start": 60.696,
+"end": 60.836,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "*grandad's*",
+"start": 60.836,
+"end": 61.386,
+"speaker": "manager",
+"line": 24
+},
+{
+"text": "na\u2013",
+"start": 61.386,
+"end": 61.49,
+"speaker": "manager",
+"line": 24
+}
+]

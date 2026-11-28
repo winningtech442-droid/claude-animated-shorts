@@ -1,0 +1,38 @@
+# EP22 Typed Money: voices (tools/cast_voice.py). speaker|exaggeration|cfg|pause|text|fx
+# Lines 1-7 are the cold open (the 10-20 s test render). Pauses hold the physical beats: the coin topples (after 1),
+# the pin fires (after 4), the title card (after 7), the jar sliding along the counter (after 9), the vault door (after 10),
+# the board (after 12), the shutter (after 16), the keyboard (after 18 and 22).
+# BAIT: the polished explainer, quick and bright; it keeps going up so the cut lands mid-thought.
+narrator|0.5|0.5|1.0|If you paid your *savings* into the bank, you might think it lends your money to someone else, but you might be surprised to know that they really|cut=that@0.55,tempo=1.08
+# REDIRECTION: sheepish, on the pavement among the coins.
+mate|0.6|0.5|0.5|...Bit *fast*?
+# REVEAL: the Booth. The producer is off-mic, on talkback.
+producer|0.8|0.3|0.25|Did the door just *eat* him?|talkback
+narrator|0.7|0.3|0.3|I hadn't *finished*.|take=2
+producer|0.9|0.3|0.9|Oh bollocks. The pin's *live*!|talkback,bleep=bollocks
+# DROP: the switched bank hall.
+alfie|0.7|0.4|0.6|Why's everyone holding *jars*?
+mate|0.6|0.5|2.6|Is that... your *nan's* name?
+# WHAT IF BRITAIN
+narrator|0.6|0.5|1.9|And what if Britain's banks could only lend the *cash* in their vault?
+# LADDER beat 1: the counter
+alfie|0.8|0.4|0.2|Oi! That's *my* jar!
+manager|0.5|0.5|0.3|And now it's his *van*.
+builder|0.4|0.6|1.6|Cheers, *son*!|take=6
+# LADDER beat 2: the vault
+alfie|0.7|0.4|0.3|Where's everyone *else's*?
+manager|0.5|0.5|0.6|Only *three* quid in a hundred is cash.
+mate|0.6|0.5|1.3|Then where's the other {*ninety-seven*|ninety seven}?
+# LADDER beat 3: the rainy high street, the run on the bank
+nan|0.8|0.4|0.2|I want my *savings*, now!
+manager|0.9|0.3|0.2|Everyone wants them *now*!
+alfie|0.8|0.4|1.4|So nobody's got their *money*?
+# TWIST: behind the shutter, at the keyboard
+manager|0.6|0.5|0.3|...that we don't lend out *your* money.
+alfie|0.8|0.4|0.2|Then where's his loan *from*?|take=3
+manager|0.5|0.5|0.4|I *typed* it.
+mate|0.8|0.4|0.3|You can just *do* that?
+manager|0.6|0.5|0.9|And when he pays it back, it *vanishes*.
+# CLIFFHANGER
+producer|1.1|0.3|0.15|Pull him *out*! Now!|talkback
+manager|1.2|0.3|0.0|That pin... there's a box in our vault with your *grandad's* name on it|cut=name@0.4
