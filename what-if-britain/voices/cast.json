@@ -196,6 +196,22 @@
         }
       ],
       "approved": "2026-11-28"
+    },
+    "rep": {
+      "episode": "EP23 Pay Later (global edition)",
+      "role": "the pay-later rep: short, square, barrel chest, huge grin, kick scooter; slick American salesman",
+      "kokoro": {
+        "blend": {
+          "am_puck": 0.5,
+          "am_michael": 0.5
+        },
+        "speed": 1.12,
+        "pitch_semitones": 0,
+        "lang": "en-us"
+      },
+      "tested": [],
+      "approved": "2026-11-28",
+      "note": "the first guest built from American Kokoro voices (lang en-us), chosen for the global edition; closest approved voices alfie 0.72, manager 0.72 (resemblyzer). Chatterbox takes not yet made: huggingface.co was blocked in the session that made it."
     }
   }
 }

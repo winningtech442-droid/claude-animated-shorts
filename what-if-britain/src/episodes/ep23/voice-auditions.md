@@ -26,3 +26,17 @@ The closest existing pair in the cast is Mate and Shopkeeper at 0.86. EP22's rej
 Each audition clip the user got: the candidate's EP23 lines read flat by Kokoro, then its 10-16 s reference clip.
 Once one per guest is approved: rebuild its reference into `voices/rep.wav` / `voices/owner.wav` and add it to
 `voices/cast.json` under "guests".
+
+## 28 Nov, round 2
+- **Rep: APPROVED, Rep 2 (American).** Reference saved as `voices/rep.wav`, settings in `voices/cast.json` (lang en-us).
+- **Owner: Owner 1 chosen, but the user said it was "too thick".** Pitching it less deep moved it towards the
+  Shopkeeper and Mate (0.83-0.91), so it was thinned with EQ on the reference instead
+  (`highpass=f=170,lowshelf=f=300:g=-6,equalizer=f=2500:t=q:w=1:g=3`; energy under 300 Hz fell from 25 % to 11 %):
+
+| Candidate | Kokoro settings + EQ | Closest approved voices |
+|---|---|---|
+| Owner 1b (thinner) | bm_lewis 1.0, speed 0.84, pitch -4, + EQ | mate 0.70, shopkeeper 0.69 |
+| Owner 1c (thinner, a touch lighter and quicker) | bm_lewis 1.0, speed 0.86, pitch -3, + EQ | mate 0.76, shopkeeper 0.74 |
+| (dropped) | bm_lewis, speed 0.86, pitch -2.5, no EQ | shopkeeper 0.86 |
+| (dropped) | bm_lewis, speed 0.88, pitch -1.5, no EQ | mate 0.83, shopkeeper 0.83 |
+| (dropped) | bm_lewis 0.7 + bm_fable 0.3, speed 0.88, pitch -2, no EQ | shopkeeper 0.91 |
