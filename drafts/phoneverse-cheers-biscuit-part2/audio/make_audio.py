@@ -99,7 +99,7 @@ line("L05", "JESS", "flat", "Why would Apple DO that?!", "why would apple [do](+
 line("L06", "YOU", "flat", "So you can find your phone when the phone that gets the codes is nicked.",
      "so you can find your phone when the phone that gets the codes is [nicked](+2).", speed=1.15, lips="OFF",
      emotion="fast, explaining while she stands up")
-line("L07", "YOU", "flat", "Oi, camera. Heathrow. Now.", "oi, camera. [heathrow](/hˈiːθɹəʊ/)... now!", speed=0.95, gap=0.15,
+line("L07", "YOU", "flat", "Oi, camera. Heathrow. Now.", "oi, camera! [heathrow](/hˈiːθɹəʊ/)! now!", speed=0.95, gap=0.35,
      emotion="commanding, phone held up to the lens")
 # Beat 2: dive 1, the den
 line("L08", "HOODED", "den", "No code. No problem.", "no code. no [problem](+2).", speed=0.85, level="aside", fx="close",
@@ -157,7 +157,7 @@ REFS = {}  # Part 2 clones Part 1's Kokoro samples (out/chatterbox/ref_*.wav are
 MUSIC = [
     ("sting_jess", ("L01", -1.2 - PRE), None),      # its boom already landed under Part 1's scream: only the tail plays
     ("C_journey", ("L02", -0.2), ("L07", -0.1)),    # sneaky, nervous: "he still needs my code, right?"
-    ("B_race", ("L07", 0.6), ("L21", 0.4)),         # the full 2-step at 140 BPM from "Heathrow. Now." ... dropout before the press
+    ("B_race", ("L08", -1.25), ("L21", 0.4)),       # the full 2-step at 140 BPM drops in on dive 1 ... dropout before the press
     ("D_sofa", ("L24", -0.05), ("L27@biscuit", 0.0)),  # the lift on "Cheers, Biscuit"; stops dead on "Biscuit124"
     ("sting_biscuit", ("L25", -0.9), None),         # dark low note under the threat text
     ("sting_tapestop", ("L27@biscuit", -0.35), None),
