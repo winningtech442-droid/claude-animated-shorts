@@ -19,7 +19,7 @@
 
 **How it differs from Parts 1-2:** no link, no password, no Apple. The target is Jess, not You. It's a phone call, a code and losing your number. The shape is different too: not a race against a click, but watching a mistake happen in slow motion, then fixing it. The camera dive goes through her earpiece instead of a screen.
 
-**Length:** 187 spoken words. At Part 2's pace that's about 58 s of speech. With about 14 s of action (the dive, the code, No Service, the ring), it comes to **about 72 s**, over a minute, so it qualifies for Creator Rewards.
+**Length:** 194 spoken words. At Part 2's pace that's about 60 s of speech. With about 14 s of action (the dive, the code, No Service, the ring), it comes to **about 74 s**, over a minute, so it qualifies for Creator Rewards.
 
 ## Cast
 | Character | Model | Voice | Engine |
@@ -30,6 +30,8 @@
 | **Hooded figure**, real voice | same | `bm_fable` -3, no filter (as in Part 2) | Kokoro |
 | **"Bank" caller** | voice only | `bf_alice`, phone-line filter | Kokoro |
 
+**Voice rule:** the hooded figure's call voice stays polite and official, with no pet names. Pet names like "babe" are only for characters with a bond, like Jess and You.
+
 ## Script with emotion direction
 Lips: **ON** = mouth visible and synced. **OFF** = back of the head, insert, voice-over or another location.
 `*word*` = the key word that turns yellow in the captions.
@@ -39,13 +41,13 @@ Repeated words follow the house rule: said twice, the first short and the second
 | # | Who | Line | Emotion | Lips |
 |---|---|---|---|---|
 | L01 | JESS | A *free* upgrade? For me?! | Squealing, delighted, phone at her ear, bags swinging. **The hook: the viewer smells a scam instantly** | **ON** |
-| L02 | HOODED (call voice) | Hiya, is that Jess? Black Friday loyalty offer. You're one of our *favourites*. | Sugary, salesy, over the phone | OFF |
+| L02 | HOODED (call voice) | Hiya, is that Jess? This is a Black Friday loyalty offer. And you're one of our *favourites*. | Polished and official-sounding, warm, over the phone | OFF |
 | L03 | YOU | Keep walking. Eyes on the *cyclists*. | Paranoid, phone clamped to her chest, scanning the crowd. Not listening to Jess | **ON** |
 
 ### Beat 2: the code (0:08-0:20)
 | # | Who | Line | Emotion | Lips |
 |---|---|---|---|---|
-| L04 | HOODED (call voice) | I've just sent you a little *code*, babe. Read it back for me? | Breezy, like it's nothing | OFF |
+| L04 | HOODED (call voice) | I've just sent you a little *code* there. Read it back for me? | Routine and official, like it's nothing | OFF |
 | L05 | JESS | Four… *eight*… | Reading slowly off the screen, juggling bags | **ON** |
 | L06 | JESS | Ooh, it says "never share this *code*". | Mildly puzzled, almost catching it | **ON** |
 | L07 | HOODED (call voice) | That's for *strangers*, Jess. I'm your network. | Warm, a tiny laugh. Smooth | OFF |
@@ -55,7 +57,7 @@ Repeated words follow the house rule: said twice, the first short and the second
 | # | Who | Line | Emotion | Lips |
 |---|---|---|---|---|
 | L09 | JESS | Can I ring you *back*, actually? My hands are full. | Breezy, bags slipping | **ON** |
-| L10 | HOODED (call voice) | No, no, no. Offer ends in two *minutes*! | **The mask slips**: sharp and fast, then forced bright again | OFF |
+| L10 | HOODED (call voice) | That wouldn't be good. The offer expires in two *minutes*! | **The mask slips**: still polite, but pushy and a bit too quick | OFF |
 | L11 | JESS | Okay, okay! *Nine*… | Flustered, rushing | **ON** |
 
 ### Beat 4: You clocks it (0:27-0:30)
@@ -85,7 +87,7 @@ Repeated words follow the house rule: said twice, the first short and the second
 ### Beat 8: the reveal (0:43-0:51)
 | # | Who | Line | Emotion | Lips |
 |---|---|---|---|---|
-| L20 | YOU | That wasn't an upgrade. You just gave him your *number*. | Quiet, deadly calm | **ON** |
+| L20 | YOU | That wasn't an upgrade, Jess. You just gave him your *number*. | Quiet, deadly calm | **ON** |
 | L21 | YOU | Every code your bank texts you goes to *him* now. | Spelling it out | **ON** |
 | L22 | JESS | My *BANK*?! | Full shriek. Pigeons scatter | **ON** |
 
@@ -111,7 +113,7 @@ Repeated words follow the house rule: said twice, the first short and the second
 |---|---|---|---|---|---|---|
 | 1. Cold open (L01-L03) | 0:00-0:08 | Black Friday crowds, "UP TO 70% OFF" posters. Jess, phone at her ear, bags swinging. A cyclist whizzes past and You clutches her phone to her chest | **New opening shot:** low and tracking on Jess's swinging bags, tilting up to her delighted face. Then a walking two-shot | — | Street crowd, a bus, a bike bell whoosh on the cyclist | Jess: delight. You: wary, scanning |
 | 2. The code (L04-L08) | 0:08-0:20 | Her phone buzzes. Screen insert: "Your code is 482913. Never share this code. We will never ask for it." She reads it out, digit by digit | Dolly backwards ahead of them; a push-in on the text | **CODE READ OUT** appears with six empty boxes; **4**, **8**, then **2** pop in yellow | Text buzz; a keypad blip on each digit | Jess: chatty, charmed. You: still watching the road |
-| 3. The tell (L09-L11) | 0:20-0:27 | Bags slipping, Jess asks to ring back. The voice snaps, then goes sweet again | A quick snap push-in on her ear and phone as he snaps | **9** pops in (4 of 6) | **Music drops out** on "No, no, no", then creeps back | Jess: flustered |
+| 3. The tell (L09-L11) | 0:20-0:27 | Bags slipping, Jess asks to ring back. The polite voice pushes back: the offer's about to expire | A quick snap push-in on her ear and phone as he pushes | **9** pops in (4 of 6) | **Music drops out** on "That wouldn't be good", then creeps back | Jess: flustered |
 | 4. You clocks it (L12-L13) | 0:27-0:30 | You spins round, then glares down the lens | Whip round to You, then a hold on her eyes | 4 of 6 | A heartbeat thud | You: dread, then fury |
 | 5. The dive and the den (L14-L15) | 0:30-0:35 | **The camera flies into Jess's earpiece**, through a tunnel of sound waves, and out of his headset mic. The den has a call-centre corner: headset, laptop with a "Replace SIM: enter code" page showing 4 of 6 digits, a blank SIM in a tray. His gloved finger taps MUTE, then unmute | **One continuous dive** (1.2 s), then over his shoulder onto the laptop | 4 of 6 | Phone-line whoosh with static; laptop hum | Hood: face never shown |
 | 6. Too late (L16-L18) | 0:35-0:40 | Back on the street, You lunges; Jess twirls away with her bags and says the last two digits. The call clicks off | Hard cut back; a wide two-shot for the slapstick | **1**, **3** pop in; all six flash **red** | Two blips, then a call-end click | You: lunging. Jess: proud |
@@ -142,7 +144,7 @@ Repeated words follow the house rule: said twice, the first short and the second
 ## Sound
 - **Music:** the series' F-minor garage theme, re-arranged:
   - **Cold open:** a bright, cheeky version for the "deal".
-  - **"No, no, no":** a dropout.
+  - **"That wouldn't be good":** a dropout.
   - **No Service:** stops dead, leaving only a dead-line tone.
   - **The fix:** lifts back in.
   - **Jess's last line:** stops dead, then a hard cut.
@@ -180,16 +182,16 @@ Repeated words follow the house rule: said twice, the first short and the second
 | Ladder (beats 2-9) | **Worth keeping** | Every beat raises the stakes: the code, "never share" ignored, the tell, You clocks it, the den, too late, No Service, the bank. The code boxes drive it, and it's a different shape from Part 2's race |
 | Facts | **Keep with a flag** | Every advice line has a UK source from this week or this year. How fast she recovers is dramatised; the post caption gives the real steps |
 | Ending | **Worth keeping** | It's a payoff, not a recap: Jess uses the lesson on the person who taught her. "Would you hang up on your actual bank?" gives the comments something to argue about |
-| Length | **Keep with a flag** | The estimate is about 72 s. Measure after voicing; if it runs over 78 s, cut L15 and L27 (about 2.5 s) |
+| Length | **Keep with a flag** | The estimate is about 74 s. Measure after voicing; if it runs over 78 s, cut L15 and L27 (about 2.5 s) |
 | Originality vs Parts 1-2 | **Worth keeping** | A new scam, a new target, a new transition. The only reuse is the Oxford Street set, with a new opening shot and camera path |
 
 **Overall: Worth keeping.**
 
 **Fix list before we voice it:**
-1. Check the 72-second estimate once the voices are rendered.
-2. Build the phone-line voice: pitch the hooded figure's call voice up 2 semitones and add the phone filter. Make sure "babe" and "favourites" sound right.
+1. Check the 74-second estimate once the voices are rendered.
+2. Build the phone-line voice: pitch the hooded figure's call voice up 2 semitones and add the phone filter. Make sure "loyalty" and "favourites" sound right.
 3. Chatterbox for the five big lines: L01, L16, L22, L25 and L30, all in lowercase (it spells out capitals).
 4. Kokoro text: send the digits as words ("four… eight…"); the code on screen is 482913.
 5. Build the new screens and the Black Friday street dressing before blocking the shots.
 
-*Log: 28 Nov 2026 · Phoneverse "Cheers, Biscuit" Part 3 · fake network "free upgrade" call; reading the code out lets them SIM-swap your number · target 72 s · Worth keeping.*
+*Log: 28 Nov 2026 · Phoneverse "Cheers, Biscuit" Part 3 · fake network "free upgrade" call; reading the code out lets them SIM-swap your number · target 74 s · Worth keeping.*
