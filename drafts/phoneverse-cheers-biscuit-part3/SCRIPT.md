@@ -51,7 +51,7 @@ Repeated words follow the house rule: said twice, the first short and the second
 | L05 | JESS | Four… *eight*… | Reading slowly off the screen, juggling bags | **ON** |
 | L06 | JESS | Ooh, it says "never share this *code*". | Mildly puzzled, almost catching it | **ON** |
 | L07 | HOODED (call voice) | That's for *strangers*, Jess. I'm your network. | Warm, a tiny laugh. Smooth | OFF |
-| L08 | JESS | Aww. *Two*… | Reassured, charmed | **ON** |
+| L08 | JESS | Aww, bless. *Two*… | Reassured, charmed | **ON** |
 
 ### Beat 3: the tell (0:20-0:27)
 | # | Who | Line | Emotion | Lips |
