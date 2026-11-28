@@ -490,12 +490,25 @@ cam.data.clip_end = 200.0
 fill_d = bpy.data.lights.new("cam_fill", "AREA"); fill_d.energy = 25; fill_d.size = 1.0; fill_d.color = (1.0, 0.9, 0.82); fill_d.use_shadow = False
 fill = bpy.data.objects.new("cam_fill", fill_d); col.objects.link(fill); fill.parent = cam; fill.location = (0.25, 0.3, 0.1)
 CLOSE = ("dive1", "dive2", "back", "thumb", "fix", "finger", "kicked", "ots")
+ph_glow.visible_camera = False
+MIN_HEAD = 0.17     # the camera must stay this far from You's head bone, or it ends up inside her face (her screen close-ups)
+def clear_of_head(p, tg):
+    hY = head_of("YOU")
+    if (p - hY).length >= MIN_HEAD: return p, 1.0
+    lo, hi = 0.15, 1.0      # slide the camera toward what it looks at until it is clear of her face
+    for _ in range(24):
+        mid = (lo + hi) / 2
+        if (tg + (p - tg) * mid - hY).length >= MIN_HEAD: lo = mid
+        else: hi = mid
+    return tg + (p - tg) * lo, lo
 def set_cam(t):
     name, t0, t1, fn = shot_at(t); r = fn(t); p, tg, lens, foc = r[:4]; roll = r[4] if len(r) > 4 else 0.0
+    k = 1.0
+    if name not in DEN_SHOTS: p, k = clear_of_head(p, tg); lens *= k ** 0.8     # wider lens keeps the framing
     cam.location = p; cam.rotation_euler = (tg - p).to_track_quat("-Z", "Y").to_euler()
     if roll: cam.rotation_euler.rotate_axis("Z", math.radians(roll))
     cam.data.lens = lens; cam.data.dof.focus_distance = max(0.03, (foc - p).length)
-    cam.data.dof.aperture_fstop = 5.6 if name in CLOSE else 2.4
+    cam.data.dof.aperture_fstop = (8.0 if k < 1.0 else 5.6) if name in CLOSE else 2.4
     fill_d.energy = 3 if name in DEN_SHOTS else (4 if name in CLOSE else 25)
     return name
 
@@ -510,7 +523,11 @@ def render_frame(f, path):
     t = f / FPS
     set_frame(t); set_cam(t); set_frame(t, cam.location.copy()); shot = set_cam(t)    # pass 2: looks/phone that aim at the lens
     sc.render.filepath = os.path.abspath(path)
-    if os.environ.get("DBG") == "2": print("DBG", f, shot, tuple(round(v, 3) for v in cam.location)); return
+    if os.environ.get("DBG") == "2":
+        pp_, pn_, _ = phone_nup(NEW)
+        print("DBG", f, shot, tuple(round(v, 3) for v in cam.location), "dYOU", round((cam.location - head_of("YOU")).length, 3),
+              "dJESS", round((cam.location - head_of("JESS")).length, 3), "phone-headY", round((pp_ - head_of("YOU")).length, 3),
+              "n.toHead", round(pn_.dot((head_of("YOU") - pp_).normalized()), 2), flush=True); return
     t0 = time.time(); bpy.ops.render.render(write_still=True); print(f"rendered {path} shot={shot} t={t:.2f} {time.time() - t0:.1f}s", flush=True)
 
 F_END = int(math.ceil(T_END * FPS))
