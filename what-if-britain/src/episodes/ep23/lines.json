@@ -1,0 +1,289 @@
+[
+ {
+  "i": 1,
+  "speaker": "narrator",
+  "text": "If you split a hundred-dollar jacket into four payments, you might think nobody's making money, because there's no interest, but you might be surprised to know that\u2013",
+  "start": 0.0,
+  "end": 7.107,
+  "exaggeration": 0.5,
+  "cfg": 0.5,
+  "fx": {
+   "cut": "that@0.55",
+   "tempo": "1.08"
+  },
+  "placeholder": true
+ },
+ {
+  "i": 2,
+  "speaker": "mate",
+  "text": "...You said *split* it.",
+  "start": 8.307,
+  "end": 9.485,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 3,
+  "speaker": "producer",
+  "text": "Did he just *rip* the jacket?",
+  "start": 9.985,
+  "end": 11.689,
+  "exaggeration": 0.8,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true
+  },
+  "placeholder": true
+ },
+ {
+  "i": 4,
+  "speaker": "narrator",
+  "text": "Split the *payments*! Not the jacket!",
+  "start": 11.939,
+  "end": 13.886,
+  "exaggeration": 0.8,
+  "cfg": 0.3,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 5,
+  "speaker": "producer",
+  "text": "B***** hell. He's *switching*!",
+  "start": 14.186,
+  "end": 15.787,
+  "exaggeration": 0.9,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true,
+   "bleep": "Bloody"
+  },
+  "placeholder": true
+ },
+ {
+  "i": 6,
+  "speaker": "alfie",
+  "text": "Where's the *cash* drawer?",
+  "start": 16.987,
+  "end": 18.301,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 7,
+  "speaker": "mate",
+  "text": "Why's everyone carrying a *sofa*?",
+  "start": 18.801,
+  "end": 20.447,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 8,
+  "speaker": "narrator",
+  "text": "And what if Britain's tills only took pay *later*?",
+  "start": 23.047,
+  "end": 25.498,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 9,
+  "speaker": "mate",
+  "text": "It's all *free*!",
+  "start": 27.398,
+  "end": 28.299,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 10,
+  "speaker": "alfie",
+  "text": "It's not free. It's *later*!",
+  "start": 28.499,
+  "end": 30.159,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 11,
+  "speaker": "alfie",
+  "text": "How many payments *is* that?",
+  "start": 31.559,
+  "end": 33.095,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 12,
+  "speaker": "mate",
+  "text": "Twelve things, times four... *forty-eight*?",
+  "start": 33.395,
+  "end": 35.744,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 13,
+  "speaker": "rep",
+  "text": "And you missed *one*.",
+  "start": 36.144,
+  "end": 37.349,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 14,
+  "speaker": "mate",
+  "text": "A *late* fee?",
+  "start": 37.649,
+  "end": 38.496,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 15,
+  "speaker": "nan",
+  "text": "In my day, we called this the *never-never*.",
+  "start": 39.696,
+  "end": 42.12,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 16,
+  "speaker": "alfie",
+  "text": "The *never-what*?",
+  "start": 42.32,
+  "end": 43.108,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 17,
+  "speaker": "nan",
+  "text": "You *never* finish paying.",
+  "start": 43.308,
+  "end": 44.649,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 18,
+  "speaker": "alfie",
+  "text": "Then who's getting *rich*?",
+  "start": 44.949,
+  "end": 46.263,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 19,
+  "speaker": "owner",
+  "text": "...that the *shop* pays them.",
+  "start": 47.663,
+  "end": 49.145,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 20,
+  "speaker": "alfie",
+  "text": "You pay *eight* dollars?",
+  "start": 49.945,
+  "end": 51.232,
+  "exaggeration": 0.8,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 21,
+  "speaker": "owner",
+  "text": "Up to eight, *every* hundred.",
+  "start": 51.432,
+  "end": 53.053,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 22,
+  "speaker": "mate",
+  "text": "So why *offer* it?",
+  "start": 53.353,
+  "end": 54.477,
+  "exaggeration": 0.7,
+  "cfg": 0.4,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 23,
+  "speaker": "owner",
+  "text": "Because you buy *more*.",
+  "start": 54.777,
+  "end": 56.036,
+  "exaggeration": 0.6,
+  "cfg": 0.5,
+  "fx": {},
+  "placeholder": true
+ },
+ {
+  "i": 24,
+  "speaker": "producer",
+  "text": "Don't let him *scan* it!",
+  "start": 57.036,
+  "end": 58.436,
+  "exaggeration": 1.1,
+  "cfg": 0.3,
+  "fx": {
+   "talkback": true
+  },
+  "placeholder": true
+ },
+ {
+  "i": 25,
+  "speaker": "rep",
+  "text": "This pin's still on the never-never... your *grandad* owes three paym\u2013",
+  "start": 58.586,
+  "end": 62.254,
+  "exaggeration": 1.2,
+  "cfg": 0.3,
+  "fx": {
+   "cut": "payments@0.45"
+  },
+  "placeholder": true
+ }
+]

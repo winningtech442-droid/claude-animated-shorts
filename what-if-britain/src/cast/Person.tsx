@@ -18,6 +18,13 @@ export type Look = {
   chin?: number; // 0 .. 1 double chin and jowls
   glassesSize?: number; // 1 = v2 frames; Nan's are huge
   headset?: 'boom' | 'phones'; // the producer's talkback headset, the narrator's studio headphones
+  // v3 EP23 (28 Nov 2026): two more silhouettes. All optional; unset (1 / none) draws exactly as before.
+  shoulders?: number; // shoulder and chest width, 1 = v2 (square Rep 1.3; pear-shaped Owner 0.78)
+  hips?: number; // hip and seat width, 1 = v2; above 1 adds a low round mass (pear-shaped)
+  chest?: number; // chest depth front to back, 1 = v2 (barrel chest > 1)
+  neck?: number; // neck length, 1 = v2 .. 0 no visible neck (the head sits on the shoulders)
+  moustache?: string; // colour of a droopy walrus moustache
+  sideHair?: string; // colour of a horseshoe of hair round the sides and back (with hairStyle 'bald')
 };
 
 export type Face = {
@@ -339,6 +346,28 @@ const Head: React.FC<{ look: Look; f: Face }> = ({ look, f }) => {
           ) : null}
         </group>
       ) : null}
+      {look.sideHair ? (
+        <mesh position={[0, -0.01, -0.012]} scale={[0.98, 0.62, 0.98]}>
+          <sphereGeometry args={[R * 1.045, 32, 16, Math.PI * 0.82, Math.PI * 1.36, Math.PI * 0.42, Math.PI * 0.24]} />
+          <Mat c={look.sideHair} r={0.95} />
+        </mesh>
+      ) : null}
+      {look.moustache ? (
+        <group position={[0, -0.032, 0.122]}>
+          {[-1, 1].map((s) => (
+            <mesh key={`m${s}`} position={[s * 0.026, -0.008, 0]} rotation={[0.2, s * 0.25, s * -0.55]} scale={[1.55, 0.62, 0.8]}>
+              <sphereGeometry args={[0.024, 16, 12]} />
+              <Mat c={look.moustache!} r={0.95} />
+            </mesh>
+          ))}
+          {[-1, 1].map((s) => (
+            <mesh key={`d${s}`} position={[s * 0.05, -0.03, -0.006]} rotation={[0.1, 0, s * 0.35]} scale={[0.7, 1.45, 0.7]}>
+              <sphereGeometry args={[0.016, 12, 10]} />
+              <Mat c={look.moustache!} r={0.95} />
+            </mesh>
+          ))}
+        </group>
+      ) : null}
       {chin > 0 ? (
         <group>
           <mesh position={[0, -0.112, 0.03]} scale={[0.72 + 0.12 * chin, 0.36 + 0.14 * chin, 0.78]}>
@@ -424,8 +453,9 @@ export const Person: React.FC<{
   const armUp = 0.29 * k * (look.armLen ?? 1), armLo = 0.27 * k * (look.armLen ?? 1);
   const bounce = b.bounce ?? 0;
   const LW = W * LT; // limb thickness
+  const SH = look.shoulders ?? 1, HP = look.hips ?? 1, CH = look.chest ?? 1, NK = look.neck ?? 1;
   const arm = (side: 1 | -1, sh: [number, number], el: number, hand: Body['handL'], tw = 0, held?: React.ReactNode) => (
-    <group position={[side * (0.2 - 0.02 * Math.max(0, -shr)) * W, shoulderY + 0.035 * shr, 0.03 * Math.max(0, -shr)]} rotation={[d2r(-sh[0]), 0, d2r(side * sh[1])]}>
+    <group position={[side * (0.2 - 0.02 * Math.max(0, -shr)) * W * SH, shoulderY + 0.035 * shr, 0.03 * Math.max(0, -shr)]} rotation={[d2r(-sh[0]), 0, d2r(side * sh[1])]}>
     <group rotation={[0, d2r(-side * tw), 0]}>
       <mesh>
         <sphereGeometry args={[0.058 * LW, 16, 12]} />
@@ -451,7 +481,7 @@ export const Person: React.FC<{
     </group>
   );
   const leg = (side: 1 | -1, hip: [number, number], kn: number) => (
-    <group position={[side * 0.095 * W, 0, 0]} rotation={[d2r(-(hip[0] + crA)), 0, d2r(side * hip[1])]}>
+    <group position={[side * 0.095 * W * HP, 0, 0]} rotation={[d2r(-(hip[0] + crA)), 0, d2r(side * hip[1])]}>
       <Seg L={thigh} r={0.07 * LW} c={look.legs} />
       <mesh position={[0, -thigh, 0]}>
         <sphereGeometry args={[0.062 * LW, 14, 10]} />
@@ -476,7 +506,7 @@ export const Person: React.FC<{
     <group position={position} rotation={[0, rotationY, 0]} scale={scale}>
       <group position={[b.sway ?? 0, hipY + bounce, 0]} rotation={[d2r(b.lean), d2r(b.turn), 0]}>
         {/* pelvis and legs */}
-        <mesh scale={[1.25 * W, 0.7, 0.85 + 0.25 * bel]}>
+        <mesh scale={[1.25 * W * HP, 0.7, 0.85 + 0.25 * bel]}>
           <sphereGeometry args={[0.13, 24, 16]} />
           <Mat c={look.legs} />
         </mesh>
@@ -484,10 +514,17 @@ export const Person: React.FC<{
         {leg(1, b.hipR, b.knR)}
         <group rotation={[d2r(b.spine ?? 0), 0, d2r(-(b.side ?? 0))]}>
         {/* torso: the jacket over a top */}
-        <mesh position={[0, torsoH * 0.5, 0]} scale={[1.08 * W, 1, 0.68 + 0.22 * bel]}>
+        <mesh position={[0, torsoH * 0.5, 0]} scale={[1.08 * W * SH, 1, (0.68 + 0.22 * bel) * CH]}>
           <capsuleGeometry args={[0.17, torsoH * 0.6, 8, 24]} />
           <Mat c={look.jacket} />
         </mesh>
+        {/* hips: a low, wide, round mass under a narrow chest (pear-shaped) */}
+        {HP > 1 ? (
+          <mesh position={[0, torsoH * 0.17, 0]} scale={[1.08 * W * HP, 0.78, 0.74 + 0.22 * bel]}>
+            <sphereGeometry args={[0.17, 28, 20]} />
+            <Mat c={look.jacket} />
+          </mesh>
+        ) : null}
         {/* belly: a round front in the top's colour, bulging between the open jacket */}
         {bel > 0 ? (
           <group>
@@ -521,7 +558,7 @@ export const Person: React.FC<{
           <Mat c={look.collar === 'harrington' ? look.jacketTrim : look.jacket} />
         </mesh>
         {/* hem band */}
-        <mesh position={[0, 0.06, 0]} scale={[1.08 * W, 1, 0.7 + 0.22 * bel]}>
+        <mesh position={[0, 0.06, 0]} scale={[1.08 * W * Math.max(SH, HP), 1, (0.7 + 0.22 * bel) * Math.max(1, CH * 0.92)]}>
           <cylinderGeometry args={[0.172, 0.172, 0.05, 24]} />
           <Mat c={look.jacketTrim} />
         </mesh>
@@ -533,11 +570,11 @@ export const Person: React.FC<{
         {arm(-1, b.shL, b.elL, b.handL, b.twL ?? 0, heldL)}
         {arm(1, b.shR, b.elR, b.handR, b.twR ?? 0, heldR)}
         {/* neck and head */}
-        <mesh position={[0, shoulderY + 0.06, 0]}>
+        <mesh position={[0, shoulderY + 0.06 - 0.03 * (1 - NK), 0]} scale={[1, NK + 0.25 * (1 - NK), 1]}>
           <cylinderGeometry args={[0.045 * Math.max(1, W * 0.9), 0.05 * Math.max(1, W * 0.9), 0.1, 16]} />
           <Mat c={look.skinShade} />
         </mesh>
-        <group position={[0, shoulderY + 0.074 + 0.176 * hs, 0.01 + 0.03 * st]} rotation={[d2r(b.headNod), d2r(b.headTurn), d2r(b.headTilt)]} scale={1.38 * hs}>
+        <group position={[0, shoulderY + 0.074 + 0.176 * hs - 0.07 * (1 - NK), 0.01 + 0.03 * st]} rotation={[d2r(b.headNod), d2r(b.headTurn), d2r(b.headTilt)]} scale={1.38 * hs}>
           <Head look={look} f={face} />
         </group>
         </group>

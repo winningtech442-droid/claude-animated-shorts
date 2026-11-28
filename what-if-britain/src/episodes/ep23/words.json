@@ -1,0 +1,1024 @@
+[
+ {
+  "text": "If",
+  "start": 0.06,
+  "end": 0.234,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "you",
+  "start": 0.249,
+  "end": 0.447,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "split",
+  "start": 0.462,
+  "end": 0.705,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "a",
+  "start": 0.72,
+  "end": 0.872,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "hundred-dollar",
+  "start": 0.887,
+  "end": 1.314,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "jacket",
+  "start": 1.329,
+  "end": 1.595,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "into",
+  "start": 1.61,
+  "end": 1.83,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "four",
+  "start": 1.845,
+  "end": 2.066,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "payments,",
+  "start": 2.081,
+  "end": 2.393,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "you",
+  "start": 2.493,
+  "end": 2.69,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "might",
+  "start": 2.705,
+  "end": 2.949,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "think",
+  "start": 2.964,
+  "end": 3.207,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "nobody's",
+  "start": 3.222,
+  "end": 3.511,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "making",
+  "start": 3.526,
+  "end": 3.793,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "money,",
+  "start": 3.808,
+  "end": 4.051,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "because",
+  "start": 4.151,
+  "end": 4.44,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "there's",
+  "start": 4.455,
+  "end": 4.722,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "no",
+  "start": 4.737,
+  "end": 4.911,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "interest,",
+  "start": 4.926,
+  "end": 5.238,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "but",
+  "start": 5.338,
+  "end": 5.536,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "you",
+  "start": 5.551,
+  "end": 5.748,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "might",
+  "start": 5.763,
+  "end": 6.006,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "be",
+  "start": 6.021,
+  "end": 6.196,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "surprised",
+  "start": 6.211,
+  "end": 6.546,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "to",
+  "start": 6.561,
+  "end": 6.736,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "know",
+  "start": 6.751,
+  "end": 6.971,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "that\u2013",
+  "start": 6.986,
+  "end": 7.107,
+  "speaker": "narrator",
+  "line": 1
+ },
+ {
+  "text": "...You",
+  "start": 8.367,
+  "end": 8.602,
+  "speaker": "mate",
+  "line": 2
+ },
+ {
+  "text": "said",
+  "start": 8.617,
+  "end": 8.879,
+  "speaker": "mate",
+  "line": 2
+ },
+ {
+  "text": "*split*",
+  "start": 8.894,
+  "end": 9.183,
+  "speaker": "mate",
+  "line": 2
+ },
+ {
+  "text": "it.",
+  "start": 9.198,
+  "end": 9.405,
+  "speaker": "mate",
+  "line": 2
+ },
+ {
+  "text": "Did",
+  "start": 10.045,
+  "end": 10.279,
+  "speaker": "producer",
+  "line": 3
+ },
+ {
+  "text": "he",
+  "start": 10.294,
+  "end": 10.502,
+  "speaker": "producer",
+  "line": 3
+ },
+ {
+  "text": "just",
+  "start": 10.517,
+  "end": 10.779,
+  "speaker": "producer",
+  "line": 3
+ },
+ {
+  "text": "*rip*",
+  "start": 10.794,
+  "end": 11.028,
+  "speaker": "producer",
+  "line": 3
+ },
+ {
+  "text": "the",
+  "start": 11.043,
+  "end": 11.278,
+  "speaker": "producer",
+  "line": 3
+ },
+ {
+  "text": "jacket?",
+  "start": 11.293,
+  "end": 11.609,
+  "speaker": "producer",
+  "line": 3
+ },
+ {
+  "text": "Split",
+  "start": 11.999,
+  "end": 12.262,
+  "speaker": "narrator",
+  "line": 4
+ },
+ {
+  "text": "the",
+  "start": 12.277,
+  "end": 12.49,
+  "speaker": "narrator",
+  "line": 4
+ },
+ {
+  "text": "*payments*!",
+  "start": 12.505,
+  "end": 12.842,
+  "speaker": "narrator",
+  "line": 4
+ },
+ {
+  "text": "Not",
+  "start": 13.062,
+  "end": 13.275,
+  "speaker": "narrator",
+  "line": 4
+ },
+ {
+  "text": "the",
+  "start": 13.29,
+  "end": 13.504,
+  "speaker": "narrator",
+  "line": 4
+ },
+ {
+  "text": "jacket!",
+  "start": 13.519,
+  "end": 13.806,
+  "speaker": "narrator",
+  "line": 4
+ },
+ {
+  "text": "B*****",
+  "start": 14.246,
+  "end": 14.563,
+  "speaker": "producer",
+  "line": 5
+ },
+ {
+  "text": "hell.",
+  "start": 14.578,
+  "end": 14.839,
+  "speaker": "producer",
+  "line": 5
+ },
+ {
+  "text": "He's",
+  "start": 15.059,
+  "end": 15.294,
+  "speaker": "producer",
+  "line": 5
+ },
+ {
+  "text": "*switching*!",
+  "start": 15.309,
+  "end": 15.707,
+  "speaker": "producer",
+  "line": 5
+ },
+ {
+  "text": "Where's",
+  "start": 17.047,
+  "end": 17.364,
+  "speaker": "alfie",
+  "line": 6
+ },
+ {
+  "text": "the",
+  "start": 17.379,
+  "end": 17.613,
+  "speaker": "alfie",
+  "line": 6
+ },
+ {
+  "text": "*cash*",
+  "start": 17.628,
+  "end": 17.89,
+  "speaker": "alfie",
+  "line": 6
+ },
+ {
+  "text": "drawer?",
+  "start": 17.905,
+  "end": 18.221,
+  "speaker": "alfie",
+  "line": 6
+ },
+ {
+  "text": "Why's",
+  "start": 18.861,
+  "end": 19.123,
+  "speaker": "mate",
+  "line": 7
+ },
+ {
+  "text": "everyone",
+  "start": 19.138,
+  "end": 19.509,
+  "speaker": "mate",
+  "line": 7
+ },
+ {
+  "text": "carrying",
+  "start": 19.524,
+  "end": 19.895,
+  "speaker": "mate",
+  "line": 7
+ },
+ {
+  "text": "a",
+  "start": 19.91,
+  "end": 20.09,
+  "speaker": "mate",
+  "line": 7
+ },
+ {
+  "text": "*sofa*?",
+  "start": 20.105,
+  "end": 20.367,
+  "speaker": "mate",
+  "line": 7
+ },
+ {
+  "text": "And",
+  "start": 23.107,
+  "end": 23.32,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "what",
+  "start": 23.335,
+  "end": 23.573,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "if",
+  "start": 23.588,
+  "end": 23.776,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "Britain's",
+  "start": 23.791,
+  "end": 24.129,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "tills",
+  "start": 24.144,
+  "end": 24.406,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "only",
+  "start": 24.421,
+  "end": 24.659,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "took",
+  "start": 24.674,
+  "end": 24.912,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "pay",
+  "start": 24.927,
+  "end": 25.141,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "*later*?",
+  "start": 25.156,
+  "end": 25.418,
+  "speaker": "narrator",
+  "line": 8
+ },
+ {
+  "text": "It's",
+  "start": 27.458,
+  "end": 27.693,
+  "speaker": "mate",
+  "line": 9
+ },
+ {
+  "text": "all",
+  "start": 27.708,
+  "end": 27.943,
+  "speaker": "mate",
+  "line": 9
+ },
+ {
+  "text": "*free*!",
+  "start": 27.958,
+  "end": 28.219,
+  "speaker": "mate",
+  "line": 9
+ },
+ {
+  "text": "It's",
+  "start": 28.559,
+  "end": 28.794,
+  "speaker": "alfie",
+  "line": 10
+ },
+ {
+  "text": "not",
+  "start": 28.809,
+  "end": 29.043,
+  "speaker": "alfie",
+  "line": 10
+ },
+ {
+  "text": "free.",
+  "start": 29.058,
+  "end": 29.32,
+  "speaker": "alfie",
+  "line": 10
+ },
+ {
+  "text": "It's",
+  "start": 29.54,
+  "end": 29.775,
+  "speaker": "alfie",
+  "line": 10
+ },
+ {
+  "text": "*later*!",
+  "start": 29.79,
+  "end": 30.079,
+  "speaker": "alfie",
+  "line": 10
+ },
+ {
+  "text": "How",
+  "start": 31.619,
+  "end": 31.853,
+  "speaker": "alfie",
+  "line": 11
+ },
+ {
+  "text": "many",
+  "start": 31.868,
+  "end": 32.13,
+  "speaker": "alfie",
+  "line": 11
+ },
+ {
+  "text": "payments",
+  "start": 32.145,
+  "end": 32.516,
+  "speaker": "alfie",
+  "line": 11
+ },
+ {
+  "text": "*is*",
+  "start": 32.531,
+  "end": 32.738,
+  "speaker": "alfie",
+  "line": 11
+ },
+ {
+  "text": "that?",
+  "start": 32.753,
+  "end": 33.015,
+  "speaker": "alfie",
+  "line": 11
+ },
+ {
+  "text": "Twelve",
+  "start": 33.455,
+  "end": 33.772,
+  "speaker": "mate",
+  "line": 12
+ },
+ {
+  "text": "things,",
+  "start": 33.787,
+  "end": 34.103,
+  "speaker": "mate",
+  "line": 12
+ },
+ {
+  "text": "times",
+  "start": 34.203,
+  "end": 34.492,
+  "speaker": "mate",
+  "line": 12
+ },
+ {
+  "text": "four...",
+  "start": 34.507,
+  "end": 34.769,
+  "speaker": "mate",
+  "line": 12
+ },
+ {
+  "text": "*forty-eight*?",
+  "start": 35.239,
+  "end": 35.664,
+  "speaker": "mate",
+  "line": 12
+ },
+ {
+  "text": "And",
+  "start": 36.204,
+  "end": 36.439,
+  "speaker": "rep",
+  "line": 13
+ },
+ {
+  "text": "you",
+  "start": 36.454,
+  "end": 36.688,
+  "speaker": "rep",
+  "line": 13
+ },
+ {
+  "text": "missed",
+  "start": 36.703,
+  "end": 37.02,
+  "speaker": "rep",
+  "line": 13
+ },
+ {
+  "text": "*one*.",
+  "start": 37.035,
+  "end": 37.269,
+  "speaker": "rep",
+  "line": 13
+ },
+ {
+  "text": "A",
+  "start": 37.709,
+  "end": 37.889,
+  "speaker": "mate",
+  "line": 14
+ },
+ {
+  "text": "*late*",
+  "start": 37.904,
+  "end": 38.166,
+  "speaker": "mate",
+  "line": 14
+ },
+ {
+  "text": "fee?",
+  "start": 38.181,
+  "end": 38.416,
+  "speaker": "mate",
+  "line": 14
+ },
+ {
+  "text": "In",
+  "start": 39.756,
+  "end": 39.963,
+  "speaker": "nan",
+  "line": 15
+ },
+ {
+  "text": "my",
+  "start": 39.978,
+  "end": 40.185,
+  "speaker": "nan",
+  "line": 15
+ },
+ {
+  "text": "day,",
+  "start": 40.2,
+  "end": 40.435,
+  "speaker": "nan",
+  "line": 15
+ },
+ {
+  "text": "we",
+  "start": 40.535,
+  "end": 40.742,
+  "speaker": "nan",
+  "line": 15
+ },
+ {
+  "text": "called",
+  "start": 40.757,
+  "end": 41.073,
+  "speaker": "nan",
+  "line": 15
+ },
+ {
+  "text": "this",
+  "start": 41.088,
+  "end": 41.35,
+  "speaker": "nan",
+  "line": 15
+ },
+ {
+  "text": "the",
+  "start": 41.365,
+  "end": 41.6,
+  "speaker": "nan",
+  "line": 15
+ },
+ {
+  "text": "*never-never*.",
+  "start": 41.615,
+  "end": 42.04,
+  "speaker": "nan",
+  "line": 15
+ },
+ {
+  "text": "The",
+  "start": 42.38,
+  "end": 42.615,
+  "speaker": "alfie",
+  "line": 16
+ },
+ {
+  "text": "*never-what*?",
+  "start": 42.63,
+  "end": 43.028,
+  "speaker": "alfie",
+  "line": 16
+ },
+ {
+  "text": "You",
+  "start": 43.368,
+  "end": 43.603,
+  "speaker": "nan",
+  "line": 17
+ },
+ {
+  "text": "*never*",
+  "start": 43.618,
+  "end": 43.907,
+  "speaker": "nan",
+  "line": 17
+ },
+ {
+  "text": "finish",
+  "start": 43.922,
+  "end": 44.238,
+  "speaker": "nan",
+  "line": 17
+ },
+ {
+  "text": "paying.",
+  "start": 44.253,
+  "end": 44.569,
+  "speaker": "nan",
+  "line": 17
+ },
+ {
+  "text": "Then",
+  "start": 45.009,
+  "end": 45.271,
+  "speaker": "alfie",
+  "line": 18
+ },
+ {
+  "text": "who's",
+  "start": 45.286,
+  "end": 45.548,
+  "speaker": "alfie",
+  "line": 18
+ },
+ {
+  "text": "getting",
+  "start": 45.563,
+  "end": 45.907,
+  "speaker": "alfie",
+  "line": 18
+ },
+ {
+  "text": "*rich*?",
+  "start": 45.922,
+  "end": 46.183,
+  "speaker": "alfie",
+  "line": 18
+ },
+ {
+  "text": "...that",
+  "start": 47.723,
+  "end": 47.985,
+  "speaker": "owner",
+  "line": 19
+ },
+ {
+  "text": "the",
+  "start": 48.0,
+  "end": 48.235,
+  "speaker": "owner",
+  "line": 19
+ },
+ {
+  "text": "*shop*",
+  "start": 48.25,
+  "end": 48.512,
+  "speaker": "owner",
+  "line": 19
+ },
+ {
+  "text": "pays",
+  "start": 48.527,
+  "end": 48.788,
+  "speaker": "owner",
+  "line": 19
+ },
+ {
+  "text": "them.",
+  "start": 48.803,
+  "end": 49.065,
+  "speaker": "owner",
+  "line": 19
+ },
+ {
+  "text": "You",
+  "start": 50.005,
+  "end": 50.24,
+  "speaker": "alfie",
+  "line": 20
+ },
+ {
+  "text": "pay",
+  "start": 50.255,
+  "end": 50.489,
+  "speaker": "alfie",
+  "line": 20
+ },
+ {
+  "text": "*eight*",
+  "start": 50.504,
+  "end": 50.793,
+  "speaker": "alfie",
+  "line": 20
+ },
+ {
+  "text": "dollars?",
+  "start": 50.808,
+  "end": 51.152,
+  "speaker": "alfie",
+  "line": 20
+ },
+ {
+  "text": "Up",
+  "start": 51.492,
+  "end": 51.699,
+  "speaker": "owner",
+  "line": 21
+ },
+ {
+  "text": "to",
+  "start": 51.714,
+  "end": 51.922,
+  "speaker": "owner",
+  "line": 21
+ },
+ {
+  "text": "eight,",
+  "start": 51.937,
+  "end": 52.226,
+  "speaker": "owner",
+  "line": 21
+ },
+ {
+  "text": "*every*",
+  "start": 52.326,
+  "end": 52.615,
+  "speaker": "owner",
+  "line": 21
+ },
+ {
+  "text": "hundred.",
+  "start": 52.63,
+  "end": 52.973,
+  "speaker": "owner",
+  "line": 21
+ },
+ {
+  "text": "So",
+  "start": 53.413,
+  "end": 53.621,
+  "speaker": "mate",
+  "line": 22
+ },
+ {
+  "text": "why",
+  "start": 53.636,
+  "end": 53.87,
+  "speaker": "mate",
+  "line": 22
+ },
+ {
+  "text": "*offer*",
+  "start": 53.885,
+  "end": 54.174,
+  "speaker": "mate",
+  "line": 22
+ },
+ {
+  "text": "it?",
+  "start": 54.189,
+  "end": 54.397,
+  "speaker": "mate",
+  "line": 22
+ },
+ {
+  "text": "Because",
+  "start": 54.837,
+  "end": 55.18,
+  "speaker": "owner",
+  "line": 23
+ },
+ {
+  "text": "you",
+  "start": 55.195,
+  "end": 55.43,
+  "speaker": "owner",
+  "line": 23
+ },
+ {
+  "text": "buy",
+  "start": 55.445,
+  "end": 55.679,
+  "speaker": "owner",
+  "line": 23
+ },
+ {
+  "text": "*more*.",
+  "start": 55.694,
+  "end": 55.956,
+  "speaker": "owner",
+  "line": 23
+ },
+ {
+  "text": "Don't",
+  "start": 57.096,
+  "end": 57.358,
+  "speaker": "producer",
+  "line": 24
+ },
+ {
+  "text": "let",
+  "start": 57.373,
+  "end": 57.608,
+  "speaker": "producer",
+  "line": 24
+ },
+ {
+  "text": "him",
+  "start": 57.623,
+  "end": 57.857,
+  "speaker": "producer",
+  "line": 24
+ },
+ {
+  "text": "*scan*",
+  "start": 57.872,
+  "end": 58.134,
+  "speaker": "producer",
+  "line": 24
+ },
+ {
+  "text": "it!",
+  "start": 58.149,
+  "end": 58.356,
+  "speaker": "producer",
+  "line": 24
+ },
+ {
+  "text": "This",
+  "start": 58.646,
+  "end": 58.908,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "pin's",
+  "start": 58.923,
+  "end": 59.185,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "still",
+  "start": 59.2,
+  "end": 59.489,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "on",
+  "start": 59.504,
+  "end": 59.711,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "the",
+  "start": 59.726,
+  "end": 59.961,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "never-never...",
+  "start": 59.976,
+  "end": 60.401,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "your",
+  "start": 60.871,
+  "end": 61.133,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "*grandad*",
+  "start": 61.148,
+  "end": 61.492,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "owes",
+  "start": 61.507,
+  "end": 61.768,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "three",
+  "start": 61.783,
+  "end": 62.073,
+  "speaker": "rep",
+  "line": 25
+ },
+ {
+  "text": "paym\u2013",
+  "start": 62.088,
+  "end": 62.254,
+  "speaker": "rep",
+  "line": 25
+ }
+]

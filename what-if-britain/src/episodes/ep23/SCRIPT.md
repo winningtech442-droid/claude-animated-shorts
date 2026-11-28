@@ -1,6 +1,6 @@
 # EP23: Pay Later (global edition)
 
-Status: script APPROVED 28 Nov 2026 (rev 1) · test render PENDING
+Status: script APPROVED 28 Nov 2026 (rev 1) · guest voices APPROVED 28 Nov · shots built on placeholder timings · voices PENDING · test render PENDING
 
 Chosen 28 Nov 2026 from the daily brief. The user asked for a global target: something in demand, or a basic-but-a-bit-
 complex money idea. The pick is pay-later ("pay in 4"), timed for Cyber Monday (Mon 30 Nov). vidIQ had no credits,
@@ -129,6 +129,11 @@ CUT TO BLACK
 New guests (Rep, Owner) get reference clips with `tools/make_voice.py`, approved by the user before any line is voiced.
 
 ## Build notes (after approval; skim only)
+- **Built 28 Nov 2026** in `src/ep/ep23/` (composition `ep23`): 13 cold-open shots (`ep23.tsx`, test render ends at
+  `TEST_END`, the hold on the PAY LATER button) and 24 act-2 shots (`act2.tsx`). Every shot is timed off
+  `lines.json` (S(n) / E(n)); today's `lines.json` and `words.json` are placeholders from `tools/placeholder_cast.py`.
+  To finish: `python3 -I tools/cast_voice.py src/episodes/ep23/voice.txt out/ep23` (overwrites both), re-still,
+  then the test render: `npx remotion render src/index.ts ep23 out/ep23/test.mp4 --frames=0-<TEST_END*30>`.
 - Body system: the Rep (short, square, barrel chest) and the Owner (pear: narrow shoulders, wide hips) need two new
   body shapes in `src/cast/Person.tsx`.
 - Hero props: the jacket that rips into four and comes back whole; the PAY LATER till button; the envelope stream;
