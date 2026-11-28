@@ -39,3 +39,8 @@ Retention = share still watching at 1 / 3 / 10 s. Target at 3 s: 65 %+.
 ## v3 (from the pilot)
 | Posted | Episode | Views | 1 s | 3 s | 10 s | Avg watch | Full watch | New followers | The one change |
 |---|---|---|---|---|---|---|---|---|---|
+
+## Daily brief log
+- **28 Nov 2026:** Windsor shows no posts 24-28 Nov (EP21 not posted yet), so there's no v3 verdict. vidIQ had no credits,
+  so outliers and competitors were skipped. News: the Ofgem cap rises 26 % to £2,166 from 1 Jan 2027 (confirmed 25 Nov),
+  and Christmas is the first under the BNPL rules. Picked: EP22 Typed Money (banks create money), the evergreen pick.
