@@ -195,7 +195,7 @@ def build_cues(tl, words):
     T_PRESS = E["L22"] + 0.2
     ev(E["L20"] - 0.2, "tension riser under the race", lambda: riser(T_PRESS - E["L20"] + 0.2, r), "normal")
     # ---- beat 10: the race (cross-cuts speed up)
-    for k, tm in enumerate((S["L21"] + 0.1, S["L21"] + 0.75, S["L21"] + 1.3, S["L21"] + 1.7, E["L21"] + 0.25, S["L22"] + 0.45)):
+    for k, tm in enumerate((S["L21"] - 0.05, S["L21"] + 0.7, S["L21"] + 1.25, S["L21"] + 1.65, S["L22"] - 0.05, S["L22"] + 0.4)):   # = the picture's race cuts
         ev(tm, "race cross-cut swish", lambda: whip(r, 0.18), "subtle", p=0.25 * (-1) ** k)
     ev(T_PRESS, "her thumb: Sign Out Of All Browsers", lambda: pop(r), "normal")
     ev(T_PRESS + 0.04, "his click: Erase (a frame too late)", lambda: trackpad_click(r, 1.2), "normal", room="warehouse")
